@@ -1,0 +1,23 @@
+# Local teaching and Codex handoff material.
+/.local/
+/AGENTS.md
+
+# Downloaded data, upstream evaluator, and complete local run archives.
+/data/
+/.cache/
+/runs/
+
+# Environments and credentials.
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+*.log
+.pytest_cache/
+.DS_Store
+Thumbs.db
+
+# Submission reports and selected results remain eligible for tracking.

@@ -1,0 +1,116 @@
+{
+  "source_commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+  "spider_dev_questions": 1034,
+  "subsets": [
+    {
+      "subset": "DB_DBcontent_equivalence",
+      "pairs": 382,
+      "database_ids_pre": 14,
+      "database_ids_post": 48
+    },
+    {
+      "subset": "DB_schema_abbreviation",
+      "pairs": 2853,
+      "database_ids_pre": 20,
+      "database_ids_post": 90
+    },
+    {
+      "subset": "DB_schema_synonym",
+      "pairs": 2619,
+      "database_ids_pre": 19,
+      "database_ids_post": 92
+    },
+    {
+      "subset": "NLQ_column_attribute",
+      "pairs": 119,
+      "database_ids_pre": 12,
+      "database_ids_post": 12
+    },
+    {
+      "subset": "NLQ_column_carrier",
+      "pairs": 579,
+      "database_ids_pre": 20,
+      "database_ids_post": 20
+    },
+    {
+      "subset": "NLQ_column_synonym",
+      "pairs": 563,
+      "database_ids_pre": 19,
+      "database_ids_post": 19
+    },
+    {
+      "subset": "NLQ_column_value",
+      "pairs": 304,
+      "database_ids_pre": 19,
+      "database_ids_post": 19
+    },
+    {
+      "subset": "NLQ_keyword_carrier",
+      "pairs": 399,
+      "database_ids_pre": 18,
+      "database_ids_post": 18
+    },
+    {
+      "subset": "NLQ_keyword_synonym",
+      "pairs": 953,
+      "database_ids_pre": 20,
+      "database_ids_post": 20
+    },
+    {
+      "subset": "NLQ_multitype",
+      "pairs": 1351,
+      "database_ids_pre": 20,
+      "database_ids_post": 20
+    },
+    {
+      "subset": "NLQ_others",
+      "pairs": 2819,
+      "database_ids_pre": 20,
+      "database_ids_post": 20
+    },
+    {
+      "subset": "NLQ_value_synonym",
+      "pairs": 506,
+      "database_ids_pre": 20,
+      "database_ids_post": 20
+    },
+    {
+      "subset": "SQL_comparison",
+      "pairs": 178,
+      "database_ids_pre": 19,
+      "database_ids_post": 19
+    },
+    {
+      "subset": "SQL_DB_number",
+      "pairs": 410,
+      "database_ids_pre": 15,
+      "database_ids_post": 15
+    },
+    {
+      "subset": "SQL_DB_text",
+      "pairs": 911,
+      "database_ids_pre": 18,
+      "database_ids_post": 18
+    },
+    {
+      "subset": "SQL_NonDB_number",
+      "pairs": 131,
+      "database_ids_pre": 8,
+      "database_ids_post": 8
+    },
+    {
+      "subset": "SQL_sort_order",
+      "pairs": 192,
+      "database_ids_pre": 19,
+      "database_ids_post": 19
+    }
+  ],
+  "pair_instances": 15269,
+  "note": "Pairs summed across perturbation subsets, original questions may recur across subsets. No model evaluation.",
+  "checks": {
+    "equal_pre_post_lengths": true,
+    "rowwise_original_question_ids_match": true,
+    "semantic_sample_audit": "pending",
+    "model_baseline": "pending"
+  }
+}
