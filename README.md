@@ -2,12 +2,12 @@
 
 使用 Thingo API 的 `gpt-6-sol`，在 Dr.Spider 的五类扰动上完成 **75 对、150 条 Text-to-SQL 预测**。50 对主批的单数据库执行一致率（EX）从 **72%（36/50）降至 66%（33/50）**。
 
-[实验报告](reports/任务1实验报告.md) · [错误诊断](reports/问题记录.md) · [rsi-data 工程阅读](reports/rsi-data阅读记录.md)
+[实验报告](reports/任务1实验报告.md) · [错误诊断](reports/问题记录.md)
 
 ## 仓库结构
 
 ```text
-├── reports/                 实验报告、错误诊断、rsi-data 工程阅读
+├── reports/                 实验报告与错误诊断
 ├── results/
 │   ├── baseline/            两批样本标识、配置、预测 SQL、逐题评分与汇总
 │   └── diagnostics/         SQL 单点复核与 JetBlue 问句对照
