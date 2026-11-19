@@ -1,0 +1,58 @@
+{
+  "source_batch": "sol-25pairs",
+  "sample_id": "NLQ_keyword_synonym-00281-pre",
+  "input_edit": {
+    "before": "Jetblue Airways",
+    "after": "JetBlue Airways"
+  },
+  "records": [
+    {
+      "run": "diag-jetblue-original-20261119",
+      "condition": "original",
+      "started_at": "2026-11-19T03:38:14.953308+00:00",
+      "model": "gpt-6-sol",
+      "digest": null,
+      "system_fingerprint": null,
+      "code_commit": "c972bac074c06419187a3e77432118b242bd3362",
+      "source_sha256": {
+        "scripts\\run_api_sample.py": "34bfc17b2e4fd2d539fd7ecd27c5fc67103187ce79e3abad5551a92982e258e5",
+        "src\\baseline.py": "a781af0ffc27e86b322e4eadd409b883db6e6487262d3f3917053957b13cd63f"
+      },
+      "parameters": {
+        "stream": false,
+        "other_generation_parameters": "provider defaults"
+      },
+      "database_sha256": "8ee4f3ad172de0cb0a1f889171f15d6682f7d7249b0c415e1dbefe9b50da2411",
+      "request_sha256": "965b015de3566e14e6764b9cf0b63be1736bbf0cfb3969d7bd0cf31a4b8ae631",
+      "response_sha256": "31703935294248d06f731e31c231d80bce530ce679b078f2f1e746e18c59b821",
+      "prediction_sql": "SELECT COUNT(*) AS flight_count\nFROM flights AS f\nJOIN airlines AS a ON a.uid = f.Airline\nWHERE a.Airline = 'Jetblue Airways';\n--",
+      "prediction_count": 0,
+      "expected_count": 100,
+      "correct": false
+    },
+    {
+      "run": "diag-jetblue-cased-20261119",
+      "condition": "cased",
+      "started_at": "2026-11-19T03:38:23.247534+00:00",
+      "model": "gpt-6-sol",
+      "digest": null,
+      "system_fingerprint": null,
+      "code_commit": "c972bac074c06419187a3e77432118b242bd3362",
+      "source_sha256": {
+        "scripts\\run_api_sample.py": "34bfc17b2e4fd2d539fd7ecd27c5fc67103187ce79e3abad5551a92982e258e5",
+        "src\\baseline.py": "a781af0ffc27e86b322e4eadd409b883db6e6487262d3f3917053957b13cd63f"
+      },
+      "parameters": {
+        "stream": false,
+        "other_generation_parameters": "provider defaults"
+      },
+      "database_sha256": "8ee4f3ad172de0cb0a1f889171f15d6682f7d7249b0c415e1dbefe9b50da2411",
+      "request_sha256": "c594889ea113f0ab115913d8261b1747664598b678f9589672335dfa75c34df0",
+      "response_sha256": "d3e8cd2e0bdfce45491e4a8a03f385cf4f5980d9a3c211c0f090c1ed99f2e9a5",
+      "prediction_sql": "SELECT COUNT(*) FROM flights AS f JOIN airlines AS a ON f.Airline = a.uid WHERE a.Airline = 'JetBlue Airways';",
+      "prediction_count": 100,
+      "expected_count": 100,
+      "correct": true
+    }
+  ]
+}

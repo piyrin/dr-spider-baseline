@@ -1,0 +1,207 @@
+{
+  "method": "read-only replay with fixed sample database and evaluator",
+  "cases": [
+    {
+      "batch": "sol-50pairs-seed43",
+      "id": "DB_schema_synonym-02040-post",
+      "original_sql": "SELECT c.Code\nFROM country AS c\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM countrylanguage AS cl\n    WHERE cl.CountryCode = c.Code\n      AND cl.dialect = 'English'\n);",
+      "edited_sql": "SELECT c.Code\nFROM country AS c\nWHERE EXISTS (SELECT 1 FROM countrylanguage AS known WHERE known.CountryCode = c.Code)\n  AND NOT EXISTS (\n    SELECT 1\n    FROM countrylanguage AS cl\n    WHERE cl.CountryCode = c.Code\n      AND cl.dialect = 'English'\n);",
+      "gold": {
+        "row_count": 173,
+        "scalar": null
+      },
+      "original": {
+        "row_count": 179,
+        "scalar": null
+      },
+      "edited": {
+        "row_count": 173,
+        "scalar": null
+      },
+      "matched_before": false,
+      "matched_after": true,
+      "witness_sql": "SELECT COUNT(*) FROM country c WHERE NOT EXISTS (SELECT 1 FROM countrylanguage l WHERE l.CountryCode=c.Code)",
+      "witness_rows": [
+        [
+          6
+        ]
+      ]
+    },
+    {
+      "batch": "sol-50pairs-seed43",
+      "id": "DB_schema_abbreviation-01515-post",
+      "original_sql": "SELECT \"Package_Option\", \"ser_name\" FROM \"TV_Channel\" WHERE \"hd\" = 'Yes';",
+      "edited_sql": "SELECT \"Package_Option\", \"ser_name\" FROM \"TV_Channel\" WHERE \"hd\" = 'yes';",
+      "gold": {
+        "row_count": 1,
+        "scalar": null
+      },
+      "original": {
+        "row_count": 0,
+        "scalar": null
+      },
+      "edited": {
+        "row_count": 1,
+        "scalar": null
+      },
+      "matched_before": false,
+      "matched_after": true,
+      "witness_sql": "SELECT hd, COUNT(*) FROM TV_Channel GROUP BY hd ORDER BY hd",
+      "witness_rows": [
+        [
+          "no",
+          14
+        ],
+        [
+          "yes",
+          1
+        ]
+      ]
+    },
+    {
+      "batch": "sol-50pairs-seed43",
+      "id": "NLQ_keyword_synonym-00147-post",
+      "original_sql": "SELECT COUNT(*) FROM cars_data WHERE CAST(Horsepower AS INTEGER) > 150;",
+      "edited_sql": "SELECT COUNT(*) FROM cars_data WHERE Horsepower > 150;",
+      "gold": {
+        "row_count": 1,
+        "scalar": 281
+      },
+      "original": {
+        "row_count": 1,
+        "scalar": 49
+      },
+      "edited": {
+        "row_count": 1,
+        "scalar": 281
+      },
+      "matched_before": false,
+      "matched_after": true,
+      "witness_sql": "SELECT typeof(Horsepower), COUNT(*) FROM cars_data WHERE (Horsepower > 150) AND NOT (CAST(Horsepower AS INTEGER)>150) GROUP BY typeof(Horsepower)",
+      "witness_rows": [
+        [
+          "text",
+          232
+        ]
+      ]
+    },
+    {
+      "batch": "sol-50pairs-seed43",
+      "id": "NLQ_column_synonym-00019-post",
+      "original_sql": "SELECT DISTINCT cm.FullName\nFROM car_makers AS cm\nJOIN model_list AS ml ON ml.Maker = cm.Id\nJOIN car_names AS cn ON cn.Model = ml.Model\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cd.Year = 1970;",
+      "edited_sql": "SELECT DISTINCT cm.Maker\nFROM car_makers AS cm\nJOIN model_list AS ml ON ml.Maker = cm.Id\nJOIN car_names AS cn ON cn.Model = ml.Model\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cd.Year = 1970;",
+      "gold": {
+        "row_count": 11,
+        "scalar": null
+      },
+      "original": {
+        "row_count": 11,
+        "scalar": null
+      },
+      "edited": {
+        "row_count": 11,
+        "scalar": null
+      },
+      "matched_before": false,
+      "matched_after": true,
+      "witness_sql": "SELECT Maker, FullName FROM car_makers WHERE Maker='gm'",
+      "witness_rows": [
+        [
+          "gm",
+          "General Motors"
+        ]
+      ]
+    },
+    {
+      "batch": "sol-50pairs-seed43",
+      "id": "NLQ_column_synonym-00378-post",
+      "original_sql": "SELECT AVG(GNP) AS mean_gdp, SUM(Population) AS total_population\nFROM country\nWHERE Name = 'United States';",
+      "edited_sql": "SELECT AVG(GNP) AS mean_gdp, SUM(Population) AS total_population\nFROM country\nWHERE GovernmentForm = 'US Territory';",
+      "gold": {
+        "row_count": 1,
+        "scalar": null
+      },
+      "original": {
+        "row_count": 1,
+        "scalar": null
+      },
+      "edited": {
+        "row_count": 1,
+        "scalar": null
+      },
+      "matched_before": false,
+      "matched_after": true,
+      "witness_sql": "SELECT COUNT(*) FROM country WHERE GovernmentForm='US Territory'",
+      "witness_rows": [
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "batch": "sol-50pairs-seed43",
+      "id": "SQL_sort_order-00171-pre",
+      "original_sql": "SELECT grade\nFROM Highschooler\nGROUP BY grade\nORDER BY COUNT(*) DESC, grade\nLIMIT 1;",
+      "edited_sql": "SELECT grade\nFROM Highschooler\nGROUP BY grade\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "gold": {
+        "row_count": 1,
+        "scalar": 12
+      },
+      "original": {
+        "row_count": 1,
+        "scalar": 9
+      },
+      "edited": {
+        "row_count": 1,
+        "scalar": 12
+      },
+      "matched_before": false,
+      "matched_after": true,
+      "witness_sql": "SELECT grade, COUNT(*) FROM Highschooler GROUP BY grade ORDER BY grade",
+      "witness_rows": [
+        [
+          9,
+          4
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          12,
+          4
+        ]
+      ]
+    },
+    {
+      "batch": "sol-25pairs",
+      "id": "NLQ_keyword_synonym-00281-pre",
+      "original_sql": "SELECT COUNT(*) AS flight_count\nFROM flights AS f\nJOIN airlines AS a ON f.Airline = a.uid\nWHERE a.Airline = 'Jetblue Airways';",
+      "edited_sql": "SELECT COUNT(*) AS flight_count\nFROM flights AS f\nJOIN airlines AS a ON f.Airline = a.uid\nWHERE a.Airline = 'JetBlue Airways';",
+      "gold": {
+        "row_count": 1,
+        "scalar": 100
+      },
+      "original": {
+        "row_count": 1,
+        "scalar": 0
+      },
+      "edited": {
+        "row_count": 1,
+        "scalar": 100
+      },
+      "matched_before": false,
+      "matched_after": true,
+      "witness_sql": "SELECT COUNT(*) FROM airlines WHERE Airline='JetBlue Airways'",
+      "witness_rows": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}
