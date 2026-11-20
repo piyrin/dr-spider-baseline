@@ -3,7 +3,7 @@
 | 任务 | 提交内容 | 验收入口 |
 | --- | --- | --- |
 | 1 · Dr.Spider 基线 | 使用 Thingo `gpt-6-sol` 完成五类扰动的 **75 对、150 条预测**。50 对主批的单数据库执行一致率（EX）由 **72%（36/50）降至 66%（33/50）**。 | [实验报告](reports/任务1实验报告.md) · [错误诊断](reports/问题记录.md) · [逐题记录](results/baseline/) |
-| 2 · RSI Data Agent | 课程 Spring Boot 启动后，经流程引擎运行单表 Agent 与多 Agent 协作生成 SQL，在 Dr.Spider SQLite 上核对结果。 | [实现与复现](task2-rsi-data/README.md) · [课程流程验收记录](results/task2/course-acceptance-20261120.json) |
+| 2 · RSI Data Agent | 课程 Spring Boot 启动后，经流程引擎运行单表 Agent 与多 Agent 协作生成 SQL，在 Dr.Spider SQLite 上核对结果。 | [验收摘要](#任务-2--rsi-data-agent) · [实现与复现](task2-rsi-data/README.md) |
 
 ## 目录与产物
 
@@ -62,3 +62,14 @@ $py = '.\.venv\Scripts\python.exe'
 ```
 
 省略 `--execute` 可离线生成抽样计划并执行全部标准 SQL。运行名已存在时，同一配置会复用已有记录。服务端采用默认生成参数，远程模型 digest 未提供，复跑时预测可能变化。
+
+## 任务 2 · RSI Data Agent
+
+课程 Spring Boot 通过 `rsi-flow` 调度 Agent，模型生成的 SQL 在只读的 `concert_singer` SQLite 数据库执行。
+
+| 流程 | Agent 分工 | 默认题结果 | 复测 |
+| --- | --- | --- | ---: |
+| 单表 | `singer` Agent 根据该表结构生成 SQL | 法国歌手 4 位 | 3/3 |
+| 多 Agent | 两个表 Agent 分别分析 `singer` 和 `singer_in_concert`，SQL Agent 汇总两份输出生成查询 | 返回 6 位歌手及场次数，包含 Joe Sharp 的 0 场 | 3/3 |
+
+两条流程各跑两次默认题和一次变体，6 次结果均与独立参考 SQL 一致。验收记录可逐次核对 Agent 输入输出、生成 SQL 和实际查询结果。[复测证据](results/task2/course-acceptance-20261120.json) · [启动与复现](task2-rsi-data/README.md#复现步骤)
