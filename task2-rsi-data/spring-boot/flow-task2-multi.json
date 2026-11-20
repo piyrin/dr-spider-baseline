@@ -1,0 +1,57 @@
+{
+  "id": "TASK2_MULTI_AGENT",
+  "type": "flow",
+  "name": "多 Agent 生成 SQL",
+  "params": [{ "name": "question", "type": "String" }],
+  "results": [{ "name": "result", "type": "String" }],
+  "nodes": [
+    {
+      "id": "TASK2_SINGER_ANALYZE",
+      "type": "event",
+      "name": "singer 表分析",
+      "reference": "TASK2_SINGER_ANALYZE",
+      "params": [{ "name": "question", "type": "String" }],
+      "results": [{ "name": "singerStep", "type": "String" }]
+    },
+    {
+      "id": "TASK2_CONCERT_ANALYZE",
+      "type": "event",
+      "name": "singer_in_concert 表分析",
+      "reference": "TASK2_CONCERT_ANALYZE",
+      "params": [{ "name": "question", "type": "String" }],
+      "results": [{ "name": "concertStep", "type": "String" }]
+    },
+    {
+      "id": "TASK2_MULTI_GENERATE",
+      "type": "event",
+      "name": "SQL Agent",
+      "reference": "TASK2_MULTI_GENERATE",
+      "params": [
+        { "name": "question", "type": "String" },
+        { "name": "singerStep", "type": "String" },
+        { "name": "concertStep", "type": "String" }
+      ],
+      "results": [{ "name": "sqlStep", "type": "String" }]
+    },
+    {
+      "id": "TASK2_MULTI_QUERY",
+      "type": "event",
+      "name": "执行 SQLite 查询",
+      "reference": "TASK2_MULTI_QUERY",
+      "params": [
+        { "name": "question", "type": "String" },
+        { "name": "singerStep", "type": "String" },
+        { "name": "concertStep", "type": "String" },
+        { "name": "sqlStep", "type": "String" }
+      ],
+      "results": [{ "name": "result", "type": "String" }]
+    }
+  ],
+  "routes": [
+    { "source": "start", "target": "TASK2_SINGER_ANALYZE" },
+    { "source": "TASK2_SINGER_ANALYZE", "target": "TASK2_CONCERT_ANALYZE" },
+    { "source": "TASK2_CONCERT_ANALYZE", "target": "TASK2_MULTI_GENERATE" },
+    { "source": "TASK2_MULTI_GENERATE", "target": "TASK2_MULTI_QUERY" },
+    { "source": "TASK2_MULTI_QUERY", "target": "end" }
+  ]
+}

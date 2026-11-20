@@ -1,0 +1,205 @@
+{
+  "runtime": "python",
+  "observation": "原题首次运行额外输出 Singer_ID。补充输出列约束后，原题复测仅返回姓名和场次数。",
+  "data_version": {
+    "repository": "https://github.com/awslabs/diagnostic-robustness-text-to-sql",
+    "commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+    "url": "https://media.githubusercontent.com/media/awslabs/diagnostic-robustness-text-to-sql/c64694a4a278ab0faff08ce7a3501d46f458b431/data.tar.gz",
+    "sha256": "d0f47e4d2c9202f4fd2d956a34e9dd1ff8180c1c9e58cf5b530c13fefaaa3ba9",
+    "bytes": 168450638,
+    "retrieved_date": "2026-11-16"
+  },
+  "before_prompt_change": {
+    "flowId": "multi-agent",
+    "question": "统计每位歌手参加的演唱会数量，包含 0 场。",
+    "database": "concert_singer",
+    "tables": [
+      "singer",
+      "singer_in_concert"
+    ],
+    "steps": [
+      {
+        "agent": "singer",
+        "system": "You are responsible for the single table provided. In Chinese, briefly explain relevant fields, row grain and keys for the question. Mention which rows from this table must be kept when appropriate. Return a short note for the downstream SQL agent.",
+        "input": "CREATE TABLE \"singer\" (\"Singer_ID\" int,\"Name\" text,\"Country\" text,\"Song_Name\" text,\"Song_release_year\" text,\"Age\" int,\"Is_male\" bool,PRIMARY KEY (\"Singer_ID\"))\n\n问题\n统计每位歌手参加的演唱会数量，包含 0 场。",
+        "output": "`singer` 每行代表一位歌手，`Singer_ID` 是主键，`Name` 是歌手姓名。本题须保留表中所有歌手，包括未参加演唱会的歌手；以 `Singer_ID` 关联演唱会参与记录后按歌手计数，缺失记录计为 0。此表本身没有演唱会信息。",
+        "model": {
+          "requested": "gpt-6-sol",
+          "returned": "gpt-6-sol",
+          "fingerprint": null,
+          "digest": null
+        }
+      },
+      {
+        "agent": "singer_in_concert",
+        "system": "You are responsible for the single table provided. In Chinese, briefly explain relevant fields, row grain and keys for the question. Mention which rows from this table must be kept when appropriate. Return a short note for the downstream SQL agent.",
+        "input": "CREATE TABLE \"singer_in_concert\" (\"concert_ID\" int,\"Singer_ID\" text,PRIMARY KEY (\"concert_ID\",\"Singer_ID\"),FOREIGN KEY (\"concert_ID\") REFERENCES \"concert\" (\"concert_ID\"),FOREIGN KEY (\"Singer_ID\") REFERENCES \"singer\" (\"Singer_ID\"))\n\n问题\n统计每位歌手参加的演唱会数量，包含 0 场。",
+        "output": "`singer_in_concert` 每行表示一位歌手参加一场演唱会，复合主键为 (`concert_ID`, `Singer_ID`)，不会重复计数。同一歌手按 `Singer_ID` 统计 `concert_ID` 数量。此表没有参加记录的歌手不会出现；要包含 0 场，须以 `singer` 表为主表 LEFT JOIN 本表，保留所有歌手，并计数本表的 `concert_ID`。",
+        "model": {
+          "requested": "gpt-6-sol",
+          "returned": "gpt-6-sol",
+          "fingerprint": null,
+          "digest": null
+        }
+      },
+      {
+        "agent": "sql",
+        "system": "Generate exactly one read-only SQLite SELECT query. Use only the provided tables and columns. Return SQL only. If counting rows of an optional relationship, count the joined column, not COUNT(*). Use the two table agents’ findings to plan the join.",
+        "input": "CREATE TABLE \"singer\" (\"Singer_ID\" int,\"Name\" text,\"Country\" text,\"Song_Name\" text,\"Song_release_year\" text,\"Age\" int,\"Is_male\" bool,PRIMARY KEY (\"Singer_ID\"))\n\nCREATE TABLE \"singer_in_concert\" (\"concert_ID\" int,\"Singer_ID\" text,PRIMARY KEY (\"concert_ID\",\"Singer_ID\"),FOREIGN KEY (\"concert_ID\") REFERENCES \"concert\" (\"concert_ID\"),FOREIGN KEY (\"Singer_ID\") REFERENCES \"singer\" (\"Singer_ID\"))\n\nsinger → `singer` 每行代表一位歌手，`Singer_ID` 是主键，`Name` 是歌手姓名。本题须保留表中所有歌手，包括未参加演唱会的歌手；以 `Singer_ID` 关联演唱会参与记录后按歌手计数，缺失记录计为 0。此表本身没有演唱会信息。\n\nsinger_in_concert → `singer_in_concert` 每行表示一位歌手参加一场演唱会，复合主键为 (`concert_ID`, `Singer_ID`)，不会重复计数。同一歌手按 `Singer_ID` 统计 `concert_ID` 数量。此表没有参加记录的歌手不会出现；要包含 0 场，须以 `singer` 表为主表 LEFT JOIN 本表，保留所有歌手，并计数本表的 `concert_ID`。\n\n问题\n统计每位歌手参加的演唱会数量，包含 0 场。",
+        "output": "SELECT s.Singer_ID, s.Name, COUNT(sc.concert_ID) AS concert_count\nFROM singer AS s\nLEFT JOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nGROUP BY s.Singer_ID, s.Name;",
+        "model": {
+          "requested": "gpt-6-sol",
+          "returned": "gpt-6-sol",
+          "fingerprint": null,
+          "digest": null
+        }
+      }
+    ],
+    "sql": "SELECT s.Singer_ID, s.Name, COUNT(sc.concert_ID) AS concert_count\nFROM singer AS s\nLEFT JOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nGROUP BY s.Singer_ID, s.Name;",
+    "columns": [
+      "Singer_ID",
+      "Name",
+      "concert_count"
+    ],
+    "rows": [
+      [
+        1,
+        "Joe Sharp",
+        0
+      ],
+      [
+        2,
+        "Timbaland",
+        2
+      ],
+      [
+        3,
+        "Justin Brown",
+        3
+      ],
+      [
+        4,
+        "Rose White",
+        1
+      ],
+      [
+        5,
+        "John Nizinik",
+        2
+      ],
+      [
+        6,
+        "Tribal King",
+        2
+      ]
+    ],
+    "matches_reference": false,
+    "error": null,
+    "run_id": "20261120T004817820243Z-83ad6e50",
+    "started_at": "2026-11-20T00:48:17.820243+00:00",
+    "parameters": {
+      "stream": false,
+      "other": "provider defaults"
+    },
+    "code_commit": "20f00228662053b080d3f8d8cb3922acef9e0484",
+    "source_sha256": {
+      "serve.py": "9e5947a23d36ae92fe5fc25910c169d94ad9084fe0feea87c55992951644be86",
+      "flow.py": "8ef31f7022560d212b705af50b8def3fd6e196962e8172a68cfc0a14d8c7c4a5"
+    },
+    "database_sha256": "76b992397b81b56b8f381813e964cac32c862f808c374868947931bb5871cdce",
+    "verification": "同一 SQLite 数据库中比较行多重集合，保留重复次数"
+  },
+  "after_prompt_change": {
+    "flowId": "multi-agent",
+    "question": "统计每位歌手参加的演唱会数量，包含 0 场。",
+    "database": "concert_singer",
+    "tables": [
+      "singer",
+      "singer_in_concert"
+    ],
+    "steps": [
+      {
+        "agent": "singer",
+        "system": "You are responsible for the single table provided. In Chinese, briefly explain relevant fields, row grain and keys for the question. Mention which rows from this table must be kept when appropriate. Return a short note for the downstream SQL agent.",
+        "input": "CREATE TABLE \"singer\" (\"Singer_ID\" int,\"Name\" text,\"Country\" text,\"Song_Name\" text,\"Song_release_year\" text,\"Age\" int,\"Is_male\" bool,PRIMARY KEY (\"Singer_ID\"))\n\n问题\n统计每位歌手参加的演唱会数量，包含 0 场。",
+        "output": "`singer` 每行是一位歌手，`Singer_ID` 为主键，`Name` 是歌手姓名。本题需保留表中所有歌手（包括没有参加演唱会的歌手）；以 `Singer_ID` 关联演唱会参与记录，按歌手统计演唱会数量，无记录时计为 0。该表本身没有演唱会信息，需从其他表取得参与关系。",
+        "model": {
+          "requested": "gpt-6-sol",
+          "returned": "gpt-6-sol",
+          "fingerprint": null,
+          "digest": null
+        }
+      },
+      {
+        "agent": "singer_in_concert",
+        "system": "You are responsible for the single table provided. In Chinese, briefly explain relevant fields, row grain and keys for the question. Mention which rows from this table must be kept when appropriate. Return a short note for the downstream SQL agent.",
+        "input": "CREATE TABLE \"singer_in_concert\" (\"concert_ID\" int,\"Singer_ID\" text,PRIMARY KEY (\"concert_ID\",\"Singer_ID\"),FOREIGN KEY (\"concert_ID\") REFERENCES \"concert\" (\"concert_ID\"),FOREIGN KEY (\"Singer_ID\") REFERENCES \"singer\" (\"Singer_ID\"))\n\n问题\n统计每位歌手参加的演唱会数量，包含 0 场。",
+        "output": "`singer_in_concert` 每行表示一位歌手参加一场演唱会；`Singer_ID` 是歌手键，`concert_ID` 是演唱会键，二者组成复合主键。按 `Singer_ID` 统计 `concert_ID` 即为参演场数。此表没有零场歌手的记录；要包含 0 场，须从 `singer` 表保留所有歌手，左连接本表后计数 `concert_ID`。",
+        "model": {
+          "requested": "gpt-6-sol",
+          "returned": "gpt-6-sol",
+          "fingerprint": null,
+          "digest": null
+        }
+      },
+      {
+        "agent": "sql",
+        "system": "Generate exactly one read-only SQLite SELECT query. Use only the provided tables and columns. Return SQL only. If counting rows of an optional relationship, count the joined column, not COUNT(*). Use the two table agents’ findings to plan the join. Return only the requested measures and the human-readable label for each row. Do not include internal IDs unless asked.",
+        "input": "CREATE TABLE \"singer\" (\"Singer_ID\" int,\"Name\" text,\"Country\" text,\"Song_Name\" text,\"Song_release_year\" text,\"Age\" int,\"Is_male\" bool,PRIMARY KEY (\"Singer_ID\"))\n\nCREATE TABLE \"singer_in_concert\" (\"concert_ID\" int,\"Singer_ID\" text,PRIMARY KEY (\"concert_ID\",\"Singer_ID\"),FOREIGN KEY (\"concert_ID\") REFERENCES \"concert\" (\"concert_ID\"),FOREIGN KEY (\"Singer_ID\") REFERENCES \"singer\" (\"Singer_ID\"))\n\nsinger → `singer` 每行是一位歌手，`Singer_ID` 为主键，`Name` 是歌手姓名。本题需保留表中所有歌手（包括没有参加演唱会的歌手）；以 `Singer_ID` 关联演唱会参与记录，按歌手统计演唱会数量，无记录时计为 0。该表本身没有演唱会信息，需从其他表取得参与关系。\n\nsinger_in_concert → `singer_in_concert` 每行表示一位歌手参加一场演唱会；`Singer_ID` 是歌手键，`concert_ID` 是演唱会键，二者组成复合主键。按 `Singer_ID` 统计 `concert_ID` 即为参演场数。此表没有零场歌手的记录；要包含 0 场，须从 `singer` 表保留所有歌手，左连接本表后计数 `concert_ID`。\n\n问题\n统计每位歌手参加的演唱会数量，包含 0 场。",
+        "output": "SELECT s.Name, COUNT(sc.concert_ID) AS concert_count\nFROM singer AS s\nLEFT JOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nGROUP BY s.Singer_ID, s.Name;",
+        "model": {
+          "requested": "gpt-6-sol",
+          "returned": "gpt-6-sol",
+          "fingerprint": null,
+          "digest": null
+        }
+      }
+    ],
+    "sql": "SELECT s.Name, COUNT(sc.concert_ID) AS concert_count\nFROM singer AS s\nLEFT JOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nGROUP BY s.Singer_ID, s.Name;",
+    "columns": [
+      "Name",
+      "concert_count"
+    ],
+    "rows": [
+      [
+        "Joe Sharp",
+        0
+      ],
+      [
+        "Timbaland",
+        2
+      ],
+      [
+        "Justin Brown",
+        3
+      ],
+      [
+        "Rose White",
+        1
+      ],
+      [
+        "John Nizinik",
+        2
+      ],
+      [
+        "Tribal King",
+        2
+      ]
+    ],
+    "matches_reference": true,
+    "error": null,
+    "run_id": "20261120T005326448729Z-a619c762",
+    "started_at": "2026-11-20T00:53:26.448729+00:00",
+    "parameters": {
+      "stream": false,
+      "other": "provider defaults"
+    },
+    "code_commit": "20f00228662053b080d3f8d8cb3922acef9e0484",
+    "source_sha256": {
+      "serve.py": "9e5947a23d36ae92fe5fc25910c169d94ad9084fe0feea87c55992951644be86",
+      "flow.py": "cc3578c3eb2dc3eff3fb116137e8961d4aaf056c4e30ad97a82fbc66d76a9f82"
+    },
+    "database_sha256": "76b992397b81b56b8f381813e964cac32c862f808c374868947931bb5871cdce",
+    "verification": "同一 SQLite 数据库中比较行多重集合，保留重复次数"
+  }
+}

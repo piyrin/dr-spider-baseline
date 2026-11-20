@@ -1,0 +1,30 @@
+{
+  "id": "TASK2_SINGLE_TABLE",
+  "type": "flow",
+  "name": "单表 Agent",
+  "params": [{ "name": "question", "type": "String" }],
+  "results": [{ "name": "result", "type": "String" }],
+  "nodes": [
+    {
+      "id": "TASK2_SINGLE_GENERATE",
+      "type": "event",
+      "name": "singer Agent 生成 SQL",
+      "reference": "TASK2_SINGLE_GENERATE",
+      "params": [{ "name": "question", "type": "String" }],
+      "results": [{ "name": "sqlStep", "type": "String" }]
+    },
+    {
+      "id": "TASK2_SINGLE_QUERY",
+      "type": "event",
+      "name": "执行 SQLite 查询",
+      "reference": "TASK2_SINGLE_QUERY",
+      "params": [{ "name": "question", "type": "String" }, { "name": "sqlStep", "type": "String" }],
+      "results": [{ "name": "result", "type": "String" }]
+    }
+  ],
+  "routes": [
+    { "source": "start", "target": "TASK2_SINGLE_GENERATE" },
+    { "source": "TASK2_SINGLE_GENERATE", "target": "TASK2_SINGLE_QUERY" },
+    { "source": "TASK2_SINGLE_QUERY", "target": "end" }
+  ]
+}
