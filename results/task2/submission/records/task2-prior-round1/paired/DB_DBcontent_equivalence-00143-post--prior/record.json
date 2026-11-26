@@ -1,0 +1,35 @@
+{
+  "id": "DB_DBcontent_equivalence-00143-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7239,
+    "completion_tokens": 163,
+    "total_tokens": 7402,
+    "prompt_tokens_details": {
+      "cached_tokens": 6656
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT COUNT(*) FROM ship WHERE is_captured = 'T';",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 1,
+  "status": "match",
+  "condition": "prior",
+  "prior": "ship.is_captured is a text flag. 'T' means captured and 'F' means not captured.",
+  "recorded_at": "2026-11-25T13:39:33+08:00",
+  "gold_rows": [
+    [
+      4
+    ]
+  ],
+  "prediction_rows": [
+    [
+      4
+    ]
+  ]
+}

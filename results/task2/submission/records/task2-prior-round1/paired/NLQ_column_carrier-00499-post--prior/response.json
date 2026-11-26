@@ -1,0 +1,27 @@
+{
+  "id": "resp_0dab700701fd204c016b06748f94e887d1b58cb0b1287ebe21",
+  "object": "chat.completion",
+  "created": 1795585168,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT name\nFROM Highschooler\nWHERE grade = 10;"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7221,
+    "completion_tokens": 76,
+    "total_tokens": 7297,
+    "prompt_tokens_details": {
+      "cached_tokens": 6272
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 62
+    }
+  }
+}

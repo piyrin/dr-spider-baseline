@@ -1,0 +1,420 @@
+{
+  "id": "NLQ_others-00896-post",
+  "side": "post",
+  "original_id": 338,
+  "method": "canvas_v2",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "format_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "Templates.Template_Type_Code"
+        ],
+        "joins": [
+          "Documents.Template_ID = Templates.Template_ID"
+        ],
+        "targets": [
+          {
+            "table": "Documents",
+            "column": "Document_Name",
+            "term": "Data Base",
+            "operator": "="
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one explicit textual equality filter. Use the exact term as written in the question, including case and whitespace, with operator \"=\". Return zero targets if there is no such unique filter. The requested output field is not a filter."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Documents\" (\"Document_ID\" INTEGER NOT NULL,\"Template_ID\" INTEGER,\"Document_Name\" VARCHAR(255),\"Document_Description\" VARCHAR(255),\"Other_Details\" VARCHAR(255),PRIMARY KEY (\"Document_ID\"),FOREIGN KEY (\"Template_ID\") REFERENCES \"Templates\" (\"Template_ID\"))\nCREATE TABLE \"Paragraphs\" (\"Paragraph_ID\" INTEGER NOT NULL,\"Document_ID\" INTEGER NOT NULL,\"Paragraph_Text\" VARCHAR(255),\"Other_Details\" VARCHAR(255),PRIMARY KEY (\"Paragraph_ID\"),FOREIGN KEY (\"Document_ID\") REFERENCES \"Documents\" (\"Document_ID\"))\nCREATE TABLE \"Ref_Template_Types\" (\"Template_Type_Code\" CHAR(15) NOT NULL,\"Template_Type_Description\" VARCHAR(255) NOT NULL,PRIMARY KEY (\"Template_Type_Code\"))\nCREATE TABLE \"Templates\" (\"Template_ID\" INTEGER NOT NULL,\"Version_Number\" INTEGER NOT NULL,\"Template_Type_Code\" CHAR(15) NOT NULL,\"Date_Effective_From\" DATETIME,\"Date_Effective_To\" DATETIME,\"Template_Details\" VARCHAR(255) NOT NULL,PRIMARY KEY (\"Template_ID\"),FOREIGN KEY (\"Template_Type_Code\") REFERENCES \"Ref_Template_Types\" (\"Template_Type_Code\"))\nQuestion\nCan you return the template type code of the template that is used by the document with the name of Data Base?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_04be4aac3a57903e016b06ff8860a887d184bc941e58e9ae0b",
+          "object": "chat.completion",
+          "created": 1795620745,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"Templates.Template_Type_Code\"],\"joins\":[\"Documents.Template_ID = Templates.Template_ID\"],\"targets\":[{\"table\":\"Documents\",\"column\":\"Document_Name\",\"term\":\"Data Base\",\"operator\":\"=\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4782,
+            "completion_tokens": 46,
+            "total_tokens": 4828,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4782,
+          "completion_tokens": 46,
+          "total_tokens": 4828,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "exact",
+      "kind": "format_exact",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "miss",
+        "target": {
+          "table": "Documents",
+          "column": "Document_Name",
+          "term": "Data Base"
+        },
+        "value": null
+      },
+      "call": null
+    },
+    {
+      "id": "normalize",
+      "kind": "format_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact"
+      ],
+      "output": {
+        "status": "normalized",
+        "candidates": [
+          "Data base"
+        ],
+        "value": "Data base"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Check whether the unique SQLite value is a formatting variant of the quoted filter term in the current question. Compare case and whitespace only. Reject if the term, column or comparison is unsupported. Return only JSON with one boolean key accept. Do not invent or change a value."
+            },
+            {
+              "role": "user",
+              "content": "{\"question\": \"Can you return the template type code of the template that is used by the document with the name of Data Base?\", \"filter\": {\"table\": \"Documents\", \"column\": \"Document_Name\", \"term\": \"Data Base\"}, \"stored_value\": \"Data base\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_062d7ab4ca892043016b06ff8cf28887d1a3c25a3965e7b6a8",
+          "object": "chat.completion",
+          "created": 1795620758,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"accept\":true}",
+                "reasoning_content": "**Determining case-insensitive comparison support**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_062d7ab4ca892043016b06ff8cf2d087d19d0c248dcebb55cd": {
+                  "input_tokens": 58,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 58,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_062d7ab4ca892043016b06ff8cf2d087d19e0a9dd262100c41": {
+                  "input_tokens": 62,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 62,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_062d7ab4ca892043016b06ff96540487d186be5b5125740eed": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 11,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 11
+                    }
+                  ]
+                },
+                "rs_062d7ab4ca892043016b06ff92b70c87d1ba2347edccb8bf07": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 95
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4502,
+            "completion_tokens": 106,
+            "total_tokens": 4608,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 95
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_062d7ab4ca892043016b06ff8cf2d087d19d0c248dcebb55cd": {
+                "input_tokens": 58,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 58,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_062d7ab4ca892043016b06ff8cf2d087d19e0a9dd262100c41": {
+                "input_tokens": 62,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 62,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_062d7ab4ca892043016b06ff96540487d186be5b5125740eed": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 11,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 11
+                  }
+                ]
+              },
+              "rs_062d7ab4ca892043016b06ff92b70c87d1ba2347edccb8bf07": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 95
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4502,
+          "completion_tokens": 106,
+          "total_tokens": 4608,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 95
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "format_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact",
+        "normalize"
+      ],
+      "output": {
+        "sql": "SELECT t.Template_Type_Code\nFROM Templates AS t\nJOIN Documents AS d ON d.Template_ID = t.Template_ID\nWHERE d.Document_Name = 'Data base';",
+        "route": "normalized",
+        "stored_value": "Data base"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Documents\" (\"Document_ID\" INTEGER NOT NULL,\"Template_ID\" INTEGER,\"Document_Name\" VARCHAR(255),\"Document_Description\" VARCHAR(255),\"Other_Details\" VARCHAR(255),PRIMARY KEY (\"Document_ID\"),FOREIGN KEY (\"Template_ID\") REFERENCES \"Templates\" (\"Template_ID\"))\nCREATE TABLE \"Paragraphs\" (\"Paragraph_ID\" INTEGER NOT NULL,\"Document_ID\" INTEGER NOT NULL,\"Paragraph_Text\" VARCHAR(255),\"Other_Details\" VARCHAR(255),PRIMARY KEY (\"Paragraph_ID\"),FOREIGN KEY (\"Document_ID\") REFERENCES \"Documents\" (\"Document_ID\"))\nCREATE TABLE \"Ref_Template_Types\" (\"Template_Type_Code\" CHAR(15) NOT NULL,\"Template_Type_Description\" VARCHAR(255) NOT NULL,PRIMARY KEY (\"Template_Type_Code\"))\nCREATE TABLE \"Templates\" (\"Template_ID\" INTEGER NOT NULL,\"Version_Number\" INTEGER NOT NULL,\"Template_Type_Code\" CHAR(15) NOT NULL,\"Date_Effective_From\" DATETIME,\"Date_Effective_To\" DATETIME,\"Template_Details\" VARCHAR(255) NOT NULL,PRIMARY KEY (\"Template_ID\"),FOREIGN KEY (\"Template_Type_Code\") REFERENCES \"Ref_Template_Types\" (\"Template_Type_Code\"))\nQuestion\nCan you return the template type code of the template that is used by the document with the name of Data Base?\nQuery plan\nVerified knowledge: in Documents.Document_Name, the exact stored text corresponding to 'Data Base' is 'Data base'. Use the stored text for that equality filter."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_02ec6002f0a314bc016b06ff9be11c87d2b4172e9fe2a848f0",
+          "object": "chat.completion",
+          "created": 1795620765,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT t.Template_Type_Code\nFROM Templates AS t\nJOIN Documents AS d ON d.Template_ID = t.Template_ID\nWHERE d.Document_Name = 'Data base';"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4715,
+            "completion_tokens": 37,
+            "total_tokens": 4752,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3328
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4715,
+          "completion_tokens": 37,
+          "total_tokens": 4752,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3328
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT t.Template_Type_Code\nFROM Templates AS t\nJOIN Documents AS d ON d.Template_ID = t.Template_ID\nWHERE d.Document_Name = 'Data base';",
+        "rows": [
+          [
+            "BK"
+          ]
+        ],
+        "columns": [
+          "Template_Type_Code"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "model_calls": 3,
+  "usage": {
+    "prompt_tokens": 13999,
+    "completion_tokens": 189,
+    "total_tokens": 14188
+  },
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  }
+}

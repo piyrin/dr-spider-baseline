@@ -1,0 +1,113 @@
+{
+  "id": "SQL_DB_text-00048-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7353,
+    "completion_tokens": 216,
+    "total_tokens": 7569,
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT ml.Model\nFROM model_list AS ml\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nWHERE cm.FullName = 'Honda'\nUNION\nSELECT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cd.Weight > 3500;",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 14,
+  "prediction_row_count": 15,
+  "status": "mismatch",
+  "condition": "prior",
+  "prior": "car_makers.FullName stores 'Honda' and car_makers.Maker stores its short code 'honda'. The question names the full manufacturer name.",
+  "recorded_at": "2026-11-25T13:39:08+08:00",
+  "gold_rows": [
+    [
+      "chevrolet"
+    ],
+    [
+      "buick"
+    ],
+    [
+      "ford"
+    ],
+    [
+      "plymouth"
+    ],
+    [
+      "pontiac"
+    ],
+    [
+      "amc"
+    ],
+    [
+      "dodge"
+    ],
+    [
+      "mercury"
+    ],
+    [
+      "oldsmobile"
+    ],
+    [
+      "chrysler"
+    ],
+    [
+      "honda"
+    ],
+    [
+      "mercedes-benz"
+    ],
+    [
+      "cadillac"
+    ],
+    [
+      "mercedes"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "amc"
+    ],
+    [
+      "buick"
+    ],
+    [
+      "cadillac"
+    ],
+    [
+      "chevrolet"
+    ],
+    [
+      "chrysler"
+    ],
+    [
+      "dodge"
+    ],
+    [
+      "ford"
+    ],
+    [
+      "hi"
+    ],
+    [
+      "honda"
+    ],
+    [
+      "mercedes"
+    ],
+    [
+      "mercedes-benz"
+    ],
+    [
+      "mercury"
+    ],
+    [
+      "oldsmobile"
+    ],
+    [
+      "plymouth"
+    ],
+    [
+      "pontiac"
+    ]
+  ]
+}

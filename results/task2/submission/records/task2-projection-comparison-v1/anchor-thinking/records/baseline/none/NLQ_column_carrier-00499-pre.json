@@ -1,0 +1,69 @@
+{
+  "id": "NLQ_column_carrier-00499-pre",
+  "side": "pre",
+  "original_id": 871,
+  "method": "baseline",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "generate",
+      "kind": "generate",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;",
+        "rows": [
+          [
+            "Haley"
+          ],
+          [
+            "Andrew"
+          ],
+          [
+            "Kris"
+          ],
+          [
+            "Brittany"
+          ]
+        ],
+        "columns": [
+          "name"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 4,
+    "prediction_rows": 4
+  },
+  "usage": {
+    "prompt_tokens": 4562,
+    "completion_tokens": 18,
+    "total_tokens": 4580,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      },
+      "cached_tokens": 3456
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 30.581
+}

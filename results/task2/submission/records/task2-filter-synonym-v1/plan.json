@@ -1,0 +1,107 @@
+{
+  "groups": {
+    "anchor": [
+      "NLQ_value_synonym-00162"
+    ],
+    "target": [
+      "NLQ_multitype-00851",
+      "NLQ_value_synonym-00483",
+      "NLQ_value_synonym-00029",
+      "NLQ_value_synonym-00211",
+      "NLQ_value_synonym-00215",
+      "NLQ_value_synonym-00413",
+      "NLQ_value_synonym-00146",
+      "NLQ_multitype-00659"
+    ],
+    "control": [
+      "DB_DBcontent_equivalence-00295",
+      "DB_schema_abbreviation-00301",
+      "DB_schema_synonym-01120",
+      "NLQ_column_attribute-00109",
+      "NLQ_column_value-00176",
+      "NLQ_keyword_synonym-00594",
+      "SQL_comparison-00011",
+      "SQL_sort_order-00114"
+    ]
+  },
+  "conditions": [
+    [
+      "baseline",
+      "none"
+    ],
+    [
+      "baseline",
+      "high"
+    ],
+    [
+      "canvas_v2",
+      "none"
+    ],
+    [
+      "canvas_v2",
+      "high"
+    ]
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "extract",
+        "kind": "synonym_extract"
+      },
+      {
+        "id": "exact",
+        "kind": "synonym_exact"
+      },
+      {
+        "id": "match",
+        "kind": "synonym_match"
+      },
+      {
+        "id": "verify",
+        "kind": "synonym_verify"
+      },
+      {
+        "id": "generate",
+        "kind": "synonym_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "extract",
+        "target": "exact"
+      },
+      {
+        "source": "exact",
+        "target": "match"
+      },
+      {
+        "source": "exact",
+        "target": "verify"
+      },
+      {
+        "source": "match",
+        "target": "verify"
+      },
+      {
+        "source": "verify",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "sources": {
+    ".local\\task2-experiment\\synonym_compare.py": "cd6109c93db1e079ca594deae944a85f112d80ef1da6ddbe35129037b3412dc0",
+    ".local\\task2-experiment\\synonym_canvas.py": "b02eced9556639fbb9063cc8fc38d0a9d055bc589403705229845d8d1f8049a6",
+    ".local\\task2-experiment\\format_canvas.py": "457f78934b065ce4a00bec9ecd394203e75527c9d02c369742efed1928905582",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  },
+  "scope": "known historical synonym cases and fixed mixed controls from question 2"
+}

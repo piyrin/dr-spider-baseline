@@ -1,0 +1,328 @@
+{
+  "seed": "20261123-round4",
+  "quotas": {
+    "第3类 · 任务要求去重": 11,
+    "第4类 · 改名后的多表定位": 13,
+    "第5类 · 多条件或排除范围": 13,
+    "第6类 · 多表统计粒度": 11,
+    "第7类 · 值缺失与聚合": 10,
+    "第8、10类 · 姓名或日期的输出组成": 12,
+    "第9类 · 排序并列": 8
+  },
+  "unique_candidate_originals": {
+    "第3类 · 任务要求去重": 14,
+    "第4类 · 改名后的多表定位": 42,
+    "第5类 · 多条件或排除范围": 14,
+    "第6类 · 多表统计粒度": 10,
+    "第7类 · 值缺失与聚合": 25,
+    "第8、10类 · 姓名或日期的输出组成": 4,
+    "第9类 · 排序并列": 1
+  },
+  "pairs": [
+    {
+      "pair_id": "SQL_sort_order-00084",
+      "original_id": 515,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "NLQ_others-01255",
+      "original_id": 455,
+      "screening": "第8、10类 · 姓名或日期的输出组成"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02815",
+      "original_id": 973,
+      "screening": "第8、10类 · 姓名或日期的输出组成"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02814",
+      "original_id": 972,
+      "screening": "第8、10类 · 姓名或日期的输出组成"
+    },
+    {
+      "pair_id": "NLQ_others-01256",
+      "original_id": 456,
+      "screening": "第8、10类 · 姓名或日期的输出组成"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00897",
+      "original_id": 369,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01155",
+      "original_id": 471,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00077",
+      "original_id": 33,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-00718",
+      "original_id": 287,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00363",
+      "original_id": 89,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-00042",
+      "original_id": 23,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00045",
+      "original_id": 22,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00499",
+      "original_id": 93,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-02502",
+      "original_id": 905,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-00275",
+      "original_id": 105,
+      "screening": "第6类 · 多表统计粒度"
+    },
+    {
+      "pair_id": "DB_schema_synonym-02187",
+      "original_id": 834,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "NLQ_others-01221",
+      "original_id": 442,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01592",
+      "original_id": 598,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01813",
+      "original_id": 685,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00826",
+      "original_id": 354,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00739",
+      "original_id": 295,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00144",
+      "original_id": 498,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "NLQ_others-00270",
+      "original_id": 104,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00114",
+      "original_id": 76,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01218",
+      "original_id": 520,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "DB_schema_synonym-02047",
+      "original_id": 786,
+      "screening": "第3类 · 任务要求去重"
+    },
+    {
+      "pair_id": "NLQ_others-00141",
+      "original_id": 66,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "NLQ_column_carrier-00374",
+      "original_id": 748,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "SQL_DB_text-00504",
+      "original_id": 718,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01911",
+      "original_id": 810,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "NLQ_others-00849",
+      "original_id": 324,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01377",
+      "original_id": 549,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "NLQ_others-02699",
+      "original_id": 982,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "NLQ_others-00027",
+      "original_id": 14,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00225",
+      "original_id": 638,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00220",
+      "original_id": 62,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02551",
+      "original_id": 855,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "NLQ_others-00196",
+      "original_id": 83,
+      "screening": "第5类 · 多条件或排除范围"
+    },
+    {
+      "pair_id": "NLQ_keyword_synonym-00001",
+      "original_id": 13,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "NLQ_others-01560",
+      "original_id": 563,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "NLQ_others-02550",
+      "original_id": 920,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "NLQ_multitype-00984",
+      "original_id": 731,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "SQL_DB_text-00509",
+      "original_id": 719,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "NLQ_column_synonym-00233",
+      "original_id": 424,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02452",
+      "original_id": 830,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "NLQ_others-01364",
+      "original_id": 495,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00844",
+      "original_id": 336,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00519",
+      "original_id": 127,
+      "screening": "第7类 · 值缺失与聚合"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00972",
+      "original_id": 340,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00756",
+      "original_id": 338,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02181",
+      "original_id": 761,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02700",
+      "original_id": 890,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00382",
+      "original_id": 234,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02350",
+      "original_id": 710,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01722",
+      "original_id": 626,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-02004",
+      "original_id": 737,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01669",
+      "original_id": 625,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00138",
+      "original_id": 114,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00638",
+      "original_id": 252,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00933",
+      "original_id": 363,
+      "screening": "第4类 · 改名后的多表定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00512",
+      "original_id": 116,
+      "screening": "第4类 · 改名后的多表定位"
+    }
+  ]
+}

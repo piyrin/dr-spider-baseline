@@ -1,0 +1,32 @@
+{
+  "id": "DB_DBcontent_equivalence-00143-pre",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7214,
+    "completion_tokens": 168,
+    "total_tokens": 7382,
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT COUNT(*) FROM \"ship\" WHERE \"disposition_of_ship\" = 'Captured';",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 1,
+  "status": "match",
+  "condition": "prior",
+  "prior": "In ship.disposition_of_ship, the captured disposition is stored as the text 'Captured'.",
+  "recorded_at": "2026-11-25T13:39:34+08:00",
+  "gold_rows": [
+    [
+      4
+    ]
+  ],
+  "prediction_rows": [
+    [
+      4
+    ]
+  ]
+}

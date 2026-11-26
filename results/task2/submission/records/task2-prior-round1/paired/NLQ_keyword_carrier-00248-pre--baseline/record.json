@@ -1,0 +1,32 @@
+{
+  "id": "NLQ_keyword_carrier-00248-pre",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7338,
+    "completion_tokens": 164,
+    "total_tokens": 7502,
+    "completion_tokens_details": {
+      "reasoning_tokens": 135
+    }
+  },
+  "prediction_sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 1,
+  "status": "match",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:40:17+08:00",
+  "gold_rows": [
+    [
+      2
+    ]
+  ],
+  "prediction_rows": [
+    [
+      2
+    ]
+  ]
+}

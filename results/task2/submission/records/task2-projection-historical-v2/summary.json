@@ -1,0 +1,147 @@
+{
+  "全体": {
+    "n": 18,
+    "originals": 14,
+    "pre": [
+      18,
+      17
+    ],
+    "post": [
+      3,
+      6
+    ],
+    "both": [
+      3,
+      6
+    ],
+    "post_fixed": 4,
+    "post_harmed": 1,
+    "pre_harmed": 1,
+    "cw_fixed": 4,
+    "cw_denominator": 15,
+    "transitions": {
+      "CW→CW": 10,
+      "CC→CC": 2,
+      "CW→CC": 4,
+      "CC→CW": 1,
+      "CW→WW": 1
+    },
+    "baseline_projection_only_post_pairs": [
+      "NLQ_column_carrier-00127",
+      "NLQ_column_carrier-00326",
+      "NLQ_column_carrier-00364",
+      "NLQ_column_carrier-00467",
+      "NLQ_column_carrier-00474",
+      "NLQ_column_synonym-00367",
+      "NLQ_keyword_synonym-00419",
+      "NLQ_multitype-00519",
+      "NLQ_others-02589",
+      "NLQ_others-02664",
+      "NLQ_value_synonym-00454"
+    ],
+    "token_mean": {
+      "baseline": {
+        "mean": 4824.25,
+        "count": 36
+      },
+      "canvas_v2": {
+        "mean": 5361.916666666667,
+        "count": 36
+      }
+    },
+    "token_difference_median": 18.5,
+    "token_difference_coverage": 36
+  },
+  "生成前加字段约束": {
+    "n": 6,
+    "originals": 4,
+    "pre": [
+      6,
+      6
+    ],
+    "post": [
+      2,
+      5
+    ],
+    "both": [
+      2,
+      5
+    ],
+    "post_fixed": 3,
+    "post_harmed": 0,
+    "pre_harmed": 0,
+    "cw_fixed": 3,
+    "cw_denominator": 4,
+    "transitions": {
+      "CC→CC": 2,
+      "CW→CC": 3,
+      "CW→CW": 1
+    },
+    "baseline_projection_only_post_pairs": [
+      "NLQ_column_carrier-00326",
+      "NLQ_keyword_synonym-00419",
+      "NLQ_multitype-00519"
+    ],
+    "token_mean": {
+      "baseline": {
+        "mean": 4807.916666666667,
+        "count": 12
+      },
+      "canvas_v2": {
+        "mean": 4987.583333333333,
+        "count": 12
+      }
+    },
+    "token_difference_median": 33.0,
+    "token_difference_coverage": 12
+  },
+  "回退": {
+    "n": 12,
+    "originals": 10,
+    "pre": [
+      12,
+      11
+    ],
+    "post": [
+      1,
+      1
+    ],
+    "both": [
+      1,
+      1
+    ],
+    "post_fixed": 1,
+    "post_harmed": 1,
+    "pre_harmed": 1,
+    "cw_fixed": 1,
+    "cw_denominator": 11,
+    "transitions": {
+      "CW→CW": 9,
+      "CW→CC": 1,
+      "CC→CW": 1,
+      "CW→WW": 1
+    },
+    "baseline_projection_only_post_pairs": [
+      "NLQ_column_carrier-00127",
+      "NLQ_column_carrier-00364",
+      "NLQ_column_carrier-00467",
+      "NLQ_column_carrier-00474",
+      "NLQ_column_synonym-00367",
+      "NLQ_others-02589",
+      "NLQ_others-02664",
+      "NLQ_value_synonym-00454"
+    ],
+    "token_mean": {
+      "baseline": {
+        "mean": 4832.416666666667,
+        "count": 24
+      },
+      "canvas_v2": {
+        "mean": 5549.083333333333,
+        "count": 24
+      }
+    },
+    "token_difference_median": 9.0,
+    "token_difference_coverage": 24
+  }
+}

@@ -1,0 +1,842 @@
+[
+  {
+    "condition": "canvas",
+    "side": "post",
+    "request": {
+      "sample_id": "DB_DBcontent_equivalence-00143-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "extract",
+            "kind": "boolean_extract"
+          },
+          {
+            "id": "lookup",
+            "kind": "boolean_lookup"
+          },
+          {
+            "id": "generate",
+            "kind": "boolean_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "extract",
+            "target": "lookup"
+          },
+          {
+            "source": "lookup",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "DB_DBcontent_equivalence-00143-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "extract",
+          "kind": "boolean_extract"
+        },
+        {
+          "id": "lookup",
+          "kind": "boolean_lookup"
+        },
+        {
+          "id": "generate",
+          "kind": "boolean_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "extract",
+          "target": "lookup"
+        },
+        {
+          "source": "lookup",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "c549ce5241464371bec677542ff5a22d",
+    "graph_sha256": "2bd8b1936674be092f30568ca975fc277a8eb5bf09ed7a035c80ac0826874324",
+    "steps": [
+      {
+        "id": "extract",
+        "kind": "boolean_extract",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": [
+            "COUNT(ship.id)"
+          ],
+          "joins": [],
+          "targets": [
+            {
+              "table": "ship",
+              "column": "is_captured",
+              "term": "Captured",
+              "operator": "=",
+              "truth": true
+            }
+          ]
+        },
+        "elapsed_s": 4.943491499998345
+      },
+      {
+        "id": "lookup",
+        "kind": "boolean_lookup",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "extract"
+        ],
+        "output": {
+          "table": "ship",
+          "column": "is_captured",
+          "term": "Captured",
+          "truth": true,
+          "declared_type": "bool",
+          "status": "boolean",
+          "value": "T",
+          "storage": "text",
+          "observed": [
+            {
+              "value": "F",
+              "storage": "text"
+            },
+            {
+              "value": "T",
+              "storage": "text"
+            }
+          ]
+        },
+        "elapsed_s": 0.0034957999996549916
+      },
+      {
+        "id": "generate",
+        "kind": "boolean_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "lookup"
+        ],
+        "output": {
+          "sql": "SELECT COUNT(*)\nFROM ship\nWHERE is_captured = 'T';",
+          "route": "boolean",
+          "stored_value": "T"
+        },
+        "elapsed_s": 30.78384399999959
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT COUNT(*)\nFROM ship\nWHERE is_captured = 'T';",
+          "rows": [
+            [
+              4
+            ]
+          ],
+          "columns": [
+            "COUNT(*)"
+          ],
+          "row_count": 1
+        },
+        "elapsed_s": 0.0013638000000355532
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 9587
+    },
+    "course_flow_id": "TASK2_CANVAS_2bd8b1936674be092f30568ca975fc277a8eb5bf09ed7a035c80ac0826874324",
+    "course_flow": {
+      "id": "TASK2_CANVAS_2bd8b1936674be092f30568ca975fc277a8eb5bf09ed7a035c80ac0826874324",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_extract",
+          "type": "event",
+          "title": "extract",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_lookup",
+          "type": "event",
+          "title": "lookup",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_extract"
+        },
+        {
+          "source": "canvas_extract",
+          "target": "canvas_lookup"
+        },
+        {
+          "source": "canvas_lookup",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "canvas",
+    "side": "pre",
+    "request": {
+      "sample_id": "DB_DBcontent_equivalence-00143-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "extract",
+            "kind": "boolean_extract"
+          },
+          {
+            "id": "lookup",
+            "kind": "boolean_lookup"
+          },
+          {
+            "id": "generate",
+            "kind": "boolean_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "extract",
+            "target": "lookup"
+          },
+          {
+            "source": "lookup",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "DB_DBcontent_equivalence-00143-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "extract",
+          "kind": "boolean_extract"
+        },
+        {
+          "id": "lookup",
+          "kind": "boolean_lookup"
+        },
+        {
+          "id": "generate",
+          "kind": "boolean_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "extract",
+          "target": "lookup"
+        },
+        {
+          "source": "lookup",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "319335c765fe4e2f8094131e3398c829",
+    "graph_sha256": "2bd8b1936674be092f30568ca975fc277a8eb5bf09ed7a035c80ac0826874324",
+    "steps": [
+      {
+        "id": "extract",
+        "kind": "boolean_extract",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": [
+            "ship.id"
+          ],
+          "joins": [],
+          "targets": [
+            {
+              "table": "ship",
+              "column": "disposition_of_ship",
+              "term": "Captured",
+              "operator": "=",
+              "truth": true
+            }
+          ]
+        },
+        "elapsed_s": 4.386492100000396
+      },
+      {
+        "id": "lookup",
+        "kind": "boolean_lookup",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "extract"
+        ],
+        "output": {
+          "table": "ship",
+          "column": "disposition_of_ship",
+          "term": "Captured",
+          "truth": true,
+          "declared_type": "TEXT",
+          "status": "exact",
+          "value": "Captured",
+          "storage": "text"
+        },
+        "elapsed_s": 0.0018650000001798617
+      },
+      {
+        "id": "generate",
+        "kind": "boolean_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "lookup"
+        ],
+        "output": {
+          "sql": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';",
+          "route": "exact",
+          "stored_value": "Captured"
+        },
+        "elapsed_s": 12.788475700001072
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';",
+          "rows": [
+            [
+              4
+            ]
+          ],
+          "columns": [
+            "COUNT(*)"
+          ],
+          "row_count": 1
+        },
+        "elapsed_s": 0.0009499999996478437
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 12265
+    },
+    "course_flow_id": "TASK2_CANVAS_2bd8b1936674be092f30568ca975fc277a8eb5bf09ed7a035c80ac0826874324",
+    "course_flow": {
+      "id": "TASK2_CANVAS_2bd8b1936674be092f30568ca975fc277a8eb5bf09ed7a035c80ac0826874324",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_extract",
+          "type": "event",
+          "title": "extract",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_lookup",
+          "type": "event",
+          "title": "lookup",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_extract"
+        },
+        {
+          "source": "canvas_extract",
+          "target": "canvas_lookup"
+        },
+        {
+          "source": "canvas_lookup",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "baseline",
+    "side": "post",
+    "request": {
+      "sample_id": "DB_DBcontent_equivalence-00143-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "generate",
+            "kind": "generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "DB_DBcontent_equivalence-00143-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "generate",
+          "kind": "generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "c2a1847792eb4bc587df5b478902970d",
+    "graph_sha256": "64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "steps": [
+      {
+        "id": "generate",
+        "kind": "generate",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "sql": "SELECT COUNT(*)\nFROM ship\nWHERE is_captured = 1;"
+        },
+        "elapsed_s": 18.639332299999296
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT COUNT(*)\nFROM ship\nWHERE is_captured = 1;",
+          "rows": [
+            [
+              0
+            ]
+          ],
+          "columns": [
+            "COUNT(*)"
+          ],
+          "row_count": 1
+        },
+        "elapsed_s": 0.001065000000380678
+      }
+    ],
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 4715
+    },
+    "course_flow_id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "course_flow": {
+      "id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "baseline",
+    "side": "pre",
+    "request": {
+      "sample_id": "DB_DBcontent_equivalence-00143-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "generate",
+            "kind": "generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "DB_DBcontent_equivalence-00143-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "generate",
+          "kind": "generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "56a869608bb64ab4ab7c0e1bb9196b22",
+    "graph_sha256": "64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "steps": [
+      {
+        "id": "generate",
+        "kind": "generate",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "sql": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';"
+        },
+        "elapsed_s": 15.716093400000318
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';",
+          "rows": [
+            [
+              4
+            ]
+          ],
+          "columns": [
+            "COUNT(*)"
+          ],
+          "row_count": 1
+        },
+        "elapsed_s": 0.0011510999993333826
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 4626
+    },
+    "course_flow_id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "course_flow": {
+      "id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

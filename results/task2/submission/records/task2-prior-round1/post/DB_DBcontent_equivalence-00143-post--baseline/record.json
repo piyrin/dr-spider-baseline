@@ -1,0 +1,32 @@
+{
+  "id": "DB_DBcontent_equivalence-00143-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7209,
+    "completion_tokens": 102,
+    "total_tokens": 7311,
+    "completion_tokens_details": {
+      "reasoning_tokens": 85
+    }
+  },
+  "prediction_sql": "SELECT COUNT(*) FROM \"ship\" WHERE \"is_captured\" = 1;",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 1,
+  "status": "mismatch",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:38:40+08:00",
+  "gold_rows": [
+    [
+      4
+    ]
+  ],
+  "prediction_rows": [
+    [
+      0
+    ]
+  ]
+}

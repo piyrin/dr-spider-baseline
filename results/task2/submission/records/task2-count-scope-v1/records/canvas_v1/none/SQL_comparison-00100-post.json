@@ -1,0 +1,495 @@
+{
+  "id": "SQL_comparison-00100-post",
+  "method": "canvas_v1",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "count_intent",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "parent_table": "Courses",
+            "parent_key": "course_id",
+            "detail_table": "Sections",
+            "detail_key": "course_id",
+            "role": "both",
+            "operator": "<",
+            "threshold": 2,
+            "policy": "observed",
+            "cue": "courses having less than 2 sections"
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For this node replace the default field-hypothesis task with a scope analysis for one count of related records per parent entity. Return JSON {\"targets\":[]} if no single applicable count or parent/detail key is clear. Otherwise return one target with parent_table, parent_key, detail_table, detail_key (exact schema identifiers connected by equality), role (\"result\", \"filter\", or \"both\"), operator (comparison to count, or null), threshold (nonnegative integer or null), policy (\"observed\", \"zero\", or \"unknown\"), and cue (exact contiguous original question text supporting the choice). Use observed when counting recorded observations about a parent, no detail makes that measurement unknown, and the question does not require inclusion of unobserved parents. Use zero when the question expressly includes zero counts or absence of related events, or asks to report a count for each parent even without matching records. Use unknown if coverage, intended population, or the effect of a compound condition is unclear. An upper bound alone does not decide whether no detail means zero. Do not provide SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Addresses\" (\"address_id\" INTEGER PRIMARY KEY,\"line_1\" VARCHAR(255),\"line_2\" VARCHAR(255),\"line_3\" VARCHAR(255),\"city\" VARCHAR(255),\"zip_postcode\" VARCHAR(20),\"state_province_county\" VARCHAR(255),\"country\" VARCHAR(255),\"other_address_details\" VARCHAR(255))\nCREATE TABLE \"Courses\" (\"course_id\" INTEGER PRIMARY KEY,\"course_name\" VARCHAR(255),\"course_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Degree_Programs\" (\"degree_program_id\" INTEGER PRIMARY KEY,\"department_id\" INTEGER NOT NULL,\"degree_summary_name\" VARCHAR(255),\"degree_summary_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"department_id\") REFERENCES \"Departments\"(\"department_id\"))\nCREATE TABLE \"Departments\" (\"department_id\" INTEGER PRIMARY KEY,\"department_name\" VARCHAR(255),\"department_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Sections\" (\"section_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"section_name\" VARCHAR(255),\"section_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"))\nCREATE TABLE \"Semesters\" (\"semester_id\" INTEGER PRIMARY KEY,\"semester_name\" VARCHAR(255),\"semester_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Student_Enrolment\" (\"student_enrolment_id\" INTEGER PRIMARY KEY,\"degree_program_id\" INTEGER NOT NULL,\"semester_id\" INTEGER NOT NULL,\"student_id\" INTEGER NOT NULL,\"other_details\" VARCHAR(255),FOREIGN KEY (\"degree_program_id\") REFERENCES \"Degree_Programs\"(\"degree_program_id\"),FOREIGN KEY (\"semester_id\") REFERENCES \"Semesters\"(\"semester_id\"),FOREIGN KEY (\"student_id\") REFERENCES \"Students\"(\"student_id\"))\nCREATE TABLE \"Student_Enrolment_Courses\" (\"student_course_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"student_enrolment_id\" INTEGER NOT NULL,FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"),FOREIGN KEY (\"student_enrolment_id\") REFERENCES \"Student_Enrolment\"(\"student_enrolment_id\"))\nCREATE TABLE \"Students\" (\"student_id\" INTEGER PRIMARY KEY,\"current_address_id\" INTEGER NOT NULL,\"permanent_address_id\" INTEGER NOT NULL,\"first_name\" VARCHAR(80),\"middle_name\" VARCHAR(40),\"last_name\" VARCHAR(40),\"cell_mobile_number\" VARCHAR(40),\"email_address\" VARCHAR(40),\"ssn\" VARCHAR(40),\"date_first_registered\" DATETIME,\"date_left\" DATETIME,\"other_student_details\" VARCHAR(255),FOREIGN KEY (\"current_address_id\") REFERENCES \"Addresses\"(\"address_id\"),FOREIGN KEY (\"permanent_address_id\") REFERENCES \"Addresses\"(\"address_id\"))\nCREATE TABLE \"Transcript_Contents\" (\"student_course_id\" INTEGER NOT NULL,\"transcript_id\" INTEGER NOT NULL,FOREIGN KEY (\"student_course_id\") REFERENCES \"Student_Enrolment_Courses\"(\"student_course_id\"),FOREIGN KEY (\"transcript_id\") REFERENCES \"Transcripts\"(\"transcript_id\"))\nCREATE TABLE \"Transcripts\" (\"transcript_id\" INTEGER PRIMARY KEY,\"transcript_date\" DATETIME,\"other_details\" VARCHAR(255))\nQuestion\nWhat are the names and id of courses having less than 2 sections?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_060016a23fdf50cd016b07a391184c87d297866c56763abc94",
+          "object": "chat.completion",
+          "created": 1795662751,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"parent_table\":\"Courses\",\"parent_key\":\"course_id\",\"detail_table\":\"Sections\",\"detail_key\":\"course_id\",\"role\":\"both\",\"operator\":\"<\",\"threshold\":2,\"policy\":\"observed\",\"cue\":\"courses having less than 2 sections\"}]}",
+                "reasoning_content": "**Clarifying course section count criteria**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_060016a23fdf50cd016b07a391188487d289fb0c080c616be1": {
+                  "input_tokens": 295,
+                  "cached_tokens": 259,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 295,
+                      "cached_tokens": 259,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_060016a23fdf50cd016b07a391188487d29f1762716fa0e617": {
+                  "input_tokens": 715,
+                  "cached_tokens": 503,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 715,
+                      "cached_tokens": 503,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_060016a23fdf50cd016b07a39e812c87d28bd211919e9c0964": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 60,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 60
+                    }
+                  ]
+                },
+                "rs_060016a23fdf50cd016b07a39a086487d2a52268798d7bbc6d": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 125
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3846,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5392,
+            "completion_tokens": 185,
+            "total_tokens": 5577,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 4608
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 125
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_060016a23fdf50cd016b07a391188487d289fb0c080c616be1": {
+                "input_tokens": 295,
+                "cached_tokens": 259,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 295,
+                    "cached_tokens": 259,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_060016a23fdf50cd016b07a391188487d29f1762716fa0e617": {
+                "input_tokens": 715,
+                "cached_tokens": 503,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 715,
+                    "cached_tokens": 503,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_060016a23fdf50cd016b07a39e812c87d28bd211919e9c0964": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 60,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 60
+                  }
+                ]
+              },
+              "rs_060016a23fdf50cd016b07a39a086487d2a52268798d7bbc6d": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 125
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3846,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 5392,
+          "completion_tokens": 185,
+          "total_tokens": 5577,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 4608
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 125
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "policy",
+      "kind": "count_policy",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "observed",
+        "role": "both",
+        "operator": "<",
+        "threshold": 2,
+        "cue": "courses having less than 2 sections",
+        "parent_table": "Courses",
+        "parent_key": "course_id",
+        "detail_table": "Sections",
+        "detail_key": "course_id"
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "count_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "policy"
+      ],
+      "output": {
+        "sql": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nJOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) < 2;",
+        "route": "observed"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Addresses\" (\"address_id\" INTEGER PRIMARY KEY,\"line_1\" VARCHAR(255),\"line_2\" VARCHAR(255),\"line_3\" VARCHAR(255),\"city\" VARCHAR(255),\"zip_postcode\" VARCHAR(20),\"state_province_county\" VARCHAR(255),\"country\" VARCHAR(255),\"other_address_details\" VARCHAR(255))\nCREATE TABLE \"Courses\" (\"course_id\" INTEGER PRIMARY KEY,\"course_name\" VARCHAR(255),\"course_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Degree_Programs\" (\"degree_program_id\" INTEGER PRIMARY KEY,\"department_id\" INTEGER NOT NULL,\"degree_summary_name\" VARCHAR(255),\"degree_summary_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"department_id\") REFERENCES \"Departments\"(\"department_id\"))\nCREATE TABLE \"Departments\" (\"department_id\" INTEGER PRIMARY KEY,\"department_name\" VARCHAR(255),\"department_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Sections\" (\"section_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"section_name\" VARCHAR(255),\"section_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"))\nCREATE TABLE \"Semesters\" (\"semester_id\" INTEGER PRIMARY KEY,\"semester_name\" VARCHAR(255),\"semester_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Student_Enrolment\" (\"student_enrolment_id\" INTEGER PRIMARY KEY,\"degree_program_id\" INTEGER NOT NULL,\"semester_id\" INTEGER NOT NULL,\"student_id\" INTEGER NOT NULL,\"other_details\" VARCHAR(255),FOREIGN KEY (\"degree_program_id\") REFERENCES \"Degree_Programs\"(\"degree_program_id\"),FOREIGN KEY (\"semester_id\") REFERENCES \"Semesters\"(\"semester_id\"),FOREIGN KEY (\"student_id\") REFERENCES \"Students\"(\"student_id\"))\nCREATE TABLE \"Student_Enrolment_Courses\" (\"student_course_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"student_enrolment_id\" INTEGER NOT NULL,FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"),FOREIGN KEY (\"student_enrolment_id\") REFERENCES \"Student_Enrolment\"(\"student_enrolment_id\"))\nCREATE TABLE \"Students\" (\"student_id\" INTEGER PRIMARY KEY,\"current_address_id\" INTEGER NOT NULL,\"permanent_address_id\" INTEGER NOT NULL,\"first_name\" VARCHAR(80),\"middle_name\" VARCHAR(40),\"last_name\" VARCHAR(40),\"cell_mobile_number\" VARCHAR(40),\"email_address\" VARCHAR(40),\"ssn\" VARCHAR(40),\"date_first_registered\" DATETIME,\"date_left\" DATETIME,\"other_student_details\" VARCHAR(255),FOREIGN KEY (\"current_address_id\") REFERENCES \"Addresses\"(\"address_id\"),FOREIGN KEY (\"permanent_address_id\") REFERENCES \"Addresses\"(\"address_id\"))\nCREATE TABLE \"Transcript_Contents\" (\"student_course_id\" INTEGER NOT NULL,\"transcript_id\" INTEGER NOT NULL,FOREIGN KEY (\"student_course_id\") REFERENCES \"Student_Enrolment_Courses\"(\"student_course_id\"),FOREIGN KEY (\"transcript_id\") REFERENCES \"Transcripts\"(\"transcript_id\"))\nCREATE TABLE \"Transcripts\" (\"transcript_id\" INTEGER PRIMARY KEY,\"transcript_date\" DATETIME,\"other_details\" VARCHAR(255))\nQuestion\nWhat are the names and id of courses having less than 2 sections?\nQuery plan\nCount scope for the relation from Courses.course_id to Sections.course_id. Use parents with matching recorded detail for this count filter. Absence of detail is an unknown observation and must not pass as zero. Keep the question’s output, comparison and other conditions."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_08071c8248ce7ee8016b07a3a1de8487d29612b532f27a131a",
+          "object": "chat.completion",
+          "created": 1795662768,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nJOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) < 2;",
+                "reasoning_content": "**Crafting SQL query for courses with fewer than two sections**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_08071c8248ce7ee8016b07a3a1ded487d284b3e0ff2b827c9f": {
+                  "input_tokens": 769,
+                  "cached_tokens": 527,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 769,
+                      "cached_tokens": 527,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_08071c8248ce7ee8016b07a3a1ded487d2bc7ea6f2430d58a7": {
+                  "input_tokens": 25,
+                  "cached_tokens": 22,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 22,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_08071c8248ce7ee8016b07a3af06d087d28cff250c7751eb35": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 54,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 54
+                    }
+                  ]
+                },
+                "rs_08071c8248ce7ee8016b07a3aba4f487d2a1e26399fe0757c9": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 93
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3931,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5176,
+            "completion_tokens": 147,
+            "total_tokens": 5323,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 4480
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 93
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_08071c8248ce7ee8016b07a3a1ded487d284b3e0ff2b827c9f": {
+                "input_tokens": 769,
+                "cached_tokens": 527,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 769,
+                    "cached_tokens": 527,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_08071c8248ce7ee8016b07a3a1ded487d2bc7ea6f2430d58a7": {
+                "input_tokens": 25,
+                "cached_tokens": 22,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 22,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_08071c8248ce7ee8016b07a3af06d087d28cff250c7751eb35": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 54,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 54
+                  }
+                ]
+              },
+              "rs_08071c8248ce7ee8016b07a3aba4f487d2a1e26399fe0757c9": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 93
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3931,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 5176,
+          "completion_tokens": 147,
+          "total_tokens": 5323,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 4480
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 93
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nJOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) < 2;",
+        "rows": [
+          [
+            2,
+            "math"
+          ],
+          [
+            4,
+            "en"
+          ],
+          [
+            6,
+            "la"
+          ],
+          [
+            7,
+            "cal"
+          ],
+          [
+            9,
+            "dl"
+          ],
+          [
+            10,
+            "ml"
+          ],
+          [
+            12,
+            "db"
+          ]
+        ],
+        "columns": [
+          "course_id",
+          "course_name"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 10568,
+    "completion_tokens": 332,
+    "total_tokens": 10900
+  },
+  "model_calls": 2,
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 7,
+    "prediction_rows": 7
+  }
+}

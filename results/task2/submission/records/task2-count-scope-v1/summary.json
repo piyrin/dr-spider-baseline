@@ -1,0 +1,1186 @@
+{
+  "anchor": {
+    "expected": 1,
+    "complete": 1,
+    "arms": {
+      "baseline none": {
+        "n": 1,
+        "states": {
+          "CW": 1
+        },
+        "clean": 1,
+        "post": 0,
+        "both": 0,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 4768,
+          "completion_tokens": 121,
+          "total_tokens": 4889
+        },
+        "token_coverage": 2,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 2
+        }
+      },
+      "baseline high": {
+        "n": 1,
+        "states": {
+          "CW": 1
+        },
+        "clean": 1,
+        "post": 0,
+        "both": 0,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 4768,
+          "completion_tokens": 114,
+          "total_tokens": 4882
+        },
+        "token_coverage": 2,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 2
+        }
+      },
+      "canvas_v1 none": {
+        "n": 1,
+        "states": {
+          "CC": 1
+        },
+        "clean": 1,
+        "post": 1,
+        "both": 1,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 9833,
+          "completion_tokens": 182,
+          "total_tokens": 10015
+        },
+        "token_coverage": 2,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 1,
+          "observed": 1
+        }
+      },
+      "canvas_v1 high": {
+        "n": 1,
+        "states": {
+          "CC": 1
+        },
+        "clean": 1,
+        "post": 1,
+        "both": 1,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 9833,
+          "completion_tokens": 305,
+          "total_tokens": 10138
+        },
+        "token_coverage": 2,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 1,
+          "observed": 1
+        }
+      }
+    },
+    "changes": {
+      "编排 none": {
+        "n": 1,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          1,
+          1
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 5126.0,
+        "token_delta_coverage": 2
+      },
+      "编排 high": {
+        "n": 1,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          1,
+          1
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 5256.0,
+        "token_delta_coverage": 2
+      },
+      "baseline none→high": {
+        "n": 1,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": -7.0,
+        "token_delta_coverage": 2
+      },
+      "canvas_v1 none→high": {
+        "n": 1,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 123.0,
+        "token_delta_coverage": 2
+      }
+    }
+  },
+  "target": {
+    "expected": 8,
+    "complete": 8,
+    "arms": {
+      "baseline none": {
+        "n": 8,
+        "states": {
+          "WW": 2,
+          "CW": 6
+        },
+        "clean": 6,
+        "post": 0,
+        "both": 0,
+        "cw": 6,
+        "token_means": {
+          "prompt_tokens": 6942.1875,
+          "completion_tokens": 86.0625,
+          "total_tokens": 7028.25
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 16
+        }
+      },
+      "baseline high": {
+        "n": 8,
+        "states": {
+          "WW": 2,
+          "CW": 6
+        },
+        "clean": 6,
+        "post": 0,
+        "both": 0,
+        "cw": 6,
+        "token_means": {
+          "prompt_tokens": 6575.5625,
+          "completion_tokens": 139.375,
+          "total_tokens": 6714.9375
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 16
+        }
+      },
+      "canvas_v1 none": {
+        "n": 8,
+        "states": {
+          "WW": 1,
+          "CC": 1,
+          "WC": 1,
+          "CW": 5
+        },
+        "clean": 6,
+        "post": 2,
+        "both": 1,
+        "cw": 5,
+        "token_means": {
+          "prompt_tokens": 12117.8125,
+          "completion_tokens": 257.3125,
+          "total_tokens": 12375.125
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 13,
+          "observed": 3
+        }
+      },
+      "canvas_v1 high": {
+        "n": 8,
+        "states": {
+          "WW": 2,
+          "CC": 1,
+          "CW": 5
+        },
+        "clean": 6,
+        "post": 1,
+        "both": 1,
+        "cw": 5,
+        "token_means": {
+          "prompt_tokens": 12610.3125,
+          "completion_tokens": 388.375,
+          "total_tokens": 12998.6875
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 14,
+          "observed": 2
+        }
+      }
+    },
+    "changes": {
+      "编排 none": {
+        "n": 8,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 2,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.375
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 5,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 1
+          }
+        },
+        "median_total_token_delta": 4966.5,
+        "token_delta_coverage": 16
+      },
+      "编排 high": {
+        "n": 8,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.375
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 5,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 5161.0,
+        "token_delta_coverage": 16
+      },
+      "baseline none→high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 6,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 26.5,
+        "token_delta_coverage": 16
+      },
+      "canvas_v1 none→high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 5,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          }
+        },
+        "median_total_token_delta": 115.0,
+        "token_delta_coverage": 16
+      }
+    }
+  },
+  "control": {
+    "expected": 9,
+    "complete": 9,
+    "arms": {
+      "baseline none": {
+        "n": 9,
+        "states": {
+          "CC": 7,
+          "WC": 1,
+          "CW": 1
+        },
+        "clean": 8,
+        "post": 8,
+        "both": 7,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 5516,
+          "completion_tokens": 71.94444444444444,
+          "total_tokens": 5587.944444444444
+        },
+        "token_coverage": 18,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 18
+        }
+      },
+      "baseline high": {
+        "n": 9,
+        "states": {
+          "WW": 2,
+          "WC": 1,
+          "CC": 6
+        },
+        "clean": 6,
+        "post": 7,
+        "both": 6,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 5844.555555555556,
+          "completion_tokens": 169.88888888888889,
+          "total_tokens": 6014.444444444444
+        },
+        "token_coverage": 18,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 18
+        }
+      },
+      "canvas_v1 none": {
+        "n": 9,
+        "states": {
+          "WC": 2,
+          "CC": 6,
+          "CW": 1
+        },
+        "clean": 7,
+        "post": 8,
+        "both": 6,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 12036.833333333334,
+          "completion_tokens": 180.66666666666666,
+          "total_tokens": 12217.5
+        },
+        "token_coverage": 18,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "zero": 4,
+          "fallback": 14
+        }
+      },
+      "canvas_v1 high": {
+        "n": 9,
+        "states": {
+          "CC": 7,
+          "WC": 1,
+          "WW": 1
+        },
+        "clean": 7,
+        "post": 8,
+        "both": 7,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 12007,
+          "completion_tokens": 380.5,
+          "total_tokens": 12387.5
+        },
+        "token_coverage": 18,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "zero": 4,
+          "fallback": 14
+        }
+      }
+    },
+    "changes": {
+      "编排 none": {
+        "n": 9,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 1,
+        "all_pre_regressions": 1,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": -1,
+        "cc_delta_ci": [
+          -0.3333333333333333,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 6,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 5129.0,
+        "token_delta_coverage": 18
+      },
+      "编排 high": {
+        "n": 9,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.3333333333333333
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 6,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          }
+        },
+        "median_total_token_delta": 5114.0,
+        "token_delta_coverage": 18
+      },
+      "baseline none→high": {
+        "n": 9,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 1,
+        "all_pre_regressions": 2,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": -1,
+        "cc_delta_ci": [
+          -0.3333333333333333,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 6,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 111.0,
+        "token_delta_coverage": 18
+      },
+      "canvas_v1 none→high": {
+        "n": 9,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 1,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.3333333333333333
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 6,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 153.5,
+        "token_delta_coverage": 18
+      }
+    }
+  },
+  "all": {
+    "expected": 17,
+    "complete": 17,
+    "arms": {
+      "baseline none": {
+        "n": 17,
+        "states": {
+          "WW": 2,
+          "CW": 7,
+          "CC": 7,
+          "WC": 1
+        },
+        "clean": 14,
+        "post": 8,
+        "both": 7,
+        "cw": 7,
+        "token_means": {
+          "prompt_tokens": 6187.14705882353,
+          "completion_tokens": 78.58823529411765,
+          "total_tokens": 6265.735294117647
+        },
+        "token_coverage": 34,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 34
+        }
+      },
+      "baseline high": {
+        "n": 17,
+        "states": {
+          "WW": 4,
+          "CW": 6,
+          "WC": 1,
+          "CC": 6
+        },
+        "clean": 12,
+        "post": 7,
+        "both": 6,
+        "cw": 6,
+        "token_means": {
+          "prompt_tokens": 6188.558823529412,
+          "completion_tokens": 155.52941176470588,
+          "total_tokens": 6344.088235294118
+        },
+        "token_coverage": 34,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 34
+        }
+      },
+      "canvas_v1 none": {
+        "n": 17,
+        "states": {
+          "WW": 1,
+          "CC": 7,
+          "WC": 3,
+          "CW": 6
+        },
+        "clean": 13,
+        "post": 10,
+        "both": 7,
+        "cw": 6,
+        "token_means": {
+          "prompt_tokens": 12074.941176470587,
+          "completion_tokens": 216.73529411764707,
+          "total_tokens": 12291.676470588236
+        },
+        "token_coverage": 34,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 27,
+          "observed": 3,
+          "zero": 4
+        }
+      },
+      "canvas_v1 high": {
+        "n": 17,
+        "states": {
+          "WW": 3,
+          "CC": 8,
+          "CW": 5,
+          "WC": 1
+        },
+        "clean": 13,
+        "post": 9,
+        "both": 8,
+        "cw": 5,
+        "token_means": {
+          "prompt_tokens": 12290.911764705883,
+          "completion_tokens": 384.20588235294116,
+          "total_tokens": 12675.117647058823
+        },
+        "token_coverage": 34,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 28,
+          "observed": 2,
+          "zero": 4
+        }
+      }
+    },
+    "changes": {
+      "编排 none": {
+        "n": 17,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 1,
+        "all_pre_regressions": 1,
+        "post_repair": 2,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          -0.17647058823529413,
+          0.17647058823529413
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 6,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 6,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 1
+          }
+        },
+        "median_total_token_delta": 5070.0,
+        "token_delta_coverage": 34
+      },
+      "编排 high": {
+        "n": 17,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 2,
+        "post_regression": 0,
+        "net_cc": 2,
+        "cc_delta_ci": [
+          0,
+          0.29411764705882354
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 6,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 5,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 3
+          }
+        },
+        "median_total_token_delta": 5119.0,
+        "token_delta_coverage": 34
+      },
+      "baseline none→high": {
+        "n": 17,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 1,
+        "all_pre_regressions": 2,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": -1,
+        "cc_delta_ci": [
+          -0.17647058823529413,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 6,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 6,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 38.5,
+        "token_delta_coverage": 34
+      },
+      "canvas_v1 none→high": {
+        "n": 17,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 1,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.17647058823529413
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 7,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 5,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 1,
+            "WW": 1
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          }
+        },
+        "median_total_token_delta": 115.0,
+        "token_delta_coverage": 34
+      }
+    }
+  },
+  "visual": [
+    {
+      "method": "canvas",
+      "side": "post",
+      "sample_id": "SQL_comparison-00133-post",
+      "run_id": "ec5434f8dea74edc8a3cb680a5d5747e",
+      "course_flow_id": "TASK2_CANVAS_63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+      "decision": {
+        "route": "observed",
+        "role": "both",
+        "operator": "<",
+        "threshold": 2,
+        "cue": "countries that speak less than 2 languages",
+        "parent_table": "country",
+        "parent_key": "Code",
+        "detail_table": "countrylanguage",
+        "detail_key": "CountryCode"
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 21,
+        "prediction_rows": 21
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 10214
+      },
+      "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;"
+    },
+    {
+      "method": "canvas",
+      "side": "pre",
+      "sample_id": "SQL_comparison-00133-pre",
+      "run_id": "4cf2b16498ed43f4bbcc4b765f05f81a",
+      "course_flow_id": "TASK2_CANVAS_63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+      "decision": {
+        "route": "fallback",
+        "reason": "zero_cannot_change_supported_filter"
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 149,
+        "prediction_rows": 149
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 10016
+      },
+      "sql": "SELECT c.\"Name\", COUNT(DISTINCT cl.\"Language\") AS \"LanguageCount\"\nFROM \"country\" AS c\nJOIN \"countrylanguage\" AS cl\n  ON cl.\"CountryCode\" = c.\"Code\"\nGROUP BY c.\"Code\", c.\"Name\"\nHAVING COUNT(DISTINCT cl.\"Language\") > 2;"
+    },
+    {
+      "method": "baseline",
+      "side": "post",
+      "sample_id": "SQL_comparison-00133-post",
+      "run_id": "4f9544bd2c7e4f0b94e454b700db7f88",
+      "course_flow_id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+      "decision": {},
+      "score": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 21,
+        "prediction_rows": 27
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 4966
+      },
+      "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;"
+    },
+    {
+      "method": "baseline",
+      "side": "pre",
+      "sample_id": "SQL_comparison-00133-pre",
+      "run_id": "5f153bfbe5214d5488f6ab3fedadd5bd",
+      "course_flow_id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+      "decision": {},
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 149,
+        "prediction_rows": 149
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 4848
+      },
+      "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) > 2;"
+    }
+  ]
+}

@@ -1,0 +1,399 @@
+{
+  "sample_id": "DB_DBcontent_equivalence-00143-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "extract",
+        "kind": "evidence_extract"
+      },
+      {
+        "id": "lookup",
+        "kind": "evidence_lookup"
+      },
+      {
+        "id": "generate",
+        "kind": "evidence_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "extract",
+        "target": "lookup"
+      },
+      {
+        "source": "lookup",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "7115fb25fab54988adc33d8bcc3e0d1c",
+  "graph_sha256": "a693306ee944ac419f92a4e4e21efbf6ed7b11d79e61a26bad8ad196566bc186",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "evidence_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "ship.id"
+        ],
+        "joins": [],
+        "targets": [
+          {
+            "table": "ship",
+            "column": "is_captured",
+            "term": "Captured",
+            "operator": null
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Return zero to four candidate filters whose stored representation is uncertain. Include likely status, boolean, enum, or short-code columns, even when other filters are clearly numeric or literal. For example a question can mention two independent states, or the opposite of a flag name. Select each uncertain filter independently. Do not return clear numbers, dates, IDs, or obvious literal comparisons. Each target must contain exact schema table and column names and the relevant short verbatim term or phrase from the question. Include a base word near a negation when useful. Do not guess a database code, polarity, SQL operator or query. Return empty targets if there is no concrete binding. Output JSON only."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"battle\" (\"id\" int,\"name\" text,\"date\" text,\"bulgarian_commander\" text,\"latin_commander\" text,\"result\" text,primary key (\"id\"))\nCREATE TABLE \"death\" (\"caused_by_ship_id\" int,\"id\" int,\"note\" text,\"killed\" int,\"injured\" int,primary key (\"id\"),foreign key (\"caused_by_ship_id\") references \"ship\"(\"id\"))\nCREATE TABLE \"ship\" (\"lost_in_battle\" int,\"id\" int,\"name\" text,\"tonnage\" text,\"brig_ship\" bool,\"18-gun_brig_ship\" bool,\"8_gun_brig_ship\" bool,\"location\" text,\"is_captured\" bool,\"is_wrecked\" bool,\"is_scuttled\" bool,\"is_sank\" bool,primary key (\"id\"),foreign key (\"lost_in_battle\") references \"battle\"(\"id\"))\nQuestion\nHow many ships ended up being 'Captured'?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0579b3e4d002532c016b07de7d6d1487d0bbaffc1081c6a8b4",
+          "object": "chat.completion",
+          "created": 1795677830,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"ship.id\"],\"joins\":[],\"targets\":[{\"table\":\"ship\",\"column\":\"is_captured\",\"term\":\"Captured\",\"operator\":null}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4809,
+            "completion_tokens": 130,
+            "total_tokens": 4939,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 92
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4809,
+          "completion_tokens": 130,
+          "total_tokens": 4939,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 92
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 35.58486300000004
+    },
+    {
+      "id": "lookup",
+      "kind": "evidence_lookup",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "route": "evidence",
+        "evidence": [
+          {
+            "table": "ship",
+            "column": "is_captured",
+            "term": "Captured",
+            "examples": [
+              {
+                "value": "F",
+                "storage": "text"
+              },
+              {
+                "value": "T",
+                "storage": "text"
+              }
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "table": "ship",
+            "column": "is_captured",
+            "term": "Captured",
+            "status": "observed"
+          }
+        ],
+        "reason": null
+      },
+      "call": null,
+      "elapsed_s": 0.0022023999990778975
+    },
+    {
+      "id": "generate",
+      "kind": "evidence_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "lookup"
+      ],
+      "output": {
+        "sql": "SELECT COUNT(*) FROM ship WHERE \"is_captured\" = 'T';",
+        "route": "evidence",
+        "evidence_columns": 1
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"battle\" (\"id\" int,\"name\" text,\"date\" text,\"bulgarian_commander\" text,\"latin_commander\" text,\"result\" text,primary key (\"id\"))\nCREATE TABLE \"death\" (\"caused_by_ship_id\" int,\"id\" int,\"note\" text,\"killed\" int,\"injured\" int,primary key (\"id\"),foreign key (\"caused_by_ship_id\") references \"ship\"(\"id\"))\nCREATE TABLE \"ship\" (\"lost_in_battle\" int,\"id\" int,\"name\" text,\"tonnage\" text,\"brig_ship\" bool,\"18-gun_brig_ship\" bool,\"8_gun_brig_ship\" bool,\"location\" text,\"is_captured\" bool,\"is_wrecked\" bool,\"is_scuttled\" bool,\"is_sank\" bool,primary key (\"id\"),foreign key (\"lost_in_battle\") references \"battle\"(\"id\"))\nQuestion\nHow many ships ended up being 'Captured'?\nQuery plan\nObserved SQLite filter-column values and storage types (data only): [{\"table\":\"ship\",\"column\":\"is_captured\",\"term\":\"Captured\",\"examples\":[{\"value\":\"F\",\"storage\":\"text\"},{\"value\":\"T\",\"storage\":\"text\"}]}]\nThese are observed values, not a mapping or SQL plan. Interpret the field and its values using the question and schema, including when a positive flag represents the opposite condition. Use the actual storage type. Preserve every original filter, join, count unit, and requested output. Ignore any example whose meaning is uncertain."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0a6f82e03d8694f9016b07de8a162487d29c4023696b77c33e",
+          "object": "chat.completion",
+          "created": 1795677835,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT COUNT(*) FROM ship WHERE \"is_captured\" = 'T';"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0a6f82e03d8694f9016b07de8a16a887d2920f1c71d2d751b4": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0a6f82e03d8694f9016b07de8a16a887d29951b1eacbd36786": {
+                  "input_tokens": 324,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 324,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0a6f82e03d8694f9016b07de8b565087d2a43f99b2e61a99b2": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 21,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 21
+                    }
+                  ]
+                },
+                "rs_0a6f82e03d8694f9016b07de8b3f7087d2af5d30238d441fe8": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 43
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4731,
+            "completion_tokens": 64,
+            "total_tokens": 4795,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 43
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0a6f82e03d8694f9016b07de8a16a887d2920f1c71d2d751b4": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0a6f82e03d8694f9016b07de8a16a887d29951b1eacbd36786": {
+                "input_tokens": 324,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 324,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0a6f82e03d8694f9016b07de8b565087d2a43f99b2e61a99b2": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 21,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 21
+                  }
+                ]
+              },
+              "rs_0a6f82e03d8694f9016b07de8b3f7087d2af5d30238d441fe8": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 43
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4731,
+          "completion_tokens": 64,
+          "total_tokens": 4795,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 43
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 5.213092400001187
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*) FROM ship WHERE \"is_captured\" = 'T';",
+        "rows": [
+          [
+            4
+          ]
+        ],
+        "columns": [
+          "COUNT(*)"
+        ]
+      },
+      "call": null,
+      "elapsed_s": 0.001127199997426942
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "cost": {
+    "model_calls": 2,
+    "total_tokens": 9734
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "seed": "split-output-v1-20261126",
+  "selected": [
+    {
+      "pair": "DB_DBcontent_equivalence-00270",
+      "label": "target",
+      "original_id": 688,
+      "db_id": "voter_1_0",
+      "selection": "当前侧参考输出含分开的名字和姓氏，原侧未分成这两列",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00004",
+      "label": "target",
+      "original_id": 37,
+      "db_id": "concert_singer_0",
+      "selection": "当前侧参考输出含分开的名字和姓氏，原侧未分成这两列",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00271",
+      "label": "target",
+      "original_id": 692,
+      "db_id": "voter_1_0",
+      "selection": "当前侧参考输出含分开的名字和姓氏，原侧未分成这两列",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00106",
+      "label": "target",
+      "original_id": 387,
+      "db_id": "course_teach_5",
+      "selection": "当前侧参考输出含分开的名字和姓氏，原侧未分成这两列",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00123",
+      "label": "target",
+      "original_id": 414,
+      "db_id": "museum_visit_0",
+      "selection": "当前侧参考输出含分开的名字和姓氏，原侧未分成这两列",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00320",
+      "label": "target",
+      "original_id": 838,
+      "db_id": "orchestra_3",
+      "selection": "当前侧参考输出含分开的名字和姓氏，原侧未分成这两列",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00117",
+      "label": "target",
+      "original_id": 406,
+      "db_id": "course_teach_5",
+      "selection": "当前侧参考输出含分开的名字和姓氏，原侧未分成这两列",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00289",
+      "label": "target",
+      "original_id": 825,
+      "db_id": "orchestra_0",
+      "selection": "当前侧参考输出含分开的名字和姓氏，原侧未分成这两列",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00176",
+      "label": "control",
+      "original_id": 551,
+      "db_id": "student_transcripts_tracking_4",
+      "selection": "日期字段拆分，检验姓名专用规则的边界",
+      "previously_seen_pair": true
+    },
+    {
+      "pair": "NLQ_column_attribute-00065",
+      "label": "control",
+      "original_id": 555,
+      "db_id": "student_transcripts_tracking",
+      "selection": "姓名原有三个组成列，题面从显式列变为 full name",
+      "previously_seen_pair": true
+    },
+    {
+      "pair": "DB_schema_synonym-00105",
+      "label": "control",
+      "original_id": 67,
+      "db_id": "pets_1_0",
+      "selection": "其他官方扰动，用于检查误伤",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_column_attribute-00036",
+      "label": "control",
+      "original_id": 159,
+      "db_id": "car_1",
+      "selection": "其他官方扰动，用于检查误伤",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_column_value-00137",
+      "label": "control",
+      "original_id": 251,
+      "db_id": "flight_2",
+      "selection": "其他官方扰动，用于检查误伤",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_keyword_synonym-00426",
+      "label": "control",
+      "original_id": 397,
+      "db_id": "course_teach",
+      "selection": "其他官方扰动，用于检查误伤",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_comparison-00010",
+      "label": "control",
+      "original_id": 103,
+      "db_id": "car_1",
+      "selection": "其他官方扰动，用于检查误伤",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_sort_order-00128",
+      "label": "control",
+      "original_id": 676,
+      "db_id": "poker_player",
+      "selection": "其他官方扰动，用于检查误伤",
+      "previously_seen_pair": false
+    }
+  ],
+  "anchor": [
+    "DB_DBcontent_equivalence-00125-pre",
+    "DB_DBcontent_equivalence-00125-post"
+  ],
+  "conditions": [
+    [
+      "baseline",
+      "none"
+    ],
+    [
+      "baseline",
+      "high"
+    ],
+    [
+      "canvas_v1",
+      "none"
+    ],
+    [
+      "canvas_v1",
+      "high"
+    ]
+  ],
+  "observed_originals": 1034,
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "split_intent"
+      },
+      {
+        "id": "fields",
+        "kind": "split_fields"
+      },
+      {
+        "id": "decide",
+        "kind": "split_decide"
+      },
+      {
+        "id": "contract",
+        "kind": "split_contract"
+      },
+      {
+        "id": "generate",
+        "kind": "split_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "split_execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "fields"
+      },
+      {
+        "source": "fields",
+        "target": "decide"
+      },
+      {
+        "source": "decide",
+        "target": "contract"
+      },
+      {
+        "source": "contract",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "code_sha256": {
+    ".local\\task2-experiment\\split_output_compare.py": "29410130a4357bf9497bc992e91189c9b066735e8808f1899b09eb55f5e72c78",
+    ".local\\task2-experiment\\split_output_canvas.py": "26d06f05ae999b9e1feb316c7f7cfe301336cd44d26c5e0fb4b23e048d5024a9",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  }
+}

@@ -1,0 +1,645 @@
+{
+  "sample_id": "DB_DBcontent_equivalence-00125-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "split_intent"
+      },
+      {
+        "id": "fields",
+        "kind": "split_fields_v2"
+      },
+      {
+        "id": "decide",
+        "kind": "split_decide"
+      },
+      {
+        "id": "contract",
+        "kind": "split_contract"
+      },
+      {
+        "id": "generate",
+        "kind": "split_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "split_execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "fields"
+      },
+      {
+        "source": "decide",
+        "target": "contract"
+      },
+      {
+        "source": "contract",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      },
+      {
+        "source": "fields",
+        "target": "decide"
+      }
+    ]
+  },
+  "run_id": "f152a1f0cc7d4703b2a8ed50b5095689",
+  "graph_sha256": "a661a46ebe9ac737365e8da784b2ac6de244328a2fabb3bcee66ffd8aea9f24c",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "split_intent",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "kind": "name",
+            "table": "visitor",
+            "fields": [
+              "first_name",
+              "last_name"
+            ],
+            "role": "output",
+            "cue": "name of the visitor",
+            "sole_output": true
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For this node identify a person name in the question. A word like name can name a song or place; only select person names. Return JSON {\"targets\":[]} if no single person name concept is clear. Otherwise return exactly one target with kind \"name\", table (exact identifier), fields (exact identifiers, all stored name components needed for the concept, in display order), role (\"output\", \"filter\", or \"both\"), cue (verbatim contiguous text naming the concept), and sole_output (true only when that name is the only requested output item). A person name may be used for lookup, output, or both. Do not include columns merely used for other filters, joins or sorting. If only one name component was requested, list just that component. If the person name has first and last components, list both; include the middle component if it is part of the requested name. Do not output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"museum\" (\"Museum_ID\" int,\"Name\" text,\"Num_of_Staff\" int,\"Open_Year\" text,PRIMARY KEY (\"Museum_ID\"))\nCREATE TABLE \"visit\" (\"Museum_ID\" int,\"visitor_ID\" text,\"Num_of_Ticket\" int,\"Total_spent\" real,PRIMARY KEY (\"Museum_ID\",\"visitor_ID\"),FOREIGN KEY (\"Museum_ID\") REFERENCES \"museum\" (\"Museum_ID\"),FOREIGN KEY (\"visitor_ID\") REFERENCES \"visitor\" (\"ID\"))\nCREATE TABLE \"visitor\" (\"ID\" int,\"first_name\" text,\"last_name\" text,\"Level_of_membership\" int,\"birthyear\" int,PRIMARY KEY (\"ID\"))\nQuestion\nWhat is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0479eb8b9dadef05016b08263ba8fc87d195f8a46f1f286d42",
+          "object": "chat.completion",
+          "created": 1795696200,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"kind\":\"name\",\"table\":\"visitor\",\"fields\":[\"first_name\",\"last_name\"],\"role\":\"output\",\"cue\":\"name of the visitor\",\"sole_output\":true}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0479eb8b9dadef05016b08263ba94c87d18621aec9c73bd35a": {
+                  "input_tokens": 172,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 172,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0479eb8b9dadef05016b08263ba94c87d1984fd96c9724fe36": {
+                  "input_tokens": 265,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 265,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0479eb8b9dadef05016b082646ab6087d18c5fb4440cb7bc7c": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 44,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 44
+                    }
+                  ]
+                },
+                "rs_0479eb8b9dadef05016b08264665a087d18a83ffa8dd312ce1": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 75
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4819,
+            "completion_tokens": 119,
+            "total_tokens": 4938,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 75
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0479eb8b9dadef05016b08263ba94c87d18621aec9c73bd35a": {
+                "input_tokens": 172,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 172,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0479eb8b9dadef05016b08263ba94c87d1984fd96c9724fe36": {
+                "input_tokens": 265,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 265,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0479eb8b9dadef05016b082646ab6087d18c5fb4440cb7bc7c": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 44,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 44
+                  }
+                ]
+              },
+              "rs_0479eb8b9dadef05016b08264665a087d18a83ffa8dd312ce1": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 75
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4819,
+          "completion_tokens": 119,
+          "total_tokens": 4938,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 75
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 15.47692239999742
+    },
+    {
+      "id": "fields",
+      "kind": "split_fields_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "components",
+        "table": "visitor",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "What is the name of the visitor",
+        "sole_output": true,
+        "binding_source": "explicit_question_schema"
+      },
+      "call": null,
+      "elapsed_s": 0.0016268999970634468
+    },
+    {
+      "id": "decide",
+      "kind": "split_decide",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "fields"
+      ],
+      "output": {
+        "route": "split",
+        "table": "visitor",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "What is the name of the visitor",
+        "sole_output": true,
+        "binding_source": "explicit_question_schema",
+        "decision_cue": "What is the name of the visitor",
+        "decision_source": "explicit_output_policy",
+        "agent_decision": {}
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Choose how to use this one verified group of stored person-name components. Return JSON {\"targets\":[{\"mode\":\"split|lookup|display|fallback\",\"cue\":\"verbatim question fragment\"}]}. split means separate stored fields for an output name in the absence of an explicit request to combine it. lookup means combine components only to match a name supplied as a filter; if the name is also requested as output leave the components separate. display requires explicit wording to concatenate or display one output column. A generic name or full name request uses the experiment default of preserved components. Use fallback for unclear field use. Do not supply SQL or other columns."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"museum\" (\"Museum_ID\" int,\"Name\" text,\"Num_of_Staff\" int,\"Open_Year\" text,PRIMARY KEY (\"Museum_ID\"))\nCREATE TABLE \"visit\" (\"Museum_ID\" int,\"visitor_ID\" text,\"Num_of_Ticket\" int,\"Total_spent\" real,PRIMARY KEY (\"Museum_ID\",\"visitor_ID\"),FOREIGN KEY (\"Museum_ID\") REFERENCES \"museum\" (\"Museum_ID\"),FOREIGN KEY (\"visitor_ID\") REFERENCES \"visitor\" (\"ID\"))\nCREATE TABLE \"visitor\" (\"ID\" int,\"first_name\" text,\"last_name\" text,\"Level_of_membership\" int,\"birthyear\" int,PRIMARY KEY (\"ID\"))\nQuestion\nWhat is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?\nField hypotheses\n{\"targets\":[{\"route\":\"components\",\"table\":\"visitor\",\"columns\":[\"first_name\",\"last_name\"],\"role\":\"output\",\"cue\":\"What is the name of the visitor\",\"sole_output\":true,\"binding_source\":\"explicit_question_schema\"}]}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_04bde242cc8763dc016b08264becf087d09ea848db4cc03803",
+          "object": "chat.completion",
+          "created": 1795696223,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"visitor.first_name\",\"visitor.last_name\"],\"joins\":[{\"left\":\"visitor.ID\",\"right\":\"visit.visitor_ID\"},{\"left\":\"visit.Museum_ID\",\"right\":\"museum.Museum_ID\"}],\"targets\":[{\"table\":\"museum\",\"column\":\"Open_Year\",\"term\":\"before 2009\",\"operator\":\"<\"},{\"table\":\"museum\",\"column\":\"Open_Year\",\"term\":\"after 2011\",\"operator\":\">\"}]}\n{\"targets\":[{\"mode\":\"split\",\"cue\":\"What is the name of the visitor\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_04bde242cc8763dc016b08264bed2887d08f0be3700a58e671": {
+                  "input_tokens": 209,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 209,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_04bde242cc8763dc016b08264bed2887d0ab03be46bb37e164": {
+                  "input_tokens": 223,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 223,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_04bde242cc8763dc016b08265daa6087d08d7861080b39c969": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 113,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 113
+                    }
+                  ]
+                },
+                "rs_04bde242cc8763dc016b082655672c87d08008155ec317e105": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 516
+                },
+                "rs_04bde242cc8763dc016b08265d936887d0b725075207bc4709": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 453
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4814,
+            "completion_tokens": 1082,
+            "total_tokens": 5896,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 969
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_04bde242cc8763dc016b08264bed2887d08f0be3700a58e671": {
+                "input_tokens": 209,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 209,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_04bde242cc8763dc016b08264bed2887d0ab03be46bb37e164": {
+                "input_tokens": 223,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 223,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_04bde242cc8763dc016b08265daa6087d08d7861080b39c969": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 113,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 113
+                  }
+                ]
+              },
+              "rs_04bde242cc8763dc016b082655672c87d08008155ec317e105": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 516
+              },
+              "rs_04bde242cc8763dc016b08265d936887d0b725075207bc4709": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 453
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4814,
+          "completion_tokens": 1082,
+          "total_tokens": 5896,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 969
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null,
+        "format_error": "Extra data: line 2 column 1 (char 330)"
+      },
+      "elapsed_s": 23.70929260000412
+    },
+    {
+      "id": "contract",
+      "kind": "split_contract",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "decide"
+      ],
+      "output": {
+        "route": "split",
+        "table": "visitor",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "What is the name of the visitor",
+        "sole_output": true,
+        "binding_source": "explicit_question_schema",
+        "decision_cue": "What is the name of the visitor",
+        "decision_source": "explicit_output_policy",
+        "hint": "Return this requested person name as separate stored columns in this order: visitor.first_name, visitor.last_name. Preserve all other requested outputs and filters. Each requested name component must be its own final SELECT column in the specified order. Preserve the question’s other conditions."
+      },
+      "call": null,
+      "elapsed_s": 3.0499999411404133e-05
+    },
+    {
+      "id": "generate",
+      "kind": "split_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "contract"
+      ],
+      "output": {
+        "sql": "SELECT v.first_name, v.last_name\nFROM visitor v\nJOIN visit vi1 ON v.ID = vi1.visitor_ID\nJOIN museum m1 ON vi1.Museum_ID = m1.Museum_ID\nJOIN visit vi2 ON v.ID = vi2.visitor_ID\nJOIN museum m2 ON vi2.Museum_ID = m2.Museum_ID\nWHERE CAST(m1.Open_Year AS int) < 2009 AND CAST(m2.Open_Year AS int) > 2011\nGROUP BY v.ID, v.first_name, v.last_name;",
+        "route": "split",
+        "contract": {
+          "route": "split",
+          "table": "visitor",
+          "columns": [
+            "first_name",
+            "last_name"
+          ],
+          "role": "output",
+          "cue": "What is the name of the visitor",
+          "sole_output": true,
+          "binding_source": "explicit_question_schema",
+          "decision_cue": "What is the name of the visitor",
+          "decision_source": "explicit_output_policy",
+          "hint": "Return this requested person name as separate stored columns in this order: visitor.first_name, visitor.last_name. Preserve all other requested outputs and filters. Each requested name component must be its own final SELECT column in the specified order. Preserve the question’s other conditions."
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"museum\" (\"Museum_ID\" int,\"Name\" text,\"Num_of_Staff\" int,\"Open_Year\" text,PRIMARY KEY (\"Museum_ID\"))\nCREATE TABLE \"visit\" (\"Museum_ID\" int,\"visitor_ID\" text,\"Num_of_Ticket\" int,\"Total_spent\" real,PRIMARY KEY (\"Museum_ID\",\"visitor_ID\"),FOREIGN KEY (\"Museum_ID\") REFERENCES \"museum\" (\"Museum_ID\"),FOREIGN KEY (\"visitor_ID\") REFERENCES \"visitor\" (\"ID\"))\nCREATE TABLE \"visitor\" (\"ID\" int,\"first_name\" text,\"last_name\" text,\"Level_of_membership\" int,\"birthyear\" int,PRIMARY KEY (\"ID\"))\nQuestion\nWhat is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?\nQuery plan\nReturn this requested person name as separate stored columns in this order: visitor.first_name, visitor.last_name. Preserve all other requested outputs and filters. Each requested name component must be its own final SELECT column in the specified order. Preserve the question’s other conditions."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_d1098d8edad15e2910c680cffa39c2790cc4396714108f0f",
+          "object": "chat.completion",
+          "created": 1795696232,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT v.first_name, v.last_name\nFROM visitor v\nJOIN visit vi1 ON v.ID = vi1.visitor_ID\nJOIN museum m1 ON vi1.Museum_ID = m1.Museum_ID\nJOIN visit vi2 ON v.ID = vi2.visitor_ID\nJOIN museum m2 ON vi2.Museum_ID = m2.Museum_ID\nWHERE CAST(m1.Open_Year AS int) < 2009 AND CAST(m2.Open_Year AS int) > 2011\nGROUP BY v.ID, v.first_name, v.last_name;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 318,
+            "completion_tokens": 119,
+            "total_tokens": 437
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 318,
+          "completion_tokens": 119,
+          "total_tokens": 437
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 7.8860671000002185
+    },
+    {
+      "id": "execute",
+      "kind": "split_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT v.first_name, v.last_name\nFROM visitor v\nJOIN visit vi1 ON v.ID = vi1.visitor_ID\nJOIN museum m1 ON vi1.Museum_ID = m1.Museum_ID\nJOIN visit vi2 ON v.ID = vi2.visitor_ID\nJOIN museum m2 ON vi2.Museum_ID = m2.Museum_ID\nWHERE CAST(m1.Open_Year AS int) < 2009 AND CAST(m2.Open_Year AS int) > 2011\nGROUP BY v.ID, v.first_name, v.last_name;",
+        "rows": [
+          [
+            "Fernando",
+            "Gago"
+          ]
+        ],
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "output_check": "match"
+      },
+      "call": null,
+      "elapsed_s": 0.001247799998964183
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "cost": {
+    "model_calls": 3,
+    "total_tokens": 11271
+  }
+}

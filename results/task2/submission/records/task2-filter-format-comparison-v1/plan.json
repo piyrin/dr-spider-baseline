@@ -1,0 +1,261 @@
+{
+  "seed": "filter-format-v1-20261125",
+  "observed_originals": 1034,
+  "excluded_pairs": 1705,
+  "exposure_surfaces": {
+    "results": 862,
+    "runs": 733,
+    "reports": 60,
+    "outputs": 154,
+    ".local/task2-experiment": 901,
+    ".local/thinking-table-review": 504,
+    ".local/drspider-pair-review": 109,
+    ".local/failed-query-review": 211,
+    ".local/learning": 5
+  },
+  "selected": [
+    {
+      "pair": "NLQ_others-00287",
+      "original_id": 115,
+      "db_id": "car_1",
+      "group": "NLQ_others",
+      "label": "target",
+      "selection_evidence": {
+        "table": "countries",
+        "column": "CountryName",
+        "term": "USA",
+        "stored_value": "usa"
+      }
+    },
+    {
+      "pair": "NLQ_column_value-00062",
+      "original_id": 111,
+      "db_id": "car_1",
+      "group": "NLQ_column_value",
+      "label": "target",
+      "selection_evidence": {
+        "table": "car_names",
+        "column": "Make",
+        "term": "AMC Hornet Sportabout (SW)",
+        "stored_value": "amc hornet sportabout (sw)"
+      }
+    },
+    {
+      "pair": "NLQ_others-00896",
+      "original_id": 338,
+      "db_id": "cre_Doc_Template_Mgt",
+      "group": "NLQ_others",
+      "label": "target",
+      "selection_evidence": {
+        "table": "Documents",
+        "column": "Document_Name",
+        "term": "Data Base",
+        "stored_value": "Data base"
+      }
+    },
+    {
+      "pair": "NLQ_multitype-00721",
+      "original_id": 535,
+      "db_id": "student_transcripts_tracking",
+      "group": "NLQ_multitype",
+      "label": "target",
+      "selection_evidence": {
+        "table": "Degree_Programs",
+        "column": "degree_summary_name",
+        "term": "bachelor",
+        "stored_value": "Bachelor"
+      }
+    },
+    {
+      "pair": "NLQ_multitype-01032",
+      "original_id": 718,
+      "db_id": "world_1",
+      "group": "NLQ_multitype",
+      "label": "target",
+      "selection_evidence": {
+        "table": "country",
+        "column": "Region",
+        "term": "central Africa",
+        "stored_value": "Central Africa"
+      }
+    },
+    {
+      "pair": "NLQ_others-00967",
+      "original_id": 360,
+      "db_id": "cre_Doc_Template_Mgt",
+      "group": "NLQ_others",
+      "label": "target",
+      "selection_evidence": {
+        "table": "Documents",
+        "column": "Document_Name",
+        "term": "summer show",
+        "stored_value": "Summer Show"
+      }
+    },
+    {
+      "pair": "NLQ_others-01751",
+      "original_id": 623,
+      "db_id": "tvshow",
+      "group": "NLQ_others",
+      "label": "target",
+      "selection_evidence": {
+        "table": "TV_series",
+        "column": "Episode",
+        "term": "A love of a lifetime",
+        "stored_value": "A Love of a Lifetime"
+      }
+    },
+    {
+      "pair": "NLQ_others-01346",
+      "original_id": 491,
+      "db_id": "battle_death",
+      "group": "NLQ_others",
+      "label": "target",
+      "selection_evidence": {
+        "table": "ship",
+        "column": "disposition_of_ship",
+        "term": "captured",
+        "stored_value": "Captured"
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00295",
+      "original_id": 839,
+      "db_id": "orchestra_0",
+      "group": "DB_DBcontent_equivalence",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "DB_schema_abbreviation-00301",
+      "original_id": 157,
+      "db_id": "car_1_3",
+      "group": "DB_schema_abbreviation",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "DB_schema_synonym-01120",
+      "original_id": 457,
+      "db_id": "wta_1_1",
+      "group": "DB_schema_synonym",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "NLQ_column_attribute-00109",
+      "original_id": 940,
+      "db_id": "dog_kennels",
+      "group": "NLQ_column_attribute",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "NLQ_column_value-00176",
+      "original_id": 403,
+      "db_id": "course_teach",
+      "group": "NLQ_column_value",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "NLQ_keyword_synonym-00594",
+      "original_id": 649,
+      "db_id": "poker_player",
+      "group": "NLQ_keyword_synonym",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "SQL_comparison-00011",
+      "original_id": 104,
+      "db_id": "car_1",
+      "group": "SQL_comparison",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "SQL_sort_order-00114",
+      "original_id": 615,
+      "db_id": "tvshow",
+      "group": "SQL_sort_order",
+      "label": "control",
+      "selection_evidence": null
+    }
+  ],
+  "anchor": [
+    "NLQ_column_value-00205-pre",
+    "NLQ_column_value-00205-post"
+  ],
+  "conditions": [
+    [
+      "baseline",
+      "none"
+    ],
+    [
+      "baseline",
+      "high"
+    ],
+    [
+      "canvas_v2",
+      "none"
+    ],
+    [
+      "canvas_v2",
+      "high"
+    ]
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "extract",
+        "kind": "format_extract"
+      },
+      {
+        "id": "exact",
+        "kind": "format_exact"
+      },
+      {
+        "id": "normalize",
+        "kind": "format_normalize"
+      },
+      {
+        "id": "generate",
+        "kind": "format_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "extract",
+        "target": "exact"
+      },
+      {
+        "source": "exact",
+        "target": "normalize"
+      },
+      {
+        "source": "exact",
+        "target": "generate"
+      },
+      {
+        "source": "normalize",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "code_sha256": {
+    ".local\\task2-experiment\\format_compare.py": "bf0a532d05649741232e5e7f6b286ff911b9d8a5fb474267c732d18b272a2b12",
+    ".local\\task2-experiment\\format_canvas.py": "457f78934b065ce4a00bec9ecd394203e75527c9d02c369742efed1928905582",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f",
+    ".local\\task2-experiment\\projection_exposure.py": "515aebb4102c1313f75cf2d84bd4f8464c21c8e7d52ecd58a3b580e6fa51c3fe"
+  }
+}

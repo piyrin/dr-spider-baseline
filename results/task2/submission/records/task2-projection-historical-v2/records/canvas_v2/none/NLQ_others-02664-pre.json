@@ -1,0 +1,269 @@
+{
+  "id": "NLQ_others-02664-pre",
+  "side": "pre",
+  "original_id": 965,
+  "method": "canvas_v2",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "match",
+      "kind": "projection_match_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "status": "unresolved",
+        "field": null,
+        "entity": null
+      }
+    },
+    {
+      "id": "normalize",
+      "kind": "projection_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match"
+      ],
+      "output": {
+        "status": "unresolved",
+        "candidate": null
+      }
+    },
+    {
+      "id": "recheck",
+      "kind": "projection_recheck",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "normalize"
+      ],
+      "output": {
+        "status": "unresolved",
+        "field": null,
+        "entity": null
+      }
+    },
+    {
+      "id": "constraint",
+      "kind": "projection_constraint",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match",
+        "recheck"
+      ],
+      "output": {
+        "route": "fallback",
+        "field": null,
+        "hint": ""
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "projection_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "constraint"
+      ],
+      "output": {
+        "sql": "SELECT dog_id, name, date_arrived, date_departed\nFROM Dogs;"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT dog_id, name, date_arrived, date_departed\nFROM Dogs;",
+        "rows": [
+          [
+            1,
+            "Kacey",
+            "2017-09-08 20:10:13",
+            "2018-03-25 06:58:44"
+          ],
+          [
+            2,
+            "Hipolito",
+            "2017-12-22 05:02:02",
+            "2018-03-25 02:11:32"
+          ],
+          [
+            3,
+            "Mavis",
+            "2017-06-25 10:14:05",
+            "2018-03-25 10:25:46"
+          ],
+          [
+            4,
+            "Houston",
+            "2017-04-20 00:58:55",
+            "2018-03-24 19:12:22"
+          ],
+          [
+            5,
+            "Jeffrey",
+            "2017-10-25 00:55:34",
+            "2018-03-25 04:50:22"
+          ],
+          [
+            6,
+            "Merritt",
+            "2017-04-15 09:25:31",
+            "2018-03-25 13:07:04"
+          ],
+          [
+            7,
+            "Narciso",
+            "2017-05-06 08:03:52",
+            "2018-03-25 06:29:10"
+          ],
+          [
+            8,
+            "George",
+            "2017-10-16 20:06:21",
+            "2018-03-25 02:47:40"
+          ],
+          [
+            9,
+            "Bessie",
+            "2018-01-17 11:44:16",
+            "2018-03-25 06:46:07"
+          ],
+          [
+            10,
+            "Troy",
+            "2017-12-29 06:08:26",
+            "2018-03-25 04:42:14"
+          ],
+          [
+            11,
+            "Betty",
+            "2017-07-25 15:19:07",
+            "2018-03-25 15:05:16"
+          ],
+          [
+            12,
+            "Holden",
+            "2017-10-24 04:45:13",
+            "2018-03-25 14:15:41"
+          ],
+          [
+            13,
+            "Jesus",
+            "2018-01-02 03:15:29",
+            "2018-03-25 05:07:47"
+          ],
+          [
+            14,
+            "Lyric",
+            "2017-06-18 19:45:38",
+            "2018-03-24 23:48:59"
+          ],
+          [
+            15,
+            "Evangeline",
+            "2017-12-29 23:24:13",
+            "2018-03-24 19:36:59"
+          ]
+        ],
+        "columns": [
+          "dog_id",
+          "name",
+          "date_arrived",
+          "date_departed"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 15,
+    "prediction_rows": 15
+  },
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_055bb20238f7df96016b06f1af1aec87d0877513968929206c": {
+          "input_tokens": 25,
+          "cached_tokens": 22,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 25,
+              "cached_tokens": 22,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_055bb20238f7df96016b06f1af1aec87d0be43fe4c1e78c8c5": {
+          "input_tokens": 560,
+          "cached_tokens": 295,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 560,
+              "cached_tokens": 295,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_055bb20238f7df96016b06f1b7ff9c87d0a538a262742ca789": {
+          "input_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 23,
+          "content": [
+            {
+              "input_tokens": 0,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 23
+            }
+          ]
+        },
+        "rs_055bb20238f7df96016b06f1b594f087d091b639df91ba34c2": {
+          "input_tokens": 2,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 56
+        }
+      },
+      "request_fields": {
+        "instructions": {
+          "input_tokens": 4380,
+          "cached_tokens": 3907,
+          "cache_write_tokens": 0,
+          "output_tokens": 0
+        }
+      }
+    },
+    "prompt_tokens": 4967,
+    "completion_tokens": 79,
+    "total_tokens": 5046,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      },
+      "cached_tokens": 4224
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 56
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 13.042
+}

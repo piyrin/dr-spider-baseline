@@ -2,10 +2,12 @@
 /.local/
 /AGENTS.md
 
-# Downloaded data, upstream evaluator, and complete local run archives.
+# Downloaded data, caches, raw runs, and local analysis workbooks.
 /data/
 /.cache/
 /runs/
+/task2-rsi-data/experiment/runs/
+/outputs/
 
 # Environments and credentials.
 .venv/
@@ -13,11 +15,27 @@ venv/
 .env
 .env.*
 !.env.example
+
+# Python caches and local runtime logs.
 __pycache__/
 *.py[cod]
-*.log
 .pytest_cache/
+*.log
+
+# Local paper, including its sources, figures, and renderers.
+/reports/drspider-paper/
+
+# Local implementation notes, demo script, and exploratory details.
+/reports/任务2手工Agent编排研究.md
+/reports/任务1与任务2演示与复现.md
+/results/drspider-17x50/diagnostics/README.md
+/results/drspider-17x50/diagnostics/thinking-summary.json
+/results/drspider-17x50/select3/paired_predictions.csv
+
+# Desktop metadata.
 .DS_Store
 Thumbs.db
 
-# Submission reports and selected results remain eligible for tracking.
+# Local browser artifacts and task 2 working notes.
+/.playwright-cli/
+/task2-rsi-data/README.md

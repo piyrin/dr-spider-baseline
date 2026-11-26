@@ -1,0 +1,249 @@
+{
+  "seed": "count-scope-v1-20261126",
+  "selected": [
+    {
+      "pair": "SQL_comparison-00165",
+      "original_id": 943,
+      "db_id": "dog_kennels",
+      "group": "SQL_comparison",
+      "label": "target",
+      "selection": {
+        "reference_counterfactual_extra_rows": 7
+      },
+      "previously_run_variant": false
+    },
+    {
+      "pair": "SQL_comparison-00160",
+      "original_id": 932,
+      "db_id": "dog_kennels",
+      "group": "SQL_comparison",
+      "label": "target",
+      "selection": {
+        "reference_counterfactual_extra_rows": 7
+      },
+      "previously_run_variant": false
+    },
+    {
+      "pair": "SQL_comparison-00100",
+      "original_id": 525,
+      "db_id": "student_transcripts_tracking",
+      "group": "SQL_comparison",
+      "label": "target",
+      "selection": {
+        "reference_counterfactual_extra_rows": 4
+      },
+      "previously_run_variant": false
+    },
+    {
+      "pair": "SQL_comparison-00175",
+      "original_id": 1023,
+      "db_id": "singer",
+      "group": "SQL_comparison",
+      "label": "target",
+      "selection": {
+        "reference_counterfactual_extra_rows": 2
+      },
+      "previously_run_variant": false
+    },
+    {
+      "pair": "SQL_comparison-00013",
+      "original_id": 123,
+      "db_id": "car_1",
+      "group": "SQL_comparison",
+      "label": "target",
+      "selection": {
+        "reference_counterfactual_extra_rows": 7
+      },
+      "previously_run_variant": false
+    },
+    {
+      "pair": "SQL_comparison-00126",
+      "original_id": 694,
+      "db_id": "voter_1",
+      "group": "SQL_comparison",
+      "label": "target",
+      "selection": {
+        "reference_counterfactual_extra_rows": 8
+      },
+      "previously_run_variant": false
+    },
+    {
+      "pair": "SQL_comparison-00006",
+      "original_id": 82,
+      "db_id": "pets_1",
+      "group": "SQL_comparison",
+      "label": "target",
+      "selection": {
+        "reference_counterfactual_extra_rows": 32
+      },
+      "previously_run_variant": true
+    },
+    {
+      "pair": "SQL_comparison-00173",
+      "original_id": 1022,
+      "db_id": "singer",
+      "group": "SQL_comparison",
+      "label": "target",
+      "selection": {
+        "reference_counterfactual_extra_rows": 2
+      },
+      "previously_run_variant": true
+    },
+    {
+      "pair": "DB_schema_abbreviation-02606",
+      "original_id": 916,
+      "db_id": "network_1_0",
+      "group": "DB_schema_abbreviation",
+      "label": "control",
+      "selection": "explicit absence control",
+      "previously_run_variant": true
+    },
+    {
+      "pair": "NLQ_keyword_synonym-00799",
+      "original_id": 917,
+      "db_id": "network_1",
+      "group": "NLQ_keyword_synonym",
+      "label": "control",
+      "selection": "explicit absence control",
+      "previously_run_variant": true
+    },
+    {
+      "pair": "NLQ_keyword_carrier-00209",
+      "original_id": 427,
+      "db_id": "museum_visit",
+      "group": "NLQ_keyword_carrier",
+      "label": "control",
+      "selection": "explicit absence control",
+      "previously_run_variant": true
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00072",
+      "original_id": 277,
+      "db_id": "employee_hire_evaluation_5",
+      "group": "DB_DBcontent_equivalence",
+      "label": "control",
+      "selection": "mixed perturbation",
+      "previously_run_variant": false
+    },
+    {
+      "pair": "DB_schema_synonym-01086",
+      "original_id": 465,
+      "db_id": "wta_1_0",
+      "group": "DB_schema_synonym",
+      "label": "control",
+      "selection": "mixed perturbation",
+      "previously_run_variant": false
+    },
+    {
+      "pair": "NLQ_column_attribute-00100",
+      "original_id": 838,
+      "db_id": "orchestra",
+      "group": "NLQ_column_attribute",
+      "label": "control",
+      "selection": "mixed perturbation",
+      "previously_run_variant": false
+    },
+    {
+      "pair": "NLQ_column_value-00007",
+      "original_id": 20,
+      "db_id": "concert_singer",
+      "group": "NLQ_column_value",
+      "label": "control",
+      "selection": "mixed perturbation",
+      "previously_run_variant": false
+    },
+    {
+      "pair": "SQL_comparison-00023",
+      "original_id": 129,
+      "db_id": "car_1",
+      "group": "SQL_comparison",
+      "label": "control",
+      "selection": "mixed perturbation",
+      "previously_run_variant": false
+    },
+    {
+      "pair": "SQL_sort_order-00122",
+      "original_id": 664,
+      "db_id": "poker_player",
+      "group": "SQL_sort_order",
+      "label": "control",
+      "selection": "mixed perturbation",
+      "previously_run_variant": false
+    }
+  ],
+  "anchor": [
+    "SQL_comparison-00133-pre",
+    "SQL_comparison-00133-post"
+  ],
+  "target_count": 8,
+  "observed_originals": 1034,
+  "exposure_surfaces": {
+    "results": 862,
+    "runs": 740,
+    "reports": 90,
+    "outputs": 154,
+    ".local/task2-experiment": 902,
+    ".local/thinking-table-review": 504,
+    ".local/drspider-pair-review": 109,
+    ".local/failed-query-review": 211,
+    ".local/learning": 5
+  },
+  "conditions": [
+    [
+      "baseline",
+      "none"
+    ],
+    [
+      "baseline",
+      "high"
+    ],
+    [
+      "canvas_v1",
+      "none"
+    ],
+    [
+      "canvas_v1",
+      "high"
+    ]
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "count_intent"
+      },
+      {
+        "id": "policy",
+        "kind": "count_policy"
+      },
+      {
+        "id": "generate",
+        "kind": "count_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "code_sha256": {
+    ".local\\task2-experiment\\count_scope_canvas.py": "f5c0a9f0cb88e4822e088418ee0f39473b0b2b12e057fddbd184a06540ad5be0",
+    ".local\\task2-experiment\\count_scope_compare.py": "7cca54b93c7615c21a6cdbf08f949cafd515e528e48d74abbcef8e1f12b65cf6",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  }
+}

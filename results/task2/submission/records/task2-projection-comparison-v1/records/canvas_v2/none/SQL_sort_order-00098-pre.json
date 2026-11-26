@@ -1,0 +1,174 @@
+{
+  "id": "SQL_sort_order-00098-pre",
+  "side": "pre",
+  "original_id": 557,
+  "method": "canvas_v2",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "match",
+      "kind": "projection_match_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "status": "unresolved",
+        "field": null,
+        "entity": null
+      }
+    },
+    {
+      "id": "normalize",
+      "kind": "projection_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match"
+      ],
+      "output": {
+        "status": "unresolved",
+        "candidate": null
+      }
+    },
+    {
+      "id": "recheck",
+      "kind": "projection_recheck",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "normalize"
+      ],
+      "output": {
+        "status": "unresolved",
+        "field": null,
+        "entity": null
+      }
+    },
+    {
+      "id": "constraint",
+      "kind": "projection_constraint",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match",
+        "recheck"
+      ],
+      "output": {
+        "route": "fallback",
+        "field": null,
+        "hint": ""
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "projection_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "constraint"
+      ],
+      "output": {
+        "sql": "SELECT first_name, middle_name, last_name\nFROM Students\nWHERE student_id IN (\n    SELECT se.student_id\n    FROM Student_Enrolment AS se\n    JOIN Transcripts AS t ON t.transcript_id IN (\n        SELECT tc.transcript_id\n        FROM Transcript_Contents AS tc\n        JOIN Student_Enrolment_Courses AS sec\n            ON sec.student_course_id = tc.student_course_id\n        JOIN Student_Enrolment AS se2\n            ON se2.student_enrolment_id = sec.student_enrolment_id\n        WHERE se2.student_id = se.student_id\n    )\n)\nORDER BY date_left ASC\nLIMIT 1;"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT first_name, middle_name, last_name\nFROM Students\nWHERE student_id IN (\n    SELECT se.student_id\n    FROM Student_Enrolment AS se\n    JOIN Transcripts AS t ON t.transcript_id IN (\n        SELECT tc.transcript_id\n        FROM Transcript_Contents AS tc\n        JOIN Student_Enrolment_Courses AS sec\n            ON sec.student_course_id = tc.student_course_id\n        JOIN Student_Enrolment AS se2\n            ON se2.student_enrolment_id = sec.student_enrolment_id\n        WHERE se2.student_id = se.student_id\n    )\n)\nORDER BY date_left ASC\nLIMIT 1;",
+        "rows": [
+          [
+            "Reva",
+            "Golda",
+            "Osinski"
+          ]
+        ],
+        "columns": [
+          "first_name",
+          "middle_name",
+          "last_name"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_000940c3eb88a73c016b06e34f387087d1a84c664f5aa4295e": {
+          "input_tokens": 25,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 25,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_000940c3eb88a73c016b06e34f387087d1afb54b3ad382a459": {
+          "input_tokens": 720,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 720,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_000940c3eb88a73c016b06e34fa30487d1be557e6a5d89a7f2": {
+          "input_tokens": 2,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 142,
+          "content": [
+            {
+              "input_tokens": 2,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 142
+            }
+          ]
+        }
+      },
+      "request_fields": {
+        "instructions": {
+          "input_tokens": 4380,
+          "cached_tokens": 3712,
+          "cache_write_tokens": 0,
+          "output_tokens": 0
+        }
+      }
+    },
+    "prompt_tokens": 5127,
+    "completion_tokens": 142,
+    "total_tokens": 5269,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      },
+      "cached_tokens": 3712
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 6.09
+}

@@ -1,0 +1,710 @@
+{
+  "conditions": "local diagnostic, v1 single-join failures only",
+  "sample_count": 8,
+  "details": [
+    {
+      "pair": "SQL_comparison-00165",
+      "effort": "none",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00165-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT p.professional_id, p.cell_number\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.cell_number\nHAVING COUNT(DISTINCT t.treatment_type_code) >= 2;",
+          "replay_sql": "SELECT p.professional_id, p.cell_number\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.cell_number\nHAVING COUNT(DISTINCT t.treatment_type_code) >= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 6,
+            "prediction_rows": 4
+          },
+          "after": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 6,
+            "prediction_rows": 4
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00165-post",
+          "route": "observed",
+          "prior_sql": "SELECT p.professional_id, p.cell_number\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.cell_number\nHAVING COUNT(DISTINCT t.treatment_type_code) <= 2;",
+          "replay_sql": "SELECT p.professional_id, p.cell_number\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.cell_number\nHAVING COUNT(DISTINCT t.treatment_type_code) <= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 7,
+            "prediction_rows": 8
+          },
+          "after": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 7,
+            "prediction_rows": 8
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00160",
+      "effort": "none",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00160-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT p.professional_id, p.role_code, p.first_name\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.role_code, p.first_name\nHAVING COUNT(t.treatment_id) >= 2;",
+          "replay_sql": "SELECT p.professional_id, p.role_code, p.first_name\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.role_code, p.first_name\nHAVING COUNT(t.treatment_id) >= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 6,
+            "prediction_rows": 6
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 6,
+            "prediction_rows": 6
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00160-post",
+          "route": "observed",
+          "prior_sql": "SELECT p.professional_id, p.role_code, p.first_name\nFROM Professionals AS p\nJOIN Treatments AS t\n  ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.role_code, p.first_name\nHAVING COUNT(t.treatment_id) <= 2;",
+          "replay_sql": "SELECT p.professional_id, p.role_code, p.first_name\nFROM Professionals AS p\nJOIN Treatments AS t\n  ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.role_code, p.first_name\nHAVING COUNT(t.treatment_id) <= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 7,
+            "prediction_rows": 7
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 7,
+            "prediction_rows": 7
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00100",
+      "effort": "none",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00100-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nLEFT JOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) <= 2;",
+          "replay_sql": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nJOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) <= 2;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 11,
+            "prediction_rows": 15
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 11,
+            "prediction_rows": 11
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00100-post",
+          "route": "observed",
+          "prior_sql": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nJOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) < 2;",
+          "replay_sql": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nJOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) < 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 7,
+            "prediction_rows": 7
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 7,
+            "prediction_rows": 7
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00175",
+      "effort": "none",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00175-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") > 1;",
+          "replay_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") > 1;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00175-post",
+          "route": "fallback",
+          "prior_sql": "SELECT s.Name\nFROM singer AS s\nLEFT JOIN song AS so ON s.Singer_ID = so.Singer_ID\nGROUP BY s.Singer_ID, s.Name\nHAVING COUNT(so.Song_ID) <= 1;",
+          "replay_sql": "SELECT s.Name\nFROM singer AS s\nJOIN song AS so ON s.Singer_ID = so.Singer_ID\nGROUP BY s.Singer_ID, s.Name\nHAVING COUNT(so.Song_ID) <= 1;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 4,
+            "prediction_rows": 6
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 4,
+            "prediction_rows": 4
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00013",
+      "effort": "none",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00013-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT c.CountryName, c.CountryId\nFROM countries AS c\nWHERE EXISTS (\n    SELECT 1\n    FROM car_makers AS m\n    WHERE m.Country = c.CountryId\n);",
+          "replay_sql": "SELECT c.CountryName, c.CountryId\nFROM countries AS c\nWHERE EXISTS (\n    SELECT 1\n    FROM car_makers AS m\n    WHERE m.Country = c.CountryId\n);",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 8,
+            "prediction_rows": 8
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 8,
+            "prediction_rows": 8
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00013-post",
+          "route": "fallback",
+          "prior_sql": "SELECT c.CountryName, c.CountryId\nFROM countries AS c\nLEFT JOIN car_makers AS cm\n  ON cm.Country = c.CountryId\nGROUP BY c.CountryId, c.CountryName\nHAVING COUNT(cm.Id) <= 1;",
+          "replay_sql": "SELECT c.CountryName, c.CountryId\nFROM countries AS c\nJOIN car_makers AS cm\n  ON cm.Country = c.CountryId\nGROUP BY c.CountryId, c.CountryName\nHAVING COUNT(cm.Id) <= 1;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 2,
+            "prediction_rows": 9
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00126",
+      "effort": "none",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00126-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN VOTES AS v ON v.contestant_number = c.contestant_number\nGROUP BY c.contestant_number, c.contestant_name\nHAVING COUNT(*) >= 2;",
+          "replay_sql": "SELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN VOTES AS v ON v.contestant_number = c.contestant_number\nGROUP BY c.contestant_number, c.contestant_name\nHAVING COUNT(*) >= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00126-post",
+          "route": "fallback",
+          "prior_sql": "SELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nLEFT JOIN VOTES AS v\n  ON c.contestant_number = v.contestant_number\nGROUP BY c.contestant_number, c.contestant_name\nHAVING COUNT(v.vote_id) <= 2;",
+          "replay_sql": "SELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN VOTES AS v\n  ON c.contestant_number = v.contestant_number\nGROUP BY c.contestant_number, c.contestant_name\nHAVING COUNT(v.vote_id) <= 2;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 3,
+            "prediction_rows": 11
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 3,
+            "prediction_rows": 3
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00006",
+      "effort": "none",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00006-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT s.Fname, s.Sex\nFROM Student AS s\nJOIN Has_Pet AS hp ON hp.StuID = s.StuID\nGROUP BY s.StuID, s.Fname, s.Sex\nHAVING COUNT(DISTINCT hp.PetID) > 1;",
+          "replay_sql": "SELECT s.Fname, s.Sex\nFROM Student AS s\nJOIN Has_Pet AS hp ON hp.StuID = s.StuID\nGROUP BY s.StuID, s.Fname, s.Sex\nHAVING COUNT(DISTINCT hp.PetID) > 1;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00006-post",
+          "route": "fallback",
+          "prior_sql": "SELECT s.Fname, s.Sex\nFROM Student AS s\nLEFT JOIN Has_Pet AS hp ON hp.StuID = s.StuID\nGROUP BY s.StuID, s.Fname, s.Sex\nHAVING COUNT(hp.PetID) <= 1;",
+          "replay_sql": "SELECT s.Fname, s.Sex\nFROM Student AS s\nJOIN Has_Pet AS hp ON hp.StuID = s.StuID\nGROUP BY s.StuID, s.Fname, s.Sex\nHAVING COUNT(hp.PetID) <= 1;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 1,
+            "prediction_rows": 33
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00173",
+      "effort": "none",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00173-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") > 1;",
+          "replay_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") > 1;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00173-post",
+          "route": "fallback",
+          "prior_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nLEFT JOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") <= 1;",
+          "replay_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") <= 1;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 4,
+            "prediction_rows": 6
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 4,
+            "prediction_rows": 4
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00165",
+      "effort": "high",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00165-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT p.professional_id, p.cell_number\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.cell_number\nHAVING COUNT(DISTINCT t.treatment_type_code) >= 2;",
+          "replay_sql": "SELECT p.professional_id, p.cell_number\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.cell_number\nHAVING COUNT(DISTINCT t.treatment_type_code) >= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 6,
+            "prediction_rows": 4
+          },
+          "after": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 6,
+            "prediction_rows": 4
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00165-post",
+          "route": "observed",
+          "prior_sql": "SELECT p.professional_id, p.cell_number\nFROM Professionals AS p\nWHERE EXISTS (\n    SELECT 1\n    FROM Treatments AS t\n    WHERE t.professional_id = p.professional_id\n)\nAND (\n    SELECT COUNT(DISTINCT t.treatment_type_code)\n    FROM Treatments AS t\n    WHERE t.professional_id = p.professional_id\n) <= 2;",
+          "replay_sql": "SELECT p.professional_id, p.cell_number\nFROM Professionals AS p\nWHERE EXISTS (\n    SELECT 1\n    FROM Treatments AS t\n    WHERE t.professional_id = p.professional_id\n)\nAND (\n    SELECT COUNT(DISTINCT t.treatment_type_code)\n    FROM Treatments AS t\n    WHERE t.professional_id = p.professional_id\n) <= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 7,
+            "prediction_rows": 8
+          },
+          "after": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 7,
+            "prediction_rows": 8
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00160",
+      "effort": "high",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00160-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT p.professional_id, p.role_code AS role, p.first_name\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.role_code, p.first_name\nHAVING COUNT(t.treatment_id) >= 2;",
+          "replay_sql": "SELECT p.professional_id, p.role_code AS role, p.first_name\nFROM Professionals AS p\nJOIN Treatments AS t ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.role_code, p.first_name\nHAVING COUNT(t.treatment_id) >= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 6,
+            "prediction_rows": 6
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 6,
+            "prediction_rows": 6
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00160-post",
+          "route": "observed",
+          "prior_sql": "SELECT p.professional_id, p.role_code, p.first_name\nFROM Professionals AS p\nJOIN Treatments AS t\n  ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.role_code, p.first_name\nHAVING COUNT(t.treatment_id) <= 2;",
+          "replay_sql": "SELECT p.professional_id, p.role_code, p.first_name\nFROM Professionals AS p\nJOIN Treatments AS t\n  ON t.professional_id = p.professional_id\nGROUP BY p.professional_id, p.role_code, p.first_name\nHAVING COUNT(t.treatment_id) <= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 7,
+            "prediction_rows": 7
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 7,
+            "prediction_rows": 7
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00100",
+      "effort": "high",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00100-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nLEFT JOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) <= 2;",
+          "replay_sql": "SELECT c.course_id, c.course_name\nFROM Courses AS c\nJOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) <= 2;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 11,
+            "prediction_rows": 15
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 11,
+            "prediction_rows": 11
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00100-post",
+          "route": "fallback",
+          "prior_sql": "SELECT c.course_name, c.course_id\nFROM Courses AS c\nLEFT JOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) < 2;\n--",
+          "replay_sql": "SELECT c.course_name, c.course_id\nFROM Courses AS c\nJOIN Sections AS s ON s.course_id = c.course_id\nGROUP BY c.course_id, c.course_name\nHAVING COUNT(s.section_id) < 2;\n--",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 7,
+            "prediction_rows": 11
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 7,
+            "prediction_rows": 7
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00175",
+      "effort": "high",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00175-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT s.Name\nFROM singer AS s\nJOIN song AS so ON so.Singer_ID = s.Singer_ID\nGROUP BY s.Singer_ID, s.Name\nHAVING COUNT(so.Song_ID) > 1;",
+          "replay_sql": "SELECT s.Name\nFROM singer AS s\nJOIN song AS so ON so.Singer_ID = s.Singer_ID\nGROUP BY s.Singer_ID, s.Name\nHAVING COUNT(so.Song_ID) > 1;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00175-post",
+          "route": "fallback",
+          "prior_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nLEFT JOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") <= 1;",
+          "replay_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") <= 1;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 4,
+            "prediction_rows": 6
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 4,
+            "prediction_rows": 4
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00013",
+      "effort": "high",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00013-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT CountryName, CountryId\nFROM countries\nWHERE EXISTS (\n    SELECT 1\n    FROM car_makers\n    WHERE car_makers.Country = countries.CountryId\n);",
+          "replay_sql": "SELECT CountryName, CountryId\nFROM countries\nWHERE EXISTS (\n    SELECT 1\n    FROM car_makers\n    WHERE car_makers.Country = countries.CountryId\n);",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 8,
+            "prediction_rows": 8
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 8,
+            "prediction_rows": 8
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00013-post",
+          "route": "fallback",
+          "prior_sql": "SELECT c.CountryName, c.CountryId\nFROM countries AS c\nLEFT JOIN car_makers AS cm\n  ON cm.Country = c.CountryId\nGROUP BY c.CountryId, c.CountryName\nHAVING COUNT(cm.Id) <= 1;",
+          "replay_sql": "SELECT c.CountryName, c.CountryId\nFROM countries AS c\nJOIN car_makers AS cm\n  ON cm.Country = c.CountryId\nGROUP BY c.CountryId, c.CountryName\nHAVING COUNT(cm.Id) <= 1;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 2,
+            "prediction_rows": 9
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00126",
+      "effort": "high",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00126-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN VOTES AS v ON v.contestant_number = c.contestant_number\nGROUP BY c.contestant_number, c.contestant_name\nHAVING COUNT(*) >= 2;",
+          "replay_sql": "SELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN VOTES AS v ON v.contestant_number = c.contestant_number\nGROUP BY c.contestant_number, c.contestant_name\nHAVING COUNT(*) >= 2;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00126-post",
+          "route": "fallback",
+          "prior_sql": "SELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nLEFT JOIN VOTES AS v\n  ON c.contestant_number = v.contestant_number\nGROUP BY c.contestant_number, c.contestant_name\nHAVING COUNT(v.vote_id) <= 2;",
+          "replay_sql": "SELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN VOTES AS v\n  ON c.contestant_number = v.contestant_number\nGROUP BY c.contestant_number, c.contestant_name\nHAVING COUNT(v.vote_id) <= 2;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 3,
+            "prediction_rows": 11
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 3,
+            "prediction_rows": 3
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00006",
+      "effort": "high",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00006-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT s.Fname, s.Sex\nFROM Student AS s\nJOIN Has_Pet AS hp ON hp.StuID = s.StuID\nGROUP BY s.StuID, s.Fname, s.Sex\nHAVING COUNT(DISTINCT hp.PetID) > 1;\n--",
+          "replay_sql": "SELECT s.Fname, s.Sex\nFROM Student AS s\nJOIN Has_Pet AS hp ON hp.StuID = s.StuID\nGROUP BY s.StuID, s.Fname, s.Sex\nHAVING COUNT(DISTINCT hp.PetID) > 1;\n--",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00006-post",
+          "route": "fallback",
+          "prior_sql": "SELECT s.Fname, s.Sex\nFROM Student AS s\nLEFT JOIN Has_Pet AS hp ON hp.StuID = s.StuID\nGROUP BY s.StuID, s.Fname, s.Sex\nHAVING COUNT(hp.PetID) <= 1;",
+          "replay_sql": "SELECT s.Fname, s.Sex\nFROM Student AS s\nJOIN Has_Pet AS hp ON hp.StuID = s.StuID\nGROUP BY s.StuID, s.Fname, s.Sex\nHAVING COUNT(hp.PetID) <= 1;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 1,
+            "prediction_rows": 33
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 1,
+            "prediction_rows": 1
+          }
+        }
+      }
+    },
+    {
+      "pair": "SQL_comparison-00173",
+      "effort": "high",
+      "sides": {
+        "pre": {
+          "id": "SQL_comparison-00173-pre",
+          "route": "fallback",
+          "prior_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(*) > 1;",
+          "replay_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON so.\"Singer_ID\" = s.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(*) > 1;",
+          "only_join_changed": false,
+          "before": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 2,
+            "prediction_rows": 2
+          }
+        },
+        "post": {
+          "id": "SQL_comparison-00173-post",
+          "route": "fallback",
+          "prior_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nLEFT JOIN \"song\" AS so ON s.\"Singer_ID\" = so.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") <= 1;",
+          "replay_sql": "SELECT s.\"Name\"\nFROM \"singer\" AS s\nJOIN \"song\" AS so ON s.\"Singer_ID\" = so.\"Singer_ID\"\nGROUP BY s.\"Singer_ID\", s.\"Name\"\nHAVING COUNT(so.\"Song_ID\") <= 1;",
+          "only_join_changed": true,
+          "before": {
+            "correct": false,
+            "status": "mismatch",
+            "reference_rows": 4,
+            "prediction_rows": 6
+          },
+          "after": {
+            "correct": true,
+            "status": "match",
+            "reference_rows": 4,
+            "prediction_rows": 4
+          }
+        }
+      }
+    }
+  ]
+}

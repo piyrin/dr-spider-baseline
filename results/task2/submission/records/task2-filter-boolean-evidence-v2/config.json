@@ -1,0 +1,111 @@
+{
+  "data_source": {
+    "repository": "https://github.com/awslabs/diagnostic-robustness-text-to-sql",
+    "commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+    "url": "https://media.githubusercontent.com/media/awslabs/diagnostic-robustness-text-to-sql/c64694a4a278ab0faff08ce7a3501d46f458b431/data.tar.gz",
+    "sha256": "d0f47e4d2c9202f4fd2d956a34e9dd1ff8180c1c9e58cf5b530c13fefaaa3ba9",
+    "bytes": 168450638,
+    "retrieved_date": "2026-11-16"
+  },
+  "source_sha256": {
+    ".cache\\evaluator\\exec_eval.py": "29d034db28904490c28037537a14fbb0150b6e86cef0049076c0511d6b6b77f7",
+    "data\\DB_DBcontent_equivalence\\questions_post_perturbation.json": "1e81b57f3c4a0c6e02282402a7c570a6fdbd2e1fd8c80dca30b7b3bfd4423fc1",
+    "data\\DB_DBcontent_equivalence\\questions_pre_perturbation.json": "a72b61f9cdef5b2fba7da83d3a2183f6cc28879b7332181d2ba7cecfe629c309",
+    "data\\DB_schema_abbreviation\\questions_post_perturbation.json": "35adde1ad5e1b2b312667ce35a429e6b4e4c72667e4f3f64734d465ff73a48e0",
+    "data\\DB_schema_abbreviation\\questions_pre_perturbation.json": "ef6730269ed7fc482b355d1a9abca16b1261a84e4b9cc510f8dd3cf6c4fa9e6b",
+    "data\\DB_schema_synonym\\questions_post_perturbation.json": "7b5cdef840c439dba65cfb18fb7289428985b1e6b9a7371891f5ae3c21e1db01",
+    "data\\DB_schema_synonym\\questions_pre_perturbation.json": "a409ca3039ad3c5e7b3f7acaa41b4ccc3e1073e6a6ef218d9a300d03a7af2d79",
+    "data\\NLQ_column_attribute\\questions_post_perturbation.json": "eaa6580bc134c40f0cc2d8eaf6b12152bd16bdcaee0833fa05368d3f200af76d",
+    "data\\NLQ_column_attribute\\questions_pre_perturbation.json": "a648ee3d1bca3244ad9d229bf6f659a90d4121ebe270313037f155d2c7cb78ef",
+    "data\\NLQ_column_value\\questions_post_perturbation.json": "39496fe0f1a8fa73490bef4eecb7ced01202dae6ac2a7fbdc5afe85015f778fc",
+    "data\\NLQ_column_value\\questions_pre_perturbation.json": "e103456d2d4bcbb156ec693cf8c7e6bda461124f1ff964599bc81a0a24bbc9f1",
+    "data\\NLQ_keyword_synonym\\questions_post_perturbation.json": "1011466c1e5768efc3885b05d9b0e1813ffe0af7850c1f53e80e97fce86002f4",
+    "data\\NLQ_keyword_synonym\\questions_pre_perturbation.json": "dd49f2a8b30663382b32126b52d17eb3b26d3ddcd871aaf6ea87bbdafe9b387e",
+    "data\\SQL_comparison\\questions_post_perturbation.json": "97b68f9b9399030f05ad5b290e50f17550b0b284b6a3ea5cb453c8e8f3669bd9",
+    "data\\SQL_comparison\\questions_pre_perturbation.json": "628eddf3a1adfd5da1b1b54141ce851568f0ccc332c8a747dfc2e3d2718e0465",
+    "data\\SQL_sort_order\\questions_post_perturbation.json": "64527d760c369c2bb16449378baad5d6fc456338a32dfb8ca0504e4a5556f626",
+    "data\\SQL_sort_order\\questions_pre_perturbation.json": "6205efb339bdcb1d70cb7f22ecfbf776ccf5439d3616a7b3742e5fecebcda11e",
+    "manifests\\data_inventory.json": "9bb4be43a16a8a7c8aaefa9054a5f8a2ece659e0013d644768c03ba3a4dcbb59",
+    "scripts\\run_api_sample.py": "34bfc17b2e4fd2d539fd7ecd27c5fc67103187ce79e3abad5551a92982e258e5",
+    "scripts\\run_full_evaluation.py": "058dc374bbd6f4c2742b3d53fd2f2248134eb5b8b5d3d2f1235e096a777baa04",
+    "src\\baseline.py": "a781af0ffc27e86b322e4eadd409b883db6e6487262d3f3917053957b13cd63f"
+  },
+  "database_sha256": {
+    "data\\DB_DBcontent_equivalence\\database_post_perturbation\\battle_death_0\\battle_death_0.sqlite": "0fb7df2f4694e43ce5adeb9d3b8dae65b748b5dd3a0f89638e58377fe4b89392",
+    "data\\DB_DBcontent_equivalence\\database_post_perturbation\\employee_hire_evaluation_0\\employee_hire_evaluation_0.sqlite": "3159b46e57dda7abfcfc95c9a215cedeed3fbe32e31f6a768b12aa3a6a8b3587",
+    "data\\DB_DBcontent_equivalence\\database_post_perturbation\\pets_1_4\\pets_1_4.sqlite": "62a3f364e2480126e0ca64fd63847f2e199ed47084d14759e0fd641ee051c96b",
+    "data\\DB_DBcontent_equivalence\\database_post_perturbation\\student_transcripts_tracking_0\\student_transcripts_tracking_0.sqlite": "309961085254ab0aafb8cb17367b36a1e469ab65bb3c7ea994a66ff05007f7b7",
+    "data\\DB_DBcontent_equivalence\\database_post_perturbation\\wta_1_0\\wta_1_0.sqlite": "113f81cd03209b88a8d9fc002b51e3303bd181dd6ba8ed0c0f8ceed1333b6e08",
+    "data\\DB_DBcontent_equivalence\\database_post_perturbation\\wta_1_3\\wta_1_3.sqlite": "f8e90590d67df592db0a82dfcb76160cfea5391decdb73381372b060fec1e72c",
+    "data\\DB_schema_abbreviation\\database_post_perturbation\\world_1_3\\world_1_3.sqlite": "141b79db106d45ce759e7213184289f731ec4a483e571710ebb1ef4cf5e0609c",
+    "data\\DB_schema_synonym\\database_post_perturbation\\voter_1_1\\voter_1_1.sqlite": "e2cdeb563701b576754cd5d12b5ca287e81d2c610bd25a7f18a69e45ccf9ccd7",
+    "data\\Spider-dev\\databases\\battle_death\\battle_death.sqlite": "9f5ca4d4e92353aff0926b7072b9449a91dd596371495f42065e260fe29e932f",
+    "data\\Spider-dev\\databases\\car_1\\car_1.sqlite": "378377f82d2c6f64439fdc2c728c8b3a78feb3592cb4689076e77940b7b59007",
+    "data\\Spider-dev\\databases\\employee_hire_evaluation\\employee_hire_evaluation.sqlite": "c326555c322227a8868b53abf800f1a47298895c26346c7c7843aebfe62fa6e8",
+    "data\\Spider-dev\\databases\\flight_2\\flight_2.sqlite": "8ee4f3ad172de0cb0a1f889171f15d6682f7d7249b0c415e1dbefe9b50da2411",
+    "data\\Spider-dev\\databases\\pets_1\\pets_1.sqlite": "bcbd47036f7306809ff38b9dd7bf131e6bb3ecfbe8b8dc26e57e5dabb088b485",
+    "data\\Spider-dev\\databases\\poker_player\\poker_player.sqlite": "13821f1591a63397ae836340f6012f46f05102924e1ace984bdd372fc748be96",
+    "data\\Spider-dev\\databases\\singer\\singer.sqlite": "0f5de1a299e6bd6539e68bcfec16180dd33fac94b49f4dc0d8543fd68cbcfd5a",
+    "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite": "4ed06695382e8f1fe56b07615a6d178102f2970e7d9f7554cf0506733219983e",
+    "data\\Spider-dev\\databases\\voter_1\\voter_1.sqlite": "1b377da1df806cf97c76d598a89fa9002f8b947092f3c300702d37ffdce106e5",
+    "data\\Spider-dev\\databases\\world_1\\world_1.sqlite": "f21ac0e799f04194de10460bed3309c123239090b3ab25c39ebb13629d7ace79",
+    "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite": "c29b1026c9be63fddbb4754f78e584f0d36779fa71d7e8dafc301772ab0cf4a4"
+  },
+  "endpoint": "https://intlapi.thingo.com.cn/v1/chat/completions",
+  "model": "gpt-6-sol",
+  "model_digest": null,
+  "parameters": {
+    "stream": false,
+    "other_generation_parameters": "provider defaults"
+  },
+  "system": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query.",
+  "metric": "single-database EX",
+  "code_commit": "2916e4d560330c9aa467f635f001d896fb1d6f0d",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "python_version": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+  "sqlite_version": "3.50.4",
+  "dependencies": {
+    "sqlparse": "0.6.1",
+    "tqdm": "4.70.1"
+  },
+  "question_sides": 34,
+  "graph": {
+    "nodes": [
+      {
+        "id": "extract",
+        "kind": "evidence_extract"
+      },
+      {
+        "id": "lookup",
+        "kind": "evidence_lookup"
+      },
+      {
+        "id": "generate",
+        "kind": "evidence_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "extract",
+        "target": "lookup"
+      },
+      {
+        "source": "lookup",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "reasoning_efforts": [
+    "none",
+    "high"
+  ],
+  "method": "evidence_v2"
+}

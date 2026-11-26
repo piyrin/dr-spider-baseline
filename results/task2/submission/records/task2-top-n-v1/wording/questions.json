@@ -1,0 +1,4 @@
+{
+  "top-n-pair-post": "Across all matches, find 5 distinct pairs of winner name and rank from the youngest wins, in ascending order of age. Output only winner name and rank.",
+  "top-n-person-post": "Find the 5 youngest distinct individual players to win a match. Keep one row per player ID using their youngest recorded win. If a player has multiple wins at that age, use the earliest tournament date and lowest match number. Output only the winner name and rank."
+}

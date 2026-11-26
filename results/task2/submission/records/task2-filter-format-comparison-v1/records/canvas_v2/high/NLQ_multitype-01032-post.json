@@ -1,0 +1,338 @@
+{
+  "id": "NLQ_multitype-01032-post",
+  "side": "post",
+  "original_id": 718,
+  "method": "canvas_v2",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "format_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "country.LifeExpectancy"
+        ],
+        "joins": [],
+        "targets": [
+          {
+            "table": "country",
+            "column": "Region",
+            "term": "central Africa",
+            "operator": "="
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one explicit textual equality filter. Use the exact term as written in the question, including case and whitespace, with operator \"=\". Return zero targets if there is no such unique filter. The requested output field is not a filter."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"city\" (\"ID\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"Name\" char(35) NOT NULL DEFAULT '',\"CountryCode\" char(3) NOT NULL DEFAULT '',\"District\" char(20) NOT NULL DEFAULT '',\"Population\" integer NOT NULL DEFAULT '0',FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nCREATE TABLE \"country\" (\"Code\" char(3) NOT NULL DEFAULT '',\"Name\" char(52) NOT NULL DEFAULT '',\"Continent\" text NOT NULL DEFAULT 'Asia',\"Region\" char(26) NOT NULL DEFAULT '',\"SurfaceArea\" float(10,2) NOT NULL DEFAULT '0.00',\"IndepYear\" integer DEFAULT NULL,\"Population\" integer NOT NULL DEFAULT '0',\"LifeExpectancy\" float(3,1) DEFAULT NULL,\"GNP\" float(10,2) DEFAULT NULL,\"GNPOld\" float(10,2) DEFAULT NULL,\"LocalName\" char(45) NOT NULL DEFAULT '',\"GovernmentForm\" char(45) NOT NULL DEFAULT '',\"HeadOfState\" char(60) DEFAULT NULL,\"Capital\" integer DEFAULT NULL,\"Code2\" char(2) NOT NULL DEFAULT '',PRIMARY KEY (\"Code\"))\nCREATE TABLE \"countrylanguage\" (\"CountryCode\" char(3) NOT NULL DEFAULT '',\"Language\" char(30) NOT NULL DEFAULT '',\"IsOfficial\" text NOT NULL DEFAULT 'F',\"Percentage\" float(4,1) NOT NULL DEFAULT '0.0',PRIMARY KEY (\"CountryCode\",\"Language\"),FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nQuestion\nThe life expectancy for countries in central Africa is how long?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_04508b918707b831016b06ffcac74487d1a461c0f87bc12ee9",
+          "object": "chat.completion",
+          "created": 1795620814,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"country.LifeExpectancy\"],\"joins\":[],\"targets\":[{\"table\":\"country\",\"column\":\"Region\",\"term\":\"central Africa\",\"operator\":\"=\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4859,
+            "completion_tokens": 78,
+            "total_tokens": 4937,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 38
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4859,
+          "completion_tokens": 78,
+          "total_tokens": 4937,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 38
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "exact",
+      "kind": "format_exact",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "miss",
+        "target": {
+          "table": "country",
+          "column": "Region",
+          "term": "central Africa"
+        },
+        "value": null
+      },
+      "call": null
+    },
+    {
+      "id": "normalize",
+      "kind": "format_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact"
+      ],
+      "output": {
+        "status": "normalized",
+        "candidates": [
+          "Central Africa"
+        ],
+        "value": "Central Africa"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Check whether the unique SQLite value is a formatting variant of the quoted filter term in the current question. Compare case and whitespace only. Reject if the term, column or comparison is unsupported. Return only JSON with one boolean key accept. Do not invent or change a value."
+            },
+            {
+              "role": "user",
+              "content": "{\"question\": \"The life expectancy for countries in central Africa is how long?\", \"filter\": {\"table\": \"country\", \"column\": \"Region\", \"term\": \"central Africa\"}, \"stored_value\": \"Central Africa\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0f52bf586bef1432016b06ffd0c4a487d2a2e8444b619a5fb9",
+          "object": "chat.completion",
+          "created": 1795620821,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"accept\":true}",
+                "reasoning_content": "**Checking JSON whitespace**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4490,
+            "completion_tokens": 31,
+            "total_tokens": 4521,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 20
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4490,
+          "completion_tokens": 31,
+          "total_tokens": 4521,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 20
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "format_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact",
+        "normalize"
+      ],
+      "output": {
+        "sql": "SELECT \"Name\", \"LifeExpectancy\"\nFROM \"country\"\nWHERE \"Region\" = 'Central Africa';",
+        "route": "normalized",
+        "stored_value": "Central Africa"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"city\" (\"ID\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"Name\" char(35) NOT NULL DEFAULT '',\"CountryCode\" char(3) NOT NULL DEFAULT '',\"District\" char(20) NOT NULL DEFAULT '',\"Population\" integer NOT NULL DEFAULT '0',FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nCREATE TABLE \"country\" (\"Code\" char(3) NOT NULL DEFAULT '',\"Name\" char(52) NOT NULL DEFAULT '',\"Continent\" text NOT NULL DEFAULT 'Asia',\"Region\" char(26) NOT NULL DEFAULT '',\"SurfaceArea\" float(10,2) NOT NULL DEFAULT '0.00',\"IndepYear\" integer DEFAULT NULL,\"Population\" integer NOT NULL DEFAULT '0',\"LifeExpectancy\" float(3,1) DEFAULT NULL,\"GNP\" float(10,2) DEFAULT NULL,\"GNPOld\" float(10,2) DEFAULT NULL,\"LocalName\" char(45) NOT NULL DEFAULT '',\"GovernmentForm\" char(45) NOT NULL DEFAULT '',\"HeadOfState\" char(60) DEFAULT NULL,\"Capital\" integer DEFAULT NULL,\"Code2\" char(2) NOT NULL DEFAULT '',PRIMARY KEY (\"Code\"))\nCREATE TABLE \"countrylanguage\" (\"CountryCode\" char(3) NOT NULL DEFAULT '',\"Language\" char(30) NOT NULL DEFAULT '',\"IsOfficial\" text NOT NULL DEFAULT 'F',\"Percentage\" float(4,1) NOT NULL DEFAULT '0.0',PRIMARY KEY (\"CountryCode\",\"Language\"),FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nQuestion\nThe life expectancy for countries in central Africa is how long?\nQuery plan\nVerified knowledge: in country.Region, the exact stored text corresponding to 'central Africa' is 'Central Africa'. Use the stored text for that equality filter."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_087702d8bf6a6f52016b06ffd74cf887d1812821eb34ccff95",
+          "object": "chat.completion",
+          "created": 1795620824,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"Name\", \"LifeExpectancy\"\nFROM \"country\"\nWHERE \"Region\" = 'Central Africa';"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4791,
+            "completion_tokens": 26,
+            "total_tokens": 4817,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3840
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4791,
+          "completion_tokens": 26,
+          "total_tokens": 4817,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3840
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"Name\", \"LifeExpectancy\"\nFROM \"country\"\nWHERE \"Region\" = 'Central Africa';",
+        "rows": [
+          [
+            "Angola",
+            38.3
+          ],
+          [
+            "Central African Republic",
+            44.0
+          ],
+          [
+            "Cameroon",
+            54.8
+          ],
+          [
+            "Congo, The Democratic Republic of the",
+            48.8
+          ],
+          [
+            "Congo",
+            47.4
+          ],
+          [
+            "Gabon",
+            50.1
+          ],
+          [
+            "Equatorial Guinea",
+            53.6
+          ],
+          [
+            "Sao Tome and Principe",
+            65.3
+          ],
+          [
+            "Chad",
+            50.5
+          ]
+        ],
+        "columns": [
+          "Name",
+          "LifeExpectancy"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "model_calls": 3,
+  "usage": {
+    "prompt_tokens": 14140,
+    "completion_tokens": 135,
+    "total_tokens": 14275
+  },
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 1,
+    "prediction_rows": 9
+  }
+}

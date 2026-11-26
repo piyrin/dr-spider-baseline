@@ -1,0 +1,182 @@
+{
+  "scope": "Offline read-only tool checks with annotated candidates. No model inference or performance metric.",
+  "probes": [
+    {
+      "sample_id": "DB_DBcontent_equivalence-00038-post",
+      "candidate_column": "Pets.is_dog",
+      "term": "dog",
+      "tool_output": {
+        "table": "Pets",
+        "column": "is_dog",
+        "term": "dog",
+        "truth": true,
+        "declared_type": "bool",
+        "status": "boolean",
+        "value": "T",
+        "storage": "text",
+        "observed": [
+          {
+            "value": "F",
+            "storage": "text"
+          },
+          {
+            "value": "T",
+            "storage": "text"
+          }
+        ]
+      }
+    },
+    {
+      "sample_id": "DB_DBcontent_equivalence-00148-post",
+      "candidate_column": "Degree_Programs.is_bachelor",
+      "term": "bachelor",
+      "tool_output": {
+        "table": "Degree_Programs",
+        "column": "is_bachelor",
+        "term": "bachelor",
+        "truth": true,
+        "declared_type": "bool",
+        "status": "boolean",
+        "value": "T",
+        "storage": "text",
+        "observed": [
+          {
+            "value": "F",
+            "storage": "text"
+          },
+          {
+            "value": "T",
+            "storage": "text"
+          }
+        ]
+      }
+    },
+    {
+      "sample_id": "DB_DBcontent_equivalence-00044-post",
+      "candidate_column": "Pets.is_cat",
+      "term": "cat",
+      "tool_output": {
+        "table": "Pets",
+        "column": "is_cat",
+        "term": "cat",
+        "truth": true,
+        "declared_type": "bool",
+        "status": "boolean",
+        "value": "T",
+        "storage": "text",
+        "observed": [
+          {
+            "value": "F",
+            "storage": "text"
+          },
+          {
+            "value": "T",
+            "storage": "text"
+          }
+        ]
+      }
+    },
+    {
+      "sample_id": "DB_DBcontent_equivalence-00046-post",
+      "candidate_column": "Pets.is_cat",
+      "term": "cat",
+      "tool_output": {
+        "table": "Pets",
+        "column": "is_cat",
+        "term": "cat",
+        "truth": true,
+        "declared_type": "bool",
+        "status": "boolean",
+        "value": "T",
+        "storage": "text",
+        "observed": [
+          {
+            "value": "F",
+            "storage": "text"
+          },
+          {
+            "value": "T",
+            "storage": "text"
+          }
+        ]
+      }
+    },
+    {
+      "sample_id": "DB_DBcontent_equivalence-00162-post",
+      "candidate_column": "Degree_Programs.is_master",
+      "term": "master",
+      "tool_output": {
+        "table": "Degree_Programs",
+        "column": "is_master",
+        "term": "master",
+        "truth": true,
+        "declared_type": "bool",
+        "status": "boolean",
+        "value": "T",
+        "storage": "text",
+        "observed": [
+          {
+            "value": "F",
+            "storage": "text"
+          },
+          {
+            "value": "T",
+            "storage": "text"
+          }
+        ]
+      }
+    },
+    {
+      "sample_id": "DB_DBcontent_equivalence-00162-post",
+      "candidate_column": "Degree_Programs.is_bachelor",
+      "term": "bachelor",
+      "tool_output": {
+        "table": "Degree_Programs",
+        "column": "is_bachelor",
+        "term": "bachelor",
+        "truth": true,
+        "declared_type": "bool",
+        "status": "boolean",
+        "value": "T",
+        "storage": "text",
+        "observed": [
+          {
+            "value": "F",
+            "storage": "text"
+          },
+          {
+            "value": "T",
+            "storage": "text"
+          }
+        ]
+      }
+    },
+    {
+      "sample_id": "DB_DBcontent_equivalence-00136-post",
+      "candidate_column": "matches.is_winner_right_handed",
+      "term": "winner right handed",
+      "tool_output": {
+        "status": "fallback",
+        "reason": "unverified_term_or_polarity"
+      }
+    },
+    {
+      "sample_id": "DB_DBcontent_equivalence-00133-post",
+      "candidate_column": "players.is_right_handed",
+      "term": "right handed",
+      "tool_output": {
+        "status": "fallback",
+        "reason": "unverified_term_or_polarity"
+      }
+    },
+    {
+      "sample_id": "DB_DBcontent_equivalence-00140-post",
+      "candidate_column": "players.is_right_handed",
+      "term": "right handed",
+      "tool_output": {
+        "status": "fallback",
+        "reason": "unverified_term_or_polarity"
+      }
+    }
+  ]
+}

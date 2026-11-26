@@ -1,0 +1,14 @@
+{
+  "model": "gpt-6-sol",
+  "stream": false,
+  "messages": [
+    {
+      "role": "system",
+      "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+    },
+    {
+      "role": "user",
+      "content": "Schema\nCREATE TABLE \"battle\" (\"id\" int,\"name\" text,\"date\" text,\"bulgarian_commander\" text,\"latin_commander\" text,\"result\" text,primary key (\"id\"))\nCREATE TABLE \"death\" (\"caused_by_ship_id\" int,\"id\" int,\"note\" text,\"killed\" int,\"injured\" int,primary key (\"id\"),foreign key (\"caused_by_ship_id\") references \"ship\"(\"id\"))\nCREATE TABLE \"ship\" (\"lost_in_battle\" int,\"id\" int,\"name\" text,\"tonnage\" text,\"ship_type\" text,\"location\" text,\"disposition_of_ship\" text,primary key (\"id\"),foreign key (\"lost_in_battle\") references \"battle\"(\"id\"))\nQuestion\nHow many ships ended up being 'Captured'?"
+    }
+  ]
+}

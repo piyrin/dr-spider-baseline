@@ -1,0 +1,4 @@
+{
+  "time": "2026-11-25T13:42:19+08:00",
+  "error": "HTTP 524: {\"error\":{\"message\":\"openai_error\",\"type\":\"bad_response_status_code\",\"param\":\"\",\"code\":\"bad_response_status_code\"}}"
+}

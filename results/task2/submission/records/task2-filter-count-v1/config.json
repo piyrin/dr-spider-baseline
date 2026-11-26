@@ -1,0 +1,84 @@
+{
+  "data_source": {
+    "repository": "https://github.com/awslabs/diagnostic-robustness-text-to-sql",
+    "commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+    "url": "https://media.githubusercontent.com/media/awslabs/diagnostic-robustness-text-to-sql/c64694a4a278ab0faff08ce7a3501d46f458b431/data.tar.gz",
+    "sha256": "d0f47e4d2c9202f4fd2d956a34e9dd1ff8180c1c9e58cf5b530c13fefaaa3ba9",
+    "bytes": 168450638,
+    "retrieved_date": "2026-11-16"
+  },
+  "source_sha256": {
+    ".cache\\evaluator\\exec_eval.py": "29d034db28904490c28037537a14fbb0150b6e86cef0049076c0511d6b6b77f7",
+    "data\\NLQ_keyword_carrier\\questions_post_perturbation.json": "cbbbaf347975b78999d744f67abbee090e45e8291fd69eb2baf635b327d5843e",
+    "data\\NLQ_keyword_carrier\\questions_pre_perturbation.json": "1b57a2d7f3d173c3794c39e9ff0967bf45c25c3bb15d1a6ab5660c019fea95bc",
+    "manifests\\data_inventory.json": "9bb4be43a16a8a7c8aaefa9054a5f8a2ece659e0013d644768c03ba3a4dcbb59",
+    "scripts\\run_api_sample.py": "34bfc17b2e4fd2d539fd7ecd27c5fc67103187ce79e3abad5551a92982e258e5",
+    "scripts\\run_full_evaluation.py": "058dc374bbd6f4c2742b3d53fd2f2248134eb5b8b5d3d2f1235e096a777baa04",
+    "src\\baseline.py": "a781af0ffc27e86b322e4eadd409b883db6e6487262d3f3917053957b13cd63f"
+  },
+  "database_sha256": {
+    "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite": "c29b1026c9be63fddbb4754f78e584f0d36779fa71d7e8dafc301772ab0cf4a4"
+  },
+  "endpoint": "https://intlapi.thingo.com.cn/v1/chat/completions",
+  "model": "gpt-6-sol",
+  "model_digest": null,
+  "parameters": {
+    "stream": false,
+    "other_generation_parameters": "provider defaults"
+  },
+  "system": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query.",
+  "metric": "single-database EX",
+  "code_commit": "2916e4d560330c9aa467f635f001d896fb1d6f0d",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "python_version": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+  "sqlite_version": "3.50.4",
+  "dependencies": {
+    "sqlparse": "0.6.1",
+    "tqdm": "4.70.1"
+  },
+  "question_sides": 2,
+  "canvas_graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "filter_count_intent"
+      },
+      {
+        "id": "verify",
+        "kind": "filter_count_verify"
+      },
+      {
+        "id": "generate",
+        "kind": "filter_count_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "filter_count_execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "verify"
+      },
+      {
+        "source": "verify",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "reasoning_efforts": [
+    "none",
+    "high"
+  ],
+  "local_sources": {
+    "filter_count_compare.py": "3ce3abeb0abf88a011e95025c3507dca0f26deff25759e1ee4b274a6edbc8551",
+    "filter_count_canvas.py": "7802435763d52d7d3b00677cb1db1ee10dcfba67250fa493130c0e9808ddf1b2",
+    "experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    "run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  }
+}

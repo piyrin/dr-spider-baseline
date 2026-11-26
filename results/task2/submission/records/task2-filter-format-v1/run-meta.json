@@ -1,0 +1,33 @@
+{
+  "git_head": "2916e4d560330c9aa467f635f001d896fb1d6f0d",
+  "source_sha256": {
+    ".local\\task2-experiment\\format_canvas.py": "457f78934b065ce4a00bec9ecd394203e75527c9d02c369742efed1928905582",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\serve_canvas.py": "8987bad52e2b287af36d3d6c0a6b62b9f399a569d2864b1d6b9d43e65843ab37",
+    ".local\\task2-experiment\\web\\page.tsx": "8971b6aed8c45cf61aacffc317a1e9724a8d49b76be859d4d2b122ee13ecd3c8",
+    ".local\\task2-experiment\\spring\\CanvasExperimentController.java": "9b7f265f249fc2caad21caa073030444dc8e0243285ff4c6a5895c88ea85c582"
+  },
+  "data_source": {
+    "repository": "https://github.com/awslabs/diagnostic-robustness-text-to-sql",
+    "commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+    "url": "https://media.githubusercontent.com/media/awslabs/diagnostic-robustness-text-to-sql/c64694a4a278ab0faff08ce7a3501d46f458b431/data.tar.gz",
+    "sha256": "d0f47e4d2c9202f4fd2d956a34e9dd1ff8180c1c9e58cf5b530c13fefaaa3ba9",
+    "bytes": 168450638,
+    "retrieved_date": "2026-11-16"
+  },
+  "database_sha256": "b770da24f1ed58243d160a5ff788b99ccc30748821c3270cf4c47d4d05cc9865",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "sqlite_version": "3.50.4",
+  "model": "gpt-6-sol",
+  "model_digest": null,
+  "system_fingerprint": null,
+  "parameters": {
+    "stream": false,
+    "other_generation_parameters": "provider defaults"
+  },
+  "sample_ids": [
+    "NLQ_column_value-00205-pre",
+    "NLQ_column_value-00205-post"
+  ],
+  "scores_replayed": 4
+}

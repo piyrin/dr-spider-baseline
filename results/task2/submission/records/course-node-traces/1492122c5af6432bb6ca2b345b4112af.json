@@ -1,0 +1,571 @@
+{
+  "sample_id": "NLQ_column_value-00205-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "extract",
+        "kind": "format_extract"
+      },
+      {
+        "id": "exact",
+        "kind": "format_exact"
+      },
+      {
+        "id": "normalize",
+        "kind": "format_normalize"
+      },
+      {
+        "id": "generate",
+        "kind": "format_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "extract",
+        "target": "exact"
+      },
+      {
+        "source": "exact",
+        "target": "normalize"
+      },
+      {
+        "source": "exact",
+        "target": "generate"
+      },
+      {
+        "source": "normalize",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "1492122c5af6432bb6ca2b345b4112af",
+  "graph_sha256": "cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "format_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          {
+            "table": "TV_Channel",
+            "column": "Package_Option"
+          }
+        ],
+        "joins": [],
+        "targets": [
+          {
+            "table": "TV_Channel",
+            "column": "series_name",
+            "term": "Sky radio",
+            "operator": "="
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one explicit textual equality filter. Use the exact term as written in the question, including case and whitespace, with operator \"=\". Return zero targets if there is no such unique filter. The requested output field is not a filter."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Cartoon\" (\"id\" real,\"Title\" text,\"Directed_by\" text,\"Written_by\" text,\"Original_air_date\" text,\"Production_code\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nCREATE TABLE \"TV_Channel\" (\"id\" text,\"series_name\" text,\"Country\" text,\"Language\" text,\"Content\" text,\"Pixel_aspect_ratio_PAR\" text,\"Hight_definition_TV\" text,\"Pay_per_view_PPV\" text,\"Package_Option\" text,PRIMARY KEY (\"id\"))\nCREATE TABLE \"TV_series\" (\"id\" real,\"Episode\" text,\"Air_Date\" text,\"Rating\" text,\"Share\" real,\"18_49_Rating_Share\" text,\"Viewers_m\" text,\"Weekly_Rank\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nQuestion\nWhat are the package options of TV channels 'Sky radio'?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_037d6dd4b2d29200016b06fb3e203887d2b70e67fc8019f325",
+          "object": "chat.completion",
+          "created": 1795619661,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[{\"table\":\"TV_Channel\",\"column\":\"Package_Option\"}],\"joins\":[],\"targets\":[{\"table\":\"TV_Channel\",\"column\":\"series_name\",\"term\":\"Sky radio\",\"operator\":\"=\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_037d6dd4b2d29200016b06fb3e206c87d2b47cafd7b93041a0": {
+                  "input_tokens": 127,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 127,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_037d6dd4b2d29200016b06fb3e207087d2a70b9c61211d67c4": {
+                  "input_tokens": 215,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 215,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_037d6dd4b2d29200016b06fb4c7d7487d2be0637cf9995749a": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 48,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 48
+                    }
+                  ]
+                },
+                "rs_037d6dd4b2d29200016b06fb4c668c87d2a5d78e969eb6fc71": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 158
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3840,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 8948,
+            "completion_tokens": 206,
+            "total_tokens": 9154,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 7552
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 158
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_037d6dd4b2d29200016b06fb3e206c87d2b47cafd7b93041a0": {
+                "input_tokens": 127,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 127,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_037d6dd4b2d29200016b06fb3e207087d2a70b9c61211d67c4": {
+                "input_tokens": 215,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 215,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_037d6dd4b2d29200016b06fb4c7d7487d2be0637cf9995749a": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 48,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 48
+                  }
+                ]
+              },
+              "rs_037d6dd4b2d29200016b06fb4c668c87d2a5d78e969eb6fc71": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 158
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3840,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 8948,
+          "completion_tokens": 206,
+          "total_tokens": 9154,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 7552
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 158
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 48.248411199994734
+    },
+    {
+      "id": "exact",
+      "kind": "format_exact",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "miss",
+        "target": {
+          "table": "TV_Channel",
+          "column": "series_name",
+          "term": "Sky radio"
+        },
+        "value": null
+      },
+      "call": null,
+      "elapsed_s": 0.003396199994313065
+    },
+    {
+      "id": "normalize",
+      "kind": "format_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact"
+      ],
+      "output": {
+        "status": "normalized",
+        "candidates": [
+          "Sky Radio"
+        ],
+        "value": "Sky Radio"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Check whether the unique SQLite value is a formatting variant of the quoted filter term in the current question. Compare case and whitespace only. Reject if the term, column or comparison is unsupported. Return only JSON with one boolean key accept. Do not invent or change a value."
+            },
+            {
+              "role": "user",
+              "content": "{\"question\": \"What are the package options of TV channels 'Sky radio'?\", \"filter\": {\"table\": \"TV_Channel\", \"column\": \"series_name\", \"term\": \"Sky radio\"}, \"stored_value\": \"Sky Radio\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_067f6d7a79c1a4d8016b06fb56b85887d0a85e5484292b9a65",
+          "object": "chat.completion",
+          "created": 1795619680,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"accept\":true}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 5729,
+            "completion_tokens": 140,
+            "total_tokens": 5869,
+            "prompt_tokens_details": {
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 126
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 5729,
+          "completion_tokens": 140,
+          "total_tokens": 5869,
+          "prompt_tokens_details": {
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 126
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 19.413409699998738
+    },
+    {
+      "id": "generate",
+      "kind": "format_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact",
+        "normalize"
+      ],
+      "output": {
+        "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+        "route": "normalized",
+        "stored_value": "Sky Radio"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Cartoon\" (\"id\" real,\"Title\" text,\"Directed_by\" text,\"Written_by\" text,\"Original_air_date\" text,\"Production_code\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nCREATE TABLE \"TV_Channel\" (\"id\" text,\"series_name\" text,\"Country\" text,\"Language\" text,\"Content\" text,\"Pixel_aspect_ratio_PAR\" text,\"Hight_definition_TV\" text,\"Pay_per_view_PPV\" text,\"Package_Option\" text,PRIMARY KEY (\"id\"))\nCREATE TABLE \"TV_series\" (\"id\" real,\"Episode\" text,\"Air_Date\" text,\"Rating\" text,\"Share\" real,\"18_49_Rating_Share\" text,\"Viewers_m\" text,\"Weekly_Rank\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nQuestion\nWhat are the package options of TV channels 'Sky radio'?\nQuery plan\nVerified knowledge: in TV_Channel.series_name, the exact stored text corresponding to 'Sky radio' is 'Sky Radio'. Use the stored text for that equality filter."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_086b5def9fc24f90016b06fb651a3c87d2a12e86e648a73a12",
+          "object": "chat.completion",
+          "created": 1795619689,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_086b5def9fc24f90016b06fb651a9487d291ca5cc9df58aee4": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_086b5def9fc24f90016b06fb651a9487d2b750675ef9d88d7b": {
+                  "input_tokens": 252,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 252,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_086b5def9fc24f90016b06fb66225c87d28e620e371503049a": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 25,
+                  "content": [
+                    {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 25
+                    }
+                  ]
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4659,
+            "completion_tokens": 25,
+            "total_tokens": 4684,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_086b5def9fc24f90016b06fb651a9487d291ca5cc9df58aee4": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_086b5def9fc24f90016b06fb651a9487d2b750675ef9d88d7b": {
+                "input_tokens": 252,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 252,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_086b5def9fc24f90016b06fb66225c87d28e620e371503049a": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 25,
+                "content": [
+                  {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 25
+                  }
+                ]
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4659,
+          "completion_tokens": 25,
+          "total_tokens": 4684,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 8.804906299999857
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+        "rows": [
+          [
+            "Sky Famiglia"
+          ]
+        ],
+        "columns": [
+          "Package_Option"
+        ]
+      },
+      "call": null,
+      "elapsed_s": 0.0010309999997843988
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "cost": {
+    "model_calls": 3,
+    "total_tokens": 19707
+  }
+}

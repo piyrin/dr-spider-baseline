@@ -1,0 +1,14 @@
+{
+  "model": "gpt-6-sol",
+  "stream": false,
+  "messages": [
+    {
+      "role": "system",
+      "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+    },
+    {
+      "role": "user",
+      "content": "Schema\nCREATE TABLE \"city\" (\"ID\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"Name\" char(35) NOT NULL DEFAULT '',\"CountryCode\" char(3) NOT NULL DEFAULT '',\"District\" char(20) NOT NULL DEFAULT '',\"Population\" integer NOT NULL DEFAULT '0',FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nCREATE TABLE \"country\" (\"Code\" char(3) NOT NULL DEFAULT '',\"Name\" char(52) NOT NULL DEFAULT '',\"Continent\" text NOT NULL DEFAULT 'Asia',\"Region\" char(26) NOT NULL DEFAULT '',\"SurfaceArea\" float(10,2) NOT NULL DEFAULT '0.00',\"IndepYear\" integer DEFAULT NULL,\"Population\" integer NOT NULL DEFAULT '0',\"LifeExpectancy\" float(3,1) DEFAULT NULL,\"GNP\" float(10,2) DEFAULT NULL,\"GNPOld\" float(10,2) DEFAULT NULL,\"LocalName\" char(45) NOT NULL DEFAULT '',\"GovernmentForm\" char(45) NOT NULL DEFAULT '',\"HeadOfState\" char(60) DEFAULT NULL,\"Capital\" integer DEFAULT NULL,\"Code2\" char(2) NOT NULL DEFAULT '',PRIMARY KEY (\"Code\"))\nCREATE TABLE \"countrylanguage\" (\"CountryCode\" char(3) NOT NULL DEFAULT '',\"Language\" char(30) NOT NULL DEFAULT '',\"IsOfficial\" text NOT NULL DEFAULT 'F',\"Percentage\" float(4,1) NOT NULL DEFAULT '0.0',PRIMARY KEY (\"CountryCode\",\"Language\"),FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nQuestion\nWhat are the names of countries that speak less than 2 languages, as well as how many languages they speak?\n\nVerified knowledge\ncountrylanguage stores observed languages by CountryCode. A country with no corresponding language rows has no recorded language count for this comparison. Missing observations do not meet a below-threshold test."
+    }
+  ]
+}

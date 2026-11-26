@@ -1,0 +1,147 @@
+{
+  "sample_id": "NLQ_column_carrier-00499-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "generate",
+        "kind": "generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "72002ef83ad84b5cac8af4937c3aab05",
+  "graph_sha256": "64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+  "steps": [
+    {
+      "id": "generate",
+      "kind": "generate",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT ID, name, grade\nFROM Highschooler\nWHERE grade = 10;"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Friend\" (\"student_id\" int,\"friend_id\" int,primary key (\"student_id\",\"friend_id\"),foreign key (\"student_id\") references \"Highschooler\" (\"ID\"),foreign key (\"friend_id\") references \"Highschooler\" (\"ID\"))\nCREATE TABLE \"Highschooler\" (\"ID\" int primary key,\"name\" text,\"grade\" int)\nCREATE TABLE \"Likes\" (\"student_id\" int,\"liked_id\" int,primary key (\"student_id\", \"liked_id\"),foreign key (\"liked_id\") references \"Highschooler\" (\"ID\"),foreign key (\"student_id\") references \"Highschooler\" (\"ID\"))\nQuestion\nWho are all students currently in grade ten?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_ft_a8320bb6887340c08aa0391d6326604a",
+          "object": "chat.completion",
+          "created": 1795608422,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": " SELECT ID, name, grade\nFROM Highschooler\nWHERE grade = 10;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4557,
+            "completion_tokens": 22,
+            "total_tokens": 4579,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 2560
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4557,
+          "completion_tokens": 22,
+          "total_tokens": 4579,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 2560
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 5.326940099999774
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT ID, name, grade\nFROM Highschooler\nWHERE grade = 10;",
+        "rows": [
+          [
+            1101,
+            "Haley",
+            10
+          ],
+          [
+            1782,
+            "Andrew",
+            10
+          ],
+          [
+            1468,
+            "Kris",
+            10
+          ],
+          [
+            1641,
+            "Brittany",
+            10
+          ]
+        ],
+        "columns": [
+          "ID",
+          "name",
+          "grade"
+        ]
+      },
+      "call": null,
+      "elapsed_s": 0.0013304999956744723
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 4,
+    "prediction_rows": 4
+  },
+  "cost": {
+    "model_calls": 1,
+    "total_tokens": 4579
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "id": "SQL_sort_order-00078-post",
+  "method": "canvas_v1",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "filter_count_intent",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [],
+        "count": null
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For a question asking for a count of distinct real-world entities from one SQLite table, extract ALL required conjunctive text equality filters AND the counted entity. Return JSON {\"targets\":[{\"table\":\"exact table\",\"column\":\"exact column\",\"term\":\"verbatim words from the question\",\"kind\":\"name|handedness\"}],\"count\":{\"table\":\"exact table\",\"column\":\"exact entity identifier column\",\"term\":\"verbatim cue about the counted entity\",\"unit\":\"entity\"}}. Use an entity ID if available. A competition referred to by an acronym and \"this tournament\" still constrains the tournament name. For a right- or left-handed condition, use the exact hand description from the question. Preserve every independent filter and use the table that stores both the entities and filters. Only handle a single total, positive text equalities joined by AND, and a single table. If unsupported or uncertain about the column or whether an entity count is requested, return {\"targets\":[],\"count\":null}. Do not write SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"matches\" (\"best_of\" INT,\"draw_size\" INT,\"loser_age\" FLOAT,\"loser_entry\" TEXT,\"loser_hand\" TEXT,\"loser_ht\" INT,\"loser_id\" INT,\"loser_ioc\" TEXT,\"loser_name\" TEXT,\"loser_rank\" INT,\"loser_rank_points\" INT,\"loser_seed\" INT,\"match_num\" INT,\"minutes\" INT,\"round\" TEXT,\"score\" TEXT,\"surface\" TEXT,\"tourney_date\" DATE,\"tourney_id\" TEXT,\"tourney_level\" TEXT,\"tourney_name\" TEXT,\"winner_age\" FLOAT,\"winner_entry\" TEXT,\"winner_hand\" TEXT,\"winner_ht\" INT,\"winner_id\" INT,\"winner_ioc\" TEXT,\"winner_name\" TEXT,\"winner_rank\" INT,\"winner_rank_points\" INT,\"winner_seed\" INT,\"year\" INT,FOREIGN KEY (\"loser_id\") REFERENCES \"players\"(\"player_id\"),FOREIGN KEY (\"winner_id\") REFERENCES \"players\"(\"player_id\"))\nCREATE TABLE \"players\" (\"player_id\" INT PRIMARY KEY,\"first_name\" TEXT,\"last_name\" TEXT,\"hand\" TEXT,\"birth_date\" DATE,\"country_code\" TEXT)\nCREATE TABLE \"rankings\" (\"ranking_date\" DATE,\"ranking\" INT,\"player_id\" INT,\"ranking_points\" INT,\"tours\" INT,FOREIGN KEY (\"player_id\") REFERENCES \"players\"(\"player_id\"))\nQuestion\nFind the name and rank of the 3 oldest winners across all matches."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_ft_8dbffd74a7ab44b0ad985f4d488c251a",
+          "object": "chat.completion",
+          "created": 1795680958,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": " {\"targets\":[],\"count\":null}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4980,
+            "completion_tokens": 12,
+            "total_tokens": 4992,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 2560
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4980,
+          "completion_tokens": 12,
+          "total_tokens": 4992,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 2560
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "filter_count_verify",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "fallback",
+        "reason": "unverified_entity_count"
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "filter_count_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "verify"
+      ],
+      "output": {
+        "sql": "SELECT winner_name, winner_rank\nFROM matches\nORDER BY winner_age DESC\nLIMIT 3;",
+        "contract": {
+          "route": "fallback",
+          "reason": "unverified_entity_count"
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"matches\" (\"best_of\" INT,\"draw_size\" INT,\"loser_age\" FLOAT,\"loser_entry\" TEXT,\"loser_hand\" TEXT,\"loser_ht\" INT,\"loser_id\" INT,\"loser_ioc\" TEXT,\"loser_name\" TEXT,\"loser_rank\" INT,\"loser_rank_points\" INT,\"loser_seed\" INT,\"match_num\" INT,\"minutes\" INT,\"round\" TEXT,\"score\" TEXT,\"surface\" TEXT,\"tourney_date\" DATE,\"tourney_id\" TEXT,\"tourney_level\" TEXT,\"tourney_name\" TEXT,\"winner_age\" FLOAT,\"winner_entry\" TEXT,\"winner_hand\" TEXT,\"winner_ht\" INT,\"winner_id\" INT,\"winner_ioc\" TEXT,\"winner_name\" TEXT,\"winner_rank\" INT,\"winner_rank_points\" INT,\"winner_seed\" INT,\"year\" INT,FOREIGN KEY (\"loser_id\") REFERENCES \"players\"(\"player_id\"),FOREIGN KEY (\"winner_id\") REFERENCES \"players\"(\"player_id\"))\nCREATE TABLE \"players\" (\"player_id\" INT PRIMARY KEY,\"first_name\" TEXT,\"last_name\" TEXT,\"hand\" TEXT,\"birth_date\" DATE,\"country_code\" TEXT)\nCREATE TABLE \"rankings\" (\"ranking_date\" DATE,\"ranking\" INT,\"player_id\" INT,\"ranking_points\" INT,\"tours\" INT,FOREIGN KEY (\"player_id\") REFERENCES \"players\"(\"player_id\"))\nQuestion\nFind the name and rank of the 3 oldest winners across all matches."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0c45e4e0ad099997016b07eac0444c87d0bf379f6b40356522",
+          "object": "chat.completion",
+          "created": 1795680961,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT winner_name, winner_rank\nFROM matches\nORDER BY winner_age DESC\nLIMIT 3;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4723,
+            "completion_tokens": 24,
+            "total_tokens": 4747,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3840
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4723,
+          "completion_tokens": 24,
+          "total_tokens": 4747,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3840
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "filter_count_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT winner_name, winner_rank\nFROM matches\nORDER BY winner_age DESC\nLIMIT 3;",
+        "rows": [
+          [
+            "Venus Williams",
+            9
+          ],
+          [
+            "Venus Williams",
+            12
+          ],
+          [
+            "Venus Williams",
+            12
+          ]
+        ],
+        "columns": [
+          "winner_name",
+          "winner_rank"
+        ],
+        "contract_check": "not_applicable"
+      },
+      "call": null
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 3,
+    "prediction_rows": 3
+  },
+  "model_calls": 2,
+  "total_tokens": 9739
+}

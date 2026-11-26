@@ -1,0 +1,113 @@
+{
+  "id": "SQL_DB_text-00048-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7306,
+    "completion_tokens": 219,
+    "total_tokens": 7525,
+    "prompt_tokens_details": {
+      "cached_tokens": 6528
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nLEFT JOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.Maker = 'Honda' OR cd.Weight > 3500;",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 14,
+  "prediction_row_count": 14,
+  "status": "mismatch",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:40:11+08:00",
+  "gold_rows": [
+    [
+      "chevrolet"
+    ],
+    [
+      "buick"
+    ],
+    [
+      "ford"
+    ],
+    [
+      "plymouth"
+    ],
+    [
+      "pontiac"
+    ],
+    [
+      "amc"
+    ],
+    [
+      "dodge"
+    ],
+    [
+      "mercury"
+    ],
+    [
+      "oldsmobile"
+    ],
+    [
+      "chrysler"
+    ],
+    [
+      "honda"
+    ],
+    [
+      "mercedes-benz"
+    ],
+    [
+      "cadillac"
+    ],
+    [
+      "mercedes"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "amc"
+    ],
+    [
+      "buick"
+    ],
+    [
+      "cadillac"
+    ],
+    [
+      "chevrolet"
+    ],
+    [
+      "chrysler"
+    ],
+    [
+      "dodge"
+    ],
+    [
+      "ford"
+    ],
+    [
+      "hi"
+    ],
+    [
+      "mercedes"
+    ],
+    [
+      "mercedes-benz"
+    ],
+    [
+      "mercury"
+    ],
+    [
+      "oldsmobile"
+    ],
+    [
+      "plymouth"
+    ],
+    [
+      "pontiac"
+    ]
+  ]
+}

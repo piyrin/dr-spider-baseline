@@ -1,0 +1,164 @@
+{
+  "groups": {
+    "anchor": [
+      "SQL_NonDB_number-00054-pre",
+      "SQL_NonDB_number-00054-post"
+    ],
+    "related": [
+      "SQL_NonDB_number-00061-pre",
+      "SQL_NonDB_number-00061-post"
+    ],
+    "explicit_tuple": [
+      "top-n-pair-pre",
+      "top-n-pair-post"
+    ],
+    "explicit_person": [
+      "top-n-person-pre",
+      "top-n-person-post"
+    ],
+    "mixed": [
+      "DB_schema_synonym-01629-pre",
+      "DB_schema_synonym-01629-post",
+      "DB_schema_abbreviation-02106-pre",
+      "DB_schema_abbreviation-02106-post",
+      "NLQ_column_carrier-00210-pre",
+      "NLQ_column_carrier-00210-post",
+      "NLQ_column_synonym-00083-pre",
+      "NLQ_column_synonym-00083-post",
+      "SQL_sort_order-00123-pre",
+      "SQL_sort_order-00123-post",
+      "SQL_NonDB_number-00069-pre",
+      "SQL_NonDB_number-00069-post",
+      "NLQ_column_attribute-00104-pre",
+      "NLQ_column_attribute-00104-post",
+      "SQL_comparison-00134-pre",
+      "SQL_comparison-00134-post"
+    ]
+  },
+  "controls": {
+    "top-n-pair-pre": {
+      "id": "top-n-pair-pre",
+      "question": "Across all matches, return the 3 distinct name-and-rank combinations of winners with the lowest age recorded for each combination. Output winner name and rank.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT winner_name, winner_rank FROM (SELECT winner_name, winner_rank, winner_age, row_number() OVER (PARTITION BY winner_name, winner_rank ORDER BY winner_age) AS rn FROM matches WHERE winner_age IS NOT NULL) WHERE rn = 1 ORDER BY winner_age, winner_name, winner_rank LIMIT 3"
+    },
+    "top-n-pair-post": {
+      "id": "top-n-pair-post",
+      "question": "Across all matches, return the 5 distinct name-and-rank combinations of winners with the lowest age recorded for each combination. Output winner name and rank.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT winner_name, winner_rank FROM (SELECT winner_name, winner_rank, winner_age, row_number() OVER (PARTITION BY winner_name, winner_rank ORDER BY winner_age) AS rn FROM matches WHERE winner_age IS NOT NULL) WHERE rn = 1 ORDER BY winner_age, winner_name, winner_rank LIMIT 5"
+    },
+    "top-n-person-pre": {
+      "id": "top-n-person-pre",
+      "question": "Find the 3 youngest distinct individual players to win a match. Return one row per player ID, with the name and rank from their youngest recorded win. If a player has multiple wins at that age, use the earliest tournament date and lowest match number.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT m.winner_name, m.winner_rank FROM matches AS m WHERE m.winner_age IS NOT NULL AND m.rowid = (SELECT a.rowid FROM matches AS a WHERE a.winner_id=m.winner_id AND a.winner_age IS NOT NULL ORDER BY a.winner_age, a.tourney_date, a.match_num, a.rowid LIMIT 1) ORDER BY m.winner_age, m.winner_id LIMIT 3"
+    },
+    "top-n-person-post": {
+      "id": "top-n-person-post",
+      "question": "Find the 5 youngest distinct individual players to win a match. Return one row per player ID, with the name and rank from their youngest recorded win. If a player has multiple wins at that age, use the earliest tournament date and lowest match number.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT m.winner_name, m.winner_rank FROM matches AS m WHERE m.winner_age IS NOT NULL AND m.rowid = (SELECT a.rowid FROM matches AS a WHERE a.winner_id=m.winner_id AND a.winner_age IS NOT NULL ORDER BY a.winner_age, a.tourney_date, a.match_num, a.rowid LIMIT 1) ORDER BY m.winner_age, m.winner_id LIMIT 5"
+    }
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent"
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect"
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy"
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "inspect"
+      },
+      {
+        "source": "inspect",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "interactive_graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent"
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect"
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy",
+        "hint": "interactive"
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "inspect"
+      },
+      {
+        "source": "inspect",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "efforts": [
+    "none",
+    "high"
+  ],
+  "methods": [
+    "baseline",
+    "canvas",
+    "interactive"
+  ],
+  "code_sha256": {
+    ".local\\task2-experiment\\top_n_compare.py": "75759a827421eccc376e9852481231b6e91c6256b0901c6f85fdfe33acbda6f9",
+    ".local\\task2-experiment\\top_n_canvas.py": "5c93f93dbe8552b8b608f32cc6a0d2d88445eb1133de5501299bce2b1d7238e7",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  }
+}

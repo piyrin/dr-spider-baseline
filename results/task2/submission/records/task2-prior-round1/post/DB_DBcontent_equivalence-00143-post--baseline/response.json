@@ -1,0 +1,24 @@
+{
+  "id": "resp_06013eacf67330b8016b067467b64c87d0ba3d5810e0cd9e6a",
+  "object": "chat.completion",
+  "created": 1795585129,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT COUNT(*) FROM \"ship\" WHERE \"is_captured\" = 1;"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7209,
+    "completion_tokens": 102,
+    "total_tokens": 7311,
+    "completion_tokens_details": {
+      "reasoning_tokens": 85
+    }
+  }
+}

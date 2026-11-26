@@ -1,0 +1,118 @@
+{
+  "id": "SQL_sort_order-00098-pre",
+  "side": "pre",
+  "original_id": 557,
+  "method": "baseline",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "generate",
+      "kind": "generate",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT s.first_name, s.middle_name, s.last_name\nFROM Students AS s\nJOIN Student_Enrolment AS se ON se.student_id = s.student_id\nJOIN Semesters AS sem ON sem.semester_id = se.semester_id\nORDER BY sem.semester_name ASC, s.date_first_registered ASC\nLIMIT 1;"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT s.first_name, s.middle_name, s.last_name\nFROM Students AS s\nJOIN Student_Enrolment AS se ON se.student_id = s.student_id\nJOIN Semesters AS sem ON sem.semester_id = se.semester_id\nORDER BY sem.semester_name ASC, s.date_first_registered ASC\nLIMIT 1;",
+        "rows": [
+          [
+            "Timmothy",
+            "Anna",
+            "Ward"
+          ]
+        ],
+        "columns": [
+          "first_name",
+          "middle_name",
+          "last_name"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_0d0f7f3ea0719691016b06e3522f9c87d18d0eec4fdf81c828": {
+          "input_tokens": 720,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 720,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_0d0f7f3ea0719691016b06e3522f9c87d1ae2ce1adcd03ec92": {
+          "input_tokens": 25,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 25,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_0d0f7f3ea0719691016b06e352aa4087d18167d78c8e2098e0": {
+          "input_tokens": 2,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 73,
+          "content": [
+            {
+              "input_tokens": 2,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 73
+            }
+          ]
+        }
+      },
+      "request_fields": {
+        "instructions": {
+          "input_tokens": 4380,
+          "cached_tokens": 3712,
+          "cache_write_tokens": 0,
+          "output_tokens": 0
+        }
+      }
+    },
+    "prompt_tokens": 5127,
+    "completion_tokens": 73,
+    "total_tokens": 5200,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      },
+      "cached_tokens": 3712
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 4.71
+}

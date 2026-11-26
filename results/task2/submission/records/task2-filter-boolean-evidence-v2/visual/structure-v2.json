@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    {
+      "id": "extract",
+      "kind": "evidence_extract"
+    },
+    {
+      "id": "lookup",
+      "kind": "evidence_lookup"
+    },
+    {
+      "id": "generate",
+      "kind": "evidence_generate"
+    },
+    {
+      "id": "execute",
+      "kind": "execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "extract",
+      "target": "lookup"
+    },
+    {
+      "source": "lookup",
+      "target": "generate"
+    },
+    {
+      "source": "generate",
+      "target": "execute"
+    }
+  ]
+}

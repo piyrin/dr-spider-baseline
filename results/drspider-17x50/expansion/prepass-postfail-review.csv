@@ -1,0 +1,46 @@
+﻿batch,pair_id,original_id,category,review_status,review_evidence,replay,replay_sql,reference_row_count,prediction_row_count
+独立留出,NLQ_column_attribute-00019,97,去重口径不同,差异已复现，题意边界,车型名称可按车辆逐行返回或先去重。删除 DISTINCT 后，28 行变为 230 行并通过。,单点修改后与参考一致,SELECT cn.Model FROM car_names AS cn JOIN cars_data AS cd ON cd.Id = cn.MakeId WHERE cd.Weight < (SELECT AVG(Weight) FROM cars_data);,230,28
+独立留出,SQL_DB_number-00052,103,筛选值和库内存法对不上,多处不同，未单因核实,改 77 为 1977 后仍多 1 行，两份 SQL 的连接范围也不同。,单点修改后仍与参考不一致,SELECT DISTINCT cn.Model FROM car_names AS cn JOIN cars_data AS cd ON cd.Id = cn.MakeId WHERE cd.Year > 1977;,27,33
+独立留出,SQL_DB_number-00130,145,筛选值和库内存法对不上,明确修复候选,库里存四位年份。把 76 改为 1976 后返回 34。,单点修改后与参考一致,SELECT COUNT(*) FROM cars_data WHERE Year = 1976;,1,1
+独立留出,SQL_comparison-00155,924,筛选范围变了或漏掉限制,题意歧义或漂移,not at most 的读法与零治疗记录该不该入选交织。,,,9,3
+独立留出,SQL_comparison-00061,178,缺失记录被当成 0,参考 SQL 问题,参考内连接漏掉 0 家厂商的国家，但 0 符合至多 3 的上限。,,,5,12
+独立留出,NLQ_column_value-00226,644,筛选范围变了或漏掉限制,题意歧义或漂移,题面省略导演角色，预测查询还包含编剧，并从动画表得到频道候选。,,,11,5
+独立留出,NLQ_value_synonym-00146,179,筛选值和库内存法对不上,明确修复候选,将 JetBlue Airlines 对齐库值 JetBlue Airways 后返回 USA。,单点修改后与参考一致,"SELECT ""Country"" FROM ""airlines"" WHERE ""Airline"" = 'JetBlue Airways';",1,0
+独立留出,NLQ_value_synonym-00431,881,分组粒度不同,参考 SQL 问题,post 明确问年级数量，参考仍逐个列出年级。,,,4,1
+独立留出,NLQ_value_synonym-00172,213,筛选值和库内存法对不上,明确修复候选,将 Jetblue 对齐 JetBlue Airways 后计数为 100。,单点修改后与参考一致,SELECT COUNT(*) AS flight_count FROM flights AS f JOIN airlines AS a ON f.Airline = a.uid WHERE a.Airline = 'JetBlue Airways'; --,1,1
+独立留出,NLQ_value_synonym-00250,514,筛选值和库内存法对不上,明确修复候选,将 PortChelsea 对齐 Port Chelsea 后返回邮编 148。,单点修改后与参考一致,SELECT zip_postcode FROM Addresses WHERE city = 'Port Chelsea';,1,0
+独立留出,DB_DBcontent_equivalence-00279,693,拆分后漏选字段,明确修复候选,创建时间原为完整时间戳。变体查询补回 created_date 后，4 行均与参考一致。,单点修改后与参考一致,"SELECT DISTINCT state, created_date, created_time FROM VOTES;",4,4
+独立留出,DB_DBcontent_equivalence-00332,946,拆分后漏选字段,差异已复现，题意边界,补回拆分的 time_of_treatment 后通过。题面只说 date，是否须返回时分秒仍需确认。,单点修改后与参考一致,"SELECT t.date_of_treatment, t.time_of_treatment, p.first_name FROM Treatments AS t JOIN Professionals AS p ON p.professional_id = t.professional_id; --",15,15
+独立留出,SQL_sort_order-00088,529,缺失记录被当成 0,参考 SQL 问题,库内有 6 个零注册明细学期，参考内连接排除了这些学期。,,,1,1
+独立留出,NLQ_column_synonym-00128,257,返回内容多选,差异已复现，题意边界,100 个机场的行数一致。把 a.* 改成 AirportName 后通过，但 post 省略了“名称”。,单点修改后与参考一致,SELECT a.AirportName FROM airports AS a WHERE NOT EXISTS ( SELECT 1 FROM flights AS f WHERE f.SourceAirport = a.AirportCode OR f.DestAirport = a.AirportCode );,100,100
+独立留出,NLQ_column_synonym-00188,356,筛选值和库内存法对不上,多处不同，未单因核实,纠正 Presentation Template 后有匹配，但类型代码与三条模板 ID 仍不同。,单点修改后仍与参考不一致,SELECT Template_Type_Code FROM Ref_Template_Types WHERE Template_Type_Description = 'Presentation'; --,3,0
+独立留出,NLQ_column_synonym-00176,337,筛选值和库内存法对不上,多处不同，未单因核实,纠正 data base 的大小写后有匹配，但类型描述 Book 与类型代码 BK 仍不同。,单点修改后仍与参考不一致,SELECT r.Template_Type_Description FROM Documents AS d JOIN Templates AS t ON d.Template_ID = t.Template_ID JOIN Ref_Template_Types AS r ON t.Template_Type_Code = r.Template_Type_Code WHERE d.Document_Name = 'Data base';,1,0
+独立留出,NLQ_multitype-00659,501,筛选值和库内存法对不上,明确修复候选,将 Baldwin 对齐库值 Baldwin I 后得到所查战役。,单点修改后与参考一致,SELECT name FROM battle WHERE bulgarian_commander = 'Kaloyan' AND latin_commander = 'Baldwin I';,1,0
+独立留出,NLQ_multitype-01027,813,返回内容多选,差异已复现，题意边界,"SELECT * 改成 Name 后，1,860 行均与参考一致。post 只要求列城市，未明确说名称。",单点修改后与参考一致,SELECT Name FROM city WHERE Population BETWEEN 160000 AND 900000;,1860,1860
+独立留出,NLQ_multitype-00645,468,返回内容多选,明确修复候选,保留排序中的 minutes，移除 SELECT 里的 minutes 后返回同一组胜者和负者。,单点修改后与参考一致,"SELECT winner_name AS winning_side, loser_name AS losing_side FROM matches WHERE minutes IS NOT NULL ORDER BY minutes DESC LIMIT 1;",1,1
+独立留出,NLQ_others-01725,614,排序方向未指定,差异已复现，题意边界,DESC 改 ASC 后通过。两侧题面均未明确指定方向。,单点修改后与参考一致,"SELECT ""Episode"" FROM ""TV_series"" ORDER BY CAST(""Rating"" AS REAL) ASC;",12,12
+定向补测第一轮,DB_DBcontent_equivalence-00183,570,参考排序与题意冲突,参考 SQL 问题,问最后一次，参考仅时间降序，年、月、日默认升序。已核对完整降序的输出。,参考补全年月日降序后与预测一致,,1,1
+定向补测第一轮,DB_DBcontent_equivalence-00141,479,自行拼接字段,差异已复现，题意边界,"预测把年、月、日拼成一个日期，参考保留三列。改回分列后 1,504 行通过。",单点修改后与参考一致,"SELECT year, month, day, SUM(tours) AS total_tours FROM rankings GROUP BY year, month, day ORDER BY year, month, day;",1504,1504
+定向补测第一轮,DB_DBcontent_equivalence-00213,620,自行拼接字段,差异已复现，题意边界,预测拼成 YYYY-MM-DD，参考分别返回月、日、年。改回分列后通过。,单点修改后与参考一致,"SELECT air_month, air_day, air_year FROM TV_series WHERE Episode = 'A Love of a Lifetime';",1,1
+定向补测第一轮,DB_DBcontent_equivalence-00346,958,拆分后漏选字段,差异已复现，题意边界,补回 time_arrived 后 9 行通过。题面只说到达日期，是否包含时分秒仍有争议。,单点修改后与参考一致,"SELECT DISTINCT d.date_arrived, d.time_arrived, d.date_departed FROM Dogs AS d WHERE EXISTS ( SELECT 1 FROM Treatments AS t WHERE t.dog_id = d.dog_id );",9,9
+定向补测第一轮,DB_DBcontent_equivalence-00112,401,并列时取法不同,差异已复现，题意边界,教师姓名相同时，预测额外按课程排序，题面只要求按教师姓名。两组结果内容相同。,内容和重复次数一致，行序不同,,6,6
+定向补测第二轮,NLQ_keyword_synonym-00097,156,参考排序与题意冲突,参考 SQL 问题,加速字段存耗时。最快是 8 秒，参考降序选中 24.8 秒。,,,1,1
+定向补测第二轮,DB_DBcontent_equivalence-00323,841,自行拼接字段,差异已复现，题意边界,参考分列返回姓名，预测合成全名。分列重跑 12 行通过，题面也支持全名。,单点修改后与参考一致,"SELECT c.first_name, c.last_name, o.Orchestra AS orchestra_name FROM conductor AS c JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID; --",12,12
+定向补测第二轮,DB_DBcontent_equivalence-00357,947,拆分后漏选字段,差异已复现，题意边界,补回治疗时间后 15 行通过，题面 date 是否包括时分秒仍待确认。,单点修改后与参考一致,"SELECT t.date_of_treatment, t.time_of_treatment, p.first_name FROM Treatments AS t JOIN Professionals AS p ON p.professional_id = t.professional_id;",15,15
+定向补测第二轮,DB_DBcontent_equivalence-00281,688,参考排序与题意冲突,参考 SQL 问题,题面明确按姓名降序，参考按名升序再按姓降序。两个字段都改降序后恢复扰动前的参赛者顺序。,参考改为姓名两部分降序后与 pre 的编号顺序相同,,11,11
+定向补测第二轮,DB_DBcontent_equivalence-00075,280,自行拼接字段,差异已复现，题意边界,预测拼接员工姓名，改回分列后通过，题面只要求姓名。,单点修改后与参考一致,"SELECT e.first_name, e.last_name FROM employee AS e JOIN evaluation AS v ON e.Employee_ID = v.Employee_ID ORDER BY v.Bonus DESC LIMIT 1;",1,1
+定向补测第二轮,NLQ_others-01069,395,并列时取法不同,差异已复现，题意边界,七个家乡各有一名老师，都并列最多。参考取一个，预测列七个并额外显示人数。,原库确认 7 项并列，预测全返回，参考返回其一,,1,7
+定向补测第二轮,NLQ_others-02213,789,并列时取法不同,差异已复现，题意边界,七个地区人口均为零，参考任选一个，预测返回并列最低的全部地区。,原库确认 7 项并列，预测全返回，参考返回其一,,1,7
+定向补测第二轮,NLQ_others-00873,332,并列时取法不同,差异已复现，题意边界,BK 与 PP 各有六个模板，并列最多。预测返回两个，参考取一个。,原库确认 2 项并列，预测全返回，参考返回其一,,1,2
+定向补测第二轮,SQL_sort_order-00172,886,缺失记录被当成 0,参考 SQL 问题,John 和 Brittany 没有好友明细，库内计数为零。参考内连接排除两人。,,,1,1
+定向补测第二轮,NLQ_others-01305,476,筛选范围变了或漏掉限制,明确修复候选,题目只要人数最多的国家代码。预测排序后保留了全部 153 个分组，检查到第一名唯一。取第一名并只返回代码后得到 USA。,确认第一名唯一，约束返回范围和字段后与参考一致,SELECT country_code FROM players GROUP BY country_code ORDER BY COUNT(*) DESC LIMIT 1;,1,153
+定向补测第三轮,DB_DBcontent_equivalence-00381,1027,自行拼接字段,差异已复现，题意边界,同两名歌手。预测合并原姓名，参考分成姓与名。改回分列后通过。题目只写 sname，是否要求分列？,单点修改后与参考一致,"SELECT s.first_name, s.last_name FROM singer AS s WHERE NOT EXISTS ( SELECT 1 FROM song AS so WHERE so.Singer_ID = s.Singer_ID );",2,2
+定向补测第三轮,SQL_sort_order-00174,930,缺失记录被当成 0,参考 SQL 问题,3 名业主没有养狗记录。参考内连接排除三人，返回养了 1 只狗的业主，预测返回养了 0 只狗的业主。,,,1,1
+定向补测第三轮,SQL_sort_order-00092,539,缺失记录被当成 0,参考 SQL 问题,有 6 个项目无注册记录，参考内连接漏掉，预测返回 0 人的项目。,,,1,1
+定向补测第三轮,NLQ_others-02537,980,参考返回内容与题意冲突,参考 SQL 问题,post 题面要求列出 ID，参考仍返回数量。,,,1,3
+定向补测第三轮,NLQ_others-01813,645,去重口径不同,差异已复现，题意边界,参考保留 11 个频道对应的套餐值，预测只列 3 个不同套餐。去掉 DISTINCT 后 11 行与参考一致。套餐值是否要保留每频道的重复项？,单点修改后与参考一致,SELECT tc.Package_Option FROM TV_Channel AS tc WHERE NOT EXISTS ( SELECT 1 FROM Cartoon AS c WHERE c.Channel = tc.id AND c.Directed_by = 'Ben Jones' );,11,3
+定向补测第四轮,SQL_sort_order-00084,515,缺失记录被当成 0,参考 SQL 问题,5 个院系没有学位项目。参考内连接漏掉这些院系，返回开设 1 个项目的 art。预测返回开设 0 个项目的 computer science。,,,1,1
+定向补测第四轮,DB_schema_abbreviation-00826,354,题意和表、列没对上,差异已复现，题意边界,模型选 Templates.Template_Details，有文档用过的模板在该列全为空字符串。参考关联到类型描述，得到 Presentation、Paper、Book、Advertisement。题目中的 descriptions 指模板自身说明，还是模板类型说明？,单点修改后与参考一致,SELECT DISTINCT r.Template_Type_Description FROM Templates AS t JOIN Documents AS d ON d.tpl_id = t.Template_ID JOIN Ref_Template_Types AS r ON r.tpl_type_code=t.Template_Type_Code;,4,1
+定向补测第四轮,DB_DBcontent_equivalence-00144,498,筛选值和库内存法对不上,明确修复候选,brig_ship 实际用文本 T/F，预测按数字 1 匹配。只替换成 T 后从 0 行恢复到 5 行。,单点修改后与参考一致,"SELECT DISTINCT b.id, b.name FROM battle AS b JOIN ship AS s ON s.lost_in_battle = b.id WHERE s.brig_ship = 'T';",5,0
+定向补测第四轮,DB_schema_synonym-00220,62,返回内容多选,明确修复候选,题面明确只问专业和年龄。预测额外返回名和姓。去掉两列后 33 行与参考一致。,单点修改后与参考一致,"SELECT s.program, s.Age FROM Student AS s WHERE NOT EXISTS ( SELECT 1 FROM Has_Pet AS hp JOIN Pets AS p ON p.PetID = hp.PetID WHERE hp.StuID = s.StuID AND p.animal_category = 'cat' );",33,33
+定向补测第四轮,NLQ_multitype-00984,731,筛选范围变了或漏掉限制,差异已复现，题意边界,参考仅筛 GovernmentForm=US Territory，共 3 条。预测还计入 2 条 Commonwealth of the US 和 1 条 Dependent Territory of the US。改回单一标签后通过。题面 U.S. territories 是库内标签，还是包括其他美国属地的通称？,单点修改后与参考一致,"SELECT AVG(GNP) AS average_gnp, SUM(Population) AS total_population FROM country WHERE GovernmentForm = 'US Territory';",1,1

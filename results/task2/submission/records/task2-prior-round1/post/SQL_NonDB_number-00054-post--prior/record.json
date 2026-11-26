@@ -1,0 +1,66 @@
+{
+  "id": "SQL_NonDB_number-00054-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7409,
+    "completion_tokens": 196,
+    "total_tokens": 7605,
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT winner_name, winner_rank\nFROM matches\nGROUP BY winner_name, winner_rank\nHAVING MIN(winner_age) IS NOT NULL\nORDER BY MIN(winner_age), winner_name, winner_rank\nLIMIT 5;",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 5,
+  "prediction_row_count": 5,
+  "status": "match",
+  "condition": "prior",
+  "prior": "matches has repeated match records. For this output, the ranking unit is a distinct (winner_name, winner_rank) combination, ordered by the youngest age observed for that combination. Distinct ranks of the same winner remain separate.",
+  "recorded_at": "2026-11-25T13:38:57+08:00",
+  "gold_rows": [
+    [
+      "Madison Keys",
+      17
+    ],
+    [
+      "Madison Keys",
+      24
+    ],
+    [
+      "Madison Keys",
+      16
+    ],
+    [
+      "Madison Keys",
+      12
+    ],
+    [
+      "Madison Keys",
+      9
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Madison Keys",
+      17
+    ],
+    [
+      "Madison Keys",
+      24
+    ],
+    [
+      "Madison Keys",
+      16
+    ],
+    [
+      "Madison Keys",
+      12
+    ],
+    [
+      "Madison Keys",
+      9
+    ]
+  ]
+}

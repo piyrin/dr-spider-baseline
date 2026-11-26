@@ -1,0 +1,27 @@
+{
+  "id": "resp_047cedf381996ff2016b0674b9115c87d2bf4c195e05356eb5",
+  "object": "chat.completion",
+  "created": 1795585213,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT Record_Company\nFROM orchestra\nORDER BY year_of_existence ASC;\n--"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7349,
+    "completion_tokens": 167,
+    "total_tokens": 7516,
+    "prompt_tokens_details": {
+      "cached_tokens": 6400
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  }
+}

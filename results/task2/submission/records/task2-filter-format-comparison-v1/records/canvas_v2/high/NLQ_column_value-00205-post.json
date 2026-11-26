@@ -1,0 +1,545 @@
+{
+  "id": "NLQ_column_value-00205-post",
+  "side": "post",
+  "original_id": 602,
+  "method": "canvas_v2",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "format_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "TV_Channel.Package_Option"
+        ],
+        "joins": [],
+        "targets": [
+          {
+            "table": "TV_Channel",
+            "column": "series_name",
+            "term": "Sky radio",
+            "operator": "="
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one explicit textual equality filter. Use the exact term as written in the question, including case and whitespace, with operator \"=\". Return zero targets if there is no such unique filter. The requested output field is not a filter."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Cartoon\" (\"id\" real,\"Title\" text,\"Directed_by\" text,\"Written_by\" text,\"Original_air_date\" text,\"Production_code\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nCREATE TABLE \"TV_Channel\" (\"id\" text,\"series_name\" text,\"Country\" text,\"Language\" text,\"Content\" text,\"Pixel_aspect_ratio_PAR\" text,\"Hight_definition_TV\" text,\"Pay_per_view_PPV\" text,\"Package_Option\" text,PRIMARY KEY (\"id\"))\nCREATE TABLE \"TV_series\" (\"id\" real,\"Episode\" text,\"Air_Date\" text,\"Rating\" text,\"Share\" real,\"18_49_Rating_Share\" text,\"Viewers_m\" text,\"Weekly_Rank\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nQuestion\nWhat are the package options of TV channels 'Sky radio'?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0df746d4c1dbf416016b06ff22194087d2bc0f6c3d0c632781",
+          "object": "chat.completion",
+          "created": 1795620654,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"TV_Channel.Package_Option\"],\"joins\":[],\"targets\":[{\"table\":\"TV_Channel\",\"column\":\"series_name\",\"term\":\"Sky radio\",\"operator\":\"=\"}]}",
+                "reasoning_content": "**Defining exact JSON mapping for package options****Confirming literal term usage in JSON**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0df746d4c1dbf416016b06ff22198c87d28440a4d29d1f11a1": {
+                  "input_tokens": 127,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 127,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0df746d4c1dbf416016b06ff22199087d2b14ab9765c6ca131": {
+                  "input_tokens": 215,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 215,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0df746d4c1dbf416016b06ff2d643087d2a9939b7a2e0d30c5": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 42,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 42
+                    }
+                  ]
+                },
+                "rs_0df746d4c1dbf416016b06ff280e0087d285d7a94c1c71161d": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 143
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3840,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 8948,
+            "completion_tokens": 185,
+            "total_tokens": 9133,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 7552
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 143
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0df746d4c1dbf416016b06ff22198c87d28440a4d29d1f11a1": {
+                "input_tokens": 127,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 127,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0df746d4c1dbf416016b06ff22199087d2b14ab9765c6ca131": {
+                "input_tokens": 215,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 215,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0df746d4c1dbf416016b06ff2d643087d2a9939b7a2e0d30c5": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 42,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 42
+                  }
+                ]
+              },
+              "rs_0df746d4c1dbf416016b06ff280e0087d285d7a94c1c71161d": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 143
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3840,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 8948,
+          "completion_tokens": 185,
+          "total_tokens": 9133,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 7552
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 143
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "exact",
+      "kind": "format_exact",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "miss",
+        "target": {
+          "table": "TV_Channel",
+          "column": "series_name",
+          "term": "Sky radio"
+        },
+        "value": null
+      },
+      "call": null
+    },
+    {
+      "id": "normalize",
+      "kind": "format_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact"
+      ],
+      "output": {
+        "status": "normalized",
+        "candidates": [
+          "Sky Radio"
+        ],
+        "value": "Sky Radio"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Check whether the unique SQLite value is a formatting variant of the quoted filter term in the current question. Compare case and whitespace only. Reject if the term, column or comparison is unsupported. Return only JSON with one boolean key accept. Do not invent or change a value."
+            },
+            {
+              "role": "user",
+              "content": "{\"question\": \"What are the package options of TV channels 'Sky radio'?\", \"filter\": {\"table\": \"TV_Channel\", \"column\": \"series_name\", \"term\": \"Sky radio\"}, \"stored_value\": \"Sky Radio\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0a71905059313797016b06ff4e6bc487d0b0acaf6a4ea3ad7e",
+          "object": "chat.completion",
+          "created": 1795620690,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"accept\":true}",
+                "reasoning_content": "**Checking whitespace match**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0a71905059313797016b06ff4e6c0487d0857b4a0395df2ffb": {
+                  "input_tokens": 58,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 58,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0a71905059313797016b06ff4e6c0487d09977f73098d6fb5e": {
+                  "input_tokens": 53,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 53,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0a71905059313797016b06ff5242cc87d0afcde3786ee51f72": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 11,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 11
+                    }
+                  ]
+                },
+                "rs_0a71905059313797016b06ff4f6bd887d0bbb674c975370ee6": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 16
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3840,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 8717,
+            "completion_tokens": 27,
+            "total_tokens": 8744,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 7552
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 16
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0a71905059313797016b06ff4e6c0487d0857b4a0395df2ffb": {
+                "input_tokens": 58,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 58,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0a71905059313797016b06ff4e6c0487d09977f73098d6fb5e": {
+                "input_tokens": 53,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 53,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0a71905059313797016b06ff5242cc87d0afcde3786ee51f72": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 11,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 11
+                  }
+                ]
+              },
+              "rs_0a71905059313797016b06ff4f6bd887d0bbb674c975370ee6": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 16
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3840,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 8717,
+          "completion_tokens": 27,
+          "total_tokens": 8744,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 7552
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 16
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "format_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact",
+        "normalize"
+      ],
+      "output": {
+        "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+        "route": "normalized",
+        "stored_value": "Sky Radio"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Cartoon\" (\"id\" real,\"Title\" text,\"Directed_by\" text,\"Written_by\" text,\"Original_air_date\" text,\"Production_code\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nCREATE TABLE \"TV_Channel\" (\"id\" text,\"series_name\" text,\"Country\" text,\"Language\" text,\"Content\" text,\"Pixel_aspect_ratio_PAR\" text,\"Hight_definition_TV\" text,\"Pay_per_view_PPV\" text,\"Package_Option\" text,PRIMARY KEY (\"id\"))\nCREATE TABLE \"TV_series\" (\"id\" real,\"Episode\" text,\"Air_Date\" text,\"Rating\" text,\"Share\" real,\"18_49_Rating_Share\" text,\"Viewers_m\" text,\"Weekly_Rank\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nQuestion\nWhat are the package options of TV channels 'Sky radio'?\nQuery plan\nVerified knowledge: in TV_Channel.series_name, the exact stored text corresponding to 'Sky radio' is 'Sky Radio'. Use the stored text for that equality filter."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_04aa0eecfb5d94d3016b06ff56214c87d18c95efa4dd0a1ece",
+          "object": "chat.completion",
+          "created": 1795620697,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4659,
+            "completion_tokens": 25,
+            "total_tokens": 4684,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3328
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4659,
+          "completion_tokens": 25,
+          "total_tokens": 4684,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3328
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+        "rows": [
+          [
+            "Sky Famiglia"
+          ]
+        ],
+        "columns": [
+          "Package_Option"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "model_calls": 3,
+  "usage": {
+    "prompt_tokens": 22324,
+    "completion_tokens": 237,
+    "total_tokens": 22561
+  },
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  }
+}

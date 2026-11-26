@@ -1,0 +1,54 @@
+{
+  "nodes": [
+    {
+      "id": "match",
+      "kind": "projection_match"
+    },
+    {
+      "id": "normalize",
+      "kind": "projection_normalize"
+    },
+    {
+      "id": "recheck",
+      "kind": "projection_recheck"
+    },
+    {
+      "id": "constraint",
+      "kind": "projection_constraint"
+    },
+    {
+      "id": "generate",
+      "kind": "projection_generate"
+    },
+    {
+      "id": "execute",
+      "kind": "execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "match",
+      "target": "normalize"
+    },
+    {
+      "source": "normalize",
+      "target": "recheck"
+    },
+    {
+      "source": "match",
+      "target": "constraint"
+    },
+    {
+      "source": "constraint",
+      "target": "generate"
+    },
+    {
+      "source": "generate",
+      "target": "execute"
+    },
+    {
+      "source": "recheck",
+      "target": "constraint"
+    }
+  ]
+}

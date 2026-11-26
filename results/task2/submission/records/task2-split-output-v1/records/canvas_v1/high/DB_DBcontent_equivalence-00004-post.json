@@ -1,0 +1,334 @@
+{
+  "id": "DB_DBcontent_equivalence-00004-post",
+  "method": "canvas_v1",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "split_intent",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "kind": "name",
+            "table": "singer",
+            "fields": [
+              "first_name",
+              "last_name"
+            ],
+            "role": "output",
+            "cue": "singer names",
+            "sole_output": true
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For this node identify a person name in the question. A word like name can name a song or place; only select person names. Return JSON {\"targets\":[]} if no single person name concept is clear. Otherwise return exactly one target with kind \"name\", table (exact identifier), fields (exact identifiers, all stored name components needed for the concept, in display order), role (\"output\", \"filter\", or \"both\"), cue (verbatim contiguous text naming the concept), and sole_output (true only when that name is the only requested output item). A person name may be used for lookup, output, or both. Do not include columns merely used for other filters, joins or sorting. If only one name component was requested, list just that component. If the person name has first and last components, list both; include the middle component if it is part of the requested name. Do not output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"concert\" (\"concert_ID\" int,\"concert_Name\" text,\"Theme\" text,\"Stadium_ID\" text,\"Year\" text,PRIMARY KEY (\"concert_ID\"),FOREIGN KEY (\"Stadium_ID\") REFERENCES \"stadium\" (\"Stadium_ID\"))\nCREATE TABLE \"singer\" (\"Singer_ID\" int,\"first_name\" text,\"last_name\" text,\"Country\" text,\"Song_Name\" text,\"Song_release_year\" text,\"Age\" int,\"gender\" text,PRIMARY KEY (\"Singer_ID\"))\nCREATE TABLE \"singer_in_concert\" (\"concert_ID\" int,\"Singer_ID\" text,PRIMARY KEY (\"concert_ID\",\"Singer_ID\"),FOREIGN KEY (\"concert_ID\") REFERENCES \"concert\" (\"concert_ID\"),FOREIGN KEY (\"Singer_ID\") REFERENCES \"singer\" (\"Singer_ID\"))\nCREATE TABLE \"stadium\" (\"Stadium_ID\" int,\"Location\" text,\"Name\" text,\"Capacity\" int,\"Highest\" int,\"Lowest\" int,\"Average\" int,PRIMARY KEY (\"Stadium_ID\"))\nQuestion\nList all singer names in concerts in year 2014."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_094725a39b3e7d0b016b07a373cff087d29d3b8852289ff11a",
+          "object": "chat.completion",
+          "created": 1795662712,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"kind\":\"name\",\"table\":\"singer\",\"fields\":[\"first_name\",\"last_name\"],\"role\":\"output\",\"cue\":\"singer names\",\"sole_output\":true}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 7566,
+            "completion_tokens": 311,
+            "total_tokens": 7877,
+            "prompt_tokens_details": {
+              "cached_tokens": 6144
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 273
+            }
+          }
+        },
+        "usage": {
+          "prompt_tokens": 7566,
+          "completion_tokens": 311,
+          "total_tokens": 7877,
+          "prompt_tokens_details": {
+            "cached_tokens": 6144
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 273
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "fields",
+      "kind": "split_fields",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "components",
+        "table": "singer",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "singer names",
+        "sole_output": true
+      },
+      "call": null
+    },
+    {
+      "id": "decide",
+      "kind": "split_decide",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "fields"
+      ],
+      "output": {
+        "route": "split",
+        "table": "singer",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "singer names",
+        "sole_output": true,
+        "decision_cue": "singer names",
+        "agent_decision": {
+          "mode": "split",
+          "cue": "singer names"
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Choose how to use this one verified group of stored person-name components. Return JSON {\"targets\":[{\"mode\":\"split|lookup|display|fallback\",\"cue\":\"verbatim question fragment\"}]}. split means separate stored fields for an output name in the absence of an explicit request to combine it. lookup means combine components only to match a name supplied as a filter; if the name is also requested as output leave the components separate. display requires explicit wording to concatenate or display one output column. A generic name or full name request uses the experiment default of preserved components. Use fallback for unclear field use. Do not supply SQL or other columns."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"concert\" (\"concert_ID\" int,\"concert_Name\" text,\"Theme\" text,\"Stadium_ID\" text,\"Year\" text,PRIMARY KEY (\"concert_ID\"),FOREIGN KEY (\"Stadium_ID\") REFERENCES \"stadium\" (\"Stadium_ID\"))\nCREATE TABLE \"singer\" (\"Singer_ID\" int,\"first_name\" text,\"last_name\" text,\"Country\" text,\"Song_Name\" text,\"Song_release_year\" text,\"Age\" int,\"gender\" text,PRIMARY KEY (\"Singer_ID\"))\nCREATE TABLE \"singer_in_concert\" (\"concert_ID\" int,\"Singer_ID\" text,PRIMARY KEY (\"concert_ID\",\"Singer_ID\"),FOREIGN KEY (\"concert_ID\") REFERENCES \"concert\" (\"concert_ID\"),FOREIGN KEY (\"Singer_ID\") REFERENCES \"singer\" (\"Singer_ID\"))\nCREATE TABLE \"stadium\" (\"Stadium_ID\" int,\"Location\" text,\"Name\" text,\"Capacity\" int,\"Highest\" int,\"Lowest\" int,\"Average\" int,PRIMARY KEY (\"Stadium_ID\"))\nQuestion\nList all singer names in concerts in year 2014.\nField hypotheses\n{\"targets\":[{\"route\":\"components\",\"table\":\"singer\",\"columns\":[\"first_name\",\"last_name\"],\"role\":\"output\",\"cue\":\"singer names\",\"sole_output\":true}]}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0710fc297c8c20d7016b07a37a49d487d0be4eb8065d0e38ca",
+          "object": "chat.completion",
+          "created": 1795662719,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"mode\":\"split\",\"cue\":\"singer names\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 7554,
+            "completion_tokens": 357,
+            "total_tokens": 7911,
+            "completion_tokens_details": {
+              "reasoning_tokens": 342
+            }
+          }
+        },
+        "usage": {
+          "prompt_tokens": 7554,
+          "completion_tokens": 357,
+          "total_tokens": 7911,
+          "completion_tokens_details": {
+            "reasoning_tokens": 342
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "contract",
+      "kind": "split_contract",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "decide"
+      ],
+      "output": {
+        "route": "split",
+        "table": "singer",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "singer names",
+        "sole_output": true,
+        "decision_cue": "singer names",
+        "hint": "Return this requested person name as separate stored columns in this order: singer.first_name, singer.last_name. Preserve all other requested outputs and filters."
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "split_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "contract"
+      ],
+      "output": {
+        "sql": "SELECT DISTINCT s.first_name, s.last_name\nFROM singer AS s\nJOIN singer_in_concert AS sc ON sc.Singer_ID = s.Singer_ID\nJOIN concert AS c ON c.concert_ID = sc.concert_ID\nWHERE c.Year = '2014';\n--",
+        "route": "split",
+        "contract": {
+          "route": "split",
+          "table": "singer",
+          "columns": [
+            "first_name",
+            "last_name"
+          ],
+          "role": "output",
+          "cue": "singer names",
+          "sole_output": true,
+          "decision_cue": "singer names",
+          "hint": "Return this requested person name as separate stored columns in this order: singer.first_name, singer.last_name. Preserve all other requested outputs and filters."
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"concert\" (\"concert_ID\" int,\"concert_Name\" text,\"Theme\" text,\"Stadium_ID\" text,\"Year\" text,PRIMARY KEY (\"concert_ID\"),FOREIGN KEY (\"Stadium_ID\") REFERENCES \"stadium\" (\"Stadium_ID\"))\nCREATE TABLE \"singer\" (\"Singer_ID\" int,\"first_name\" text,\"last_name\" text,\"Country\" text,\"Song_Name\" text,\"Song_release_year\" text,\"Age\" int,\"gender\" text,PRIMARY KEY (\"Singer_ID\"))\nCREATE TABLE \"singer_in_concert\" (\"concert_ID\" int,\"Singer_ID\" text,PRIMARY KEY (\"concert_ID\",\"Singer_ID\"),FOREIGN KEY (\"concert_ID\") REFERENCES \"concert\" (\"concert_ID\"),FOREIGN KEY (\"Singer_ID\") REFERENCES \"singer\" (\"Singer_ID\"))\nCREATE TABLE \"stadium\" (\"Stadium_ID\" int,\"Location\" text,\"Name\" text,\"Capacity\" int,\"Highest\" int,\"Lowest\" int,\"Average\" int,PRIMARY KEY (\"Stadium_ID\"))\nQuestion\nList all singer names in concerts in year 2014.\nQuery plan\nReturn this requested person name as separate stored columns in this order: singer.first_name, singer.last_name. Preserve all other requested outputs and filters."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_021480b54f41d951016b07a3811b2087d2beae5832acdad4ec",
+          "object": "chat.completion",
+          "created": 1795662725,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT DISTINCT s.first_name, s.last_name\nFROM singer AS s\nJOIN singer_in_concert AS sc ON sc.Singer_ID = s.Singer_ID\nJOIN concert AS c ON c.concert_ID = sc.concert_ID\nWHERE c.Year = '2014';\n--",
+                "reasoning_content": "**Generating SQL query**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 7268,
+            "completion_tokens": 357,
+            "total_tokens": 7625,
+            "completion_tokens_details": {
+              "reasoning_tokens": 300
+            }
+          }
+        },
+        "usage": {
+          "prompt_tokens": 7268,
+          "completion_tokens": 357,
+          "total_tokens": 7625,
+          "completion_tokens_details": {
+            "reasoning_tokens": 300
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "split_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT DISTINCT s.first_name, s.last_name\nFROM singer AS s\nJOIN singer_in_concert AS sc ON sc.Singer_ID = s.Singer_ID\nJOIN concert AS c ON c.concert_ID = sc.concert_ID\nWHERE c.Year = '2014';\n--",
+        "rows": [
+          [
+            "A",
+            "Timbaland"
+          ],
+          [
+            "Justin",
+            "Brown"
+          ],
+          [
+            "John",
+            "Nizinik"
+          ],
+          [
+            "Tribal",
+            "King"
+          ],
+          [
+            "Rose",
+            "White"
+          ]
+        ],
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "output_check": "match"
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 22388,
+    "completion_tokens": 1025,
+    "total_tokens": 23413
+  },
+  "model_calls": 3,
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 6,
+    "prediction_rows": 5
+  }
+}

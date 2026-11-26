@@ -1,0 +1,24 @@
+{
+  "id": "resp_058f2541b0b5c392016b067477d0b887d0a06bbd1e9e3a052b",
+  "object": "chat.completion",
+  "created": 1795585147,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT winner_name, winner_rank\nFROM matches\nGROUP BY winner_name, winner_rank\nHAVING MIN(winner_age) IS NOT NULL\nORDER BY MIN(winner_age), winner_name, winner_rank\nLIMIT 5;"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7409,
+    "completion_tokens": 196,
+    "total_tokens": 7605,
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  }
+}

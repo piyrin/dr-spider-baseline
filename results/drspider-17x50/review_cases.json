@@ -1,0 +1,2398 @@
+[
+  {
+    "id": "DB_DBcontent_equivalence-00084-pre",
+    "group": "DB_DBcontent_equivalence",
+    "index": 84,
+    "side": "pre",
+    "original_id": 387,
+    "db_id": "course_teach",
+    "database": "data\\Spider-dev\\databases\\course_teach\\course_teach.sqlite",
+    "question": "List the name of teachers whose hometown is not `` Little Lever Urban District '' .",
+    "gold_sql": "select name from teacher where hometown != \"little lever urban district\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4551,
+      "completion_tokens": 24,
+      "total_tokens": 4575,
+      "prompt_tokens_details": {
+        "cached_tokens": 4459
+      }
+    },
+    "prediction_sql": "SELECT \"Name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> 'Little Lever Urban District';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 7,
+    "prediction_row_count": 6,
+    "status": "mismatch",
+    "stratum_failed": 6,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "题目明确排除 Little Lever Urban District。参考用全小写值，结果仍包含 Anne Walker，共 7 行。预测匹配问句的地名，排除该老师，返回 6 行。"
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00107-pre",
+    "group": "DB_DBcontent_equivalence",
+    "index": 107,
+    "side": "pre",
+    "original_id": 388,
+    "db_id": "course_teach",
+    "database": "data\\Spider-dev\\databases\\course_teach\\course_teach.sqlite",
+    "question": "What are the names of the teachers whose hometown is not `` Little Lever Urban District '' ?",
+    "gold_sql": "select name from teacher where hometown != \"little lever urban district\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4553,
+      "completion_tokens": 24,
+      "total_tokens": 4577,
+      "prompt_tokens_details": {
+        "cached_tokens": 4461
+      }
+    },
+    "prediction_sql": "SELECT \"Name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> 'Little Lever Urban District';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 7,
+    "prediction_row_count": 6,
+    "status": "mismatch",
+    "stratum_failed": 6,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "参考用小写地名做不等筛选，未排除 Anne Walker。模型用实际地名大小写，返回 6 行，符合排除要求。"
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00037-post",
+    "group": "DB_DBcontent_equivalence",
+    "index": 37,
+    "side": "post",
+    "original_id": 54,
+    "db_id": "pets_1_2",
+    "database": "data\\DB_DBcontent_equivalence\\database_post_perturbation\\pets_1_2\\pets_1_2.sqlite",
+    "question": "How many dog pets are raised by female students?",
+    "gold_sql": "SELECT count(*) FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.is_male = \"F\" and Pets.PetType = \"dog\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4554,
+      "completion_tokens": 106,
+      "total_tokens": 4660,
+      "prompt_tokens_details": {
+        "cached_tokens": 4462
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      }
+    },
+    "prediction_sql": "SELECT COUNT(DISTINCT p.PetID)\nFROM Pets AS p\nJOIN Has_Pet AS hp ON hp.PetID = p.PetID\nJOIN Student AS s ON s.StuID = hp.StuID\nWHERE p.PetType = 'dog'\n  AND s.is_male = 0;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 20,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "变体库的 Student.is_male 只存文本 F 和 T。模型用 0 筛女性，返回 0，参考筛 F 得到 2。犬只去重也是潜在差异，但匹配值已足以解释该库的空结果。",
+    "showcase": true,
+    "verification": [
+      {
+        "role": "gold_sql",
+        "sql": "SELECT count(*) FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.is_male = \"F\" and Pets.PetType = \"dog\"",
+        "row_count": 1,
+        "first_rows": [
+          [
+            2
+          ]
+        ]
+      },
+      {
+        "role": "prediction_sql",
+        "sql": "SELECT COUNT(DISTINCT p.PetID)\nFROM Pets AS p\nJOIN Has_Pet AS hp ON hp.PetID = p.PetID\nJOIN Student AS s ON s.StuID = hp.StuID\nWHERE p.PetType = 'dog'\n  AND s.is_male = 0;",
+        "row_count": 1,
+        "first_rows": [
+          [
+            0
+          ]
+        ]
+      },
+      {
+        "role": "diagnostic_check",
+        "sql": "SELECT is_male, typeof(is_male), COUNT(*) FROM Student GROUP BY is_male",
+        "row_count": 2,
+        "first_rows": [
+          [
+            "F",
+            "text",
+            10
+          ],
+          [
+            "T",
+            "text",
+            24
+          ]
+        ]
+      },
+      {
+        "role": "diagnostic_check",
+        "sql": "SELECT COUNT(DISTINCT p.PetID) FROM Pets p JOIN Has_Pet hp ON hp.PetID=p.PetID JOIN Student s ON s.StuID=hp.StuID WHERE p.PetType='dog' AND s.is_male='F'",
+        "row_count": 1,
+        "first_rows": [
+          [
+            2
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00176-post",
+    "group": "DB_DBcontent_equivalence",
+    "index": 176,
+    "side": "post",
+    "original_id": 551,
+    "db_id": "student_transcripts_tracking_4",
+    "database": "data\\DB_DBcontent_equivalence\\database_post_perturbation\\student_transcripts_tracking_4\\student_transcripts_tracking_4.sqlite",
+    "question": "Show the date and id of the transcript with at least 2 course results.",
+    "gold_sql": "SELECT Transcripts.transcript_year , Transcripts.transcript_month , Transcripts.transcript_day , Transcripts.transcript_time , Transcript_Contents.transcript_id FROM Transcript_Contents JOIN Transcripts ON Transcript_Contents.transcript_id = Transcripts.transcript_id GROUP BY Transcript_Contents.transcript_id HAVING count(*) >= 2",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 5144,
+      "completion_tokens": 169,
+      "total_tokens": 5313,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      }
+    },
+    "prediction_sql": "SELECT\n    date(printf('%04d-%02d-%02d', t.transcript_year, t.transcript_month, t.transcript_day)) AS transcript_date,\n    t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc ON tc.transcript_id = t.transcript_id\nGROUP BY t.transcript_id\nHAVING COUNT(tc.student_course_id) >= 2;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 4,
+    "prediction_row_count": 4,
+    "status": "mismatch",
+    "stratum_failed": 20,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "参考用年、月、日、时刻描述日期和 ID，预测用 ISO 日期和 ID。四个 ID 及日期相同，题目要求日期，未要求分栏或时刻。"
+  },
+  {
+    "id": "DB_schema_abbreviation-00308-pre",
+    "group": "DB_schema_abbreviation",
+    "index": 308,
+    "side": "pre",
+    "original_id": 166,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "For all of the 4 cylinder cars, which model has the most horsepower?",
+    "gold_sql": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id WHERE T2.Cylinders = 4 ORDER BY T2.horsepower DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4667,
+      "completion_tokens": 97,
+      "total_tokens": 4764,
+      "prompt_tokens_details": {
+        "cached_tokens": 4573
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      }
+    },
+    "prediction_sql": "SELECT cn.Model\nFROM cars_data AS cd\nJOIN car_names AS cn ON cn.MakeId = cd.Id\nWHERE cd.Cylinders = 4\nORDER BY CAST(cd.Horsepower AS REAL) DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 9,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "四缸车的 Horsepower 存为文本，降序的前五条都是字符串 null。按数值排序的最大值为 115。预测选 citroen，参考选取了马力缺失的 ford。"
+  },
+  {
+    "id": "DB_schema_abbreviation-02124-pre",
+    "group": "DB_schema_abbreviation",
+    "index": 2124,
+    "side": "pre",
+    "original_id": 818,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "What is the total number of countries where Spanish is spoken by the largest percentage of people?",
+    "gold_sql": "SELECT count(*) , max(Percentage) FROM countrylanguage WHERE LANGUAGE = \"Spanish\" GROUP BY CountryCode",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4763,
+      "completion_tokens": 99,
+      "total_tokens": 4862,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*)\nFROM countrylanguage AS cl\nWHERE cl.Language = 'Spanish'\n  AND NOT EXISTS (\n    SELECT 1\n    FROM countrylanguage AS other\n    WHERE other.CountryCode = cl.CountryCode\n      AND other.Percentage > cl.Percentage\n  );",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 28,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 9,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "题目要求以西班牙语为使用率最高语言的国家总数。参考先过滤西班牙语，随后按国家输出 28 行，未比较其他语言。预测逐国比较语言比例后返回总数 21。"
+  },
+  {
+    "id": "DB_schema_abbreviation-00308-post",
+    "group": "DB_schema_abbreviation",
+    "index": 308,
+    "side": "post",
+    "original_id": 166,
+    "db_id": "car_1_3",
+    "database": "data\\DB_schema_abbreviation\\database_post_perturbation\\car_1_3\\car_1_3.sqlite",
+    "question": "For all of the 4 cylinder cars, which model has the most horsepower?",
+    "gold_sql": "SELECT car_names.mdl FROM car_names JOIN cars_data ON car_names.MakeId = cars_data.Id WHERE cars_data.Cylinders = 4 ORDER BY cars_data.hp desc LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4670,
+      "completion_tokens": 90,
+      "total_tokens": 4760,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      }
+    },
+    "prediction_sql": "SELECT cn.mdl\nFROM cars_data AS cd\nJOIN car_names AS cn ON cn.MakeId = cd.Id\nWHERE cd.Cylinders = 4\nORDER BY CAST(cd.hp AS REAL) DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 12,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "变体库将马力列缩写为 hp，参考仍按文本排序并选中缺失值对应的 ford。预测把 hp 转为数值后选 citroen，符合最大马力的数值比较。"
+  },
+  {
+    "id": "DB_schema_abbreviation-02124-post",
+    "group": "DB_schema_abbreviation",
+    "index": 2124,
+    "side": "post",
+    "original_id": 818,
+    "db_id": "world_1_1",
+    "database": "data\\DB_schema_abbreviation\\database_post_perturbation\\world_1_1\\world_1_1.sqlite",
+    "question": "What is the total number of countries where Spanish is spoken by the largest percentage of people?",
+    "gold_sql": "SELECT count(*) , max(countrylanguage.pct) FROM countrylanguage WHERE countrylanguage.Language = \"Spanish\" GROUP BY countrylanguage.CountryCode",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4761,
+      "completion_tokens": 112,
+      "total_tokens": 4873,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*)\nFROM countrylanguage AS cl\nWHERE cl.Language = 'Spanish'\n  AND cl.pct = (\n    SELECT MAX(cl2.pct)\n    FROM countrylanguage AS cl2\n    WHERE cl2.CountryCode = cl.CountryCode\n  );",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 28,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 12,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "参考对已筛出的西语记录按国家分组，返回 28 行。模型把西语比例与该国所有语言的最大比例比较，再计数为 21，符合题意。"
+  },
+  {
+    "id": "DB_schema_synonym-02483-pre",
+    "group": "DB_schema_synonym",
+    "index": 2483,
+    "side": "pre",
+    "original_id": 996,
+    "db_id": "dog_kennels",
+    "database": "data\\Spider-dev\\databases\\dog_kennels\\dog_kennels.sqlite",
+    "question": "What are all the possible breed type and size type combinations?",
+    "gold_sql": "SELECT DISTINCT breed_code , size_code FROM dogs",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4966,
+      "completion_tokens": 27,
+      "total_tokens": 4993,
+      "prompt_tokens_details": {
+        "cached_tokens": 4736
+      }
+    },
+    "prediction_sql": "SELECT b.breed_name, s.size_description\nFROM Breeds AS b\nCROSS JOIN Sizes AS s;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 7,
+    "prediction_row_count": 9,
+    "status": "mismatch",
+    "stratum_failed": 14,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "possible combinations 可指词典表能枚举的全部配对，也可指 Dogs 中观察到的配对。预测取笛卡尔积的 9 种并输出说明文字，参考取实际的 7 种并输出代码。"
+  },
+  {
+    "id": "DB_schema_synonym-01026-pre",
+    "group": "DB_schema_synonym",
+    "index": 1026,
+    "side": "pre",
+    "original_id": 420,
+    "db_id": "museum_visit",
+    "database": "data\\Spider-dev\\databases\\museum_visit\\museum_visit.sqlite",
+    "question": "What are the id, name and membership level of visitors who have spent the largest amount of money in total in all museum tickets?",
+    "gold_sql": "SELECT t2.visitor_id , t1.name , t1.Level_of_membership FROM visitor AS t1 JOIN visit AS t2 ON t1.id = t2.visitor_id GROUP BY t2.visitor_id ORDER BY sum(t2.Total_spent) DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4572,
+      "completion_tokens": 171,
+      "total_tokens": 4743,
+      "prompt_tokens_details": {
+        "cached_tokens": 4480
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      }
+    },
+    "prediction_sql": "WITH visitor_totals AS (\n  SELECT visitor_ID, SUM(Total_spent) AS total_spent\n  FROM visit\n  GROUP BY visitor_ID\n)\nSELECT v.ID, v.Name, v.Level_of_membership\nFROM visitor AS v\nJOIN visitor_totals AS t ON t.visitor_ID = v.ID\nWHERE t.total_spent = (SELECT MAX(total_spent) FROM visitor_totals);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 14,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "两者都返回同一会员 Arjen Robben，且 ID 同为 3。参考取 visit 表的文本外键，模型取 visitor 表的整数主键，评分因类型表示不同而分开。"
+  },
+  {
+    "id": "DB_schema_synonym-02550-post",
+    "group": "DB_schema_synonym",
+    "index": 2550,
+    "side": "post",
+    "original_id": 1007,
+    "db_id": "singer_0",
+    "database": "data\\DB_schema_synonym\\database_post_perturbation\\singer_0\\singer_0.sqlite",
+    "question": "What are the names of the singers who are not French citizens?",
+    "gold_sql": "SELECT singer.Name FROM singer WHERE singer.nationality != \"France\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4517,
+      "completion_tokens": 16,
+      "total_tokens": 4533,
+      "prompt_tokens_details": {
+        "cached_tokens": 4224
+      }
+    },
+    "prediction_sql": "SELECT Name\nFROM singer\nWHERE nationality <> 'French';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 7,
+    "prediction_row_count": 8,
+    "status": "mismatch",
+    "stratum_failed": 17,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "国籍列 NATIONALITY 的法国值为 France。预测使用 French 做不等筛选，保留了应排除的 Liliane Bettencourt，结果多一行。"
+  },
+  {
+    "id": "DB_schema_synonym-00467-post",
+    "group": "DB_schema_synonym",
+    "index": 467,
+    "side": "post",
+    "original_id": 131,
+    "db_id": "car_1_3",
+    "database": "data\\DB_schema_synonym\\database_post_perturbation\\car_1_3\\car_1_3.sqlite",
+    "question": "What is the maximum horsepower and the make of the car models with 3 cylinders?",
+    "gold_sql": "SELECT cars_data.engine , car_names.Make FROM car_names JOIN cars_data ON car_names.MakeId = cars_data.Id WHERE cars_data.cylinder_number = 3 ORDER BY cars_data.engine desc LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4669,
+      "completion_tokens": 143,
+      "total_tokens": 4812,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      }
+    },
+    "prediction_sql": "SELECT CAST(cd.engine AS REAL) AS max_horsepower, cn.Make\nFROM cars_data AS cd\nJOIN car_names AS cn ON cn.MakeId = cd.Id\nWHERE cd.cylinder_number = 3\nORDER BY CAST(cd.engine AS REAL) DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 17,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "字段改名为 engine 后仍以文本存放。参考按文本序拿到 97，预测按数值排得到 110，后者符合最大马力的题意。"
+  },
+  {
+    "id": "NLQ_column_attribute-00035-pre",
+    "group": "NLQ_column_attribute",
+    "index": 35,
+    "side": "pre",
+    "original_id": 159,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "How many cars have a larger accelerate than the car with the largest horsepower?",
+    "gold_sql": "SELECT COUNT(*) FROM CARS_DATA WHERE Accelerate > ( SELECT Accelerate FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1 )",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4666,
+      "completion_tokens": 76,
+      "total_tokens": 4742,
+      "prompt_tokens_details": {
+        "cached_tokens": 4572
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    ORDER BY CAST(Horsepower AS REAL) DESC\n    LIMIT 1\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 16,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "题目以数值最大马力的车辆作为加速值阈值。参考把马力按文本排序，模型按数值排序，随后分别得到 39 和 399。直接文本排序与最大马力的数值含义不符。"
+  },
+  {
+    "id": "NLQ_column_attribute-00029-pre",
+    "group": "NLQ_column_attribute",
+    "index": 29,
+    "side": "pre",
+    "original_id": 133,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "Which model saves the most gasoline? That is to say, have the maximum miles per gallon.",
+    "gold_sql": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id ORDER BY T2.mpg DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4670,
+      "completion_tokens": 131,
+      "total_tokens": 4801,
+      "prompt_tokens_details": {
+        "cached_tokens": 4576
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      }
+    },
+    "prediction_sql": "SELECT cn.Model, cd.MPG\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE CAST(cd.MPG AS REAL) = (\n    SELECT MAX(CAST(MPG AS REAL))\n    FROM cars_data\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 16,
+    "verdict": "model_error",
+    "model_type": "return_fields",
+    "evidence": "题目明确只问车型。预测附加返回 MPG，输出两列。参考的文本排序还会选到缺失 MPG，不能用参考行值单独证明模型找错车型。"
+  },
+  {
+    "id": "NLQ_column_attribute-00022-post",
+    "group": "NLQ_column_attribute",
+    "index": 22,
+    "side": "post",
+    "original_id": 98,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the car model which has lighter than average?",
+    "gold_sql": "SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id WHERE T2.Weight < (SELECT avg(Weight) FROM CARS_DATA)",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4662,
+      "completion_tokens": 60,
+      "total_tokens": 4722,
+      "prompt_tokens_details": {
+        "cached_tokens": 4568
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      }
+    },
+    "prediction_sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cd.Weight < (SELECT AVG(Weight) FROM cars_data);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 230,
+    "prediction_row_count": 28,
+    "status": "mismatch",
+    "stratum_failed": 16,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "双方筛选相同的低于平均重量车辆。参考每辆车输出车型，共 230 行，模型对车型去重为 28 行。题面没有明确要求一车一行或一个车型一行。"
+  },
+  {
+    "id": "NLQ_column_attribute-00033-post",
+    "group": "NLQ_column_attribute",
+    "index": 33,
+    "side": "post",
+    "original_id": 134,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the car model with the best fuel efficiency?",
+    "gold_sql": "select t1.model from car_names as t1 join cars_data as t2 on t1.makeid = t2.id order by t2.mpg desc limit 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4662,
+      "completion_tokens": 112,
+      "total_tokens": 4774,
+      "prompt_tokens_details": {
+        "cached_tokens": 4568
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      }
+    },
+    "prediction_sql": "SELECT cn.Model\nFROM cars_data AS cd\nJOIN car_names AS cn ON cn.MakeId = cd.Id\nWHERE cd.MPG IS NOT NULL AND cd.MPG != '?'\nORDER BY CAST(cd.MPG AS REAL) DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 16,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "题目求燃油效率最高车型。参考按文本排 MPG，字符串 null 居前，选出 citroen。预测按数值比较，选出数值 MPG 较高的 mazda。"
+  },
+  {
+    "id": "NLQ_column_carrier-00054-pre",
+    "group": "NLQ_column_carrier",
+    "index": 54,
+    "side": "pre",
+    "original_id": 65,
+    "db_id": "pets_1",
+    "database": "data\\Spider-dev\\databases\\pets_1\\pets_1.sqlite",
+    "question": "Find the first name and age of students who have a dog but do not have a cat as a pet.",
+    "gold_sql": "SELECT T1.fname , T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat')",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4566,
+      "completion_tokens": 125,
+      "total_tokens": 4691,
+      "prompt_tokens_details": {
+        "cached_tokens": 4474
+      }
+    },
+    "prediction_sql": "SELECT s.Fname, s.Age\nFROM Student AS s\nWHERE EXISTS (\n    SELECT 1\n    FROM Has_Pet AS hp\n    JOIN Pets AS p ON p.PetID = hp.PetID\n    WHERE hp.StuID = s.StuID AND p.PetType = 'dog'\n)\nAND NOT EXISTS (\n    SELECT 1\n    FROM Has_Pet AS hp\n    JOIN Pets AS p ON p.PetID = hp.PetID\n    WHERE hp.StuID = s.StuID AND p.PetType = 'cat'\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 2,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 5,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "题目要学生的姓名和年龄。Tracy 的同一学生 ID 1002 养了两只狗，参考把她输出两次，预测按学生输出一次，均指向符合条件的 Tracy。"
+  },
+  {
+    "id": "NLQ_column_carrier-00267-pre",
+    "group": "NLQ_column_carrier",
+    "index": 267,
+    "side": "pre",
+    "original_id": 574,
+    "db_id": "student_transcripts_tracking",
+    "database": "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite",
+    "question": "What is the date and id of the transcript with the least number of results?",
+    "gold_sql": "SELECT T2.transcript_date , T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id = T2.transcript_id GROUP BY T1.transcript_id ORDER BY count(*) ASC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 5123,
+      "completion_tokens": 95,
+      "total_tokens": 5218,
+      "prompt_tokens_details": {
+        "cached_tokens": 4992
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      }
+    },
+    "prediction_sql": "SELECT t.transcript_date, t.transcript_id\nFROM Transcripts AS t\nLEFT JOIN Transcript_Contents AS tc ON tc.transcript_id = t.transcript_id\nGROUP BY t.transcript_id, t.transcript_date\nORDER BY COUNT(tc.student_course_id) ASC, t.transcript_id ASC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 5,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "题目未规定成绩单没有成绩时是否计入，也未规定并列如何处理。预测从成绩单总表左连接并设次排序，参考仅在有明细的范围内选一条，返回 ID 分别为 1 与 2。"
+  },
+  {
+    "id": "NLQ_column_carrier-00499-post",
+    "group": "NLQ_column_carrier",
+    "index": 499,
+    "side": "post",
+    "original_id": 871,
+    "db_id": "network_1",
+    "database": "data\\Spider-dev\\databases\\network_1\\network_1.sqlite",
+    "question": "Who are all students currently in grade ten?",
+    "gold_sql": "SELECT name FROM Highschooler WHERE grade = 10",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4557,
+      "completion_tokens": 22,
+      "total_tokens": 4579,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      }
+    },
+    "prediction_sql": "SELECT ID, name, grade\nFROM Highschooler\nWHERE grade = 10;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 4,
+    "prediction_row_count": 4,
+    "status": "mismatch",
+    "stratum_failed": 19,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "两条查询均找到同样四位十年级学生。模型额外返回编号和年级，题目以“谁”提问，未规定输出列。"
+  },
+  {
+    "id": "NLQ_column_carrier-00275-post",
+    "group": "NLQ_column_carrier",
+    "index": 275,
+    "side": "post",
+    "original_id": 624,
+    "db_id": "tvshow",
+    "database": "data\\Spider-dev\\databases\\tvshow\\tvshow.sqlite",
+    "question": "Which series has the episode 'A Love of a lifetime'?",
+    "gold_sql": "SELECT T1.series_name FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Episode = \"A Love of a Lifetime\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4622,
+      "completion_tokens": 59,
+      "total_tokens": 4681,
+      "prompt_tokens_details": {
+        "cached_tokens": 4480
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      }
+    },
+    "prediction_sql": "SELECT DISTINCT c.series_name\nFROM TV_series AS s\nJOIN TV_Channel AS c ON s.Channel = c.id\nWHERE s.Episode = 'A Love of a lifetime';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 0,
+    "status": "mismatch",
+    "stratum_failed": 19,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "预测逐字使用 A Love of a lifetime，库值为 A Love of a Lifetime。只要匹配该名称的实际大小写，就能从空集命中 Sky Radio。"
+  },
+  {
+    "id": "NLQ_column_synonym-00449-post",
+    "group": "NLQ_column_synonym",
+    "index": 449,
+    "side": "post",
+    "original_id": 816,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "Which countries speak which languages as a predominant language?",
+    "gold_sql": "SELECT LANGUAGE , CountryCode , max(Percentage) FROM countrylanguage GROUP BY CountryCode",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4755,
+      "completion_tokens": 177,
+      "total_tokens": 4932,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      }
+    },
+    "prediction_sql": "SELECT c.Name AS Country, cl.Language, cl.Percentage\nFROM country AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nWHERE cl.Percentage = (\n    SELECT MAX(cl2.Percentage)\n    FROM countrylanguage AS cl2\n    WHERE cl2.CountryCode = c.Code\n)\nORDER BY c.Name, cl.Language;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 233,
+    "prediction_row_count": 241,
+    "status": "mismatch",
+    "stratum_failed": 22,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "题目要国家及其使用率最高的语言。预测用国名表示国家并返回所有并列最高语言，参考用代码且每国只选一行。题面没有限定代码或并列取舍。"
+  },
+  {
+    "id": "NLQ_column_synonym-00526-post",
+    "group": "NLQ_column_synonym",
+    "index": 526,
+    "side": "post",
+    "original_id": 996,
+    "db_id": "dog_kennels",
+    "database": "data\\Spider-dev\\databases\\dog_kennels\\dog_kennels.sqlite",
+    "question": "Please state every combination of breed and size codes.",
+    "gold_sql": "SELECT DISTINCT breed_code , size_code FROM dogs",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4964,
+      "completion_tokens": 27,
+      "total_tokens": 4991,
+      "prompt_tokens_details": {
+        "cached_tokens": 4736
+      }
+    },
+    "prediction_sql": "SELECT b.breed_code, s.size_code\nFROM Breeds AS b\nCROSS JOIN Sizes AS s;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 7,
+    "prediction_row_count": 9,
+    "status": "mismatch",
+    "stratum_failed": 22,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "两份 SQL 均返回品种与尺寸代码。模型还列出 BUL 与 SML、HUS 与 LGE 两个理论组合。题目未明确组合是否要求在 Dogs 表中出现过。"
+  },
+  {
+    "id": "NLQ_column_synonym-00297-pre",
+    "group": "NLQ_column_synonym",
+    "index": 297,
+    "side": "pre",
+    "original_id": 580,
+    "db_id": "student_transcripts_tracking",
+    "database": "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite",
+    "question": "What other details can you tell me about students in reverse alphabetical order?",
+    "gold_sql": "SELECT other_student_details FROM Students ORDER BY other_student_details DESC",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 5121,
+      "completion_tokens": 147,
+      "total_tokens": 5268,
+      "prompt_tokens_details": {
+        "cached_tokens": 4992
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      }
+    },
+    "prediction_sql": "SELECT other_student_details\nFROM Students\nORDER BY last_name DESC, first_name DESC;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 15,
+    "prediction_row_count": 15,
+    "status": "mismatch",
+    "stratum_failed": 14,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "两者返回相同的其他详细信息。参考按详细信息逆字母序，预测按学生姓、名逆序。题面没有明确要对学生姓名还是详细信息排序。"
+  },
+  {
+    "id": "NLQ_column_synonym-00049-pre",
+    "group": "NLQ_column_synonym",
+    "index": 49,
+    "side": "pre",
+    "original_id": 102,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the maker of the carr produced in the earliest year and what year was it?",
+    "gold_sql": "SELECT T2.Make , T1.Year FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId WHERE T1.Year = (SELECT min(YEAR) FROM CARS_DATA)",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4669,
+      "completion_tokens": 105,
+      "total_tokens": 4774,
+      "prompt_tokens_details": {
+        "cached_tokens": 4575
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      }
+    },
+    "prediction_sql": "SELECT cm.Maker, cd.Year\nFROM cars_data AS cd\nJOIN car_names AS cn ON cn.MakeId = cd.Id\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nORDER BY cd.Year ASC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 35,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 14,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "题面使用 maker 并以单数提问。参考给最早年份 1970 的 35 条车辆名称，预测给一条制造商简称与年份。制造商与车型以及并列范围都未明确。"
+  },
+  {
+    "id": "NLQ_column_value-00231-pre",
+    "group": "NLQ_column_value",
+    "index": 231,
+    "side": "pre",
+    "original_id": 691,
+    "db_id": "voter_1",
+    "database": "data\\Spider-dev\\databases\\voter_1\\voter_1.sqlite",
+    "question": "What is last date created of votes from the state 'CA'?",
+    "gold_sql": "SELECT max(created) FROM votes WHERE state = 'CA'",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4573,
+      "completion_tokens": 25,
+      "total_tokens": 4598,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      }
+    },
+    "prediction_sql": "SELECT MAX(DATE(created)) AS last_vote_date\nFROM VOTES\nWHERE state = 'CA';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 4,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "题目问最新日期。参考输出 2018-03-09 19:03:39，预测输出同一天的 2018-03-09。两者差在是否附带时刻。"
+  },
+  {
+    "id": "NLQ_column_value-00024-pre",
+    "group": "NLQ_column_value",
+    "index": 24,
+    "side": "pre",
+    "original_id": 37,
+    "db_id": "concert_singer",
+    "database": "data\\Spider-dev\\databases\\concert_singer\\concert_singer.sqlite",
+    "question": "List all singer names in concerts in year 2014.",
+    "gold_sql": "SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id = T2.singer_id JOIN concert AS T3 ON T1.concert_id = T3.concert_id WHERE T3.year = 2014",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4632,
+      "completion_tokens": 55,
+      "total_tokens": 4687,
+      "prompt_tokens_details": {
+        "cached_tokens": 4480
+      }
+    },
+    "prediction_sql": "SELECT DISTINCT s.Name\nFROM singer AS s\nJOIN singer_in_concert AS sic ON s.Singer_ID = sic.Singer_ID\nJOIN concert AS c ON sic.concert_ID = c.concert_ID\nWHERE c.Year = '2014';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 6,
+    "prediction_row_count": 5,
+    "status": "mismatch",
+    "stratum_failed": 4,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "题目找 2014 年参演歌手的姓名。参考对参演记录逐条输出，Justin Brown 出现两次，预测每个姓名一次，名字集合相同。"
+  },
+  {
+    "id": "NLQ_column_value-00026-post",
+    "group": "NLQ_column_value",
+    "index": 26,
+    "side": "post",
+    "original_id": 37,
+    "db_id": "concert_singer",
+    "database": "data\\Spider-dev\\databases\\concert_singer\\concert_singer.sqlite",
+    "question": "List all singers who have performed in concert during 2014.",
+    "gold_sql": "SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id = T2.singer_id JOIN concert AS T3 ON T1.concert_id = T3.concert_id WHERE T3.year = 2014",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4633,
+      "completion_tokens": 55,
+      "total_tokens": 4688,
+      "prompt_tokens_details": {
+        "cached_tokens": 4480
+      }
+    },
+    "prediction_sql": "SELECT DISTINCT s.Name\nFROM singer AS s\nJOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nJOIN concert AS c ON sc.concert_ID = c.concert_ID\nWHERE c.Year = '2014';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 6,
+    "prediction_row_count": 5,
+    "status": "mismatch",
+    "stratum_failed": 14,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "改写问句说列出 2014 年参加过演出的歌手。模型仅去掉 Justin Brown 的重复行，保留与参考相同的歌手姓名集合。"
+  },
+  {
+    "id": "NLQ_column_value-00095-post",
+    "group": "NLQ_column_value",
+    "index": 95,
+    "side": "post",
+    "original_id": 158,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the cylinder count on the version of a Volvo with the least acceleration?",
+    "gold_sql": "SELECT T1.cylinders FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId WHERE T2.Model = 'volvo' ORDER BY T1.accelerate ASC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4667,
+      "completion_tokens": 107,
+      "total_tokens": 4774,
+      "prompt_tokens_details": {
+        "cached_tokens": 4573
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      }
+    },
+    "prediction_sql": "SELECT cd.Cylinders\nFROM cars_data AS cd\nJOIN car_names AS cn ON cn.MakeId = cd.Id\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nWHERE cm.Maker = 'Volvo'\nORDER BY cd.Accelerate ASC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 0,
+    "status": "mismatch",
+    "stratum_failed": 14,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "题目问 Volvo 车型的最小加速所对应气缸数。预测将 Volvo 作为 Maker 字段精确条件，筛得 0 行，参考从车型列以 volvo 找到候选并返回 6。"
+  },
+  {
+    "id": "NLQ_keyword_carrier-00085-pre",
+    "group": "NLQ_keyword_carrier",
+    "index": 85,
+    "side": "pre",
+    "original_id": 162,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the number of countries with more than 2 car makers ?",
+    "gold_sql": "select count(*) from countries as t1 join car_makers as t2 on t1.countryid = t2.country group by t1.countryid having count(*) > 2",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4665,
+      "completion_tokens": 92,
+      "total_tokens": 4757,
+      "prompt_tokens_details": {
+        "cached_tokens": 4571
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*)\nFROM (\n    SELECT c.\"CountryId\"\n    FROM \"countries\" AS c\n    JOIN \"car_makers\" AS cm ON cm.\"Country\" = c.\"CountryId\"\n    GROUP BY c.\"CountryId\"\n    HAVING COUNT(*) > 2\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 4,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 10,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "题目要求符合条件的国家总数。参考输出 4 个国家各自的厂商数，预测对 4 个合格组再次计数，返回所问的标量 4。"
+  },
+  {
+    "id": "NLQ_keyword_carrier-00058-pre",
+    "group": "NLQ_keyword_carrier",
+    "index": 58,
+    "side": "pre",
+    "original_id": 125,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the number of the cars with horsepower more than 150?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE horsepower > 150",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4665,
+      "completion_tokens": 22,
+      "total_tokens": 4687,
+      "prompt_tokens_details": {
+        "cached_tokens": 4571
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) FROM cars_data WHERE CAST(Horsepower AS REAL) > 150;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 10,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "Horsepower 是文本列。参考直接比较把文本 90 也算为大于 150，返回 281。预测转为数值后得到 49，符合数值大于 150 的要求。",
+    "showcase": true,
+    "verification": [
+      {
+        "role": "gold_sql",
+        "sql": "SELECT count(*) FROM CARS_DATA WHERE horsepower > 150",
+        "row_count": 1,
+        "first_rows": [
+          [
+            281
+          ]
+        ]
+      },
+      {
+        "role": "prediction_sql",
+        "sql": "SELECT COUNT(*) FROM cars_data WHERE CAST(Horsepower AS REAL) > 150;",
+        "row_count": 1,
+        "first_rows": [
+          [
+            49
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "NLQ_keyword_carrier-00360-post",
+    "group": "NLQ_keyword_carrier",
+    "index": 360,
+    "side": "post",
+    "original_id": 902,
+    "db_id": "network_1",
+    "database": "data\\Spider-dev\\databases\\network_1\\network_1.sqlite",
+    "question": "How many likes have been counted for each student id?",
+    "gold_sql": "SELECT student_id , count(*) FROM Likes GROUP BY student_id",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4559,
+      "completion_tokens": 135,
+      "total_tokens": 4694,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      }
+    },
+    "prediction_sql": "SELECT h.ID AS student_id, COUNT(l.liked_id) AS like_count\nFROM Highschooler AS h\nLEFT JOIN Likes AS l ON l.student_id = h.ID\nGROUP BY h.ID;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 10,
+    "prediction_row_count": 16,
+    "status": "mismatch",
+    "stratum_failed": 11,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "题意要求每个学生 ID 的点赞计数。参考仅按点赞表分组，忽略 6 个从未点赞的学生。模型从学生表左连接，保留十六个学生 ID。"
+  },
+  {
+    "id": "NLQ_keyword_carrier-00124-post",
+    "group": "NLQ_keyword_carrier",
+    "index": 124,
+    "side": "post",
+    "original_id": 214,
+    "db_id": "flight_2",
+    "database": "data\\Spider-dev\\databases\\flight_2\\flight_2.sqlite",
+    "question": "How many Jetblue Airways flights do you know?",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T1.Airline = T2.uid WHERE T2.Airline = \"JetBlue Airways\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4554,
+      "completion_tokens": 40,
+      "total_tokens": 4594,
+      "prompt_tokens_details": {
+        "cached_tokens": 4462
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) AS flight_count\nFROM flights AS f\nJOIN airlines AS a ON f.Airline = a.uid\nWHERE a.Airline = 'Jetblue Airways';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 11,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "问句中的 Jetblue Airways 未按库值 JetBlue Airways 规范化。等值匹配得 0，按实际航司值查询得 100。"
+  },
+  {
+    "id": "NLQ_keyword_synonym-00499-post",
+    "group": "NLQ_keyword_synonym",
+    "index": 499,
+    "side": "post",
+    "original_id": 500,
+    "db_id": "battle_death",
+    "database": "data\\Spider-dev\\databases\\battle_death\\battle_death.sqlite",
+    "question": "Show the ship ID and name that had the highest number of total injuries.",
+    "gold_sql": "SELECT T2.id , T2.name FROM death AS T1 JOIN ship AS t2 ON T1.caused_by_ship_id = T2.id GROUP BY T2.id ORDER BY count(*) DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4586,
+      "completion_tokens": 94,
+      "total_tokens": 4680,
+      "prompt_tokens_details": {
+        "cached_tokens": 4480
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      }
+    },
+    "prediction_sql": "SELECT s.id, s.name\nFROM ship AS s\nJOIN death AS d ON d.caused_by_ship_id = s.id\nGROUP BY s.id, s.name\nORDER BY SUM(COALESCE(d.injured, 0)) DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 20,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "题面要求总受伤人数。参考用 COUNT(*) 计算伤亡记录条数，返回 Three Brothers。预测对 injured 求和，返回 HMS Avon，计算目标符合题意。"
+  },
+  {
+    "id": "NLQ_keyword_synonym-00419-post",
+    "group": "NLQ_keyword_synonym",
+    "index": 419,
+    "side": "post",
+    "original_id": 383,
+    "db_id": "course_teach",
+    "database": "data\\Spider-dev\\databases\\course_teach\\course_teach.sqlite",
+    "question": "Show me a list of teachers in increasing order of age.",
+    "gold_sql": "SELECT Name FROM teacher ORDER BY Age ASC",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4547,
+      "completion_tokens": 49,
+      "total_tokens": 4596,
+      "prompt_tokens_details": {
+        "cached_tokens": 4456
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      }
+    },
+    "prediction_sql": "SELECT * FROM \"teacher\" ORDER BY CAST(\"Age\" AS INTEGER) ASC;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 7,
+    "prediction_row_count": 7,
+    "status": "mismatch",
+    "stratum_failed": 20,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "题目要按年龄列出老师，未指定哪些列。参考只返回姓名，预测返回七条教师完整记录，排序方向与题目一致。"
+  },
+  {
+    "id": "NLQ_keyword_synonym-00135-pre",
+    "group": "NLQ_keyword_synonym",
+    "index": 135,
+    "side": "pre",
+    "original_id": 165,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "For the cars with 4 cylinders, which model has the largest horsepower?",
+    "gold_sql": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id WHERE T2.Cylinders = 4 ORDER BY T2.horsepower DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4666,
+      "completion_tokens": 88,
+      "total_tokens": 4754,
+      "prompt_tokens_details": {
+        "cached_tokens": 4572
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      }
+    },
+    "prediction_sql": "SELECT cn.Model\nFROM cars_data AS cd\nJOIN car_names AS cn ON cn.MakeId = cd.Id\nWHERE cd.Cylinders = 4\nORDER BY CAST(cd.Horsepower AS REAL) DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 16,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "参考将文本 null 排在数值马力之前，得到 ford。预测按马力数值把 115 排在首位，返回满足最大值的车型之一 citroen。"
+  },
+  {
+    "id": "NLQ_keyword_synonym-00690-pre",
+    "group": "NLQ_keyword_synonym",
+    "index": 690,
+    "side": "pre",
+    "original_id": 756,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "Which language is the most popular on the Asian continent?",
+    "gold_sql": "SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Continent = \"Asia\" GROUP BY T2.Language ORDER BY COUNT (*) DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4756,
+      "completion_tokens": 96,
+      "total_tokens": 4852,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      }
+    },
+    "prediction_sql": "SELECT cl.Language\nFROM countrylanguage AS cl\nJOIN country AS c ON c.Code = cl.CountryCode\nWHERE c.Continent = 'Asia'\nGROUP BY cl.Language\nORDER BY SUM(c.Population * cl.Percentage / 100.0) DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 16,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "最流行可以按使用该语言的国家数量计算，也可以按估计使用人数计算。参考计国家行得到 Arabic，预测按人口乘语言比例求和得到 Chinese。",
+    "showcase": true,
+    "verification": [
+      {
+        "role": "gold_sql",
+        "sql": "SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Continent = \"Asia\" GROUP BY T2.Language ORDER BY COUNT (*) DESC LIMIT 1",
+        "row_count": 1,
+        "first_rows": [
+          [
+            "Arabic"
+          ]
+        ]
+      },
+      {
+        "role": "prediction_sql",
+        "sql": "SELECT cl.Language\nFROM countrylanguage AS cl\nJOIN country AS c ON c.Code = cl.CountryCode\nWHERE c.Continent = 'Asia'\nGROUP BY cl.Language\nORDER BY SUM(c.Population * cl.Percentage / 100.0) DESC\nLIMIT 1;",
+        "row_count": 1,
+        "first_rows": [
+          [
+            "Chinese"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "NLQ_multitype-01331-pre",
+    "group": "NLQ_multitype",
+    "index": 1331,
+    "side": "pre",
+    "original_id": 1007,
+    "db_id": "singer",
+    "database": "data\\Spider-dev\\databases\\singer\\singer.sqlite",
+    "question": "What are the names of the singers who are not French citizens?",
+    "gold_sql": "SELECT Name FROM singer WHERE Citizenship != \"France\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4522,
+      "completion_tokens": 16,
+      "total_tokens": 4538,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      }
+    },
+    "prediction_sql": "SELECT Name\nFROM singer\nWHERE Citizenship <> 'French';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 7,
+    "prediction_row_count": 8,
+    "status": "mismatch",
+    "stratum_failed": 13,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "Citizenship 存国家名 France。模型用 French 做不等比较，未排除法国公民 Liliane Bettencourt，返回 8 人，参考排除后返回 7 人。"
+  },
+  {
+    "id": "NLQ_multitype-00305-pre",
+    "group": "NLQ_multitype",
+    "index": 305,
+    "side": "pre",
+    "original_id": 126,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the number of cars with a horsepower greater than 150?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE horsepower > 150",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4665,
+      "completion_tokens": 22,
+      "total_tokens": 4687,
+      "prompt_tokens_details": {
+        "cached_tokens": 4571
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) FROM cars_data WHERE CAST(Horsepower AS REAL) > 150;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 13,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "题目明确要求马力数值大于 150。直接比较文本返回 281，而数值转换后返回 49。参考把部分马力低于阈值的车型计入。"
+  },
+  {
+    "id": "NLQ_multitype-00961-post",
+    "group": "NLQ_multitype",
+    "index": 961,
+    "side": "post",
+    "original_id": 805,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "What are the three countries with the smallest population?",
+    "gold_sql": "SELECT Name FROM country ORDER BY Population ASC LIMIT 3",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4755,
+      "completion_tokens": 24,
+      "total_tokens": 4779,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      }
+    },
+    "prediction_sql": "SELECT Name, Population\nFROM country\nORDER BY Population ASC, Name ASC\nLIMIT 3;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 3,
+    "prediction_row_count": 3,
+    "status": "mismatch",
+    "stratum_failed": 23,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "多条人口记录均为 0，题目未规定并列顺序。参考与预测选取三条最小人口记录，模型还附上用于排序的人口数。"
+  },
+  {
+    "id": "NLQ_multitype-00305-post",
+    "group": "NLQ_multitype",
+    "index": 305,
+    "side": "post",
+    "original_id": 126,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "How many vehicles with a horsepower of over 150?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE horsepower > 150",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4662,
+      "completion_tokens": 45,
+      "total_tokens": 4707,
+      "prompt_tokens_details": {
+        "cached_tokens": 4568
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) FROM cars_data WHERE CAST(Horsepower AS REAL) > 150;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 23,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "改变问法后仍是数值阈值。参考按文本比较，得到 281。预测按数值比较，得到 49。"
+  },
+  {
+    "id": "NLQ_others-01398-pre",
+    "group": "NLQ_others",
+    "index": 1398,
+    "side": "pre",
+    "original_id": 576,
+    "db_id": "student_transcripts_tracking",
+    "database": "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite",
+    "question": "What is the id of the semester that had both Masters and Bachelors students enrolled?",
+    "gold_sql": "SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE degree_summary_name = 'Master' INTERSECT SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE degree_summary_name = 'Bachelor'",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 5124,
+      "completion_tokens": 111,
+      "total_tokens": 5235,
+      "prompt_tokens_details": {
+        "cached_tokens": 4992
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      }
+    },
+    "prediction_sql": "SELECT se.semester_id\nFROM Student_Enrolment AS se\nJOIN Degree_Programs AS dp\n  ON dp.degree_program_id = se.degree_program_id\nWHERE dp.degree_summary_name IN ('Masters', 'Bachelors')\nGROUP BY se.semester_id\nHAVING COUNT(DISTINCT dp.degree_summary_name) = 2;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 0,
+    "status": "mismatch",
+    "stratum_failed": 11,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "库中的学位摘要为 Master 和 Bachelor。预测用 Masters 和 Bachelors 做等值筛选得到空集，参考交集得到第 13 学期。"
+  },
+  {
+    "id": "NLQ_others-00496-pre",
+    "group": "NLQ_others",
+    "index": 496,
+    "side": "pre",
+    "original_id": 214,
+    "db_id": "flight_2",
+    "database": "data\\Spider-dev\\databases\\flight_2\\flight_2.sqlite",
+    "question": "Give the number of Jetblue Airways flights.",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T1.Airline = T2.uid WHERE T2.Airline = \"JetBlue Airways\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4553,
+      "completion_tokens": 40,
+      "total_tokens": 4593,
+      "prompt_tokens_details": {
+        "cached_tokens": 4224
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) AS flight_count\nFROM flights AS f\nJOIN airlines AS a ON f.Airline = a.uid\nWHERE a.Airline = 'Jetblue Airways';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 11,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "预测沿用 Jetblue Airways 的问句拼写，库内实际为 JetBlue Airways。精确匹配导致预测计数 0，实际应为 100。"
+  },
+  {
+    "id": "NLQ_others-01994-post",
+    "group": "NLQ_others",
+    "index": 1994,
+    "side": "post",
+    "original_id": 760,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "Which city has the largest population that speaks English?",
+    "gold_sql": "SELECT T1.Name , T1.Population FROM city AS T1 JOIN countrylanguage AS T2 ON T1.CountryCode = T2.CountryCode WHERE T2.Language = \"English\" ORDER BY T1.Population DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4755,
+      "completion_tokens": 111,
+      "total_tokens": 4866,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      }
+    },
+    "prediction_sql": "SELECT c.Name\nFROM city AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.CountryCode\nWHERE cl.Language = 'English' AND cl.Percentage > 0\nORDER BY c.Population DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 17,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "两条 SQL 均选出 New York。题目可以指英语使用人口最多，也可以指有英语使用者的城市中总人口最多。数据库只有国家级语言比例。参考附带总人口，模型只返回城市名。"
+  },
+  {
+    "id": "NLQ_others-01896-post",
+    "group": "NLQ_others",
+    "index": 1896,
+    "side": "post",
+    "original_id": 676,
+    "db_id": "poker_player",
+    "database": "data\\Spider-dev\\databases\\poker_player\\poker_player.sqlite",
+    "question": "Among all, which nationality is the most popular? Describe them to me.",
+    "gold_sql": "SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4529,
+      "completion_tokens": 245,
+      "total_tokens": 4774,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      }
+    },
+    "prediction_sql": "SELECT Nationality, COUNT(*) AS people_count, GROUP_CONCAT(Name, ', ') AS people\nFROM people\nGROUP BY Nationality\nORDER BY people_count DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 17,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "参考和模型都找到最常见国籍 Russia。改写题面附加了“描述”，模型补充六人计数与名字，提供了相同国籍及相关说明。"
+  },
+  {
+    "id": "NLQ_value_synonym-00375-post",
+    "group": "NLQ_value_synonym",
+    "index": 375,
+    "side": "post",
+    "original_id": 777,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "Show the names of the Asian countries whose populations are larger than those of any African country.",
+    "gold_sql": "SELECT Name FROM country WHERE Continent = \"Asia\" AND population > (SELECT min(population) FROM country WHERE Continent = \"Africa\")",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4763,
+      "completion_tokens": 157,
+      "total_tokens": 4920,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      }
+    },
+    "prediction_sql": "SELECT Name\nFROM country\nWHERE Continent = 'Asia'\n  AND Population > (\n    SELECT MAX(Population)\n    FROM country\n    WHERE Continent = 'Africa'\n  );",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 51,
+    "prediction_row_count": 6,
+    "status": "mismatch",
+    "stratum_failed": 32,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "对 any African country 的存在性解读用非洲最小人口，返回 51 行。全称解读用最大人口，返回 6 行。题面未说明比较范围。"
+  },
+  {
+    "id": "NLQ_value_synonym-00198-post",
+    "group": "NLQ_value_synonym",
+    "index": 198,
+    "side": "post",
+    "original_id": 303,
+    "db_id": "cre_Doc_Template_Mgt",
+    "database": "data\\Spider-dev\\databases\\cre_Doc_Template_Mgt\\cre_Doc_Template_Mgt.sqlite",
+    "question": "Document ID, Template ID, and Document Description for the document named \"RobbinCV\"",
+    "gold_sql": "SELECT document_id , template_id , Document_Description FROM Documents WHERE document_name = \"Robbin CV\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4675,
+      "completion_tokens": 27,
+      "total_tokens": 4702,
+      "prompt_tokens_details": {
+        "cached_tokens": 4581
+      }
+    },
+    "prediction_sql": "SELECT Document_ID, Template_ID, Document_Description\nFROM Documents\nWHERE Document_Name = 'RobbinCV';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 0,
+    "status": "mismatch",
+    "stratum_failed": 32,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "问句的 RobbinCV 对应库中的 Robbin CV。预测直接按改写名称精确匹配，遗漏文档 76。"
+  },
+  {
+    "id": "NLQ_value_synonym-00363-pre",
+    "group": "NLQ_value_synonym",
+    "index": 363,
+    "side": "pre",
+    "original_id": 773,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "Which countries have greater area than that of any country in Europe?",
+    "gold_sql": "SELECT Name FROM country WHERE SurfaceArea > (SELECT min(SurfaceArea) FROM country WHERE Continent = \"Europe\")",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4758,
+      "completion_tokens": 117,
+      "total_tokens": 4875,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      }
+    },
+    "prediction_sql": "SELECT Name\nFROM country\nWHERE SurfaceArea > (\n    SELECT MAX(SurfaceArea)\n    FROM country\n    WHERE Continent = 'Europe'\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 238,
+    "prediction_row_count": 0,
+    "status": "mismatch",
+    "stratum_failed": 12,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "greater than any 可理解为大于欧洲所有国家，也可能按大于其中某国处理。参考用欧洲最小面积，预测用最大面积，题面未进一步说明量词范围。"
+  },
+  {
+    "id": "NLQ_value_synonym-00375-pre",
+    "group": "NLQ_value_synonym",
+    "index": 375,
+    "side": "pre",
+    "original_id": 777,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "What are the Asian countries which have a population larger than that of any country in Africa?",
+    "gold_sql": "SELECT Name FROM country WHERE Continent = \"Asia\" AND population > (SELECT min(population) FROM country WHERE Continent = \"Africa\")",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4763,
+      "completion_tokens": 90,
+      "total_tokens": 4853,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      }
+    },
+    "prediction_sql": "SELECT Name\nFROM country\nWHERE Continent = 'Asia'\n  AND Population > (\n    SELECT MAX(Population)\n    FROM country\n    WHERE Continent = 'Africa'\n  );",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 51,
+    "prediction_row_count": 6,
+    "status": "mismatch",
+    "stratum_failed": 12,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "参考用非洲最小人口作为比较线，预测用最大人口。差异来自对 any 的存在性与全称解释，题目缺少量词说明。"
+  },
+  {
+    "id": "SQL_comparison-00091-pre",
+    "group": "SQL_comparison",
+    "index": 91,
+    "side": "pre",
+    "original_id": 445,
+    "db_id": "wta_1",
+    "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+    "question": "Find the name of tourney that has more than 10 matches.",
+    "gold_sql": "SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*) > 10",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4722,
+      "completion_tokens": 45,
+      "total_tokens": 4767,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      }
+    },
+    "prediction_sql": "SELECT tourney_name\nFROM matches\nGROUP BY tourney_id, tourney_name\nHAVING COUNT(*) > 10;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 9,
+    "prediction_row_count": 7,
+    "status": "mismatch",
+    "stratum_failed": 11,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "参考按赛事名称合并记录，预测按赛事 ID 区分不同届次。相同名称可对应多个 ID，题目没有规定届次。"
+  },
+  {
+    "id": "SQL_comparison-00017-pre",
+    "group": "SQL_comparison",
+    "index": 17,
+    "side": "pre",
+    "original_id": 125,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the number of the cars with horsepower more than 150?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE horsepower > 150",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4665,
+      "completion_tokens": 22,
+      "total_tokens": 4687,
+      "prompt_tokens_details": {
+        "cached_tokens": 4571
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) FROM cars_data WHERE CAST(Horsepower AS REAL) > 150;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 11,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "马力是文本列。参考直接做大于比较返回 281，包含部分数值低于 150 的车辆。数值比较得到 49。"
+  },
+  {
+    "id": "SQL_comparison-00151-post",
+    "group": "SQL_comparison",
+    "index": 151,
+    "side": "post",
+    "original_id": 923,
+    "db_id": "dog_kennels",
+    "database": "data\\Spider-dev\\databases\\dog_kennels\\dog_kennels.sqlite",
+    "question": "Find the id, last name and cell phone of the professionals who live in the state of Indiana or have performed less than two treatments.",
+    "gold_sql": "SELECT professional_id , last_name , cell_number FROM Professionals WHERE state = 'Indiana' UNION SELECT T1.professional_id , T1.last_name , T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id HAVING count(*) < 2",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4981,
+      "completion_tokens": 84,
+      "total_tokens": 5065,
+      "prompt_tokens_details": {
+        "cached_tokens": 4736
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      }
+    },
+    "prediction_sql": "SELECT p.professional_id, p.last_name, p.cell_number\nFROM Professionals AS p\nWHERE p.state = 'Indiana'\n   OR (\n       SELECT COUNT(*)\n       FROM Treatments AS t\n       WHERE t.professional_id = p.professional_id\n   ) < 2;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 4,
+    "prediction_row_count": 10,
+    "status": "mismatch",
+    "stratum_failed": 23,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "少于两次包含零次。参考的治疗分支以治疗明细作内连接，漏掉没有治疗记录的人员。预测从人员表对治疗数检查，补回六人。"
+  },
+  {
+    "id": "SQL_comparison-00092-post",
+    "group": "SQL_comparison",
+    "index": 92,
+    "side": "post",
+    "original_id": 446,
+    "db_id": "wta_1",
+    "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+    "question": "What are the names of tournaments that have less than 10 matches?",
+    "gold_sql": "SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*) < 10",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4722,
+      "completion_tokens": 117,
+      "total_tokens": 4839,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      }
+    },
+    "prediction_sql": "SELECT DISTINCT tourney_name\nFROM matches\nWHERE tourney_id IN (\n    SELECT tourney_id\n    FROM matches\n    GROUP BY tourney_id\n    HAVING COUNT(*) < 10\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 44,
+    "prediction_row_count": 49,
+    "status": "mismatch",
+    "stratum_failed": 23,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "参考以赛事名称作为单位，预测以单届 ID 筛选后返回名称。对于同名多届赛事，题目没有说明使用单届还是合计场次。"
+  },
+  {
+    "id": "SQL_DB_number-00110-pre",
+    "group": "SQL_DB_number",
+    "index": 110,
+    "side": "pre",
+    "original_id": 135,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the average horsepower of the cars before 1980?",
+    "gold_sql": "SELECT avg(horsepower) FROM CARS_DATA WHERE YEAR < 1980",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4664,
+      "completion_tokens": 149,
+      "total_tokens": 4813,
+      "prompt_tokens_details": {
+        "cached_tokens": 4570
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      }
+    },
+    "prediction_sql": "SELECT AVG(CAST(Horsepower AS REAL)) AS average_horsepower\nFROM cars_data\nWHERE Year < 80\n  AND Horsepower IS NOT NULL\n  AND Horsepower <> '?';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 8,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "年份列用四位数。模型用 Year 小于 80 来回答 1980 年以前，结果 NULL，参考约为 111.13。"
+  },
+  {
+    "id": "SQL_DB_number-00136-pre",
+    "group": "SQL_DB_number",
+    "index": 136,
+    "side": "pre",
+    "original_id": 146,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "In 1980, how many cars were made?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE YEAR = 1980",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4662,
+      "completion_tokens": 65,
+      "total_tokens": 4727,
+      "prompt_tokens_details": {
+        "cached_tokens": 4568
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) FROM cars_data WHERE Year = 80;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 8,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "题目问 1980 年，库里使用四位数年份，模型筛 Year = 80 返回 0。匹配 1980 得到 29。"
+  },
+  {
+    "id": "SQL_DB_number-00409-post",
+    "group": "SQL_DB_number",
+    "index": 409,
+    "side": "post",
+    "original_id": 1033,
+    "db_id": "real_estate_properties",
+    "database": "data\\Spider-dev\\databases\\real_estate_properties\\real_estate_properties.sqlite",
+    "question": "What are the names of properties that are either houses or apartments with more than 8 room?",
+    "gold_sql": "SELECT property_name FROM Properties WHERE property_type_code = \"House\" UNION SELECT property_name FROM Properties WHERE property_type_code = \"Apartment\" AND room_count > 8",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4883,
+      "completion_tokens": 133,
+      "total_tokens": 5016,
+      "prompt_tokens_details": {
+        "cached_tokens": 4736
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      }
+    },
+    "prediction_sql": "SELECT p.property_name\nFROM Properties AS p\nJOIN Ref_Property_Types AS t\n  ON p.property_type_code = t.property_type_code\nWHERE p.room_count > 8\n  AND (\n    LOWER(t.property_type_description) LIKE '%house%'\n    OR LOWER(t.property_type_description) LIKE '%apartment%'\n  );",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 4,
+    "prediction_row_count": 2,
+    "status": "mismatch",
+    "stratum_failed": 7,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "题目可读成所有房屋加房间数大于 8 的公寓，也可读成两种房产均需房间数大于 8。参考只对公寓加阈值，预测对两类同时加阈值，分别返回 4 和 2 行。"
+  },
+  {
+    "id": "SQL_DB_number-00092-post",
+    "group": "SQL_DB_number",
+    "index": 92,
+    "side": "post",
+    "original_id": 125,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the number of the cars with horsepower more than 144?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE horsepower > 144",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4665,
+      "completion_tokens": 22,
+      "total_tokens": 4687,
+      "prompt_tokens_details": {
+        "cached_tokens": 4571
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) FROM cars_data WHERE CAST(Horsepower AS REAL) > 144;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 7,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "改写后阈值为 144。参考直接比较文本马力得到 312。模型按数值比较得到 80，两条 SQL 的差异来自参考查询的文本比较。"
+  },
+  {
+    "id": "SQL_DB_text-00313-post",
+    "group": "SQL_DB_text",
+    "index": 313,
+    "side": "post",
+    "original_id": 583,
+    "db_id": "student_transcripts_tracking",
+    "database": "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite",
+    "question": "Find the first name of the students who permanently live in the country Haiti or have the cell phone number 677.401.9382 .",
+    "gold_sql": "select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id = t2.address_id where t2.country = 'haiti' or t1.cell_mobile_number = '677.401.9382'",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 5135,
+      "completion_tokens": 53,
+      "total_tokens": 5188,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      }
+    },
+    "prediction_sql": "SELECT DISTINCT s.first_name\nFROM Students AS s\nJOIN Addresses AS a ON a.address_id = s.permanent_address_id\nWHERE a.country = 'Haiti'\n   OR s.cell_mobile_number = '677.401.9382';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 4,
+    "status": "mismatch",
+    "stratum_failed": 17,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "参考把库中的 Haiti 写成小写 haiti，漏掉符合国家条件的学生，只保留电话命中的 Helga。预测用实际大小写，得到 4 名满足任一条件的学生。"
+  },
+  {
+    "id": "SQL_DB_text-00714-post",
+    "group": "SQL_DB_text",
+    "index": 714,
+    "side": "post",
+    "original_id": 772,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "What are the countries that have greater surface area than any country in Oceania?",
+    "gold_sql": "SELECT Name FROM country WHERE SurfaceArea > (SELECT min(SurfaceArea) FROM country WHERE Continent = \"Oceania\")",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4761,
+      "completion_tokens": 144,
+      "total_tokens": 4905,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      }
+    },
+    "prediction_sql": "SELECT Name\nFROM country\nWHERE SurfaceArea > (\n    SELECT MAX(SurfaceArea)\n    FROM country\n    WHERE Continent = 'Oceania'\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 235,
+    "prediction_row_count": 6,
+    "status": "mismatch",
+    "stratum_failed": 17,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "any country 可以指大于大洋洲每个国家或至少一个国家。预测使用最大面积阈值返回 6 行，参考使用最小面积阈值返回 235 行。"
+  },
+  {
+    "id": "SQL_DB_text-00313-pre",
+    "group": "SQL_DB_text",
+    "index": 313,
+    "side": "pre",
+    "original_id": 583,
+    "db_id": "student_transcripts_tracking",
+    "database": "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite",
+    "question": "Find the first name of the students who permanently live in the country Haiti or have the cell phone number 09700166582 .",
+    "gold_sql": "select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id = t2.address_id where t2.country = 'haiti' or t1.cell_mobile_number = '09700166582'",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 5133,
+      "completion_tokens": 50,
+      "total_tokens": 5183,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      }
+    },
+    "prediction_sql": "SELECT s.first_name\nFROM Students AS s\nJOIN Addresses AS a ON a.address_id = s.permanent_address_id\nWHERE a.country = 'Haiti'\n   OR s.cell_mobile_number = '09700166582';",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 4,
+    "status": "mismatch",
+    "stratum_failed": 14,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "参考使用小写 haiti，与地址值 Haiti 的大小写不一致。两条查询均保留电话匹配的 Jarvis，预测额外找回 3 名在 Haiti 的学生。"
+  },
+  {
+    "id": "SQL_DB_text-00540-pre",
+    "group": "SQL_DB_text",
+    "index": 540,
+    "side": "pre",
+    "original_id": 726,
+    "db_id": "world_1",
+    "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+    "question": "What is the total surface area of the continents Asia and Europe?",
+    "gold_sql": "SELECT sum(SurfaceArea) FROM country WHERE Continent = \"Asia\" OR Continent = \"Europe\"",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4758,
+      "completion_tokens": 36,
+      "total_tokens": 4794,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      }
+    },
+    "prediction_sql": "SELECT Continent, SUM(SurfaceArea) AS TotalSurfaceArea\nFROM country\nWHERE Continent IN ('Asia', 'Europe')\nGROUP BY Continent;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 2,
+    "status": "mismatch",
+    "stratum_failed": 14,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "题目询问亚洲和欧洲的总面积。参考输出两洲合计，预测分别汇总两洲，数值之和等于参考。题面未明确分别给值或给合计值。"
+  },
+  {
+    "id": "SQL_NonDB_number-00036-post",
+    "group": "SQL_NonDB_number",
+    "index": 36,
+    "side": "post",
+    "original_id": 445,
+    "db_id": "wta_1",
+    "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+    "question": "Find the name of tourney that has more than 8 matches.",
+    "gold_sql": "SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*) > 8",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4722,
+      "completion_tokens": 136,
+      "total_tokens": 4858,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      }
+    },
+    "prediction_sql": "SELECT DISTINCT tourney_name\nFROM matches\nWHERE tourney_id IN (\n    SELECT tourney_id\n    FROM matches\n    GROUP BY tourney_id\n    HAVING COUNT(*) > 8\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 10,
+    "prediction_row_count": 8,
+    "status": "mismatch",
+    "stratum_failed": 18,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "参考按赛事名称汇总，模型按赛事 ID 分组再输出名字。同名赛事跨多届时产生不同结果，题目未指定比赛场次是按届还是跨届计算。"
+  },
+  {
+    "id": "SQL_NonDB_number-00040-post",
+    "group": "SQL_NonDB_number",
+    "index": 40,
+    "side": "post",
+    "original_id": 446,
+    "db_id": "wta_1",
+    "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+    "question": "What are the names of tournaments that have more than 4 matches?",
+    "gold_sql": "SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*) > 4",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4722,
+      "completion_tokens": 30,
+      "total_tokens": 4752,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      }
+    },
+    "prediction_sql": "SELECT tourney_name\nFROM matches\nGROUP BY tourney_id, tourney_name\nHAVING COUNT(*) > 4;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 20,
+    "prediction_row_count": 23,
+    "status": "mismatch",
+    "stratum_failed": 18,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "两份 SQL 分别按赛事名称和赛事 ID 总计。同名赛事的不同届次在模型输出中可各占一行。题面未指定统计粒度。"
+  },
+  {
+    "id": "SQL_NonDB_number-00040-pre",
+    "group": "SQL_NonDB_number",
+    "index": 40,
+    "side": "pre",
+    "original_id": 446,
+    "db_id": "wta_1",
+    "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+    "question": "What are the names of tournaments that have more than 10 matches?",
+    "gold_sql": "SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*) > 10",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4722,
+      "completion_tokens": 30,
+      "total_tokens": 4752,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      }
+    },
+    "prediction_sql": "SELECT tourney_name\nFROM matches\nGROUP BY tourney_id, tourney_name\nHAVING COUNT(*) > 10;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 9,
+    "prediction_row_count": 7,
+    "status": "mismatch",
+    "stratum_failed": 10,
+    "verdict": "ambiguous",
+    "model_type": null,
+    "evidence": "题目问超过 10 场的赛事名称。参考跨同名赛事汇总，模型按 ID 分组，赛事的届次范围未说明。"
+  },
+  {
+    "id": "SQL_NonDB_number-00010-pre",
+    "group": "SQL_NonDB_number",
+    "index": 10,
+    "side": "pre",
+    "original_id": 162,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the number of countries with more than 2 car makers ?",
+    "gold_sql": "select count(*) from countries as t1 join car_makers as t2 on t1.countryid = t2.country group by t1.countryid having count(*) > 2",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4665,
+      "completion_tokens": 73,
+      "total_tokens": 4738,
+      "prompt_tokens_details": {
+        "cached_tokens": 4571
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*)\nFROM (\n    SELECT Country\n    FROM car_makers\n    GROUP BY Country\n    HAVING COUNT(*) > 2\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 4,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 10,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "参考对合格国家各返回一个厂商计数，得到四行，预测在分组后再次计数，返回题目所问的国家总数 4。"
+  },
+  {
+    "id": "SQL_sort_order-00094-pre",
+    "group": "SQL_sort_order",
+    "index": 94,
+    "side": "pre",
+    "original_id": 541,
+    "db_id": "student_transcripts_tracking",
+    "database": "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite",
+    "question": "Which student has enrolled for the most times in any program? List the id, first name, middle name, last name, the number of enrollments and student id.",
+    "gold_sql": "SELECT T1.student_id , T1.first_name , T1.middle_name , T1.last_name , count(*) , T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 5141,
+      "completion_tokens": 173,
+      "total_tokens": 5314,
+      "prompt_tokens_details": {
+        "cached_tokens": 4992
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      }
+    },
+    "prediction_sql": "SELECT s.student_id AS id,\n       s.first_name,\n       s.middle_name,\n       s.last_name,\n       COUNT(*) AS number_of_enrollments,\n       se.student_id AS student_id\nFROM Students AS s\nJOIN Student_Enrolment AS se ON se.student_id = s.student_id\nGROUP BY s.student_id, s.first_name, s.middle_name, s.last_name\nORDER BY number_of_enrollments DESC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 12,
+    "verdict": "valid_alternative",
+    "model_type": null,
+    "evidence": "参考选择学生 7，预测选择学生 6。两人均入学三次且达到该库的最高次数，题目未规定并列时选哪人。",
+    "showcase": true,
+    "verification": [
+      {
+        "role": "gold_sql",
+        "sql": "SELECT T1.student_id , T1.first_name , T1.middle_name , T1.last_name , count(*) , T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+        "row_count": 1,
+        "first_rows": [
+          [
+            7,
+            "Frida",
+            "Aisha",
+            "Huel",
+            3,
+            7
+          ]
+        ]
+      },
+      {
+        "role": "prediction_sql",
+        "sql": "SELECT s.student_id AS id,\n       s.first_name,\n       s.middle_name,\n       s.last_name,\n       COUNT(*) AS number_of_enrollments,\n       se.student_id AS student_id\nFROM Students AS s\nJOIN Student_Enrolment AS se ON se.student_id = s.student_id\nGROUP BY s.student_id, s.first_name, s.middle_name, s.last_name\nORDER BY number_of_enrollments DESC\nLIMIT 1;",
+        "row_count": 1,
+        "first_rows": [
+          [
+            6,
+            "Stanford",
+            "Mona",
+            "Rogahn",
+            3,
+            6
+          ]
+        ]
+      },
+      {
+        "role": "diagnostic_check",
+        "sql": "SELECT student_id, COUNT(*) FROM Student_Enrolment GROUP BY student_id ORDER BY 2 DESC, 1 LIMIT 5",
+        "row_count": 5,
+        "first_rows": [
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            14,
+            2
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SQL_sort_order-00025-pre",
+    "group": "SQL_sort_order",
+    "index": 25,
+    "side": "pre",
+    "original_id": 159,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "How many cars have a larger accelerate than the car with the largest horsepower?",
+    "gold_sql": "SELECT COUNT(*) FROM CARS_DATA WHERE Accelerate > ( SELECT Accelerate FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1 )",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4666,
+      "completion_tokens": 87,
+      "total_tokens": 4753,
+      "prompt_tokens_details": {
+        "cached_tokens": 4224
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    ORDER BY CAST(Horsepower AS REAL) DESC\n    LIMIT 1\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 12,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "参考使用马力文本的最大值作为查加速阈值的前提，可能选到文本 null。预测按数值最大马力决定阈值，执行比较中的 39 与 399 源于所选汽车不同。"
+  },
+  {
+    "id": "SQL_sort_order-00173-post",
+    "group": "SQL_sort_order",
+    "index": 173,
+    "side": "post",
+    "original_id": 887,
+    "db_id": "network_1",
+    "database": "data\\Spider-dev\\databases\\network_1\\network_1.sqlite",
+    "question": "Return the name of the high school student with the least friends.",
+    "gold_sql": "SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) ASC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4561,
+      "completion_tokens": 118,
+      "total_tokens": 4679,
+      "prompt_tokens_details": {
+        "cached_tokens": 4352
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      }
+    },
+    "prediction_sql": "SELECT h.name\nFROM Highschooler AS h\nLEFT JOIN Friend AS f ON f.student_id = h.ID\nGROUP BY h.ID, h.name\nORDER BY COUNT(f.friend_id), h.ID\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "stratum_failed": 18,
+    "verdict": "reference_issue",
+    "model_type": null,
+    "evidence": "最少朋友的候选应包括零朋友的学生。参考内连接仅保留 Friend 明细表中出现的学生，返回 Haley。预测左连接让零朋友的 John 成为可选的最小项。"
+  },
+  {
+    "id": "SQL_sort_order-00100-post",
+    "group": "SQL_sort_order",
+    "index": 100,
+    "side": "post",
+    "original_id": 561,
+    "db_id": "student_transcripts_tracking",
+    "database": "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite",
+    "question": "Which address holds the least number of students currently? List the address id and all lines.",
+    "gold_sql": "SELECT T1.address_id , T1.line_1 , T1.line_2 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id = T2.current_address_id GROUP BY T1.address_id ORDER BY count(*) ASC LIMIT 1",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 5125,
+      "completion_tokens": 146,
+      "total_tokens": 5271,
+      "prompt_tokens_details": {
+        "cached_tokens": 4992
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      }
+    },
+    "prediction_sql": "SELECT a.address_id, a.line_1, a.line_2, a.line_3\nFROM Addresses AS a\nJOIN Students AS s ON s.current_address_id = a.address_id\nWHERE s.date_left IS NULL\nGROUP BY a.address_id, a.line_1, a.line_2, a.line_3\nORDER BY COUNT(*) ASC, a.address_id ASC\nLIMIT 1;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 0,
+    "status": "mismatch",
+    "stratum_failed": 18,
+    "verdict": "model_error",
+    "model_type": "filter_condition",
+    "evidence": "题目所述当前地址已有 current_address_id 字段。预测又要求 date_left 为 NULL，导致所有候选被过滤。参考在当前住址上统计并返回一行。"
+  }
+]

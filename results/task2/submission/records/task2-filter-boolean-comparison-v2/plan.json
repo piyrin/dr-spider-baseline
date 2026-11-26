@@ -1,0 +1,304 @@
+{
+  "seed": "filter-boolean-v1-20261126",
+  "observed_originals": 1034,
+  "excluded_pairs": 1721,
+  "exposure_surfaces": {
+    "results": 862,
+    "runs": 737,
+    "reports": 75,
+    "outputs": 154,
+    ".local/task2-experiment": 901,
+    ".local/thinking-table-review": 504,
+    ".local/drspider-pair-review": 109,
+    ".local/failed-query-review": 211,
+    ".local/learning": 5
+  },
+  "selected": [
+    {
+      "pair": "DB_DBcontent_equivalence-00038",
+      "original_id": 53,
+      "pre_db_id": "pets_1",
+      "db_id": "pets_1_4",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "selection_evidence": {
+        "flag_predicates": [
+          [
+            "is_dog",
+            "T"
+          ]
+        ],
+        "named_status_in_question": [
+          "is_dog"
+        ]
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00148",
+      "original_id": 535,
+      "pre_db_id": "student_transcripts_tracking",
+      "db_id": "student_transcripts_tracking_0",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "selection_evidence": {
+        "flag_predicates": [
+          [
+            "is_bachelor",
+            "T"
+          ]
+        ],
+        "named_status_in_question": [
+          "is_bachelor"
+        ]
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00044",
+      "original_id": 63,
+      "pre_db_id": "pets_1",
+      "db_id": "pets_1_4",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "selection_evidence": {
+        "flag_predicates": [
+          [
+            "is_cat",
+            "T"
+          ]
+        ],
+        "named_status_in_question": [
+          "is_cat"
+        ]
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00046",
+      "original_id": 83,
+      "pre_db_id": "pets_1",
+      "db_id": "pets_1_4",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "selection_evidence": {
+        "flag_predicates": [
+          [
+            "is_cat",
+            "T"
+          ]
+        ],
+        "named_status_in_question": [
+          "is_cat"
+        ]
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00162",
+      "original_id": 575,
+      "pre_db_id": "student_transcripts_tracking",
+      "db_id": "student_transcripts_tracking_0",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "selection_evidence": {
+        "flag_predicates": [
+          [
+            "is_master",
+            "T"
+          ],
+          [
+            "is_bachelor",
+            "T"
+          ]
+        ],
+        "named_status_in_question": [
+          "is_bachelor",
+          "is_master"
+        ]
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00136",
+      "original_id": 486,
+      "pre_db_id": "wta_1",
+      "db_id": "wta_1_0",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "selection_evidence": {
+        "flag_predicates": [
+          [
+            "is_winner_right_handed",
+            "F"
+          ]
+        ],
+        "named_status_in_question": []
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00133",
+      "original_id": 457,
+      "pre_db_id": "wta_1",
+      "db_id": "wta_1_0",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "selection_evidence": {
+        "flag_predicates": [
+          [
+            "is_right_handed",
+            "F"
+          ]
+        ],
+        "named_status_in_question": []
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00140",
+      "original_id": 458,
+      "pre_db_id": "wta_1",
+      "db_id": "wta_1_3",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "selection_evidence": {
+        "flag_predicates": [
+          [
+            "is_right_handed",
+            "F"
+          ]
+        ],
+        "named_status_in_question": []
+      }
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00055",
+      "original_id": 262,
+      "pre_db_id": "employee_hire_evaluation",
+      "db_id": "employee_hire_evaluation_0",
+      "group": "DB_DBcontent_equivalence",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "DB_schema_abbreviation-02289",
+      "original_id": 761,
+      "pre_db_id": "world_1",
+      "db_id": "world_1_3",
+      "group": "DB_schema_abbreviation",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "DB_schema_synonym-01689",
+      "original_id": 695,
+      "pre_db_id": "voter_1",
+      "db_id": "voter_1_1",
+      "group": "DB_schema_synonym",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "NLQ_column_attribute-00075",
+      "original_id": 656,
+      "pre_db_id": "poker_player",
+      "db_id": "poker_player",
+      "group": "NLQ_column_attribute",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "NLQ_column_value-00303",
+      "original_id": 1006,
+      "pre_db_id": "singer",
+      "db_id": "singer",
+      "group": "NLQ_column_value",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "NLQ_keyword_synonym-00240",
+      "original_id": 241,
+      "pre_db_id": "flight_2",
+      "db_id": "flight_2",
+      "group": "NLQ_keyword_synonym",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "SQL_comparison-00035",
+      "original_id": 144,
+      "pre_db_id": "car_1",
+      "db_id": "car_1",
+      "group": "SQL_comparison",
+      "label": "control",
+      "selection_evidence": null
+    },
+    {
+      "pair": "SQL_sort_order-00096",
+      "original_id": 547,
+      "pre_db_id": "student_transcripts_tracking",
+      "db_id": "student_transcripts_tracking",
+      "group": "SQL_sort_order",
+      "label": "control",
+      "selection_evidence": null
+    }
+  ],
+  "anchor": [
+    "DB_DBcontent_equivalence-00143-pre",
+    "DB_DBcontent_equivalence-00143-post"
+  ],
+  "conditions": [
+    [
+      "baseline",
+      "none"
+    ],
+    [
+      "baseline",
+      "high"
+    ],
+    [
+      "canvas_v2",
+      "none"
+    ],
+    [
+      "canvas_v2",
+      "high"
+    ]
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "extract",
+        "kind": "boolean_extract"
+      },
+      {
+        "id": "lookup",
+        "kind": "boolean_lookup"
+      },
+      {
+        "id": "generate",
+        "kind": "boolean_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "extract",
+        "target": "lookup"
+      },
+      {
+        "source": "lookup",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "code_sha256": {
+    ".local\\task2-experiment\\boolean_compare.py": "e0125d73f2666fb58adaeb31b502dc563fc01f00aeba10dde5969593fca23ff7",
+    ".local\\task2-experiment\\boolean_canvas.py": "2d31b11c48f7e69a19dac9a79834294ca1eda1fb3dea075389c9bf31648815dc",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f",
+    ".local\\task2-experiment\\projection_exposure.py": "515aebb4102c1313f75cf2d84bd4f8464c21c8e7d52ecd58a3b580e6fa51c3fe"
+  }
+}

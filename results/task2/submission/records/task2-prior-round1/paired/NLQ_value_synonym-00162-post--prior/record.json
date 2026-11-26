@@ -1,0 +1,125 @@
+{
+  "id": "NLQ_value_synonym-00162-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7209,
+    "completion_tokens": 172,
+    "total_tokens": 7381,
+    "prompt_tokens_details": {
+      "cached_tokens": 6272
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'USA';",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 12,
+  "prediction_row_count": 12,
+  "status": "match",
+  "condition": "prior",
+  "prior": "In Airlines.Country, the United States is stored as 'USA'.",
+  "recorded_at": "2026-11-25T13:39:28+08:00",
+  "gold_rows": [
+    [
+      "United Airlines",
+      "UAL"
+    ],
+    [
+      "US Airways",
+      "USAir"
+    ],
+    [
+      "Delta Airlines",
+      "Delta"
+    ],
+    [
+      "Southwest Airlines",
+      "Southwest"
+    ],
+    [
+      "American Airlines",
+      "American"
+    ],
+    [
+      "Northwest Airlines",
+      "Northwest"
+    ],
+    [
+      "Continental Airlines",
+      "Continental"
+    ],
+    [
+      "JetBlue Airways",
+      "JetBlue"
+    ],
+    [
+      "Frontier Airlines",
+      "Frontier"
+    ],
+    [
+      "AirTran Airways",
+      "AirTran"
+    ],
+    [
+      "Allegiant Air",
+      "Allegiant"
+    ],
+    [
+      "Virgin America",
+      "Virgin"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "United Airlines",
+      "UAL"
+    ],
+    [
+      "US Airways",
+      "USAir"
+    ],
+    [
+      "Delta Airlines",
+      "Delta"
+    ],
+    [
+      "Southwest Airlines",
+      "Southwest"
+    ],
+    [
+      "American Airlines",
+      "American"
+    ],
+    [
+      "Northwest Airlines",
+      "Northwest"
+    ],
+    [
+      "Continental Airlines",
+      "Continental"
+    ],
+    [
+      "JetBlue Airways",
+      "JetBlue"
+    ],
+    [
+      "Frontier Airlines",
+      "Frontier"
+    ],
+    [
+      "AirTran Airways",
+      "AirTran"
+    ],
+    [
+      "Allegiant Air",
+      "Allegiant"
+    ],
+    [
+      "Virgin America",
+      "Virgin"
+    ]
+  ]
+}

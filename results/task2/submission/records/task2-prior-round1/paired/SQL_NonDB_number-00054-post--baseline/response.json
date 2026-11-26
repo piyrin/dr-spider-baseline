@@ -1,0 +1,27 @@
+{
+  "id": "resp_05bc287a6b470ad6016b0674b3179487d09cfa28b3343b1cd0",
+  "object": "chat.completion",
+  "created": 1795585208,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "WITH youngest_win AS (\n  SELECT winner_name, winner_rank, winner_age,\n         ROW_NUMBER() OVER (PARTITION BY winner_id ORDER BY winner_age ASC, tourney_date ASC, match_num ASC) AS rn\n  FROM matches\n  WHERE winner_age IS NOT NULL\n)\nSELECT winner_name, winner_rank\nFROM youngest_win\nWHERE rn = 1\nORDER BY winner_age ASC\nLIMIT 5;"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7333,
+    "completion_tokens": 235,
+    "total_tokens": 7568,
+    "prompt_tokens_details": {
+      "cached_tokens": 6528
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  }
+}

@@ -1,0 +1,689 @@
+[
+  {
+    "condition": "canvas",
+    "side": "post",
+    "request": {
+      "sample_id": "SQL_DB_text-00048-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "column_intent"
+          },
+          {
+            "id": "verify",
+            "kind": "column_probe"
+          },
+          {
+            "id": "generate",
+            "kind": "column_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "column_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "verify",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          },
+          {
+            "source": "intent",
+            "target": "verify"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_DB_text-00048-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "column_intent"
+        },
+        {
+          "id": "verify",
+          "kind": "column_probe"
+        },
+        {
+          "id": "generate",
+          "kind": "column_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "column_execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "verify",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        },
+        {
+          "source": "intent",
+          "target": "verify"
+        }
+      ]
+    },
+    "run_id": "d5fe8061e24d496da6c4bedd23d9798c",
+    "graph_sha256": "858d63096af27f807ad5a3268c07c329d63aad5f5fe79e61ca704291a20ee8dc",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "column_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": "different models",
+          "conditions": [
+            "car maker Honda",
+            "weighed more than 3500"
+          ],
+          "connective": "OR",
+          "targets": [
+            {
+              "term": "Honda",
+              "candidates": [
+                {
+                  "table": "car_makers",
+                  "column": "Maker"
+                },
+                {
+                  "table": "car_makers",
+                  "column": "FullName"
+                },
+                {
+                  "table": "car_names",
+                  "column": "Make"
+                }
+              ]
+            }
+          ]
+        },
+        "elapsed_s": 7.115678200003458
+      },
+      {
+        "id": "verify",
+        "kind": "column_probe",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "unique_exact",
+          "term": "Honda",
+          "chosen": {
+            "table": "car_makers",
+            "column": "FullName",
+            "term": "Honda",
+            "exact": [
+              "Honda"
+            ],
+            "normalized": [
+              "Honda"
+            ],
+            "value": "Honda"
+          },
+          "matches": [
+            {
+              "table": "car_makers",
+              "column": "Maker",
+              "term": "Honda",
+              "exact": [],
+              "normalized": [
+                "honda"
+              ]
+            },
+            {
+              "table": "car_makers",
+              "column": "FullName",
+              "term": "Honda",
+              "exact": [
+                "Honda"
+              ],
+              "normalized": [
+                "Honda"
+              ]
+            },
+            {
+              "table": "car_names",
+              "column": "Make",
+              "term": "Honda",
+              "exact": [],
+              "normalized": []
+            }
+          ]
+        },
+        "elapsed_s": 0.005739799998991657
+      },
+      {
+        "id": "generate",
+        "kind": "column_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "verify"
+        ],
+        "output": {
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda'\n   OR cd.Weight > 3500;",
+          "column_route": "unique_exact"
+        },
+        "elapsed_s": 5.340650399994047
+      },
+      {
+        "id": "execute",
+        "kind": "column_execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda'\n   OR cd.Weight > 3500;",
+          "rows": [
+            [
+              "chevrolet"
+            ],
+            [
+              "buick"
+            ],
+            [
+              "ford"
+            ],
+            [
+              "plymouth"
+            ],
+            [
+              "pontiac"
+            ],
+            [
+              "amc"
+            ],
+            [
+              "dodge"
+            ],
+            [
+              "mercury"
+            ],
+            [
+              "oldsmobile"
+            ],
+            [
+              "chrysler"
+            ],
+            [
+              "honda"
+            ],
+            [
+              "mercedes-benz"
+            ],
+            [
+              "cadillac"
+            ],
+            [
+              "mercedes"
+            ]
+          ],
+          "columns": [
+            "Model"
+          ],
+          "row_count": 14
+        },
+        "elapsed_s": 0.0013727999976254068
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 14,
+      "prediction_rows": 14
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 9976
+    },
+    "course_flow_id": "TASK2_CANVAS_858d63096af27f807ad5a3268c07c329d63aad5f5fe79e61ca704291a20ee8dc",
+    "course_flow": {
+      "id": "TASK2_CANVAS_858d63096af27f807ad5a3268c07c329d63aad5f5fe79e61ca704291a20ee8dc",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_verify",
+          "type": "event",
+          "title": "verify",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_verify"
+        },
+        {
+          "source": "canvas_verify",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "canvas",
+    "side": "pre",
+    "request": {
+      "sample_id": "SQL_DB_text-00048-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "column_intent"
+          },
+          {
+            "id": "verify",
+            "kind": "column_probe"
+          },
+          {
+            "id": "generate",
+            "kind": "column_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "column_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "verify",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          },
+          {
+            "source": "intent",
+            "target": "verify"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_DB_text-00048-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "column_intent"
+        },
+        {
+          "id": "verify",
+          "kind": "column_probe"
+        },
+        {
+          "id": "generate",
+          "kind": "column_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "column_execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "verify",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        },
+        {
+          "source": "intent",
+          "target": "verify"
+        }
+      ]
+    },
+    "run_id": "3c1274790b1447219e50bdd9c5367265",
+    "graph_sha256": "858d63096af27f807ad5a3268c07c329d63aad5f5fe79e61ca704291a20ee8dc",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "column_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": "different models",
+          "conditions": [
+            "car maker General Motors",
+            "weighed more than 3500"
+          ],
+          "connective": "OR",
+          "targets": [
+            {
+              "term": "General Motors",
+              "candidates": [
+                {
+                  "table": "car_makers",
+                  "column": "Maker"
+                },
+                {
+                  "table": "car_makers",
+                  "column": "FullName"
+                }
+              ]
+            }
+          ]
+        },
+        "elapsed_s": 6.7625109999935376
+      },
+      {
+        "id": "verify",
+        "kind": "column_probe",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "unique_exact",
+          "term": "General Motors",
+          "chosen": {
+            "table": "car_makers",
+            "column": "FullName",
+            "term": "General Motors",
+            "exact": [
+              "General Motors"
+            ],
+            "normalized": [
+              "General Motors"
+            ],
+            "value": "General Motors"
+          },
+          "matches": [
+            {
+              "table": "car_makers",
+              "column": "Maker",
+              "term": "General Motors",
+              "exact": [],
+              "normalized": []
+            },
+            {
+              "table": "car_makers",
+              "column": "FullName",
+              "term": "General Motors",
+              "exact": [
+                "General Motors"
+              ],
+              "normalized": [
+                "General Motors"
+              ]
+            }
+          ]
+        },
+        "elapsed_s": 0.0037354000014602207
+      },
+      {
+        "id": "generate",
+        "kind": "column_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "verify"
+        ],
+        "output": {
+          "sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nLEFT JOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;",
+          "column_route": "unique_exact"
+        },
+        "elapsed_s": 8.378683000002638
+      },
+      {
+        "id": "execute",
+        "kind": "column_execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nLEFT JOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;",
+          "rows": [
+            [
+              "amc"
+            ],
+            [
+              "buick"
+            ],
+            [
+              "cadillac"
+            ],
+            [
+              "chevrolet"
+            ],
+            [
+              "chrysler"
+            ],
+            [
+              "dodge"
+            ],
+            [
+              "ford"
+            ],
+            [
+              "hi"
+            ],
+            [
+              "mercedes"
+            ],
+            [
+              "mercedes-benz"
+            ],
+            [
+              "mercury"
+            ],
+            [
+              "oldsmobile"
+            ],
+            [
+              "plymouth"
+            ],
+            [
+              "pontiac"
+            ]
+          ],
+          "columns": [
+            "Model"
+          ],
+          "row_count": 14
+        },
+        "elapsed_s": 0.0012614000006578863
+      }
+    ],
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 13,
+      "prediction_rows": 14
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 9986
+    },
+    "course_flow_id": "TASK2_CANVAS_858d63096af27f807ad5a3268c07c329d63aad5f5fe79e61ca704291a20ee8dc",
+    "course_flow": {
+      "id": "TASK2_CANVAS_858d63096af27f807ad5a3268c07c329d63aad5f5fe79e61ca704291a20ee8dc",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_verify",
+          "type": "event",
+          "title": "verify",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_verify"
+        },
+        {
+          "source": "canvas_verify",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

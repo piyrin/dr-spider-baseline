@@ -1,0 +1,213 @@
+{
+  "seed": "filter-count-regression-v1-20261126",
+  "anchor": [
+    "NLQ_keyword_carrier-00248-pre",
+    "NLQ_keyword_carrier-00248-post"
+  ],
+  "selected": [
+    {
+      "pair": "DB_DBcontent_equivalence-00135",
+      "original_id": 485,
+      "db_id": "wta_1_0",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "reason": "左右手字段改成布尔编码",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_schema_synonym-01192",
+      "original_id": 485,
+      "db_id": "wta_1_3",
+      "group": "DB_schema_synonym",
+      "label": "target",
+      "reason": "赛事、获胜者或左右手字段改名",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_others-01327",
+      "original_id": 485,
+      "db_id": "wta_1",
+      "group": "NLQ_others",
+      "label": "target",
+      "reason": "在仍询问人数的情况下改写题面",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_DB_text-00254",
+      "original_id": 485,
+      "db_id": "wta_1",
+      "group": "SQL_DB_text",
+      "label": "target",
+      "reason": "替换赛事名称，保持双条件去重计数",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00136",
+      "original_id": 486,
+      "db_id": "wta_1_0",
+      "group": "DB_DBcontent_equivalence",
+      "label": "target",
+      "reason": "左右手字段改成布尔编码",
+      "previously_seen_pair": true
+    },
+    {
+      "pair": "DB_schema_synonym-01193",
+      "original_id": 486,
+      "db_id": "wta_1_3",
+      "group": "DB_schema_synonym",
+      "label": "target",
+      "reason": "赛事、获胜者或左右手字段改名",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_keyword_carrier-00247",
+      "original_id": 486,
+      "db_id": "wta_1",
+      "group": "NLQ_keyword_carrier",
+      "label": "target",
+      "reason": "在仍询问人数的情况下改写题面",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_DB_text-00258",
+      "original_id": 486,
+      "db_id": "wta_1",
+      "group": "SQL_DB_text",
+      "label": "target",
+      "reason": "替换赛事名称，保持双条件去重计数",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_schema_synonym-02001",
+      "original_id": 734,
+      "db_id": "world_1_3",
+      "group": "DB_schema_synonym",
+      "label": "mixed",
+      "reason": "单条件但统计去重属性类别",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_schema_abbreviation-01994",
+      "original_id": 770,
+      "db_id": "world_1_0",
+      "group": "DB_schema_abbreviation",
+      "label": "mixed",
+      "reason": "有关联、数值比较和布尔条件的跨表去重计数",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_others-01758",
+      "original_id": 625,
+      "db_id": "tvshow",
+      "group": "NLQ_others",
+      "label": "mixed",
+      "reason": "检查其他单表或关联查值方式是否影响基线",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00235",
+      "original_id": 634,
+      "db_id": "tvshow_4",
+      "group": "DB_DBcontent_equivalence",
+      "label": "mixed",
+      "reason": "双等值条件下统计记录数",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_comparison-00052",
+      "original_id": 163,
+      "db_id": "car_1",
+      "group": "SQL_comparison",
+      "label": "mixed",
+      "reason": "含数值比较的计数",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_keyword_synonym-00319",
+      "original_id": 296,
+      "db_id": "employee_hire_evaluation",
+      "group": "NLQ_keyword_synonym",
+      "label": "mixed",
+      "reason": "无筛选条件计数",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_sort_order-00078",
+      "original_id": 483,
+      "db_id": "wta_1",
+      "group": "SQL_sort_order",
+      "label": "mixed",
+      "reason": "排序类问题",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_column_carrier-00161",
+      "original_id": 386,
+      "db_id": "course_teach",
+      "group": "NLQ_column_carrier",
+      "label": "mixed",
+      "reason": "列输出类问题",
+      "previously_seen_pair": false
+    }
+  ],
+  "observed_originals": 1034,
+  "conditions": [
+    [
+      "baseline",
+      "none"
+    ],
+    [
+      "baseline",
+      "high"
+    ],
+    [
+      "canvas_v1",
+      "none"
+    ],
+    [
+      "canvas_v1",
+      "high"
+    ]
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "filter_count_intent"
+      },
+      {
+        "id": "verify",
+        "kind": "filter_count_verify"
+      },
+      {
+        "id": "generate",
+        "kind": "filter_count_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "filter_count_execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "verify"
+      },
+      {
+        "source": "verify",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "source_sha256": {
+    ".local\\task2-experiment\\filter_count_regression.py": "6995b64f710106c039d96689e23b19aa7bf8f8f6aad958eb4814d120714b4ad7",
+    ".local\\task2-experiment\\filter_count_compare.py": "3ce3abeb0abf88a011e95025c3507dca0f26deff25759e1ee4b274a6edbc8551",
+    ".local\\task2-experiment\\filter_count_canvas.py": "7802435763d52d7d3b00677cb1db1ee10dcfba67250fa493130c0e9808ddf1b2",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  }
+}

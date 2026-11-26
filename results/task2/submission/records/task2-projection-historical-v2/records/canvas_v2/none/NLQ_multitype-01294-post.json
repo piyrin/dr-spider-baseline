@@ -1,0 +1,190 @@
+{
+  "id": "NLQ_multitype-01294-post",
+  "side": "post",
+  "original_id": 1006,
+  "method": "canvas_v2",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "match",
+      "kind": "projection_match_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "status": "unresolved",
+        "field": null,
+        "entity": null
+      }
+    },
+    {
+      "id": "normalize",
+      "kind": "projection_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match"
+      ],
+      "output": {
+        "status": "candidate",
+        "candidate": "singers"
+      }
+    },
+    {
+      "id": "recheck",
+      "kind": "projection_recheck",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "normalize"
+      ],
+      "output": {
+        "status": "verified",
+        "field": "singer.Name",
+        "entity": "singers"
+      }
+    },
+    {
+      "id": "constraint",
+      "kind": "projection_constraint",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match",
+        "recheck"
+      ],
+      "output": {
+        "route": "normalized",
+        "field": "singer.Name",
+        "hint": "Return only the requested entity name from singer.Name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "projection_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "constraint"
+      ],
+      "output": {
+        "sql": "SELECT Name\nFROM singer\nWHERE Citizenship <> 'French';"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT Name\nFROM singer\nWHERE Citizenship <> 'French';",
+        "rows": [
+          [
+            "Liliane Bettencourt"
+          ],
+          [
+            "Christy Walton"
+          ],
+          [
+            "Alice Walton"
+          ],
+          [
+            "Iris Fontbona"
+          ],
+          [
+            "Jacqueline Mars"
+          ],
+          [
+            "Gina Rinehart"
+          ],
+          [
+            "Susanne Klatten"
+          ],
+          [
+            "Abigail Johnson"
+          ]
+        ],
+        "columns": [
+          "Name"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 7,
+    "prediction_rows": 8
+  },
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_04578928b07eb4fc016b06f1a04a7887d2b2b89e930adae46b": {
+          "input_tokens": 25,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 25,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_04578928b07eb4fc016b06f1a04a7887d2bc72541dd343f920": {
+          "input_tokens": 145,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 145,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_04578928b07eb4fc016b06f1a0a4e887d2a73d900a156ef525": {
+          "input_tokens": 2,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 16,
+          "content": [
+            {
+              "input_tokens": 2,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 16
+            }
+          ]
+        }
+      },
+      "request_fields": {
+        "instructions": {
+          "input_tokens": 4380,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0
+        }
+      }
+    },
+    "prompt_tokens": 4552,
+    "completion_tokens": 16,
+    "total_tokens": 4568,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      }
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 4.619
+}

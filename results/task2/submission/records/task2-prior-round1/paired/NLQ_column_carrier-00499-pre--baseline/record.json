@@ -1,0 +1,50 @@
+{
+  "id": "NLQ_column_carrier-00499-pre",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7178,
+    "completion_tokens": 129,
+    "total_tokens": 7307,
+    "completion_tokens_details": {
+      "reasoning_tokens": 117
+    }
+  },
+  "prediction_sql": "SELECT name FROM Highschooler WHERE grade = 10;",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 4,
+  "prediction_row_count": 4,
+  "status": "match",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:39:21+08:00",
+  "gold_rows": [
+    [
+      "Haley"
+    ],
+    [
+      "Andrew"
+    ],
+    [
+      "Kris"
+    ],
+    [
+      "Brittany"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Haley"
+    ],
+    [
+      "Andrew"
+    ],
+    [
+      "Kris"
+    ],
+    [
+      "Brittany"
+    ]
+  ]
+}

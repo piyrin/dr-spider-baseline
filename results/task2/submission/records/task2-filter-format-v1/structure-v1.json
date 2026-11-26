@@ -1,0 +1,46 @@
+{
+  "nodes": [
+    {
+      "id": "extract",
+      "kind": "format_extract"
+    },
+    {
+      "id": "exact",
+      "kind": "format_exact"
+    },
+    {
+      "id": "normalize",
+      "kind": "format_normalize"
+    },
+    {
+      "id": "generate",
+      "kind": "format_generate"
+    },
+    {
+      "id": "execute",
+      "kind": "execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "extract",
+      "target": "exact"
+    },
+    {
+      "source": "exact",
+      "target": "normalize"
+    },
+    {
+      "source": "exact",
+      "target": "generate"
+    },
+    {
+      "source": "normalize",
+      "target": "generate"
+    },
+    {
+      "source": "generate",
+      "target": "execute"
+    }
+  ]
+}

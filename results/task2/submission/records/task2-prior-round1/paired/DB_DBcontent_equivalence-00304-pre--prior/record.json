@@ -1,0 +1,98 @@
+{
+  "id": "DB_DBcontent_equivalence-00304-pre",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7326,
+    "completion_tokens": 126,
+    "total_tokens": 7452,
+    "completion_tokens_details": {
+      "reasoning_tokens": 112
+    }
+  },
+  "prediction_sql": "SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC;",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 12,
+  "prediction_row_count": 12,
+  "status": "match",
+  "condition": "prior",
+  "prior": "orchestra.Year_of_Founded is the founding calendar year. A larger value means more recently founded.",
+  "recorded_at": "2026-11-25T13:40:02+08:00",
+  "gold_rows": [
+    [
+      "Columbia Masterworks"
+    ],
+    [
+      "Philips"
+    ],
+    [
+      "Philips Classics Records"
+    ],
+    [
+      "RCA"
+    ],
+    [
+      "EMI"
+    ],
+    [
+      "Koch Records / Naxos Records"
+    ],
+    [
+      "Decca Records"
+    ],
+    [
+      "Mercury Records"
+    ],
+    [
+      "Deutsche Grammophon"
+    ],
+    [
+      "Kultur"
+    ],
+    [
+      "Decca Records"
+    ],
+    [
+      "Delos Records"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Columbia Masterworks"
+    ],
+    [
+      "Philips"
+    ],
+    [
+      "Philips Classics Records"
+    ],
+    [
+      "RCA"
+    ],
+    [
+      "EMI"
+    ],
+    [
+      "Koch Records / Naxos Records"
+    ],
+    [
+      "Decca Records"
+    ],
+    [
+      "Mercury Records"
+    ],
+    [
+      "Deutsche Grammophon"
+    ],
+    [
+      "Kultur"
+    ],
+    [
+      "Decca Records"
+    ],
+    [
+      "Delos Records"
+    ]
+  ]
+}

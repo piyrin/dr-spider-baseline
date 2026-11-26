@@ -1,0 +1,795 @@
+[
+  {
+    "condition": "canvas",
+    "side": "post",
+    "request": {
+      "sample_id": "DB_DBcontent_equivalence-00125-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "split_intent"
+          },
+          {
+            "id": "fields",
+            "kind": "split_fields_v2"
+          },
+          {
+            "id": "decide",
+            "kind": "split_decide"
+          },
+          {
+            "id": "contract",
+            "kind": "split_contract"
+          },
+          {
+            "id": "generate",
+            "kind": "split_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "split_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "fields"
+          },
+          {
+            "source": "decide",
+            "target": "contract"
+          },
+          {
+            "source": "contract",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          },
+          {
+            "source": "fields",
+            "target": "decide"
+          }
+        ]
+      }
+    },
+    "sample_id": "DB_DBcontent_equivalence-00125-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "split_intent"
+        },
+        {
+          "id": "fields",
+          "kind": "split_fields_v2"
+        },
+        {
+          "id": "decide",
+          "kind": "split_decide"
+        },
+        {
+          "id": "contract",
+          "kind": "split_contract"
+        },
+        {
+          "id": "generate",
+          "kind": "split_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "split_execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "fields"
+        },
+        {
+          "source": "decide",
+          "target": "contract"
+        },
+        {
+          "source": "contract",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        },
+        {
+          "source": "fields",
+          "target": "decide"
+        }
+      ]
+    },
+    "run_id": "f152a1f0cc7d4703b2a8ed50b5095689",
+    "graph_sha256": "a661a46ebe9ac737365e8da784b2ac6de244328a2fabb3bcee66ffd8aea9f24c",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "split_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "kind": "name",
+              "table": "visitor",
+              "fields": [
+                "first_name",
+                "last_name"
+              ],
+              "role": "output",
+              "cue": "name of the visitor",
+              "sole_output": true
+            }
+          ]
+        },
+        "elapsed_s": 15.47692239999742
+      },
+      {
+        "id": "fields",
+        "kind": "split_fields_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "components",
+          "table": "visitor",
+          "columns": [
+            "first_name",
+            "last_name"
+          ],
+          "role": "output",
+          "cue": "What is the name of the visitor",
+          "sole_output": true,
+          "binding_source": "explicit_question_schema"
+        },
+        "elapsed_s": 0.0016268999970634468
+      },
+      {
+        "id": "decide",
+        "kind": "split_decide",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "fields"
+        ],
+        "output": {
+          "route": "split",
+          "table": "visitor",
+          "columns": [
+            "first_name",
+            "last_name"
+          ],
+          "role": "output",
+          "cue": "What is the name of the visitor",
+          "sole_output": true,
+          "binding_source": "explicit_question_schema",
+          "decision_cue": "What is the name of the visitor",
+          "decision_source": "explicit_output_policy",
+          "agent_decision": {}
+        },
+        "elapsed_s": 23.70929260000412
+      },
+      {
+        "id": "contract",
+        "kind": "split_contract",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "decide"
+        ],
+        "output": {
+          "route": "split",
+          "table": "visitor",
+          "columns": [
+            "first_name",
+            "last_name"
+          ],
+          "role": "output",
+          "cue": "What is the name of the visitor",
+          "sole_output": true,
+          "binding_source": "explicit_question_schema",
+          "decision_cue": "What is the name of the visitor",
+          "decision_source": "explicit_output_policy",
+          "hint": "Return this requested person name as separate stored columns in this order: visitor.first_name, visitor.last_name. Preserve all other requested outputs and filters. Each requested name component must be its own final SELECT column in the specified order. Preserve the question’s other conditions."
+        },
+        "elapsed_s": 0.000030499999411404133
+      },
+      {
+        "id": "generate",
+        "kind": "split_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "contract"
+        ],
+        "output": {
+          "sql": "SELECT v.first_name, v.last_name\nFROM visitor v\nJOIN visit vi1 ON v.ID = vi1.visitor_ID\nJOIN museum m1 ON vi1.Museum_ID = m1.Museum_ID\nJOIN visit vi2 ON v.ID = vi2.visitor_ID\nJOIN museum m2 ON vi2.Museum_ID = m2.Museum_ID\nWHERE CAST(m1.Open_Year AS int) < 2009 AND CAST(m2.Open_Year AS int) > 2011\nGROUP BY v.ID, v.first_name, v.last_name;",
+          "route": "split",
+          "contract": {
+            "route": "split",
+            "table": "visitor",
+            "columns": [
+              "first_name",
+              "last_name"
+            ],
+            "role": "output",
+            "cue": "What is the name of the visitor",
+            "sole_output": true,
+            "binding_source": "explicit_question_schema",
+            "decision_cue": "What is the name of the visitor",
+            "decision_source": "explicit_output_policy",
+            "hint": "Return this requested person name as separate stored columns in this order: visitor.first_name, visitor.last_name. Preserve all other requested outputs and filters. Each requested name component must be its own final SELECT column in the specified order. Preserve the question’s other conditions."
+          }
+        },
+        "elapsed_s": 7.8860671000002185
+      },
+      {
+        "id": "execute",
+        "kind": "split_execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT v.first_name, v.last_name\nFROM visitor v\nJOIN visit vi1 ON v.ID = vi1.visitor_ID\nJOIN museum m1 ON vi1.Museum_ID = m1.Museum_ID\nJOIN visit vi2 ON v.ID = vi2.visitor_ID\nJOIN museum m2 ON vi2.Museum_ID = m2.Museum_ID\nWHERE CAST(m1.Open_Year AS int) < 2009 AND CAST(m2.Open_Year AS int) > 2011\nGROUP BY v.ID, v.first_name, v.last_name;",
+          "rows": [
+            [
+              "Fernando",
+              "Gago"
+            ]
+          ],
+          "columns": [
+            "first_name",
+            "last_name"
+          ],
+          "output_check": "match",
+          "row_count": 1
+        },
+        "elapsed_s": 0.001247799998964183
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 3,
+      "total_tokens": 11271
+    },
+    "course_flow_id": "TASK2_CANVAS_a661a46ebe9ac737365e8da784b2ac6de244328a2fabb3bcee66ffd8aea9f24c",
+    "course_flow": {
+      "id": "TASK2_CANVAS_a661a46ebe9ac737365e8da784b2ac6de244328a2fabb3bcee66ffd8aea9f24c",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_fields",
+          "type": "event",
+          "title": "fields",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_decide",
+          "type": "event",
+          "title": "decide",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_contract",
+          "type": "event",
+          "title": "contract",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_fields"
+        },
+        {
+          "source": "canvas_fields",
+          "target": "canvas_decide"
+        },
+        {
+          "source": "canvas_decide",
+          "target": "canvas_contract"
+        },
+        {
+          "source": "canvas_contract",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "canvas",
+    "side": "pre",
+    "request": {
+      "sample_id": "DB_DBcontent_equivalence-00125-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "split_intent"
+          },
+          {
+            "id": "fields",
+            "kind": "split_fields_v2"
+          },
+          {
+            "id": "decide",
+            "kind": "split_decide"
+          },
+          {
+            "id": "contract",
+            "kind": "split_contract"
+          },
+          {
+            "id": "generate",
+            "kind": "split_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "split_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "fields"
+          },
+          {
+            "source": "decide",
+            "target": "contract"
+          },
+          {
+            "source": "contract",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          },
+          {
+            "source": "fields",
+            "target": "decide"
+          }
+        ]
+      }
+    },
+    "sample_id": "DB_DBcontent_equivalence-00125-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "split_intent"
+        },
+        {
+          "id": "fields",
+          "kind": "split_fields_v2"
+        },
+        {
+          "id": "decide",
+          "kind": "split_decide"
+        },
+        {
+          "id": "contract",
+          "kind": "split_contract"
+        },
+        {
+          "id": "generate",
+          "kind": "split_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "split_execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "fields"
+        },
+        {
+          "source": "decide",
+          "target": "contract"
+        },
+        {
+          "source": "contract",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        },
+        {
+          "source": "fields",
+          "target": "decide"
+        }
+      ]
+    },
+    "run_id": "60821ecfb8a4465f98ce0064ca341d9d",
+    "graph_sha256": "a661a46ebe9ac737365e8da784b2ac6de244328a2fabb3bcee66ffd8aea9f24c",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "split_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "kind": "name",
+              "table": "visitor",
+              "fields": [
+                "Name"
+              ],
+              "role": "output",
+              "cue": "name of the visitor",
+              "sole_output": true
+            }
+          ]
+        },
+        "elapsed_s": 17.47026800000458
+      },
+      {
+        "id": "fields",
+        "kind": "split_fields_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "direct",
+          "table": "visitor",
+          "columns": [
+            "Name"
+          ],
+          "role": "output",
+          "cue": "What is the name of the visitor",
+          "sole_output": true,
+          "binding_source": "explicit_question_schema"
+        },
+        "elapsed_s": 0.001224399995408021
+      },
+      {
+        "id": "decide",
+        "kind": "split_decide",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "fields"
+        ],
+        "output": {
+          "route": "direct",
+          "table": "visitor",
+          "columns": [
+            "Name"
+          ],
+          "role": "output",
+          "cue": "What is the name of the visitor",
+          "sole_output": true,
+          "binding_source": "explicit_question_schema",
+          "decision_skipped": true
+        },
+        "elapsed_s": 0.000008200004231184721
+      },
+      {
+        "id": "contract",
+        "kind": "split_contract",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "decide"
+        ],
+        "output": {
+          "route": "direct",
+          "table": "visitor",
+          "columns": [
+            "Name"
+          ],
+          "role": "output",
+          "cue": "What is the name of the visitor",
+          "sole_output": true,
+          "binding_source": "explicit_question_schema",
+          "decision_skipped": true,
+          "hint": ""
+        },
+        "elapsed_s": 0.000015700003132224083
+      },
+      {
+        "id": "generate",
+        "kind": "split_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "contract"
+        ],
+        "output": {
+          "sql": "SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);",
+          "route": "direct",
+          "contract": {
+            "route": "direct",
+            "table": "visitor",
+            "columns": [
+              "Name"
+            ],
+            "role": "output",
+            "cue": "What is the name of the visitor",
+            "sole_output": true,
+            "binding_source": "explicit_question_schema",
+            "decision_skipped": true,
+            "hint": ""
+          }
+        },
+        "elapsed_s": 5.991024999995716
+      },
+      {
+        "id": "execute",
+        "kind": "split_execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);",
+          "rows": [
+            [
+              "Fernando Gago"
+            ]
+          ],
+          "columns": [
+            "Name"
+          ],
+          "output_check": "not_applicable",
+          "row_count": 1
+        },
+        "elapsed_s": 0.0009723999974085018
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 9639
+    },
+    "course_flow_id": "TASK2_CANVAS_a661a46ebe9ac737365e8da784b2ac6de244328a2fabb3bcee66ffd8aea9f24c",
+    "course_flow": {
+      "id": "TASK2_CANVAS_a661a46ebe9ac737365e8da784b2ac6de244328a2fabb3bcee66ffd8aea9f24c",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_fields",
+          "type": "event",
+          "title": "fields",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_decide",
+          "type": "event",
+          "title": "decide",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_contract",
+          "type": "event",
+          "title": "contract",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_fields"
+        },
+        {
+          "source": "canvas_fields",
+          "target": "canvas_decide"
+        },
+        {
+          "source": "canvas_decide",
+          "target": "canvas_contract"
+        },
+        {
+          "source": "canvas_contract",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

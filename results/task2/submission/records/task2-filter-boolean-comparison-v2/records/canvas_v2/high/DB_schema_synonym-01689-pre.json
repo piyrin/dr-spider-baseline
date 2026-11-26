@@ -1,0 +1,351 @@
+{
+  "id": "DB_schema_synonym-01689-pre",
+  "side": "pre",
+  "original_id": 695,
+  "method": "canvas_v2",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "boolean_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "CONTESTANTS.contestant_number",
+          "CONTESTANTS.contestant_name"
+        ],
+        "joins": [
+          {
+            "table": "VOTES",
+            "column": "contestant_number",
+            "references_table": "CONTESTANTS",
+            "references_column": "contestant_number"
+          }
+        ],
+        "targets": []
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For a single clear equality condition describing an entity status or property, return one target with table, column, term, operator \"=\", and truth (JSON true or false). Term must be the exact unquoted status word or phrase in the question. For a status column with literal text and for an affirmative boolean flag, represent the positive status with true. For an explicitly negated affirmative flag use false and keep the status term itself without negation. When the condition or its column is uncertain, or several conditions are equally plausible, return zero targets. Do not guess how the value is stored."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"AREA_CODE_STATE\" (\"area_code\" integer NOT NULL,\"state\" varchar(2) NOT NULL,PRIMARY KEY (\"area_code\"))\nCREATE TABLE \"CONTESTANTS\" (\"contestant_number\" integer,\"contestant_name\" varchar(50) NOT NULL,PRIMARY KEY (\"contestant_number\"))\nCREATE TABLE \"VOTES\" (\"vote_id\" integer NOT NULL PRIMARY KEY,\"phone_number\" integer NOT NULL,\"state\" varchar(2) NOT NULL,\"contestant_number\" integer NOT NULL,\"created\" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY (\"state\") REFERENCES \"AREA_CODE_STATE\" (\"state\"),FOREIGN KEY (\"contestant_number\") REFERENCES \"CONTESTANTS\" (\"contestant_number\"))\nQuestion\nOf all the contestants who got voted, what is the contestant number and name of the contestant who got least votes?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0d4f8b638369390d016b079fbb877487d08ccaf11c02654bb1",
+          "object": "chat.completion",
+          "created": 1795661776,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"CONTESTANTS.contestant_number\",\"CONTESTANTS.contestant_name\"],\"joins\":[{\"table\":\"VOTES\",\"column\":\"contestant_number\",\"references_table\":\"CONTESTANTS\",\"references_column\":\"contestant_number\"}],\"targets\":[]}",
+                "reasoning_content": "**Designing SQL output mapping JSON****Including votes in output fields**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0d4f8b638369390d016b079fbb87c087d0841da2b011381830": {
+                  "input_tokens": 176,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 176,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0d4f8b638369390d016b079fbb87c087d09974024eca57679b": {
+                  "input_tokens": 199,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 199,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0d4f8b638369390d016b079fced0d887d080cbe5ba69c0b7bc": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 58,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 58
+                    }
+                  ]
+                },
+                "rs_0d4f8b638369390d016b079fc67ed887d082321cfb54ca49be": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 215
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4757,
+            "completion_tokens": 273,
+            "total_tokens": 5030,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 215
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0d4f8b638369390d016b079fbb87c087d0841da2b011381830": {
+                "input_tokens": 176,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 176,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0d4f8b638369390d016b079fbb87c087d09974024eca57679b": {
+                "input_tokens": 199,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 199,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0d4f8b638369390d016b079fced0d887d080cbe5ba69c0b7bc": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 58,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 58
+                  }
+                ]
+              },
+              "rs_0d4f8b638369390d016b079fc67ed887d082321cfb54ca49be": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 215
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4757,
+          "completion_tokens": 273,
+          "total_tokens": 5030,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 215
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "lookup",
+      "kind": "boolean_lookup",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "fallback",
+        "reason": "no_unique_target"
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "boolean_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "lookup"
+      ],
+      "output": {
+        "sql": "WITH vote_counts AS (\n    SELECT contestant_number, COUNT(*) AS vote_count\n    FROM VOTES\n    GROUP BY contestant_number\n)\nSELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN vote_counts AS vc\n    ON vc.contestant_number = c.contestant_number\nWHERE vc.vote_count = (SELECT MIN(vote_count) FROM vote_counts);",
+        "route": "fallback",
+        "stored_value": null
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"AREA_CODE_STATE\" (\"area_code\" integer NOT NULL,\"state\" varchar(2) NOT NULL,PRIMARY KEY (\"area_code\"))\nCREATE TABLE \"CONTESTANTS\" (\"contestant_number\" integer,\"contestant_name\" varchar(50) NOT NULL,PRIMARY KEY (\"contestant_number\"))\nCREATE TABLE \"VOTES\" (\"vote_id\" integer NOT NULL PRIMARY KEY,\"phone_number\" integer NOT NULL,\"state\" varchar(2) NOT NULL,\"contestant_number\" integer NOT NULL,\"created\" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY (\"state\") REFERENCES \"AREA_CODE_STATE\" (\"state\"),FOREIGN KEY (\"contestant_number\") REFERENCES \"CONTESTANTS\" (\"contestant_number\"))\nQuestion\nOf all the contestants who got voted, what is the contestant number and name of the contestant who got least votes?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0446dedc430fe985016b079fd2c83c87d2b9f85d0117ffeef4",
+          "object": "chat.completion",
+          "created": 1795661783,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "WITH vote_counts AS (\n    SELECT contestant_number, COUNT(*) AS vote_count\n    FROM VOTES\n    GROUP BY contestant_number\n)\nSELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN vote_counts AS vc\n    ON vc.contestant_number = c.contestant_number\nWHERE vc.vote_count = (SELECT MIN(vote_count) FROM vote_counts);",
+                "reasoning_content": "**Building tie query**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4583,
+            "completion_tokens": 137,
+            "total_tokens": 4720,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3584
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 47
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4583,
+          "completion_tokens": 137,
+          "total_tokens": 4720,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3584
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 47
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "WITH vote_counts AS (\n    SELECT contestant_number, COUNT(*) AS vote_count\n    FROM VOTES\n    GROUP BY contestant_number\n)\nSELECT c.contestant_number, c.contestant_name\nFROM CONTESTANTS AS c\nJOIN vote_counts AS vc\n    ON vc.contestant_number = c.contestant_number\nWHERE vc.vote_count = (SELECT MIN(vote_count) FROM vote_counts);",
+        "rows": [
+          [
+            2,
+            "Tabatha Gehling"
+          ],
+          [
+            5,
+            "Alana Bregman"
+          ]
+        ],
+        "columns": [
+          "contestant_number",
+          "contestant_name"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9340,
+    "completion_tokens": 410,
+    "total_tokens": 9750
+  },
+  "model_calls": 2,
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 1,
+    "prediction_rows": 2
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "seed": "projection-v2-20261125",
+  "known_original_count": 1034,
+  "known_pair_count": 1689,
+  "selected": [
+    {
+      "pair": "NLQ_column_carrier-00111",
+      "original_id": 277,
+      "group": "NLQ_column_carrier",
+      "db_id": "employee_hire_evaluation",
+      "label": "target"
+    },
+    {
+      "pair": "NLQ_column_carrier-00563",
+      "original_id": 1006,
+      "group": "NLQ_column_carrier",
+      "db_id": "singer",
+      "label": "target"
+    },
+    {
+      "pair": "NLQ_column_carrier-00082",
+      "original_id": 108,
+      "group": "NLQ_column_carrier",
+      "db_id": "car_1",
+      "label": "target"
+    },
+    {
+      "pair": "NLQ_column_carrier-00346",
+      "original_id": 721,
+      "group": "NLQ_column_carrier",
+      "db_id": "world_1",
+      "label": "target"
+    },
+    {
+      "pair": "NLQ_column_carrier-00494",
+      "original_id": 897,
+      "group": "NLQ_column_carrier",
+      "db_id": "network_1",
+      "label": "target"
+    },
+    {
+      "pair": "NLQ_column_carrier-00464",
+      "original_id": 907,
+      "group": "NLQ_column_carrier",
+      "db_id": "network_1",
+      "label": "target"
+    },
+    {
+      "pair": "NLQ_column_carrier-00572",
+      "original_id": 1022,
+      "group": "NLQ_column_carrier",
+      "db_id": "singer",
+      "label": "target"
+    },
+    {
+      "pair": "NLQ_column_carrier-00400",
+      "original_id": 703,
+      "group": "NLQ_column_carrier",
+      "db_id": "world_1",
+      "label": "target"
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00284",
+      "original_id": 694,
+      "group": "DB_DBcontent_equivalence",
+      "db_id": "voter_1_7",
+      "label": "control"
+    },
+    {
+      "pair": "DB_schema_abbreviation-00734",
+      "original_id": 294,
+      "group": "DB_schema_abbreviation",
+      "db_id": "employee_hire_evaluation_3",
+      "label": "control"
+    },
+    {
+      "pair": "DB_schema_synonym-01943",
+      "original_id": 756,
+      "group": "DB_schema_synonym",
+      "db_id": "world_1_2",
+      "label": "control"
+    },
+    {
+      "pair": "NLQ_column_attribute-00045",
+      "original_id": 275,
+      "group": "NLQ_column_attribute",
+      "db_id": "employee_hire_evaluation",
+      "label": "control"
+    },
+    {
+      "pair": "NLQ_column_value-00047",
+      "original_id": 53,
+      "group": "NLQ_column_value",
+      "db_id": "pets_1",
+      "label": "control"
+    },
+    {
+      "pair": "NLQ_keyword_synonym-00058",
+      "original_id": 51,
+      "group": "NLQ_keyword_synonym",
+      "db_id": "pets_1",
+      "label": "control"
+    },
+    {
+      "pair": "SQL_comparison-00047",
+      "original_id": 161,
+      "group": "SQL_comparison",
+      "db_id": "car_1",
+      "label": "control"
+    },
+    {
+      "pair": "SQL_sort_order-00098",
+      "original_id": 557,
+      "group": "SQL_sort_order",
+      "db_id": "student_transcripts_tracking",
+      "label": "control"
+    }
+  ],
+  "conditions": [
+    [
+      "baseline",
+      "none"
+    ],
+    [
+      "baseline",
+      "high"
+    ],
+    [
+      "canvas_v2",
+      "none"
+    ],
+    [
+      "canvas_v2",
+      "high"
+    ]
+  ],
+  "project_scope": "fresh variant pairs of previously exposed original IDs",
+  "target_rule": "NLQ_column_carrier, v2 explicit to normalized same unique name field",
+  "control_rule": "one fixed-hash sample per listed distinct non-carrier perturbation group",
+  "code_sha256": {
+    ".local\\task2-experiment\\projection_compare.py": "9a0954322e8520bf747ee56ad00c4ddcae58e1dac8ae3753703d7cd8f2980771",
+    ".local\\task2-experiment\\projection_generalization.py": "b040b817640f38777cd205cf7b8a87ce157823cea1190f1d09d336ca371c5848",
+    ".local\\task2-experiment\\projection_canvas.py": "343b2d099b32414839a7a82b42556437d5361a3834ec31013ac169e076ba2267",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4"
+  }
+}

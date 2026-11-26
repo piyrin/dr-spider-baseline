@@ -1,0 +1,69 @@
+{
+  "id": "SQL_NonDB_number-00054-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7333,
+    "completion_tokens": 235,
+    "total_tokens": 7568,
+    "prompt_tokens_details": {
+      "cached_tokens": 6528
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "WITH youngest_win AS (\n  SELECT winner_name, winner_rank, winner_age,\n         ROW_NUMBER() OVER (PARTITION BY winner_id ORDER BY winner_age ASC, tourney_date ASC, match_num ASC) AS rn\n  FROM matches\n  WHERE winner_age IS NOT NULL\n)\nSELECT winner_name, winner_rank\nFROM youngest_win\nWHERE rn = 1\nORDER BY winner_age ASC\nLIMIT 5;",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 5,
+  "prediction_row_count": 5,
+  "status": "mismatch",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:39:58+08:00",
+  "gold_rows": [
+    [
+      "Madison Keys",
+      17
+    ],
+    [
+      "Madison Keys",
+      24
+    ],
+    [
+      "Madison Keys",
+      16
+    ],
+    [
+      "Madison Keys",
+      12
+    ],
+    [
+      "Madison Keys",
+      9
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Madison Keys",
+      17
+    ],
+    [
+      "Elina Svitolina",
+      16
+    ],
+    [
+      "Garbine Muguruza",
+      4
+    ],
+    [
+      "Sloane Stephens",
+      30
+    ],
+    [
+      "Petra Kvitova",
+      6
+    ]
+  ]
+}

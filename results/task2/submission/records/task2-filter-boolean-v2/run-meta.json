@@ -1,0 +1,14 @@
+{
+  "code_sha256": {
+    ".local\\task2-experiment\\boolean_canvas.py": "2d31b11c48f7e69a19dac9a79834294ca1eda1fb3dea075389c9bf31648815dc",
+    ".local\\task2-experiment\\serve_canvas.py": "46bb3aa27ef0a962f09ff969f278620197823c83c22fd8095ff2142bc3cfe4e4",
+    ".local\\task2-experiment\\web\\page.tsx": "6a826d3b45851f4206de9d8c21d0c4a05d5650b0e8003b2ef3bc3af5512a6835"
+  },
+  "run_ids": {
+    "canvas/post": "c1dd019fd8024e17837f029e1ec797e1",
+    "canvas/pre": "4c4525d26b5b4151898b464e87e7d1e6",
+    "baseline/post": "1ae7e49f5a4149a38dc96c491c3afe3a",
+    "baseline/pre": "f2ef619203da4e09b65ec3c28eaa5b8f"
+  },
+  "model": "gpt-6-sol"
+}

@@ -1,0 +1,306 @@
+[
+  {
+    "id": "SQL_sort_order-00026-post",
+    "group": "SQL_sort_order",
+    "index": 26,
+    "side": "post",
+    "original_id": 160,
+    "db_id": "car_1",
+    "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+    "question": "What is the number of cars with a greater accelerate than the one with the least horsepower?",
+    "gold_sql": "SELECT COUNT(*) FROM CARS_DATA WHERE Accelerate > ( SELECT Accelerate FROM CARS_DATA ORDER BY Horsepower ASC LIMIT 1 )",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4669,
+      "completion_tokens": 143,
+      "total_tokens": 4812,
+      "prompt_tokens_details": {
+        "cached_tokens": 4575
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    WHERE Horsepower IS NOT NULL AND Horsepower != '?'\n    ORDER BY CAST(Horsepower AS REAL) ASC\n    LIMIT 1\n);",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 1,
+    "prediction_row_count": 1,
+    "status": "mismatch",
+    "case_type": "排序与取值范围",
+    "evidence": "马力最小的候选中混入了文本 null。SQLite 将其转为 0，导致模型选到缺失马力的车辆。排除缺失标记后最小有效马力为 46，且有多辆车并列。",
+    "verification": [
+      {
+        "role": "reference",
+        "sql": "SELECT COUNT(*) FROM CARS_DATA WHERE Accelerate > ( SELECT Accelerate FROM CARS_DATA ORDER BY Horsepower ASC LIMIT 1 )",
+        "row_count": 1,
+        "first_rows": [
+          [
+            330
+          ]
+        ]
+      },
+      {
+        "role": "prediction",
+        "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    WHERE Horsepower IS NOT NULL AND Horsepower != '?'\n    ORDER BY CAST(Horsepower AS REAL) ASC\n    LIMIT 1\n);",
+        "row_count": 1,
+        "first_rows": [
+          [
+            39
+          ]
+        ]
+      },
+      {
+        "role": "diagnostic_check",
+        "sql": "SELECT Horsepower, Accelerate, typeof(Horsepower), CAST(Horsepower AS REAL) FROM cars_data ORDER BY CAST(Horsepower AS REAL) LIMIT 4",
+        "row_count": 4,
+        "first_rows": [
+          [
+            "null",
+            19.0,
+            "text",
+            0.0
+          ],
+          [
+            "null",
+            17.0,
+            "text",
+            0.0
+          ],
+          [
+            "null",
+            17.3,
+            "text",
+            0.0
+          ],
+          [
+            "null",
+            14.3,
+            "text",
+            0.0
+          ]
+        ]
+      },
+      {
+        "role": "diagnostic_check",
+        "sql": "SELECT Horsepower, Accelerate FROM cars_data WHERE trim(lower(Horsepower)) NOT IN ('null','?','') ORDER BY CAST(Horsepower AS REAL) LIMIT 5",
+        "row_count": 5,
+        "first_rows": [
+          [
+            "46",
+            20.5
+          ],
+          [
+            "46",
+            21.0
+          ],
+          [
+            "48",
+            20.0
+          ],
+          [
+            "48",
+            21.5
+          ],
+          [
+            "48",
+            21.7
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SQL_NonDB_number-00061-post",
+    "group": "SQL_NonDB_number",
+    "index": 61,
+    "side": "post",
+    "original_id": 484,
+    "db_id": "wta_1",
+    "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+    "question": "What are the names and ranks of the six youngest winners across all matches?",
+    "gold_sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 6",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4723,
+      "completion_tokens": 62,
+      "total_tokens": 4785,
+      "prompt_tokens_details": {
+        "cached_tokens": 4608
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      }
+    },
+    "prediction_sql": "SELECT winner_name, winner_rank\nFROM matches\nWHERE winner_age IS NOT NULL\nORDER BY winner_age ASC\nLIMIT 6;",
+    "correct": false,
+    "error": null,
+    "gold_row_count": 6,
+    "prediction_row_count": 6,
+    "status": "mismatch",
+    "case_type": "集合关系与去重",
+    "evidence": "若题目中的六位获胜者按选手计，预测的六行都属于同一位 Madison Keys。参考按姓名和排名去重后仍只有两位选手，此题也暴露了参考查询的粒度问题。",
+    "verification": [
+      {
+        "role": "reference",
+        "sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 6",
+        "row_count": 6,
+        "first_rows": [
+          [
+            "Madison Keys",
+            17
+          ],
+          [
+            "Madison Keys",
+            24
+          ],
+          [
+            "Madison Keys",
+            16
+          ],
+          [
+            "Madison Keys",
+            12
+          ],
+          [
+            "Madison Keys",
+            9
+          ],
+          [
+            "Elina Svitolina",
+            16
+          ]
+        ]
+      },
+      {
+        "role": "prediction",
+        "sql": "SELECT winner_name, winner_rank\nFROM matches\nWHERE winner_age IS NOT NULL\nORDER BY winner_age ASC\nLIMIT 6;",
+        "row_count": 6,
+        "first_rows": [
+          [
+            "Madison Keys",
+            17
+          ],
+          [
+            "Madison Keys",
+            24
+          ],
+          [
+            "Madison Keys",
+            16
+          ],
+          [
+            "Madison Keys",
+            12
+          ],
+          [
+            "Madison Keys",
+            12
+          ],
+          [
+            "Madison Keys",
+            9
+          ]
+        ]
+      },
+      {
+        "role": "diagnostic_check",
+        "sql": "SELECT winner_id,winner_name,winner_age,winner_rank FROM matches WHERE winner_age IS NOT NULL ORDER BY winner_age LIMIT 6",
+        "row_count": 6,
+        "first_rows": [
+          [
+            201619,
+            "Madison Keys",
+            20.9171800137,
+            17
+          ],
+          [
+            201619,
+            "Madison Keys",
+            21.0896646133,
+            24
+          ],
+          [
+            201619,
+            "Madison Keys",
+            21.3196440794,
+            16
+          ],
+          [
+            201619,
+            "Madison Keys",
+            21.4346338125,
+            12
+          ],
+          [
+            201619,
+            "Madison Keys",
+            21.4346338125,
+            12
+          ],
+          [
+            201619,
+            "Madison Keys",
+            21.4729637235,
+            9
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "NLQ_keyword_carrier-00042-post",
+    "group": "NLQ_keyword_carrier",
+    "index": 42,
+    "side": "post",
+    "original_id": 79,
+    "db_id": "pets_1",
+    "database": "data\\Spider-dev\\databases\\pets_1\\pets_1.sqlite",
+    "question": "I want to know how many animals are owned by a specific student by their student id.",
+    "gold_sql": "SELECT count(*) , T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid GROUP BY T1.stuid",
+    "model": "gpt-6-sol",
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 4562,
+      "completion_tokens": 81,
+      "total_tokens": 4643,
+      "prompt_tokens_details": {
+        "cached_tokens": 4470
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      }
+    },
+    "prediction_sql": "SELECT COUNT(*) AS animal_count\nFROM Has_Pet\nWHERE StuID = :student_id;",
+    "correct": false,
+    "error": "ProgrammingError: Incorrect number of bindings supplied. The current statement uses 1, and there are 0 supplied.",
+    "gold_row_count": 2,
+    "status": "prediction_execution",
+    "case_type": "SQL 不可执行",
+    "evidence": "模型输出了未绑定的 :student_id，SQLite 无法执行。题面提到某位学生，但未给出实际 ID。该条记录的执行失败可以确定，具体用户意图仍需澄清。",
+    "verification": [
+      {
+        "role": "reference",
+        "sql": "SELECT count(*) , T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid GROUP BY T1.stuid",
+        "row_count": 2,
+        "first_rows": [
+          [
+            1,
+            1001
+          ],
+          [
+            2,
+            1002
+          ]
+        ]
+      },
+      {
+        "role": "prediction",
+        "sql": "SELECT COUNT(*) AS animal_count\nFROM Has_Pet\nWHERE StuID = :student_id;",
+        "error": "Incorrect number of bindings supplied. The current statement uses 1, and there are 0 supplied."
+      }
+    ]
+  }
+]

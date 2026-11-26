@@ -1,0 +1,825 @@
+[
+  {
+    "condition": "canvas",
+    "side": "post",
+    "request": {
+      "sample_id": "DB_DBcontent_equivalence-00304-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "sort_intent"
+          },
+          {
+            "id": "probe",
+            "kind": "sort_probe"
+          },
+          {
+            "id": "direction",
+            "kind": "sort_meaning_v2"
+          },
+          {
+            "id": "generate",
+            "kind": "sort_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "sort_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "probe"
+          },
+          {
+            "source": "probe",
+            "target": "direction"
+          },
+          {
+            "source": "direction",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "DB_DBcontent_equivalence-00304-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "sort_intent"
+        },
+        {
+          "id": "probe",
+          "kind": "sort_probe"
+        },
+        {
+          "id": "direction",
+          "kind": "sort_meaning_v2"
+        },
+        {
+          "id": "generate",
+          "kind": "sort_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "sort_execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "probe"
+        },
+        {
+          "source": "probe",
+          "target": "direction"
+        },
+        {
+          "source": "direction",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "76dabe94bfe444569815c5f036243c52",
+    "graph_sha256": "237bf6f13e96f74c907d14dee94485b4e3e5573f082f0546e9479a741fc9262a",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "sort_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "match": "similar",
+              "table": "orchestra",
+              "column": "year_of_existence",
+              "direction": "DESC",
+              "cue": "descending order of years in which they were founded"
+            }
+          ]
+        },
+        "elapsed_s": 43.45060029999877
+      },
+      {
+        "id": "probe",
+        "kind": "sort_probe",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "similar",
+          "table": "orchestra",
+          "column": "year_of_existence",
+          "cue": "descending order of years in which they were founded",
+          "direction": "DESC",
+          "declared_type": "INT",
+          "values": [
+            [
+              14,
+              "integer",
+              3
+            ],
+            [
+              20,
+              "integer",
+              3
+            ],
+            [
+              19,
+              "integer",
+              2
+            ],
+            [
+              13,
+              "integer",
+              1
+            ],
+            [
+              15,
+              "integer",
+              1
+            ],
+            [
+              16,
+              "integer",
+              1
+            ],
+            [
+              18,
+              "integer",
+              1
+            ]
+          ]
+        },
+        "elapsed_s": 0.0037026999998488463
+      },
+      {
+        "id": "direction",
+        "kind": "sort_meaning_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "probe"
+        ],
+        "output": {
+          "route": "similar",
+          "table": "orchestra",
+          "column": "year_of_existence",
+          "cue": "descending order of years in which they were founded",
+          "direction": "ASC",
+          "declared_type": "INT",
+          "values": [
+            [
+              14,
+              "integer",
+              3
+            ],
+            [
+              20,
+              "integer",
+              3
+            ],
+            [
+              19,
+              "integer",
+              2
+            ],
+            [
+              13,
+              "integer",
+              1
+            ],
+            [
+              15,
+              "integer",
+              1
+            ],
+            [
+              16,
+              "integer",
+              1
+            ],
+            [
+              18,
+              "integer",
+              1
+            ]
+          ],
+          "original_direction": "DESC",
+          "relation": "reverse",
+          "requested_quantity": "calendar years in which orchestras were founded",
+          "column_meaning": "elapsed years of an orchestra's existence, stored as integer duration values",
+          "reason": "The candidate field year_of_existence describes elapsed duration rather than a founding calendar year; its integer samples (13-20) are duration-like. For the same orchestra at a shared snapshot, a later founding year implies fewer years of existence, so ordering by this field reverses founding-year ordering."
+        },
+        "elapsed_s": 31.92057399999976
+      },
+      {
+        "id": "generate",
+        "kind": "sort_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "direction"
+        ],
+        "output": {
+          "sql": "SELECT \"Record_Company\"\nFROM \"orchestra\"\nORDER BY \"year_of_existence\" ASC;",
+          "sort_plan": {
+            "route": "similar",
+            "table": "orchestra",
+            "column": "year_of_existence",
+            "cue": "descending order of years in which they were founded",
+            "direction": "ASC",
+            "declared_type": "INT",
+            "values": [
+              [
+                14,
+                "integer",
+                3
+              ],
+              [
+                20,
+                "integer",
+                3
+              ],
+              [
+                19,
+                "integer",
+                2
+              ],
+              [
+                13,
+                "integer",
+                1
+              ],
+              [
+                15,
+                "integer",
+                1
+              ],
+              [
+                16,
+                "integer",
+                1
+              ],
+              [
+                18,
+                "integer",
+                1
+              ]
+            ],
+            "original_direction": "DESC",
+            "relation": "reverse",
+            "requested_quantity": "calendar years in which orchestras were founded",
+            "column_meaning": "elapsed years of an orchestra's existence, stored as integer duration values",
+            "reason": "The candidate field year_of_existence describes elapsed duration rather than a founding calendar year; its integer samples (13-20) are duration-like. For the same orchestra at a shared snapshot, a later founding year implies fewer years of existence, so ordering by this field reverses founding-year ordering."
+          }
+        },
+        "elapsed_s": 4.590881899999658
+      },
+      {
+        "id": "execute",
+        "kind": "sort_execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"Record_Company\"\nFROM \"orchestra\"\nORDER BY \"year_of_existence\" ASC;",
+          "rows": [
+            [
+              "Columbia Masterworks"
+            ],
+            [
+              "Philips"
+            ],
+            [
+              "Philips Classics Records"
+            ],
+            [
+              "RCA"
+            ],
+            [
+              "EMI"
+            ],
+            [
+              "Koch Records / Naxos Records"
+            ],
+            [
+              "Decca Records"
+            ],
+            [
+              "Mercury Records"
+            ],
+            [
+              "Deutsche Grammophon"
+            ],
+            [
+              "Kultur"
+            ],
+            [
+              "Decca Records"
+            ],
+            [
+              "Delos Records"
+            ]
+          ],
+          "columns": [
+            "Record_Company"
+          ],
+          "row_count": 12
+        },
+        "elapsed_s": 0.0012545999998110346
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "cost": {
+      "model_calls": 3,
+      "total_tokens": 21183
+    },
+    "course_flow_id": "TASK2_CANVAS_237bf6f13e96f74c907d14dee94485b4e3e5573f082f0546e9479a741fc9262a",
+    "course_flow": {
+      "id": "TASK2_CANVAS_237bf6f13e96f74c907d14dee94485b4e3e5573f082f0546e9479a741fc9262a",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_probe",
+          "type": "event",
+          "title": "probe",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_direction",
+          "type": "event",
+          "title": "direction",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_probe"
+        },
+        {
+          "source": "canvas_probe",
+          "target": "canvas_direction"
+        },
+        {
+          "source": "canvas_direction",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "canvas",
+    "side": "pre",
+    "request": {
+      "sample_id": "DB_DBcontent_equivalence-00304-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "sort_intent"
+          },
+          {
+            "id": "probe",
+            "kind": "sort_probe"
+          },
+          {
+            "id": "direction",
+            "kind": "sort_meaning_v2"
+          },
+          {
+            "id": "generate",
+            "kind": "sort_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "sort_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "probe"
+          },
+          {
+            "source": "probe",
+            "target": "direction"
+          },
+          {
+            "source": "direction",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "DB_DBcontent_equivalence-00304-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "sort_intent"
+        },
+        {
+          "id": "probe",
+          "kind": "sort_probe"
+        },
+        {
+          "id": "direction",
+          "kind": "sort_meaning_v2"
+        },
+        {
+          "id": "generate",
+          "kind": "sort_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "sort_execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "probe"
+        },
+        {
+          "source": "probe",
+          "target": "direction"
+        },
+        {
+          "source": "direction",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "342b77a822db49a6b8a012579879d1db",
+    "graph_sha256": "237bf6f13e96f74c907d14dee94485b4e3e5573f082f0546e9479a741fc9262a",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "sort_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "match": "direct",
+              "table": "orchestra",
+              "column": "Year_of_Founded",
+              "direction": "DESC",
+              "cue": "descending order of years in which they were founded"
+            }
+          ]
+        },
+        "elapsed_s": 39.48314029999892
+      },
+      {
+        "id": "probe",
+        "kind": "sort_probe",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "direct",
+          "table": "orchestra",
+          "column": "Year_of_Founded",
+          "cue": "descending order of years in which they were founded",
+          "direction": "DESC",
+          "declared_type": "REAL"
+        },
+        "elapsed_s": 0.0016707000031601638
+      },
+      {
+        "id": "direction",
+        "kind": "sort_meaning_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "probe"
+        ],
+        "output": {
+          "route": "direct",
+          "table": "orchestra",
+          "column": "Year_of_Founded",
+          "cue": "descending order of years in which they were founded",
+          "direction": "DESC",
+          "declared_type": "REAL",
+          "agent_skipped": true
+        },
+        "elapsed_s": 0.000004099998477613553
+      },
+      {
+        "id": "generate",
+        "kind": "sort_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "direction"
+        ],
+        "output": {
+          "sql": "SELECT \"Record_Company\"\nFROM \"orchestra\"\nORDER BY \"Year_of_Founded\" DESC;",
+          "sort_plan": {
+            "route": "direct",
+            "table": "orchestra",
+            "column": "Year_of_Founded",
+            "cue": "descending order of years in which they were founded",
+            "direction": "DESC",
+            "declared_type": "REAL",
+            "agent_skipped": true
+          }
+        },
+        "elapsed_s": 16.484971400001086
+      },
+      {
+        "id": "execute",
+        "kind": "sort_execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"Record_Company\"\nFROM \"orchestra\"\nORDER BY \"Year_of_Founded\" DESC;",
+          "rows": [
+            [
+              "Columbia Masterworks"
+            ],
+            [
+              "Philips"
+            ],
+            [
+              "Philips Classics Records"
+            ],
+            [
+              "RCA"
+            ],
+            [
+              "EMI"
+            ],
+            [
+              "Koch Records / Naxos Records"
+            ],
+            [
+              "Decca Records"
+            ],
+            [
+              "Mercury Records"
+            ],
+            [
+              "Deutsche Grammophon"
+            ],
+            [
+              "Kultur"
+            ],
+            [
+              "Decca Records"
+            ],
+            [
+              "Delos Records"
+            ]
+          ],
+          "columns": [
+            "Record_Company"
+          ],
+          "row_count": 12
+        },
+        "elapsed_s": 0.0011890999994648155
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 22720
+    },
+    "course_flow_id": "TASK2_CANVAS_237bf6f13e96f74c907d14dee94485b4e3e5573f082f0546e9479a741fc9262a",
+    "course_flow": {
+      "id": "TASK2_CANVAS_237bf6f13e96f74c907d14dee94485b4e3e5573f082f0546e9479a741fc9262a",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_probe",
+          "type": "event",
+          "title": "probe",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_direction",
+          "type": "event",
+          "title": "direction",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_probe"
+        },
+        {
+          "source": "canvas_probe",
+          "target": "canvas_direction"
+        },
+        {
+          "source": "canvas_direction",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

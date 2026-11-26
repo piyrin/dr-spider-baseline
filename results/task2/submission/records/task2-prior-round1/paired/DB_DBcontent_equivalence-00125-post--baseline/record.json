@@ -1,0 +1,37 @@
+{
+  "id": "DB_DBcontent_equivalence-00125-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7193,
+    "completion_tokens": 273,
+    "total_tokens": 7466,
+    "prompt_tokens_details": {
+      "cached_tokens": 6400
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT DISTINCT v.first_name, v.last_name\nFROM visitor AS v\nWHERE EXISTS (\n  SELECT 1\n  FROM visit AS vi\n  JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n  WHERE vi.visitor_ID = v.ID AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n  SELECT 1\n  FROM visit AS vi\n  JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n  WHERE vi.visitor_ID = v.ID AND CAST(m.Open_Year AS INTEGER) > 2011\n);",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 1,
+  "status": "match",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:39:51+08:00",
+  "gold_rows": [
+    [
+      "Fernando",
+      "Gago"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Fernando",
+      "Gago"
+    ]
+  ]
+}

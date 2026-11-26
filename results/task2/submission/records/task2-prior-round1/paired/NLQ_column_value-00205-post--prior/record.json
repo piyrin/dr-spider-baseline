@@ -1,0 +1,35 @@
+{
+  "id": "NLQ_column_value-00205-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7273,
+    "completion_tokens": 171,
+    "total_tokens": 7444,
+    "prompt_tokens_details": {
+      "cached_tokens": 6528
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT \"Package_Option\" FROM \"TV_Channel\" WHERE \"series_name\" = 'Sky Radio';",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 1,
+  "status": "match",
+  "condition": "prior",
+  "prior": "In TV_Channel.series_name, the stored value corresponding to the question's 'Sky radio' is 'Sky Radio'.",
+  "recorded_at": "2026-11-25T13:39:25+08:00",
+  "gold_rows": [
+    [
+      "Sky Famiglia"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Sky Famiglia"
+    ]
+  ]
+}

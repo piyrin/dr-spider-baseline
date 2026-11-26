@@ -1,0 +1,984 @@
+﻿id,group,index,side,original_id,db_id,database,question,gold_sql,prediction_sql,correct,status,system_fingerprint,gold_row_count,prediction_row_count
+SQL_NonDB_number-00023-pre,SQL_NonDB_number,23,pre,372,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What are the ids of documents that have 2 or more paragraphs?,SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) >= 2,"SELECT Document_ID
+FROM Paragraphs
+GROUP BY Document_ID
+HAVING COUNT(*) >= 2;",True,match,,4,4
+SQL_NonDB_number-00023-post,SQL_NonDB_number,23,post,372,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What are the ids of documents that have 3 or more paragraphs?,SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) >= 3,"SELECT Document_ID
+FROM Paragraphs
+GROUP BY Document_ID
+HAVING COUNT(*) >= 3;",True,match,,1,1
+SQL_NonDB_number-00022-pre,SQL_NonDB_number,22,pre,371,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,List all document ids with at least two paragraphs.,SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) >= 2,"SELECT Document_ID
+FROM Paragraphs
+GROUP BY Document_ID
+HAVING COUNT(*) >= 2;",True,match,,4,4
+SQL_NonDB_number-00022-post,SQL_NonDB_number,22,post,371,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,List all document ids with at least three paragraphs.,SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) >= 3,"SELECT Document_ID
+FROM Paragraphs
+GROUP BY Document_ID
+HAVING COUNT(*) >= 3;",True,match,,1,1
+SQL_NonDB_number-00127-pre,SQL_NonDB_number,127,pre,932,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"Which professionals have done at least two treatments? List the professional's id, role, and first name.","SELECT T1.professional_id , T1.role_code , T1.first_name FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id HAVING count(*) >= 2","SELECT p.professional_id, p.role_code, p.first_name
+FROM Professionals AS p
+JOIN Treatments AS t ON t.professional_id = p.professional_id
+GROUP BY p.professional_id, p.role_code, p.first_name
+HAVING COUNT(*) >= 2;",True,match,,6,6
+SQL_NonDB_number-00127-post,SQL_NonDB_number,127,post,932,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"Which professionals have done at least three treatments? List the professional's id, role, and first name.","SELECT T1.professional_id , T1.role_code , T1.first_name FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id HAVING count(*) >= 3","SELECT p.professional_id, p.role_code, p.first_name
+FROM Professionals AS p
+JOIN Treatments AS t ON t.professional_id = p.professional_id
+GROUP BY p.professional_id, p.role_code, p.first_name
+HAVING COUNT(*) >= 3;",True,match,,1,1
+NLQ_column_attribute-00091-pre,NLQ_column_attribute,91,pre,790,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"What are the population, name and leader of the country with the largest area?","SELECT Name , population , HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1","SELECT Population, Name, HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1;",True,match,,1,1
+NLQ_column_attribute-00091-post,NLQ_column_attribute,91,post,790,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"What are the population, name and leader of the largest country?","SELECT Name , population , HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1","SELECT Population, Name, HeadOfState AS leader
+FROM country
+ORDER BY SurfaceArea DESC
+LIMIT 1;",True,match,,1,1
+NLQ_column_attribute-00019-pre,NLQ_column_attribute,19,pre,97,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,Find the model of the car whose weight is below the average weight.,SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id WHERE T2.Weight < (SELECT avg(Weight) FROM CARS_DATA),"SELECT cn.Model
+FROM car_names AS cn
+JOIN cars_data AS cd ON cd.Id = cn.MakeId
+WHERE cd.Weight < (SELECT AVG(Weight) FROM cars_data);",True,match,,230,230
+NLQ_column_attribute-00019-post,NLQ_column_attribute,19,post,97,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,Find the model of the car that is lighter than the average.,SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id WHERE T2.Weight < (SELECT avg(Weight) FROM CARS_DATA),"SELECT DISTINCT cn.Model
+FROM car_names AS cn
+JOIN cars_data AS cd ON cd.Id = cn.MakeId
+WHERE cd.Weight < (SELECT AVG(Weight) FROM cars_data);",False,mismatch,,230,28
+NLQ_column_attribute-00076-pre,NLQ_column_attribute,76,pre,665,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What is the birth date of the poker player with the lowest earnings?,SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Earnings ASC LIMIT 1,"SELECT p.Birth_Date
+FROM poker_player AS pp
+JOIN people AS p ON p.People_ID = pp.People_ID
+ORDER BY pp.Earnings ASC
+LIMIT 1;
+--",True,match,,1,1
+NLQ_column_attribute-00076-post,NLQ_column_attribute,76,post,665,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What is the birthday of the poker player who has made the least?,SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Earnings ASC LIMIT 1,"SELECT p.Birth_Date
+FROM people AS p
+JOIN poker_player AS pp ON pp.People_ID = p.People_ID
+ORDER BY pp.Earnings ASC
+LIMIT 1;",True,match,,1,1
+NLQ_column_attribute-00107-pre,NLQ_column_attribute,107,pre,940,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Which owner has paid the largest amount of money in total for their dogs? Show the owner id and zip code.,"SELECT T1.owner_id , T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1","SELECT o.owner_id, o.zip_code
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Treatments AS t ON t.dog_id = d.dog_id
+GROUP BY o.owner_id, o.zip_code
+ORDER BY SUM(t.cost_of_treatment) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_column_attribute-00107-post,NLQ_column_attribute,107,post,940,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Who paid the most in total for their dogs? Show the owner id and zip code.,"SELECT T1.owner_id , T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1","SELECT o.owner_id, o.zip_code
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Treatments AS t ON t.dog_id = d.dog_id
+GROUP BY o.owner_id, o.zip_code
+ORDER BY SUM(t.cost_of_treatment) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_column_attribute-00074-pre,NLQ_column_attribute,74,pre,656,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,Return the money rank of the player with the greatest earnings.,SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1,SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1;,True,match,,1,1
+NLQ_column_attribute-00074-post,NLQ_column_attribute,74,post,656,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,Return the money rank of the player who made the most.,SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1,SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1;,True,match,,1,1
+NLQ_column_attribute-00053-pre,NLQ_column_attribute,53,pre,453,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Find the first name and country code of the oldest player.,"SELECT first_name , country_code FROM players ORDER BY birth_date LIMIT 1","SELECT first_name, country_code
+FROM players
+WHERE birth_date IS NOT NULL
+ORDER BY birth_date ASC
+LIMIT 1;",True,match,,1,1
+NLQ_column_attribute-00053-post,NLQ_column_attribute,53,post,453,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Find the country code and first name of the oldest.,"SELECT first_name , country_code FROM players ORDER BY birth_date LIMIT 1","SELECT country_code, first_name
+FROM players
+WHERE birth_date IS NOT NULL
+ORDER BY birth_date ASC
+LIMIT 1;",True,match,,1,1
+NLQ_column_attribute-00090-pre,NLQ_column_attribute,90,pre,788,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"What are the name, independence year, and surface area of the country with the smallest population?","SELECT Name , SurfaceArea , IndepYear FROM country ORDER BY Population LIMIT 1","SELECT Name, IndepYear, SurfaceArea
+FROM country
+ORDER BY Population ASC
+LIMIT 1;",True,match,,1,1
+NLQ_column_attribute-00090-post,NLQ_column_attribute,90,post,788,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"What is the name, independence year, and surface area of the small country in which there is least people?","SELECT Name , SurfaceArea , IndepYear FROM country ORDER BY Population LIMIT 1","SELECT Name, IndepYear, SurfaceArea
+FROM country
+ORDER BY Population ASC
+LIMIT 1;",True,match,,1,1
+SQL_DB_number-00225-pre,SQL_DB_number,225,pre,413,museum_visit,data\Spider-dev\databases\museum_visit\museum_visit.sqlite,What is the average age of the visitors whose membership level is not higher than 4?,SELECT avg(age) FROM visitor WHERE Level_of_membership <= 4,SELECT AVG(Age) FROM visitor WHERE Level_of_membership <= 4;,True,match,,1,1
+SQL_DB_number-00225-post,SQL_DB_number,225,post,413,museum_visit,data\Spider-dev\databases\museum_visit\museum_visit.sqlite,What is the average age of the visitors whose membership level is not higher than 6?,SELECT avg(age) FROM visitor WHERE Level_of_membership <= 6,SELECT AVG(Age) FROM visitor WHERE Level_of_membership <= 6;,True,match,,1,1
+SQL_DB_number-00299-pre,SQL_DB_number,299,pre,669,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What is the average earnings of poker players with height higher than 200?,SELECT avg(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height > 200,"SELECT AVG(pp.Earnings) AS average_earnings
+FROM poker_player AS pp
+JOIN people AS p ON pp.People_ID = p.People_ID
+WHERE p.Height > 200;",True,match,,1,1
+SQL_DB_number-00299-post,SQL_DB_number,299,post,669,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What is the average earnings of poker players with height higher than 207?,SELECT avg(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height > 207,"SELECT AVG(pp.Earnings)
+FROM poker_player AS pp
+JOIN people AS p ON pp.People_ID = p.People_ID
+WHERE p.Height > 207;",True,match,,1,1
+SQL_DB_number-00061-pre,SQL_DB_number,61,pre,117,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the average miles per gallon(mpg) of the cars with 4 cylinders?,SELECT avg(mpg) FROM CARS_DATA WHERE Cylinders = 4,"SELECT AVG(CAST(""MPG"" AS REAL)) AS avg_mpg
+FROM ""cars_data""
+WHERE ""Cylinders"" = 4;
+--",True,match,,1,1
+SQL_DB_number-00061-post,SQL_DB_number,61,post,117,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the average miles per gallon(mpg) of the cars with 5 cylinders?,SELECT avg(mpg) FROM CARS_DATA WHERE Cylinders = 5,"SELECT AVG(CAST(""MPG"" AS REAL)) AS average_mpg
+FROM ""cars_data""
+WHERE ""Cylinders"" = 5;
+--",True,match,,1,1
+SQL_DB_number-00271-pre,SQL_DB_number,271,pre,448,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What are the names of players who won in both 2013 and 2016?,SELECT winner_name FROM matches WHERE YEAR = 2013 INTERSECT SELECT winner_name FROM matches WHERE YEAR = 2016,"SELECT DISTINCT winner_name
+FROM matches
+WHERE year = 2013
+  AND winner_id IN (
+    SELECT winner_id
+    FROM matches
+    WHERE year = 2016
+  );",True,match,,5,5
+SQL_DB_number-00271-post,SQL_DB_number,271,post,448,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What are the names of players who won in both 2013 and 2013?,SELECT winner_name FROM matches WHERE YEAR = 2013 INTERSECT SELECT winner_name FROM matches WHERE YEAR = 2013,"SELECT DISTINCT winner_name
+FROM matches
+WHERE year = 2013;",True,match,,7,7
+SQL_DB_number-00052-pre,SQL_DB_number,52,pre,103,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,Which distinct car models are the produced after 1980?,SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.model = T2.model JOIN CARS_DATA AS T3 ON T2.MakeId = T3.id WHERE T3.year > 1980,"SELECT DISTINCT cn.Model
+FROM car_names AS cn
+JOIN cars_data AS cd ON cd.Id = cn.MakeId
+WHERE cd.Year > 1980;",True,match,,21,21
+SQL_DB_number-00052-post,SQL_DB_number,52,post,103,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,Which distinct car models are the produced after 1977?,SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.model = T2.model JOIN CARS_DATA AS T3 ON T2.MakeId = T3.id WHERE T3.year > 1977,"SELECT DISTINCT cn.Model
+FROM car_names AS cn
+JOIN cars_data AS cd ON cd.Id = cn.MakeId
+WHERE cd.Year > 77;",False,mismatch,,27,33
+SQL_DB_number-00033-pre,SQL_DB_number,33,pre,38,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What are the names of the singers who performed in a concert in 2014?,SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id = T2.singer_id JOIN concert AS T3 ON T1.concert_id = T3.concert_id WHERE T3.year = 2014,"SELECT DISTINCT s.Name
+FROM singer AS s
+JOIN singer_in_concert AS sic ON s.Singer_ID = sic.Singer_ID
+JOIN concert AS c ON sic.concert_ID = c.concert_ID
+WHERE c.Year = '2014';",False,mismatch,,6,5
+SQL_DB_number-00033-post,SQL_DB_number,33,post,38,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What are the names of the singers who performed in a concert in 2015?,SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id = T2.singer_id JOIN concert AS T3 ON T1.concert_id = T3.concert_id WHERE T3.year = 2015,"SELECT DISTINCT s.Name
+FROM singer AS s
+JOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID
+JOIN concert AS c ON sc.concert_ID = c.concert_ID
+WHERE c.Year = '2015';",True,match,,4,4
+SQL_DB_number-00160-pre,SQL_DB_number,160,pre,168,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,"Among the cars that do not have the minimum horsepower , what are the make ids and names of all those with less than 4 cylinders ?","select t2.makeid , t2.make from cars_data as t1 join car_names as t2 on t1.id = t2.makeid where t1.horsepower > (select min(horsepower) from cars_data) and t1.cylinders < 4","SELECT cn.MakeId, cn.Make
+FROM car_names AS cn
+JOIN cars_data AS cd ON cd.Id = cn.MakeId
+WHERE cd.Cylinders < 4
+  AND CAST(NULLIF(cd.Horsepower, '?') AS REAL) <> (
+    SELECT MIN(CAST(NULLIF(Horsepower, '?') AS REAL))
+    FROM cars_data
+  );",False,mismatch,,3,4
+SQL_DB_number-00160-post,SQL_DB_number,160,post,168,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,"Among the cars that do not have the minimum horsepower , what are the make ids and names of all those with less than 10 cylinders ?","select t2.makeid , t2.make from cars_data as t1 join car_names as t2 on t1.id = t2.makeid where t1.horsepower > (select min(horsepower) from cars_data) and t1.cylinders < 10","SELECT cn.MakeId, cn.Make
+FROM car_names AS cn
+JOIN cars_data AS cd ON cd.Id = cn.MakeId
+WHERE cd.Cylinders < 10
+  AND cd.Horsepower GLOB '[0-9]*'
+  AND CAST(cd.Horsepower AS INTEGER) > (
+    SELECT MIN(CAST(Horsepower AS INTEGER))
+    FROM cars_data
+    WHERE Horsepower GLOB '[0-9]*'
+  );",False,mismatch,,389,398
+SQL_DB_number-00130-pre,SQL_DB_number,130,pre,145,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,how many cars were produced in 1980?,SELECT count(*) FROM CARS_DATA WHERE YEAR = 1980,SELECT COUNT(*) FROM cars_data WHERE Year = 1980;,True,match,,1,1
+SQL_DB_number-00130-post,SQL_DB_number,130,post,145,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,how many cars were produced in 1976?,SELECT count(*) FROM CARS_DATA WHERE YEAR = 1976,SELECT COUNT(*) FROM cars_data WHERE Year = 76;,False,mismatch,,1,1
+SQL_comparison-00174-pre,SQL_comparison,174,pre,1023,singer,data\Spider-dev\databases\singer\singer.sqlite,What are the names of the singers that have more than one songs?,SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Name HAVING COUNT(*) > 1,"SELECT s.Name
+FROM singer AS s
+JOIN song AS so ON so.Singer_ID = s.Singer_ID
+GROUP BY s.Singer_ID, s.Name
+HAVING COUNT(*) > 1;
+--",True,match,,2,2
+SQL_comparison-00174-post,SQL_comparison,174,post,1023,singer,data\Spider-dev\databases\singer\singer.sqlite,What are the names of the singers that have at least one songs?,SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Name HAVING COUNT(*) >= 1,SELECT Name FROM singer WHERE EXISTS (SELECT 1 FROM song WHERE song.Singer_ID = singer.Singer_ID);,True,match,,6,6
+SQL_comparison-00155-pre,SQL_comparison,155,pre,924,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Which dogs have not cost their owner more than 1000 for treatment ? List the dog names .,select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment) > 1000 ),"SELECT d.name
+FROM Dogs AS d
+LEFT JOIN Treatments AS t ON t.dog_id = d.dog_id
+GROUP BY d.dog_id, d.name
+HAVING COALESCE(SUM(t.cost_of_treatment), 0) <= 1000;",True,match,,12,12
+SQL_comparison-00155-post,SQL_comparison,155,post,924,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Which dogs have not cost their owner at most 1000 for treatment ? List the dog names .,select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment) <= 1000 ),"SELECT d.name
+FROM Dogs AS d
+JOIN Treatments AS t ON t.dog_id = d.dog_id
+GROUP BY d.dog_id, d.name
+HAVING SUM(t.cost_of_treatment) > 1000;",False,mismatch,,9,3
+SQL_comparison-00086-pre,SQL_comparison,86,pre,414,museum_visit,data\Spider-dev\databases\museum_visit\museum_visit.sqlite,"Find the name and membership level of the visitors whose membership level is higher than 4, and sort by their age from old to young.","SELECT name , Level_of_membership FROM visitor WHERE Level_of_membership > 4 ORDER BY age DESC","SELECT Name, Level_of_membership
+FROM visitor
+WHERE Level_of_membership > 4
+ORDER BY Age DESC;",True,match,,3,3
+SQL_comparison-00086-post,SQL_comparison,86,post,414,museum_visit,data\Spider-dev\databases\museum_visit\museum_visit.sqlite,"Find the name and membership level of the visitors whose membership level is at most 4, and sort by their age from old to young.","SELECT name , Level_of_membership FROM visitor WHERE Level_of_membership <= 4 ORDER BY age DESC","SELECT ""Name"", ""Level_of_membership""
+FROM ""visitor""
+WHERE ""Level_of_membership"" <= 4
+ORDER BY ""Age"" DESC;",True,match,,3,3
+SQL_comparison-00108-pre,SQL_comparison,108,pre,641,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,find id of the tv channels that from the countries where have more than two tv channels.,SELECT id FROM tv_channel GROUP BY country HAVING count(*) > 2,SELECT id FROM TV_Channel WHERE Country IN (SELECT Country FROM TV_Channel GROUP BY Country HAVING COUNT(*) > 2);,False,mismatch,,1,12
+SQL_comparison-00108-post,SQL_comparison,108,post,641,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,find id of the tv channels that from the countries where have less than two tv channels.,SELECT id FROM tv_channel GROUP BY country HAVING count(*) < 2,"SELECT id
+FROM TV_Channel
+WHERE Country IN (
+    SELECT Country
+    FROM TV_Channel
+    GROUP BY Country
+    HAVING COUNT(*) < 2
+);",True,match,,1,1
+SQL_comparison-00061-pre,SQL_comparison,61,pre,178,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What are the ids and names of all countries that either have more than 3 car makers or produce fiat model ?,"select t1.countryid , t1.countryname from countries as t1 join car_makers as t2 on t1.countryid = t2.country group by t1.countryid having count(*) > 3 union select t1.countryid , t1.countryname from countries as t1 join car_makers as t2 on t1.countryid = t2.country join model_list as t3 on t2.id = t3.maker where t3.model = 'fiat'","SELECT c.CountryId, c.CountryName
+FROM countries AS c
+WHERE (SELECT COUNT(*) FROM car_makers AS cm WHERE cm.Country = c.CountryId) > 3
+   OR EXISTS (
+       SELECT 1
+       FROM car_makers AS cm
+       JOIN model_list AS ml ON ml.Maker = cm.Id
+       WHERE cm.Country = c.CountryId
+         AND LOWER(ml.Model) = 'fiat'
+   );",True,match,,4,4
+SQL_comparison-00061-post,SQL_comparison,61,post,178,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What are the ids and names of all countries that either have at most 3 car makers or produce fiat model ?,"select t1.countryid , t1.countryname from countries as t1 join car_makers as t2 on t1.countryid = t2.country group by t1.countryid having count(*) <= 3 union select t1.countryid , t1.countryname from countries as t1 join car_makers as t2 on t1.countryid = t2.country join model_list as t3 on t2.id = t3.maker where t3.model = 'fiat'","SELECT c.CountryId, c.CountryName
+FROM countries AS c
+WHERE (SELECT COUNT(*) FROM car_makers AS cm WHERE cm.Country = c.CountryId) <= 3
+   OR EXISTS (
+       SELECT 1
+       FROM car_makers AS cm
+       JOIN model_list AS ml ON ml.Maker = cm.Id
+       WHERE cm.Country = c.CountryId
+         AND LOWER(ml.Model) = 'fiat'
+   );
+--",False,mismatch,,5,12
+SQL_comparison-00122-pre,SQL_comparison,122,pre,677,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What are the nationalities that are shared by at least two people?,SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*) >= 2,"SELECT Nationality
+FROM people
+GROUP BY Nationality
+HAVING COUNT(*) >= 2;",True,match,,1,1
+SQL_comparison-00122-post,SQL_comparison,122,post,677,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What are the nationalities that are shared by less than two people?,SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*) < 2,"SELECT Nationality
+FROM people
+GROUP BY Nationality
+HAVING COUNT(*) < 2;",True,match,,1,1
+SQL_comparison-00012-pre,SQL_comparison,12,pre,123,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What are the countries having at least one car maker? List name and id.,"SELECT T1.CountryName , T1.CountryId FROM COUNTRIES AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING count(*) >= 1","SELECT c.CountryName, c.CountryId
+FROM countries AS c
+WHERE EXISTS (
+    SELECT 1
+    FROM car_makers AS m
+    WHERE m.Country = c.CountryId
+);",True,match,,8,8
+SQL_comparison-00012-post,SQL_comparison,12,post,123,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What are the countries having more than one car maker? List name and id.,"SELECT T1.CountryName , T1.CountryId FROM COUNTRIES AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING count(*) > 1","SELECT c.CountryName, c.CountryId
+FROM countries AS c
+JOIN car_makers AS m ON m.Country = c.CountryId
+GROUP BY c.CountryId, c.CountryName
+HAVING COUNT(m.Id) > 1;",True,match,,6,6
+SQL_comparison-00029-pre,SQL_comparison,29,pre,136,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the average horsepower for all cars produced before 1980 ?,select avg(horsepower) from cars_data where year < 1980,"SELECT AVG(CAST(Horsepower AS REAL)) AS average_horsepower
+FROM cars_data
+WHERE Year < 80;",False,mismatch,,1,1
+SQL_comparison-00029-post,SQL_comparison,29,post,136,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the average horsepower for all cars produced after 1980 ?,select avg(horsepower) from cars_data where year > 1980,"SELECT AVG(CAST(Horsepower AS REAL)) AS average_horsepower
+FROM cars_data
+WHERE Year > 80 AND Horsepower GLOB '[0-9]*';",False,mismatch,,1,1
+NLQ_column_value-00240-pre,NLQ_column_value,240,pre,699,voter_1,data\Spider-dev\databases\voter_1\voter_1.sqlite,"What are the create dates, states, and phone numbers of the votes that were for the contestant named 'Tabatha Gehling'?","SELECT T2.created , T2.state , T2.phone_number FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number WHERE T1.contestant_name = 'Tabatha Gehling'","SELECT v.created, v.state, v.phone_number
+FROM VOTES AS v
+JOIN CONTESTANTS AS c ON c.contestant_number = v.contestant_number
+WHERE c.contestant_name = 'Tabatha Gehling';
+--",True,match,,1,1
+NLQ_column_value-00240-post,NLQ_column_value,240,post,699,voter_1,data\Spider-dev\databases\voter_1\voter_1.sqlite,"Find the create date, state, and phone number of all the votes that are casted to Tabatha Gehling.","SELECT T2.created , T2.state , T2.phone_number FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number WHERE T1.contestant_name = 'Tabatha Gehling'","SELECT v.created, v.state, v.phone_number
+FROM VOTES AS v
+JOIN CONTESTANTS AS c ON c.contestant_number = v.contestant_number
+WHERE c.contestant_name = 'Tabatha Gehling';",True,match,,1,1
+NLQ_column_value-00248-pre,NLQ_column_value,248,pre,709,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is the continent name which Anguilla belongs to?,"SELECT Continent FROM country WHERE Name = ""Anguilla""",SELECT Continent FROM country WHERE Name = 'Anguilla';,True,match,,1,1
+NLQ_column_value-00248-post,NLQ_column_value,248,post,709,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"Which is the continent (as listed below) whose island-country ""Anguilla"" belongs to?","SELECT Continent FROM country WHERE Name = ""Anguilla""",SELECT Continent FROM country WHERE Name = 'Anguilla';,True,match,,1,1
+NLQ_column_value-00196-pre,NLQ_column_value,196,pre,513,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the zip code of the address in the city Port Chelsea?,SELECT zip_postcode FROM Addresses WHERE city = 'Port Chelsea',SELECT zip_postcode FROM Addresses WHERE city = 'Port Chelsea';,True,match,,1,1
+NLQ_column_value-00196-post,NLQ_column_value,196,post,513,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What's the zip code for the address in Port Chelsea?,SELECT zip_postcode FROM Addresses WHERE city = 'Port Chelsea',SELECT zip_postcode FROM Addresses WHERE city = 'Port Chelsea';,True,match,,1,1
+NLQ_column_value-00201-pre,NLQ_column_value,201,pre,582,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the description for the section named h?,SELECT section_description FROM Sections WHERE section_name = 'h',SELECT section_description FROM Sections WHERE section_name = 'h';,True,match,,1,1
+NLQ_column_value-00201-post,NLQ_column_value,201,post,582,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the description of the 'h' section?,SELECT section_description FROM Sections WHERE section_name = 'h',SELECT section_description FROM Sections WHERE section_name = 'h';,True,match,,1,1
+NLQ_column_value-00223-pre,NLQ_column_value,223,pre,633,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,which countries' tv channels are playing some cartoon written by Todd Casey?,SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by = 'Todd Casey',"SELECT DISTINCT tc.Country
+FROM TV_Channel AS tc
+JOIN Cartoon AS c ON c.Channel = tc.id
+WHERE c.Written_by LIKE '%Todd Casey%';",True,match,,2,2
+NLQ_column_value-00223-post,NLQ_column_value,223,post,633,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,"Among the TV channels broadcast in, which country's are showing a cartoon of Todd Casey?",SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by = 'Todd Casey',"SELECT DISTINCT t.Country
+FROM TV_Channel AS t
+JOIN Cartoon AS c ON c.Channel = t.id
+WHERE c.Written_by LIKE '%Todd Casey%';",True,match,,2,2
+NLQ_column_value-00152-pre,NLQ_column_value,152,pre,265,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,Which cities do more than one employee under age 30 come from?,SELECT city FROM employee WHERE age < 30 GROUP BY city HAVING count(*) > 1,"SELECT City
+FROM employee
+WHERE Age < 30
+GROUP BY City
+HAVING COUNT(*) > 1;",True,match,,1,1
+NLQ_column_value-00152-post,NLQ_column_value,152,post,265,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,Which cities have more than 1 employee who is below 30 years old?,SELECT city FROM employee WHERE age < 30 GROUP BY city HAVING count(*) > 1,"SELECT City
+FROM employee
+WHERE Age < 30
+GROUP BY City
+HAVING COUNT(*) > 1;",True,match,,1,1
+NLQ_column_value-00099-pre,NLQ_column_value,99,pre,185,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,List the airport code and name in the city of Anthony.,"SELECT AirportCode , AirportName FROM AIRPORTS WHERE city = ""Anthony""","SELECT ""AirportCode"", ""AirportName""
+FROM ""airports""
+WHERE ""City"" = 'Anthony';",True,match,,0,0
+NLQ_column_value-00099-post,NLQ_column_value,99,post,185,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,What is the airport code and name in Anthony?,"SELECT AirportCode , AirportName FROM AIRPORTS WHERE city = ""Anthony""","SELECT AirportCode, AirportName FROM airports WHERE City = 'Anthony';",True,match,,0,0
+NLQ_column_value-00226-pre,NLQ_column_value,226,pre,644,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What are the ids of the TV channels that do not have any cartoons directed by Ben Jones?,SELECT id FROM TV_Channel EXCEPT SELECT channel FROM cartoon WHERE directed_by = 'Ben Jones',"SELECT t.id
+FROM TV_Channel AS t
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Cartoon AS c
+    WHERE c.Channel = t.id
+      AND c.Directed_by = 'Ben Jones'
+);",True,match,,11,11
+NLQ_column_value-00226-post,NLQ_column_value,226,post,644,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,"For cartoon channels without Ben Jones, what are their IDs?",SELECT id FROM TV_Channel EXCEPT SELECT channel FROM cartoon WHERE directed_by = 'Ben Jones',"SELECT DISTINCT c.Channel
+FROM Cartoon AS c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Cartoon AS b
+    WHERE b.Channel = c.Channel
+      AND (b.Directed_by LIKE '%Ben Jones%' OR b.Written_by LIKE '%Ben Jones%')
+);",False,mismatch,,11,5
+NLQ_keyword_carrier-00170-pre,NLQ_keyword_carrier,170,pre,298,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Count the number of documents.,SELECT count(*) FROM Documents,SELECT COUNT(*) FROM Documents;,True,match,,1,1
+NLQ_keyword_carrier-00170-post,NLQ_keyword_carrier,170,post,298,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,how many documents do we need?,SELECT count(*) FROM Documents,SELECT COUNT(*) AS document_count FROM Documents;,True,match,,1,1
+NLQ_keyword_carrier-00105-pre,NLQ_keyword_carrier,105,pre,204,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Count the number of flights departing from 'APG'.,"SELECT count(*) FROM FLIGHTS WHERE SourceAirport = ""APG""",SELECT COUNT(*) FROM flights WHERE SourceAirport = 'APG';,True,match,,1,1
+NLQ_keyword_carrier-00105-post,NLQ_keyword_carrier,105,post,204,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,How many flights have departed from APG?,"SELECT count(*) FROM FLIGHTS WHERE SourceAirport = ""APG""",SELECT COUNT(*) AS flight_count FROM flights WHERE SourceAirport = 'APG';,True,match,,1,1
+NLQ_keyword_carrier-00288-pre,NLQ_keyword_carrier,288,pre,686,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,Count the number of different nationalities.,SELECT count(DISTINCT Nationality) FROM people,SELECT COUNT(DISTINCT Nationality) FROM people;,True,match,,1,1
+NLQ_keyword_carrier-00288-post,NLQ_keyword_carrier,288,post,686,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,How many nationalities are there?,SELECT count(DISTINCT Nationality) FROM people,"SELECT COUNT(DISTINCT ""Nationality"") FROM ""people"";
+--",True,match,,1,1
+NLQ_keyword_carrier-00180-pre,NLQ_keyword_carrier,180,pre,308,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Count the number of documents that use the PPT template type.,SELECT count(*) FROM Documents AS T1 JOIN Templates AS T2 ON T1.Template_ID = T2.Template_ID WHERE T2.Template_Type_Code = 'PPT',SELECT COUNT(*) FROM Documents AS d JOIN Templates AS t ON d.Template_ID = t.Template_ID WHERE t.Template_Type_Code = 'PPT';,True,match,,1,1
+NLQ_keyword_carrier-00180-post,NLQ_keyword_carrier,180,post,308,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Tell me how many documents have the PPT template type?,SELECT count(*) FROM Documents AS T1 JOIN Templates AS T2 ON T1.Template_ID = T2.Template_ID WHERE T2.Template_Type_Code = 'PPT',SELECT COUNT(*) FROM Documents AS d JOIN Templates AS t ON d.Template_ID = t.Template_ID WHERE t.Template_Type_Code = 'PPT';,True,match,,1,1
+NLQ_keyword_carrier-00301-pre,NLQ_keyword_carrier,301,pre,745,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is the number of nations that use English and Dutch?,"SELECT COUNT(*) FROM (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = ""English"" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = ""Dutch"")","SELECT COUNT(*) AS nation_count
+FROM country AS c
+WHERE EXISTS (
+  SELECT 1 FROM countrylanguage AS cl
+  WHERE cl.CountryCode = c.Code AND cl.Language = 'English'
+)
+AND EXISTS (
+  SELECT 1 FROM countrylanguage AS cl
+  WHERE cl.CountryCode = c.Code AND cl.Language = 'Dutch'
+);
+--",True,match,,1,1
+NLQ_keyword_carrier-00301-post,NLQ_keyword_carrier,301,post,745,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,How many nations use English and Dutch?,"SELECT COUNT(*) FROM (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = ""English"" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = ""Dutch"")","SELECT COUNT(*) AS nation_count
+FROM countrylanguage AS english
+JOIN countrylanguage AS dutch ON dutch.CountryCode = english.CountryCode
+WHERE english.Language = 'English'
+  AND dutch.Language = 'Dutch';",True,match,,1,1
+NLQ_keyword_carrier-00365-pre,NLQ_keyword_carrier,365,pre,913,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Return the number of likes that the high schooler named Kyle has.,"SELECT count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id WHERE T2.name = ""Kyle""",SELECT COUNT(*) FROM Likes AS l JOIN Highschooler AS h ON h.ID = l.liked_id WHERE h.name = 'Kyle';,True,match,,1,1
+NLQ_keyword_carrier-00365-post,NLQ_keyword_carrier,365,post,913,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,how many likes that the high schooler named Kyle has?,"SELECT count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id WHERE T2.name = ""Kyle""","SELECT COUNT(L.student_id) AS likes_count
+FROM Highschooler AS H
+LEFT JOIN Likes AS L ON L.liked_id = H.ID
+WHERE H.name = 'Kyle';",True,match,,1,1
+NLQ_keyword_carrier-00335-pre,NLQ_keyword_carrier,335,pre,823,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,Count the number of conductors.,SELECT count(*) FROM conductor,SELECT COUNT(*) AS conductor_count FROM conductor;,True,match,,1,1
+NLQ_keyword_carrier-00335-post,NLQ_keyword_carrier,335,post,823,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,How many conductors do you have?,SELECT count(*) FROM conductor,SELECT COUNT(*) AS conductor_count FROM conductor;,True,match,,1,1
+NLQ_keyword_carrier-00270-pre,NLQ_keyword_carrier,270,pre,607,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,List each language and the number of TV Channels using it.,"SELECT LANGUAGE , count(*) FROM TV_Channel GROUP BY LANGUAGE","SELECT Language, COUNT(*) AS channel_count
+FROM TV_Channel
+GROUP BY Language;",True,match,,2,2
+NLQ_keyword_carrier-00270-post,NLQ_keyword_carrier,270,post,607,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What are the different languages and how many TV channels use each?,"SELECT LANGUAGE , count(*) FROM TV_Channel GROUP BY LANGUAGE","SELECT Language, COUNT(*) AS channel_count
+FROM TV_Channel
+GROUP BY Language;",True,match,,2,2
+NLQ_value_synonym-00146-pre,NLQ_value_synonym,146,pre,179,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,"Which country does Airline ""JetBlue Airways"" belong to?","SELECT Country FROM AIRLINES WHERE Airline = ""JetBlue Airways""","SELECT ""Country"" FROM ""airlines"" WHERE ""Airline"" = 'JetBlue Airways';",True,match,,1,1
+NLQ_value_synonym-00146-post,NLQ_value_synonym,146,post,179,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,"Show me the country which is the home of airline ""JetBlue Airlines"".","SELECT Country FROM AIRLINES WHERE Airline = ""JetBlue Airways""","SELECT ""Country"" FROM ""airlines"" WHERE ""Airline"" = 'JetBlue Airlines';",False,mismatch,,1,0
+NLQ_value_synonym-00404-pre,NLQ_value_synonym,404,pre,806,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,how many countries are in Asia?,"SELECT count(*) FROM country WHERE continent = ""Asia""","SELECT COUNT(*) FROM country WHERE Continent = 'Asia';
+--",True,match,,1,1
+NLQ_value_synonym-00404-post,NLQ_value_synonym,404,post,806,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,How many Asian countries are there?,"SELECT count(*) FROM country WHERE continent = ""Asia""","SELECT COUNT(*) FROM country WHERE Continent = 'Asia';
+--",True,match,,1,1
+NLQ_value_synonym-00324-pre,NLQ_value_synonym,324,pre,704,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,How many countries have a republic as their form of government?,"SELECT count(*) FROM country WHERE GovernmentForm = ""Republic""",SELECT COUNT(*) AS country_count FROM country WHERE GovernmentForm LIKE '%Republic%';,False,mismatch,,1,1
+NLQ_value_synonym-00324-post,NLQ_value_synonym,324,post,704,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Show the number of countries having a Republican Government.,"SELECT count(*) FROM country WHERE GovernmentForm = ""Republic""",SELECT COUNT(*) FROM country WHERE GovernmentForm LIKE '%Republic%';,False,mismatch,,1,1
+NLQ_value_synonym-00431-pre,NLQ_value_synonym,431,pre,881,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Which grades have 4 or more high schoolers?,SELECT grade FROM Highschooler GROUP BY grade HAVING count(*) >= 4,"SELECT grade
+FROM Highschooler
+GROUP BY grade
+HAVING COUNT(*) >= 4;",True,match,,4,4
+NLQ_value_synonym-00431-post,NLQ_value_synonym,431,post,881,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Show how many grades have four high school students or more.,SELECT grade FROM Highschooler GROUP BY grade HAVING count(*) >= 4,"SELECT COUNT(*) AS grade_count
+FROM (
+    SELECT grade
+    FROM Highschooler
+    GROUP BY grade
+    HAVING COUNT(*) >= 4
+) AS qualifying_grades;",False,mismatch,,4,1
+NLQ_value_synonym-00197-pre,NLQ_value_synonym,197,pre,294,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,Find the districts in which there are both shops selling less than 3000 products and shops selling more than 10000 products.,SELECT district FROM shop WHERE Number_products < 3000 INTERSECT SELECT district FROM shop WHERE Number_products > 10000,"SELECT District
+FROM shop
+GROUP BY District
+HAVING SUM(CASE WHEN Number_products < 3000 THEN 1 ELSE 0 END) > 0
+   AND SUM(CASE WHEN Number_products > 10000 THEN 1 ELSE 0 END) > 0;",True,match,,0,0
+NLQ_value_synonym-00197-post,NLQ_value_synonym,197,post,294,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,"Show me all districts where there is both shops selling less than 3,000 products and shops selling more than 10000 products.",SELECT district FROM shop WHERE Number_products < 3000 INTERSECT SELECT district FROM shop WHERE Number_products > 10000,"SELECT District
+FROM shop
+GROUP BY District
+HAVING SUM(CASE WHEN Number_products < 3000 THEN 1 ELSE 0 END) > 0
+   AND SUM(CASE WHEN Number_products > 10000 THEN 1 ELSE 0 END) > 0;",True,match,,0,0
+NLQ_value_synonym-00172-pre,NLQ_value_synonym,172,pre,213,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,How many flights does airline 'JetBlue Airways' have?,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T1.Airline = T2.uid WHERE T2.Airline = ""JetBlue Airways""",SELECT COUNT(*) FROM flights AS f JOIN airlines AS a ON f.Airline = a.uid WHERE a.Airline = 'JetBlue Airways';,True,match,,1,1
+NLQ_value_synonym-00172-post,NLQ_value_synonym,172,post,213,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Show me how many flights Jetblue has.,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T1.Airline = T2.uid WHERE T2.Airline = ""JetBlue Airways""","SELECT COUNT(*) AS flight_count
+FROM flights AS f
+JOIN airlines AS a ON f.Airline = a.uid
+WHERE a.Airline = 'Jetblue';
+--",False,mismatch,,1,1
+NLQ_value_synonym-00250-pre,NLQ_value_synonym,250,pre,514,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the zip code for Port Chelsea?,SELECT zip_postcode FROM Addresses WHERE city = 'Port Chelsea',"SELECT DISTINCT zip_postcode
+FROM Addresses
+WHERE city = 'Port Chelsea';",True,match,,1,1
+NLQ_value_synonym-00250-post,NLQ_value_synonym,250,post,514,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Return the ZIP for PortChelsea.,SELECT zip_postcode FROM Addresses WHERE city = 'Port Chelsea',SELECT zip_postcode FROM Addresses WHERE city = 'PortChelsea';,False,mismatch,,1,0
+NLQ_value_synonym-00352-pre,NLQ_value_synonym,352,pre,759,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What languages are only used by a single country with a republic government?,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.GovernmentForm = ""Republic"" GROUP BY T2.Language HAVING COUNT(*) = 1","SELECT cl.Language
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+GROUP BY cl.Language
+HAVING COUNT(DISTINCT cl.CountryCode) = 1
+   AND MAX(c.GovernmentForm LIKE '%Republic%') = 1;",False,mismatch,,258,286
+NLQ_value_synonym-00352-post,NLQ_value_synonym,352,post,759,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Show the languages that are only used by one country with a republican form of government.,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.GovernmentForm = ""Republic"" GROUP BY T2.Language HAVING COUNT(*) = 1","SELECT cl.Language
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+WHERE c.GovernmentForm LIKE '%Republic%'
+  AND cl.Language IN (
+    SELECT Language
+    FROM countrylanguage
+    GROUP BY Language
+    HAVING COUNT(DISTINCT CountryCode) = 1
+  );",False,mismatch,,258,286
+DB_DBcontent_equivalence-00372-pre,DB_DBcontent_equivalence,372,pre,1018,singer,data\Spider-dev\databases\singer\singer.sqlite,Show titles of songs and names of singers.,"SELECT T2.Title , T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID","SELECT song.Title, singer.Name
+FROM song
+JOIN singer ON song.Singer_ID = singer.Singer_ID;",True,match,,8,8
+DB_DBcontent_equivalence-00372-post,DB_DBcontent_equivalence,372,post,1018,singer_0,data\DB_DBcontent_equivalence\database_post_perturbation\singer_0\singer_0.sqlite,Show titles of songs and names of singers.,"SELECT song.Title , singer.first_name , singer.last_name FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID","SELECT song.Title, singer.first_name, singer.last_name
+FROM song
+JOIN singer ON song.Singer_ID = singer.Singer_ID;",True,match,,8,8
+DB_DBcontent_equivalence-00279-pre,DB_DBcontent_equivalence,279,pre,693,voter_1,data\Spider-dev\databases\voter_1\voter_1.sqlite,What are the distinct states and create time of all votes?,"SELECT DISTINCT state , created FROM votes","SELECT DISTINCT state, created FROM VOTES;",True,match,,4,4
+DB_DBcontent_equivalence-00279-post,DB_DBcontent_equivalence,279,post,693,voter_1_4,data\DB_DBcontent_equivalence\database_post_perturbation\voter_1_4\voter_1_4.sqlite,What are the distinct states and create time of all votes?,"SELECT DISTINCT VOTES.state , VOTES.created_date , VOTES.created_time FROM VOTES","SELECT DISTINCT state, created_time FROM VOTES;",False,mismatch,,4,4
+DB_DBcontent_equivalence-00033-pre,DB_DBcontent_equivalence,33,pre,48,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,How much does the youngest dog weigh?,SELECT weight FROM pets ORDER BY pet_age LIMIT 1,SELECT weight FROM Pets WHERE PetType = 'dog' ORDER BY pet_age ASC LIMIT 1;,True,match,,1,1
+DB_DBcontent_equivalence-00033-post,DB_DBcontent_equivalence,33,post,48,pets_1_1,data\DB_DBcontent_equivalence\database_post_perturbation\pets_1_1\pets_1_1.sqlite,How much does the youngest dog weigh?,SELECT Pets.weight FROM Pets ORDER BY Pets.birthyear desc LIMIT 1,SELECT weight FROM Pets WHERE PetType = 'dog' ORDER BY birthyear DESC LIMIT 1;,True,match,,1,1
+DB_DBcontent_equivalence-00103-pre,DB_DBcontent_equivalence,103,pre,392,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,Where is the youngest teacher from?,SELECT Hometown FROM teacher ORDER BY Age ASC LIMIT 1,SELECT Hometown FROM teacher ORDER BY CAST(Age AS INTEGER) ASC LIMIT 1;,True,match,,1,1
+DB_DBcontent_equivalence-00103-post,DB_DBcontent_equivalence,103,post,392,course_teach_4,data\DB_DBcontent_equivalence\database_post_perturbation\course_teach_4\course_teach_4.sqlite,Where is the youngest teacher from?,SELECT teacher.Hometown FROM teacher ORDER BY teacher.birthyear desc LIMIT 1,"SELECT Hometown FROM teacher ORDER BY birthyear DESC LIMIT 1;
+--",True,match,,1,1
+DB_DBcontent_equivalence-00314-pre,DB_DBcontent_equivalence,314,pre,824,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,List the names of conductors in ascending order of age.,SELECT Name FROM conductor ORDER BY Age ASC,"SELECT ""Name"" FROM ""conductor"" ORDER BY ""Age"" ASC;",True,match,,12,12
+DB_DBcontent_equivalence-00314-post,DB_DBcontent_equivalence,314,post,824,orchestra_3,data\DB_DBcontent_equivalence\database_post_perturbation\orchestra_3\orchestra_3.sqlite,List the names of conductors in ascending order of age.,"SELECT conductor.first_name , conductor.last_name FROM conductor ORDER BY conductor.Age asc","SELECT first_name, last_name FROM conductor ORDER BY Age ASC;",True,match,,12,12
+DB_DBcontent_equivalence-00115-pre,DB_DBcontent_equivalence,115,pre,404,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What are the names of the people who teach math courses?,"SELECT T3.Name FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID = T3.Teacher_ID WHERE T2.Course = ""Math""","SELECT DISTINCT t.Name
+FROM teacher AS t
+JOIN course_arrange AS ca ON ca.Teacher_ID = t.Teacher_ID
+JOIN course AS c ON c.Course_ID = ca.Course_ID
+WHERE c.Course LIKE '%math%';",True,match,,2,2
+DB_DBcontent_equivalence-00115-post,DB_DBcontent_equivalence,115,post,404,course_teach_5,data\DB_DBcontent_equivalence\database_post_perturbation\course_teach_5\course_teach_5.sqlite,What are the names of the people who teach math courses?,"SELECT teacher.first_name , teacher.last_name FROM course_arrange JOIN course ON course_arrange.Course_ID = course.Course_ID JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID WHERE course.Course = ""Math""","SELECT DISTINCT t.first_name, t.last_name
+FROM teacher AS t
+JOIN course_arrange AS ca ON ca.Teacher_ID = t.Teacher_ID
+JOIN course AS c ON c.Course_ID = ca.Course_ID
+WHERE c.Course LIKE '%math%';",True,match,,2,2
+DB_DBcontent_equivalence-00332-pre,DB_DBcontent_equivalence,332,pre,946,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"List the date of each treatment, together with the first name of the professional who operated it.","SELECT T1.date_of_treatment , T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id","SELECT t.date_of_treatment, p.first_name
+FROM Treatments AS t
+JOIN Professionals AS p ON p.professional_id = t.professional_id;",True,match,,15,15
+DB_DBcontent_equivalence-00332-post,DB_DBcontent_equivalence,332,post,946,dog_kennels_0,data\DB_DBcontent_equivalence\database_post_perturbation\dog_kennels_0\dog_kennels_0.sqlite,"List the date of each treatment, together with the first name of the professional who operated it.","SELECT Treatments.date_of_treatment , Treatments.time_of_treatment , Professionals.first_name FROM Treatments JOIN Professionals ON Treatments.professional_id = Professionals.professional_id","SELECT t.date_of_treatment, p.first_name
+FROM Treatments AS t
+JOIN Professionals AS p ON p.professional_id = t.professional_id;
+--",False,mismatch,,15,15
+DB_DBcontent_equivalence-00099-pre,DB_DBcontent_equivalence,99,pre,410,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What are the names of the teachers whose courses have not been arranged?,SELECT Name FROM teacher WHERE Teacher_id NOT IN (SELECT Teacher_id FROM course_arrange),"SELECT t.Name
+FROM teacher AS t
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM course_arrange AS ca
+    WHERE ca.Teacher_ID = t.Teacher_ID
+);",True,match,,2,2
+DB_DBcontent_equivalence-00099-post,DB_DBcontent_equivalence,99,post,410,course_teach_1,data\DB_DBcontent_equivalence\database_post_perturbation\course_teach_1\course_teach_1.sqlite,What are the names of the teachers whose courses have not been arranged?,"SELECT teacher.first_name , teacher.last_name FROM teacher WHERE teacher.Teacher_ID NOT in (SELECT course_arrange.Teacher_ID FROM course_arrange)","SELECT first_name, last_name
+FROM teacher AS t
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM course_arrange AS ca
+    WHERE ca.Teacher_ID = t.Teacher_ID
+);",True,match,,2,2
+SQL_sort_order-00107-pre,SQL_sort_order,107,pre,579,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,List all the student details in reversed lexicographical order.,SELECT other_student_details FROM Students ORDER BY other_student_details DESC,"SELECT * FROM Students ORDER BY last_name DESC, first_name DESC;",False,mismatch,,15,15
+SQL_sort_order-00107-post,SQL_sort_order,107,post,579,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,List all the student details in lexicographical order.,SELECT other_student_details FROM Students ORDER BY other_student_details ASC,"SELECT * FROM Students ORDER BY first_name, middle_name, last_name;",False,mismatch,,15,15
+SQL_sort_order-00054-pre,SQL_sort_order,54,pre,391,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What is the hometown of the youngest teacher?,SELECT Hometown FROM teacher ORDER BY Age ASC LIMIT 1,SELECT Hometown FROM teacher ORDER BY CAST(Age AS INTEGER) ASC LIMIT 1;,True,match,,1,1
+SQL_sort_order-00054-post,SQL_sort_order,54,post,391,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What is the hometown of the oldest teacher?,SELECT Hometown FROM teacher ORDER BY Age DESC LIMIT 1,SELECT Hometown FROM teacher ORDER BY CAST(Age AS INTEGER) DESC LIMIT 1;,True,match,,1,1
+SQL_sort_order-00087-pre,SQL_sort_order,87,pre,528,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What are the names of the sections in reverse alphabetical order?,SELECT section_name FROM Sections ORDER BY section_name DESC,SELECT section_name FROM Sections ORDER BY section_name DESC;,True,match,,15,15
+SQL_sort_order-00087-post,SQL_sort_order,87,post,528,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What are the names of the sections in alphabetical order?,SELECT section_name FROM Sections ORDER BY section_name ASC,SELECT section_name FROM Sections ORDER BY section_name ASC;,True,match,,15,15
+SQL_sort_order-00051-pre,SQL_sort_order,51,pre,375,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What is the document id with least number of paragraphs?,SELECT document_id FROM Paragraphs GROUP BY document_id ORDER BY count(*) ASC LIMIT 1,"SELECT d.Document_ID
+FROM Documents AS d
+LEFT JOIN Paragraphs AS p ON p.Document_ID = d.Document_ID
+GROUP BY d.Document_ID
+ORDER BY COUNT(p.Paragraph_ID) ASC, d.Document_ID ASC
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00051-post,SQL_sort_order,51,post,375,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What is the document id with most number of paragraphs?,SELECT document_id FROM Paragraphs GROUP BY document_id ORDER BY count(*) DESC LIMIT 1,"SELECT Document_ID
+FROM Paragraphs
+GROUP BY Document_ID
+ORDER BY COUNT(*) DESC, Document_ID
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00088-pre,SQL_sort_order,88,pre,529,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the semester which most student registered in? Show both the name and the id.,"SELECT T1.semester_name , T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id = T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) DESC LIMIT 1","SELECT s.semester_name, s.semester_id
+FROM Semesters AS s
+JOIN Student_Enrolment AS se ON se.semester_id = s.semester_id
+GROUP BY s.semester_id, s.semester_name
+ORDER BY COUNT(DISTINCT se.student_id) DESC, s.semester_id
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00088-post,SQL_sort_order,88,post,529,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the semester which least student registered in? Show both the name and the id.,"SELECT T1.semester_name , T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id = T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) ASC LIMIT 1","SELECT s.semester_name, s.semester_id
+FROM Semesters AS s
+LEFT JOIN Student_Enrolment AS e ON e.semester_id = s.semester_id
+GROUP BY s.semester_id, s.semester_name
+ORDER BY COUNT(DISTINCT e.student_id), s.semester_id
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00053-pre,SQL_sort_order,53,pre,384,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What are the names of the teachers ordered by ascending age?,SELECT Name FROM teacher ORDER BY Age ASC,"SELECT ""Name"" FROM ""teacher"" ORDER BY CAST(""Age"" AS INTEGER) ASC;",True,match,,7,7
+SQL_sort_order-00053-post,SQL_sort_order,53,post,384,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What are the names of the teachers ordered by descending age?,SELECT Name FROM teacher ORDER BY Age DESC,"SELECT ""Name"" FROM ""teacher"" ORDER BY CAST(""Age"" AS INTEGER) DESC;",True,match,,7,7
+SQL_sort_order-00093-pre,SQL_sort_order,93,pre,540,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the program id and the summary of the degree that has the most students enrolled?,"SELECT T1.degree_program_id , T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1","SELECT dp.degree_program_id, dp.degree_summary_name, dp.degree_summary_description
+FROM Degree_Programs AS dp
+JOIN Student_Enrolment AS se ON se.degree_program_id = dp.degree_program_id
+GROUP BY dp.degree_program_id
+ORDER BY COUNT(DISTINCT se.student_id) DESC
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00093-post,SQL_sort_order,93,post,540,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the program id and the summary of the degree that has the least students enrolled?,"SELECT T1.degree_program_id , T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) ASC LIMIT 1","SELECT dp.degree_program_id, dp.degree_summary_name
+FROM Degree_Programs AS dp
+LEFT JOIN Student_Enrolment AS se ON se.degree_program_id = dp.degree_program_id
+GROUP BY dp.degree_program_id, dp.degree_summary_name
+ORDER BY COUNT(DISTINCT se.student_id), dp.degree_program_id
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00059-pre,SQL_sort_order,59,pre,402,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What are the names of the teachers and the courses they teach in ascending alphabetical order by the name of the teacher?,"SELECT T3.Name , T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID = T3.Teacher_ID ORDER BY T3.Name ASC","SELECT DISTINCT t.Name, c.Course
+FROM teacher AS t
+JOIN course_arrange AS ca ON ca.Teacher_ID = t.Teacher_ID
+JOIN course AS c ON c.Course_ID = ca.Course_ID
+ORDER BY t.Name ASC;",True,match,,6,6
+SQL_sort_order-00059-post,SQL_sort_order,59,post,402,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What are the names of the teachers and the courses they teach in descending alphabetical order by the name of the teacher?,"SELECT T3.Name , T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID = T3.Teacher_ID ORDER BY T3.Name DESC","SELECT DISTINCT t.Name, c.Course
+FROM teacher AS t
+JOIN course_arrange AS ca ON ca.Teacher_ID = t.Teacher_ID
+JOIN course AS c ON c.Course_ID = ca.Course_ID
+ORDER BY t.Name DESC;",True,match,,6,6
+SQL_DB_text-00418-pre,SQL_DB_text,418,pre,636,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What are the countries that are not playing cartoons written by Todd Casey?,SELECT country FROM TV_Channel EXCEPT SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by = 'Todd Casey',"SELECT DISTINCT t.Country
+FROM TV_Channel AS t
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM TV_Channel AS t2
+    JOIN Cartoon AS c ON c.Channel = t2.id
+    WHERE t2.Country = t.Country
+      AND c.Written_by LIKE '%Todd Casey%'
+);",True,match,,1,1
+SQL_DB_text-00418-post,SQL_DB_text,418,post,636,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What are the countries that are not playing cartoons written by James Krieg?,SELECT country FROM TV_Channel EXCEPT SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by = 'James Krieg',"SELECT DISTINCT tc.Country
+FROM TV_Channel AS tc
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM TV_Channel AS playing
+    JOIN Cartoon AS c ON c.Channel = playing.id
+    WHERE playing.Country = tc.Country
+      AND c.Written_by LIKE '%James Krieg%'
+);",True,match,,2,2
+SQL_DB_text-00302-pre,SQL_DB_text,302,pre,581,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Describe the section h.,SELECT section_description FROM Sections WHERE section_name = 'h',SELECT section_description FROM Sections WHERE section_name = 'h';,True,match,,1,1
+SQL_DB_text-00302-post,SQL_DB_text,302,post,581,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Describe the section f.,SELECT section_description FROM Sections WHERE section_name = 'f',SELECT section_description FROM Sections WHERE section_name = 'f';,True,match,,1,1
+SQL_DB_text-00008-pre,SQL_DB_text,8,pre,61,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find the major and age of students who do not have a cat pet.,"SELECT major , age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat')","SELECT s.Major, s.Age
+FROM Student AS s
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Has_Pet AS hp
+    JOIN Pets AS p ON p.PetID = hp.PetID
+    WHERE hp.StuID = s.StuID AND p.PetType = 'cat'
+);",True,match,,33,33
+SQL_DB_text-00008-post,SQL_DB_text,8,post,61,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find the major and age of students who do not have a dog pet.,"SELECT major , age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'dog')","SELECT s.Major, s.Age
+FROM Student AS s
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Has_Pet AS hp
+    JOIN Pets AS p ON p.PetID = hp.PetID
+    WHERE hp.StuID = s.StuID
+      AND p.PetType = 'dog'
+);",True,match,,33,33
+SQL_DB_text-00340-pre,SQL_DB_text,340,pre,601,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,"What is the Package Option of TV Channel with serial name ""Sky Radio""?","SELECT Package_Option FROM TV_Channel WHERE series_name = ""Sky Radio""","SELECT ""Package_Option"" FROM ""TV_Channel"" WHERE ""series_name"" = 'Sky Radio';",True,match,,1,1
+SQL_DB_text-00340-post,SQL_DB_text,340,post,601,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,"What is the Package Option of TV Channel with serial name ""Classica""?","SELECT Package_Option FROM TV_Channel WHERE series_name = ""Classica""","SELECT ""Package_Option"" FROM ""TV_Channel"" WHERE ""series_name"" = 'Classica';
+--",True,match,,1,1
+SQL_DB_text-00756-pre,SQL_DB_text,756,pre,782,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What are the codes of the countries that do not speak English and whose government forms are not Republic?,"SELECT Code FROM country WHERE GovernmentForm != ""Republic"" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE = ""English""","SELECT c.Code
+FROM country AS c
+WHERE c.GovernmentForm <> 'Republic'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = c.Code
+      AND cl.Language = 'English'
+  );",True,match,,69,69
+SQL_DB_text-00756-post,SQL_DB_text,756,post,782,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What are the codes of the countries that do not speak Limba and whose government forms are not Republic?,"SELECT Code FROM country WHERE GovernmentForm != ""Republic"" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE = ""Limba""","SELECT c.Code
+FROM country AS c
+WHERE c.GovernmentForm <> 'Republic'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = c.Code
+      AND cl.Language = 'Limba'
+  );",True,match,,117,117
+SQL_DB_text-00229-pre,SQL_DB_text,229,pre,451,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What are the country code and first name of the players who won in both tourney WTA Championships and Australian Open?,"SELECT T1.country_code , T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id WHERE T2.tourney_name = 'WTA Championships' INTERSECT SELECT T1.country_code , T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id WHERE T2.tourney_name = 'Australian Open'","SELECT DISTINCT p.country_code, p.first_name
+FROM players AS p
+JOIN matches AS m ON m.winner_id = p.player_id
+WHERE m.tourney_name IN ('WTA Championships', 'Australian Open')
+GROUP BY p.player_id, p.country_code, p.first_name
+HAVING COUNT(DISTINCT m.tourney_name) = 2;",True,match,,2,2
+SQL_DB_text-00229-post,SQL_DB_text,229,post,451,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What are the country code and first name of the players who won in both tourney Rabat and Australian Open?,"SELECT T1.country_code , T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id WHERE T2.tourney_name = 'Rabat' INTERSECT SELECT T1.country_code , T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id WHERE T2.tourney_name = 'Australian Open'","SELECT DISTINCT p.country_code, p.first_name
+FROM players AS p
+JOIN matches AS m ON m.winner_id = p.player_id
+WHERE m.tourney_name = 'Rabat'
+  AND EXISTS (
+    SELECT 1
+    FROM matches AS a
+    WHERE a.winner_id = p.player_id
+      AND a.tourney_name = 'Australian Open'
+  );",True,match,,1,1
+SQL_DB_text-00701-pre,SQL_DB_text,701,pre,767,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,How many people live in countries that do not speak English?,"SELECT sum(Population) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = ""English"")","SELECT SUM(c.Population) AS population
+FROM country AS c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = c.Code
+      AND cl.Language = 'English'
+);",True,match,,1,1
+SQL_DB_text-00701-post,SQL_DB_text,701,post,767,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,How many people live in countries that do not speak Ndebele?,"SELECT sum(Population) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = ""Ndebele"")","SELECT SUM(c.Population) AS total_population
+FROM country AS c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = c.Code
+      AND cl.Language = 'Ndebele'
+);",True,match,,1,1
+SQL_DB_text-00547-pre,SQL_DB_text,547,pre,727,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give the total surface area covered by countries in Asia or Europe.,"SELECT sum(SurfaceArea) FROM country WHERE Continent = ""Asia"" OR Continent = ""Europe""","SELECT SUM(SurfaceArea) AS total_surface_area FROM country WHERE Continent IN ('Asia', 'Europe');",True,match,,1,1
+SQL_DB_text-00547-post,SQL_DB_text,547,post,727,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give the total surface area covered by countries in Antarctica or Europe.,"SELECT sum(SurfaceArea) FROM country WHERE Continent = ""Antarctica"" OR Continent = ""Europe""","SELECT SUM(SurfaceArea) AS total_surface_area
+FROM country
+WHERE Continent IN ('Antarctica', 'Europe');",True,match,,1,1
+NLQ_column_carrier-00445-pre,NLQ_column_carrier,445,pre,843,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,What are the names of conductors who have conducted at more than one orchestra?,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID GROUP BY T2.Conductor_ID HAVING COUNT(*) > 1,"SELECT c.Name
+FROM conductor AS c
+JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID
+GROUP BY c.Conductor_ID, c.Name
+HAVING COUNT(DISTINCT o.Orchestra_ID) > 1;
+--",True,match,,0,0
+NLQ_column_carrier-00445-post,NLQ_column_carrier,445,post,843,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,Which conductors had conducted at more orchestras than one?,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID GROUP BY T2.Conductor_ID HAVING COUNT(*) > 1,"SELECT c.Name
+FROM conductor AS c
+JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID
+GROUP BY c.Conductor_ID, c.Name
+HAVING COUNT(DISTINCT o.Orchestra_ID) > 1;",True,match,,0,0
+NLQ_column_carrier-00495-pre,NLQ_column_carrier,495,pre,897,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,What are the names of students who have no friends?,SELECT name FROM Highschooler EXCEPT SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id,"SELECT h.name
+FROM Highschooler AS h
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM Friend AS f
+  WHERE f.student_id = h.ID OR f.friend_id = h.ID
+);",False,mismatch,,2,0
+NLQ_column_carrier-00495-post,NLQ_column_carrier,495,post,897,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Who are the students without friends?,SELECT name FROM Highschooler EXCEPT SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id,"SELECT h.ID, h.name, h.grade
+FROM Highschooler AS h
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Friend AS f
+    WHERE f.student_id = h.ID OR f.friend_id = h.ID
+);",False,mismatch,,2,0
+NLQ_column_carrier-00065-pre,NLQ_column_carrier,65,pre,73,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find the average weight for each pet type.,"SELECT avg(weight) , pettype FROM pets GROUP BY pettype","SELECT PetType, AVG(weight) AS average_weight
+FROM Pets
+GROUP BY PetType;",True,match,,2,2
+NLQ_column_carrier-00065-post,NLQ_column_carrier,65,post,73,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,How heavy are pets on average for each type,"SELECT avg(weight) , pettype FROM pets GROUP BY pettype","SELECT PetType, AVG(weight) AS average_weight
+FROM Pets
+GROUP BY PetType;
+--",True,match,,2,2
+NLQ_column_carrier-00519-pre,NLQ_column_carrier,519,pre,988,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,What is the age of the oldest dog?,SELECT max(age) FROM Dogs,SELECT MAX(CAST(age AS INTEGER)) AS oldest_age FROM Dogs;,False,mismatch,,1,1
+NLQ_column_carrier-00519-post,NLQ_column_carrier,519,post,988,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,How old is the oldest dog?,SELECT max(age) FROM Dogs,SELECT MAX(CAST(age AS INTEGER)) AS oldest_age FROM Dogs;,False,mismatch,,1,1
+NLQ_column_carrier-00506-pre,NLQ_column_carrier,506,pre,954,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,List the names of the dogs of the rarest breed and the treatment dates of them.,"SELECT T1.name , T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.breed_code = ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )","SELECT d.name, t.date_of_treatment
+FROM Dogs AS d
+LEFT JOIN Treatments AS t ON t.dog_id = d.dog_id
+WHERE d.breed_code IN (
+    SELECT breed_code
+    FROM Dogs
+    GROUP BY breed_code
+    HAVING COUNT(*) = (
+        SELECT MIN(breed_count)
+        FROM (
+            SELECT COUNT(*) AS breed_count
+            FROM Dogs
+            GROUP BY breed_code
+        )
+    )
+);",False,mismatch,,5,12
+NLQ_column_carrier-00506-post,NLQ_column_carrier,506,post,954,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"Give us list of rarest breed of dogs which received treatment and their dates, too.","SELECT T1.name , T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.breed_code = ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )","WITH breed_counts AS (
+  SELECT breed_code, COUNT(*) AS dog_count
+  FROM Dogs
+  GROUP BY breed_code
+)
+SELECT b.breed_name, d.name AS dog_name, t.date_of_treatment
+FROM breed_counts AS bc
+JOIN Dogs AS d ON d.breed_code = bc.breed_code
+JOIN Breeds AS b ON b.breed_code = d.breed_code
+JOIN Treatments AS t ON t.dog_id = d.dog_id
+WHERE bc.dog_count = (SELECT MIN(dog_count) FROM breed_counts)
+ORDER BY b.breed_name, d.name, t.date_of_treatment;
+--",False,mismatch,,5,10
+NLQ_column_carrier-00470-pre,NLQ_column_carrier,470,pre,904,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,"Show the names of high schoolers who have likes, and numbers of likes for each.","SELECT T2.name , count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id","SELECT h.name, COUNT(*) AS number_of_likes
+FROM Highschooler AS h
+JOIN Likes AS l ON l.liked_id = h.ID
+GROUP BY h.ID, h.name;",False,mismatch,,10,8
+NLQ_column_carrier-00470-post,NLQ_column_carrier,470,post,904,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,"Show list of high schools students with likes, and how much they had per person.","SELECT T2.name , count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id","SELECT h.ID, h.name, COUNT(*) AS like_count
+FROM Highschooler AS h
+JOIN Likes AS l ON l.liked_id = h.ID
+GROUP BY h.ID, h.name;",False,mismatch,,10,8
+NLQ_column_carrier-00237-pre,NLQ_column_carrier,237,pre,537,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Find the kind of program which most number of students are enrolled in?,SELECT T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id GROUP BY T1.degree_summary_name ORDER BY count(*) DESC LIMIT 1,"SELECT dp.degree_summary_name
+FROM Degree_Programs AS dp
+JOIN Student_Enrolment AS se ON se.degree_program_id = dp.degree_program_id
+GROUP BY dp.degree_program_id, dp.degree_summary_name
+ORDER BY COUNT(DISTINCT se.student_id) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_column_carrier-00237-post,NLQ_column_carrier,237,post,537,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Which program has the highest number of students enrolled in it?,SELECT T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id GROUP BY T1.degree_summary_name ORDER BY count(*) DESC LIMIT 1,"SELECT dp.degree_summary_name
+FROM Degree_Programs AS dp
+JOIN Student_Enrolment AS se ON se.degree_program_id = dp.degree_program_id
+GROUP BY dp.degree_program_id
+ORDER BY COUNT(DISTINCT se.student_id) DESC
+LIMIT 1;
+--",True,match,,1,1
+NLQ_column_carrier-00044-pre,NLQ_column_carrier,44,pre,15,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What are the locations and names of all stations with capacity between 5000 and 10000?,"SELECT LOCATION , name FROM stadium WHERE capacity BETWEEN 5000 AND 10000","SELECT ""Location"", ""Name"" FROM ""stadium"" WHERE ""Capacity"" BETWEEN 5000 AND 10000;",True,match,,0,0
+NLQ_column_carrier-00044-post,NLQ_column_carrier,44,post,15,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What stations have capacity between 5000 and 10000? And Where are they?,"SELECT LOCATION , name FROM stadium WHERE capacity BETWEEN 5000 AND 10000","SELECT ""Name"", ""Location""
+FROM ""stadium""
+WHERE ""Capacity"" BETWEEN 5000 AND 10000;",True,match,,0,0
+NLQ_column_synonym-00128-pre,NLQ_column_synonym,128,pre,257,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Find the name of airports which do not have any flight in and out.,SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights),"SELECT a.AirportName
+FROM airports AS a
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM flights AS f
+    WHERE f.SourceAirport = a.AirportCode
+       OR f.DestAirport = a.AirportCode
+);",True,match,,100,100
+NLQ_column_synonym-00128-post,NLQ_column_synonym,128,post,257,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Give me all the airports that do not have a flight taking off or landing at them.,SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights),"SELECT a.*
+FROM airports AS a
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM flights AS f
+    WHERE f.SourceAirport = a.AirportCode
+       OR f.DestAirport = a.AirportCode
+);",False,mismatch,,100,100
+NLQ_column_synonym-00279-pre,NLQ_column_synonym,279,pre,531,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the description of the department whose name has the substring the computer?,SELECT department_description FROM Departments WHERE department_name LIKE '%computer%',"SELECT department_description
+FROM Departments
+WHERE LOWER(department_name) LIKE '%the computer%';",False,mismatch,,1,0
+NLQ_column_synonym-00279-post,NLQ_column_synonym,279,post,531,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,The department which has the substring 'computers' should be described.,SELECT department_description FROM Departments WHERE department_name LIKE '%computer%',SELECT department_description FROM Departments WHERE LOWER(department_name) LIKE '%computers%';,False,mismatch,,1,0
+NLQ_column_synonym-00188-pre,NLQ_column_synonym,188,pre,356,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Return the ids corresponding to templates with the description 'Presentation'.,"SELECT T2.template_id FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code = T2.template_type_code WHERE T1.template_type_description = ""Presentation""","SELECT t.Template_ID
+FROM Templates AS t
+JOIN Ref_Template_Types AS r ON t.Template_Type_Code = r.Template_Type_Code
+WHERE r.Template_Type_Description = 'Presentation';",True,match,,3,3
+NLQ_column_synonym-00188-post,NLQ_column_synonym,188,post,356,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Return to me the code for the Presentation Template.,"SELECT T2.template_id FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code = T2.template_type_code WHERE T1.template_type_description = ""Presentation""","SELECT Template_Type_Code
+FROM Ref_Template_Types
+WHERE Template_Type_Description = 'Presentation Template';
+--",False,mismatch,,3,0
+NLQ_column_synonym-00271-pre,NLQ_column_synonym,271,pre,523,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What are the names and descriptions of all the sections?,"SELECT section_name , section_description FROM Sections","SELECT section_name, section_description FROM Sections;",True,match,,15,15
+NLQ_column_synonym-00271-post,NLQ_column_synonym,271,post,523,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Please list the names and content of all the sections.,"SELECT section_name , section_description FROM Sections","SELECT section_name, section_description FROM Sections;",True,match,,15,15
+NLQ_column_synonym-00408-pre,NLQ_column_synonym,408,pre,707,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,How much surface area do the countires in the Carribean cover together?,"SELECT sum(SurfaceArea) FROM country WHERE Region = ""Caribbean""","SELECT SUM(""SurfaceArea"") AS total_surface_area
+FROM ""country""
+WHERE ""Region"" = 'Caribbean';",True,match,,1,1
+NLQ_column_synonym-00408-post,NLQ_column_synonym,408,post,707,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is the total area of all countries in the Caribbean together?,"SELECT sum(SurfaceArea) FROM country WHERE Region = ""Caribbean""","SELECT SUM(""SurfaceArea"") AS total_area
+FROM ""country""
+WHERE ""Region"" = 'Caribbean';",True,match,,1,1
+NLQ_column_synonym-00326-pre,NLQ_column_synonym,326,pre,618,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What is the maximum and minimum share for the TV series?,"SELECT max(SHARE) , min(SHARE) FROM TV_series","SELECT MAX(""Share"") AS max_share, MIN(""Share"") AS min_share FROM ""TV_series"";",True,match,,1,1
+NLQ_column_synonym-00326-post,NLQ_column_synonym,326,post,618,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,Can you list the highest and lowest percentage achieved for TV show?,"SELECT max(SHARE) , min(SHARE) FROM TV_series","SELECT MAX(""Share"") AS highest_percentage, MIN(""Share"") AS lowest_percentage FROM ""TV_series"";",True,match,,1,1
+NLQ_column_synonym-00176-pre,NLQ_column_synonym,176,pre,337,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,"What is the template type code of the template used by document with the name ""Data base""?","SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id WHERE T2.document_name = ""Data base""","SELECT t.Template_Type_Code
+FROM Documents AS d
+JOIN Templates AS t ON t.Template_ID = d.Template_ID
+WHERE d.Document_Name = 'Data base';",True,match,,1,1
+NLQ_column_synonym-00176-post,NLQ_column_synonym,176,post,337,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,"Which template type is being used by the file named ""data base""?","SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id WHERE T2.document_name = ""Data base""","SELECT r.Template_Type_Description
+FROM Documents AS d
+JOIN Templates AS t ON d.Template_ID = t.Template_ID
+JOIN Ref_Template_Types AS r ON t.Template_Type_Code = r.Template_Type_Code
+WHERE d.Document_Name = 'data base';",False,mismatch,,1,0
+NLQ_column_synonym-00314-pre,NLQ_column_synonym,314,pre,586,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What are the titles of the cartoons sorted alphabetically?,SELECT Title FROM Cartoon ORDER BY title,"SELECT ""Title"" FROM ""Cartoon"" ORDER BY ""Title"" ASC;",True,match,,12,12
+NLQ_column_synonym-00314-post,NLQ_column_synonym,314,post,586,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,I would like to know the names of the cartoons sorted alphabetically.,SELECT Title FROM Cartoon ORDER BY title,"SELECT ""Title"" FROM ""Cartoon"" ORDER BY ""Title"" ASC;",True,match,,12,12
+NLQ_multitype-00659-pre,NLQ_multitype,659,pre,501,battle_death,data\Spider-dev\databases\battle_death\battle_death.sqlite,What are the distinct battle names which are between bulgarian commander 'Kaloyan' and latin commander 'Baldwin I'?,SELECT name FROM battle WHERE bulgarian_commander = 'Kaloyan' AND latin_commander = 'Baldwin I',SELECT DISTINCT name FROM battle WHERE bulgarian_commander = 'Kaloyan' AND latin_commander = 'Baldwin I';,True,match,,1,1
+NLQ_multitype-00659-post,NLQ_multitype,659,post,501,battle_death,data\Spider-dev\databases\battle_death\battle_death.sqlite,Give me the names of battles that Bulgarian officer Kaloyan fought against Latin officer Baldwin.,SELECT name FROM battle WHERE bulgarian_commander = 'Kaloyan' AND latin_commander = 'Baldwin I',SELECT name FROM battle WHERE bulgarian_commander = 'Kaloyan' AND latin_commander = 'Baldwin';,False,mismatch,,1,0
+NLQ_multitype-01027-pre,NLQ_multitype,1027,pre,813,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Return the names of cities that have a population between 160000 and 900000 .,select name from city where population between 160000 and 900000,"SELECT ""Name"" FROM ""city"" WHERE ""Population"" BETWEEN 160000 AND 900000;",True,match,,1860,1860
+NLQ_multitype-01027-post,NLQ_multitype,1027,post,813,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,list all the cities with population in between160000 and 900000.,select name from city where population between 160000 and 900000,SELECT * FROM city WHERE Population BETWEEN 160000 AND 900000;,False,mismatch,,1860,1860
+NLQ_multitype-00645-pre,NLQ_multitype,645,pre,468,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What are the names of the winner and loser who played in the longest match?,"SELECT winner_name , loser_name FROM matches ORDER BY minutes DESC LIMIT 1","SELECT winner_name, loser_name
+FROM matches
+WHERE minutes = (SELECT MAX(minutes) FROM matches);
+--",True,match,,1,1
+NLQ_multitype-00645-post,NLQ_multitype,645,post,468,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Who had the longest match? And What were the winning and losing sides?,"SELECT winner_name , loser_name FROM matches ORDER BY minutes DESC LIMIT 1","SELECT winner_name AS winning_side, loser_name AS losing_side, minutes
+FROM matches
+WHERE minutes IS NOT NULL
+ORDER BY minutes DESC
+LIMIT 1;",False,mismatch,,1,1
+NLQ_multitype-00691-pre,NLQ_multitype,691,pre,507,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,what are all the addresses including line 1 and line 2?,"SELECT line_1 , line_2 FROM addresses","SELECT line_1, line_2 FROM Addresses;",True,match,,15,15
+NLQ_multitype-00691-post,NLQ_multitype,691,post,507,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,I'm looking for all the addresses on line one and line two.,"SELECT line_1 , line_2 FROM addresses","SELECT line_1, line_2 FROM Addresses;",True,match,,15,15
+NLQ_multitype-00099-pre,NLQ_multitype,99,pre,51,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find number of pets owned by students who are older than 20.,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid WHERE T1.age > 20,"SELECT COUNT(*) AS pet_count
+FROM Has_Pet AS hp
+JOIN Student AS s ON s.StuID = hp.StuID
+WHERE s.Age > 20;
+--",True,match,,1,1
+NLQ_multitype-00099-post,NLQ_multitype,99,post,51,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Show the number of pets owned by students who are over twenty years old.,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid WHERE T1.age > 20,"SELECT COUNT(*) AS pet_count
+FROM Has_Pet AS hp
+JOIN Student AS s ON s.StuID = hp.StuID
+WHERE s.Age > 20;
+--",True,match,,1,1
+NLQ_multitype-01016-pre,NLQ_multitype,1016,pre,808,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What are the names of the countries that are in the continent of Europe and have a population of 80000?,"SELECT Name FROM country WHERE continent = ""Europe"" AND Population = ""80000""","SELECT ""Name"" FROM ""country"" WHERE ""Continent"" = 'Europe' AND ""Population"" = 80000;",True,match,,0,0
+NLQ_multitype-01016-post,NLQ_multitype,1016,post,808,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Which countries are in the continent of Europe and have a population of 8000,"SELECT Name FROM country WHERE continent = ""Europe"" AND Population = ""80000""",SELECT Name FROM country WHERE Continent = 'Europe' AND Population = 8000;,True,match,,0,0
+NLQ_multitype-00679-pre,NLQ_multitype,679,pre,547,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What's the name of the course with most number of enrollments?,SELECT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id = T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1,"SELECT c.course_name
+FROM Courses AS c
+JOIN Student_Enrolment_Courses AS sec ON sec.course_id = c.course_id
+GROUP BY c.course_id
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+--",False,mismatch,,1,1
+NLQ_multitype-00679-post,NLQ_multitype,679,post,547,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What course had the most number of enrollment?,SELECT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id = T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1,"SELECT c.course_name
+FROM Courses AS c
+JOIN Student_Enrolment_Courses AS sec ON sec.course_id = c.course_id
+GROUP BY c.course_id, c.course_name
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+--",False,mismatch,,1,1
+NLQ_multitype-00540-pre,NLQ_multitype,540,pre,405,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,Show names of teachers and the number of courses they teach.,"SELECT T2.Name , COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T2.Name","SELECT t.Name, COUNT(DISTINCT ca.Course_ID) AS course_count
+FROM teacher AS t
+LEFT JOIN course_arrange AS ca ON ca.Teacher_ID = t.Teacher_ID
+GROUP BY t.Teacher_ID, t.Name;",False,mismatch,,5,7
+NLQ_multitype-00540-post,NLQ_multitype,540,post,405,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,"show, list of teachers and number of courses taught.","SELECT T2.Name , COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T2.Name","SELECT t.Name, COUNT(DISTINCT ca.Course_ID) AS course_count
+FROM teacher AS t
+LEFT JOIN course_arrange AS ca ON ca.Teacher_ID = t.Teacher_ID
+GROUP BY t.Teacher_ID, t.Name;",False,mismatch,,5,7
+NLQ_keyword_synonym-00565-pre,NLQ_keyword_synonym,565,pre,608,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,"For each language, list the number of TV Channels that use it.","SELECT LANGUAGE , count(*) FROM TV_Channel GROUP BY LANGUAGE","SELECT ""Language"", COUNT(*) AS channel_count
+FROM ""TV_Channel""
+GROUP BY ""Language"";",True,match,,2,2
+NLQ_keyword_synonym-00565-post,NLQ_keyword_synonym,565,post,608,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What is the total count of TV Channels using each language?,"SELECT LANGUAGE , count(*) FROM TV_Channel GROUP BY LANGUAGE","SELECT ""Language"", COUNT(*) AS channel_count
+FROM ""TV_Channel""
+GROUP BY ""Language"";",True,match,,2,2
+NLQ_keyword_synonym-00065-pre,NLQ_keyword_synonym,65,pre,50,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,List the maximum weight and type for each type of pet.,"SELECT max(weight) , petType FROM pets GROUP BY petType","SELECT MAX(weight) AS max_weight, PetType
+FROM Pets
+GROUP BY PetType;",True,match,,2,2
+NLQ_keyword_synonym-00065-post,NLQ_keyword_synonym,65,post,50,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,List the heaviest weight for each type of pet.,"SELECT max(weight) , petType FROM pets GROUP BY petType","SELECT PetType, MAX(weight) AS heaviest_weight
+FROM Pets
+GROUP BY PetType;",True,match,,2,2
+NLQ_keyword_synonym-00259-pre,NLQ_keyword_synonym,259,pre,192,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Return the number of flights.,SELECT count(*) FROM FLIGHTS,SELECT COUNT(*) AS flight_count FROM flights;,True,match,,1,1
+NLQ_keyword_synonym-00259-post,NLQ_keyword_synonym,259,post,192,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,What is the current flight count?,SELECT count(*) FROM FLIGHTS,SELECT COUNT(*) AS flight_count FROM flights;,True,match,,1,1
+NLQ_keyword_synonym-00235-pre,NLQ_keyword_synonym,235,pre,242,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Which airlines have at least 10 flights?,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline GROUP BY T1.Airline HAVING count(*) > 10,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+JOIN ""flights"" AS f ON f.""Airline"" = a.""uid""
+GROUP BY a.""uid"", a.""Airline""
+HAVING COUNT(*) >= 10;",True,match,,12,12
+NLQ_keyword_synonym-00235-post,NLQ_keyword_synonym,235,post,242,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,List all airlines that have at least 10 flights.,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline GROUP BY T1.Airline HAVING count(*) > 10,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+JOIN ""flights"" AS f ON f.""Airline"" = a.""uid""
+GROUP BY a.""uid"", a.""Airline""
+HAVING COUNT(*) >= 10;",True,match,,12,12
+NLQ_keyword_synonym-00843-pre,NLQ_keyword_synonym,843,pre,907,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Give the name of the student with the most likes.,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1,"SELECT h.name
+FROM Highschooler AS h
+JOIN Likes AS l ON l.liked_id = h.ID
+GROUP BY h.ID, h.name
+ORDER BY COUNT(*) DESC, h.ID
+LIMIT 1;",False,mismatch,,1,1
+NLQ_keyword_synonym-00843-post,NLQ_keyword_synonym,843,post,907,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Tell me the name of the student with the largest number of likes.,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1,"SELECT h.name
+FROM Highschooler AS h
+LEFT JOIN Likes AS l ON l.liked_id = h.ID
+GROUP BY h.ID, h.name
+ORDER BY COUNT(l.student_id) DESC, h.ID
+LIMIT 1;",False,mismatch,,1,1
+NLQ_keyword_synonym-00677-pre,NLQ_keyword_synonym,677,pre,713,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What language is predominantly spoken in Aruba?,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Name = ""Aruba"" ORDER BY Percentage DESC LIMIT 1","SELECT cl.Language
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+WHERE c.Name = 'Aruba'
+ORDER BY cl.Percentage DESC
+LIMIT 1;",True,match,,1,1
+NLQ_keyword_synonym-00677-post,NLQ_keyword_synonym,677,post,713,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is the most spoken language in Aruba?,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Name = ""Aruba"" ORDER BY Percentage DESC LIMIT 1","SELECT cl.Language
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+WHERE c.Name = 'Aruba'
+ORDER BY cl.Percentage DESC
+LIMIT 1;",True,match,,1,1
+NLQ_keyword_synonym-00046-pre,NLQ_keyword_synonym,46,pre,70,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,What is the id and weight of every pet who is older than 1?,"SELECT petid , weight FROM pets WHERE pet_age > 1","SELECT PetID, weight FROM Pets WHERE pet_age > 1;",True,match,,2,2
+NLQ_keyword_synonym-00046-post,NLQ_keyword_synonym,46,post,70,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,What is the id and weight of every pet that has more than 1 year of age?,"SELECT petid , weight FROM pets WHERE pet_age > 1","SELECT PetID, weight FROM Pets WHERE pet_age > 1;",True,match,,2,2
+NLQ_keyword_synonym-00824-pre,NLQ_keyword_synonym,824,pre,906,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,What is the name of the high schooler who has the greatest number of likes?,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1,"SELECT h.name
+FROM Highschooler AS h
+LEFT JOIN Likes AS l ON l.liked_id = h.ID
+GROUP BY h.ID, h.name
+ORDER BY COUNT(l.student_id) DESC, h.ID
+LIMIT 1;",False,mismatch,,1,1
+NLQ_keyword_synonym-00824-post,NLQ_keyword_synonym,824,post,906,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Find out the name of the student with the largest number of likes in high school.,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1,"SELECT h.name
+FROM Highschooler AS h
+LEFT JOIN Likes AS l ON l.liked_id = h.ID
+GROUP BY h.ID, h.name
+ORDER BY COUNT(l.student_id) DESC, h.ID
+LIMIT 1;",False,mismatch,,1,1
+DB_schema_abbreviation-00639-pre,DB_schema_abbreviation,639,pre,215,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,How many 'United Airlines' flights go to Airport 'ASY'?,"SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline = T1.uid WHERE T1.Airline = ""United Airlines"" AND T2.DestAirport = ""ASY""",SELECT COUNT(*) FROM flights AS f JOIN airlines AS a ON f.Airline = a.uid WHERE a.Airline = 'United Airlines' AND f.DestAirport = 'ASY';,True,match,,1,1
+DB_schema_abbreviation-00639-post,DB_schema_abbreviation,639,post,215,flight_2_4,data\DB_schema_abbreviation\database_post_perturbation\flight_2_4\flight_2_4.sqlite,How many 'United Airlines' flights go to Airport 'ASY'?,"SELECT count(*) FROM airlines JOIN flights ON flights.air = airlines.uid WHERE airlines.air = ""United Airlines"" and flights.destapt = ""ASY""",SELECT COUNT(*) FROM flights AS f JOIN airlines AS a ON f.air = a.uid WHERE a.air = 'United Airlines' AND f.destapt = 'ASY';,True,match,,1,1
+DB_schema_abbreviation-01846-pre,DB_schema_abbreviation,1846,pre,660,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,Return the names of all the poker players.,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID,"SELECT p.Name
+FROM people AS p
+JOIN poker_player AS pp ON pp.People_ID = p.People_ID;",True,match,,5,5
+DB_schema_abbreviation-01846-post,DB_schema_abbreviation,1846,post,660,poker_player_4,data\DB_schema_abbreviation\database_post_perturbation\poker_player_4\poker_player_4.sqlite,Return the names of all the poker players.,SELECT people.Name FROM people JOIN poker_player ON people.ppl_id = poker_player.ppl_id,"SELECT people.Name
+FROM people
+JOIN poker_player ON people.ppl_id = poker_player.ppl_id;",True,match,,5,5
+DB_schema_abbreviation-02728-pre,DB_schema_abbreviation,2728,pre,950,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"List each owner's first name, last name, and the size of his for her dog.","SELECT T1.first_name , T1.last_name , T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id","SELECT o.first_name, o.last_name, s.size_description
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Sizes AS s ON s.size_code = d.size_code;
+--",False,mismatch,,15,15
+DB_schema_abbreviation-02728-post,DB_schema_abbreviation,2728,post,950,dog_kennels_1,data\DB_schema_abbreviation\database_post_perturbation\dog_kennels_1\dog_kennels_1.sqlite,"List each owner's first name, last name, and the size of his for her dog.","SELECT Owners.first_name , Owners.last_name , Dogs.sz_code FROM Owners JOIN Dogs ON Owners.owner_id = Dogs.owner_id","SELECT o.first_name, o.last_name, s.size_description
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Sizes AS s ON s.sz_code = d.sz_code;",False,mismatch,,15,15
+DB_schema_abbreviation-00977-pre,DB_schema_abbreviation,977,pre,345,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Show all template type codes that are not used by any document.,SELECT template_type_code FROM Templates EXCEPT SELECT template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id,"SELECT r.Template_Type_Code
+FROM Ref_Template_Types AS r
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Templates AS t
+    JOIN Documents AS d ON d.Template_ID = t.Template_ID
+    WHERE t.Template_Type_Code = r.Template_Type_Code
+);",True,match,,1,1
+DB_schema_abbreviation-00977-post,DB_schema_abbreviation,977,post,345,cre_Doc_Template_Mgt_4,data\DB_schema_abbreviation\database_post_perturbation\cre_Doc_Template_Mgt_4\cre_Doc_Template_Mgt_4.sqlite,Show all template type codes that are not used by any document.,SELECT Templates.tpl_tpye_code FROM Templates EXCEPT SELECT Templates.tpl_tpye_code FROM Templates JOIN Documents ON Templates.Template_ID = Documents.Template_ID,"SELECT r.tpl_type_code
+FROM Ref_Template_Types AS r
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Templates AS t
+    JOIN Documents AS d ON d.Template_ID = t.Template_ID
+    WHERE t.tpl_tpye_code = r.tpl_type_code
+);",True,match,,1,1
+DB_schema_abbreviation-01227-pre,DB_schema_abbreviation,1227,pre,535,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,"Who is enrolled in a Bachelor degree program? List the first name, middle name, last name.","SELECT DISTINCT T1.first_name , T1.middle_name , T1.last_name FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id JOIN Degree_Programs AS T3 ON T2.degree_program_id = T3.degree_program_id WHERE T3.degree_summary_name = 'Bachelor'","SELECT DISTINCT s.first_name, s.middle_name, s.last_name
+FROM Students AS s
+JOIN Student_Enrolment AS se ON se.student_id = s.student_id
+JOIN Degree_Programs AS dp ON dp.degree_program_id = se.degree_program_id
+WHERE dp.degree_summary_name LIKE '%Bachelor%';",True,match,,5,5
+DB_schema_abbreviation-01227-post,DB_schema_abbreviation,1227,post,535,student_transcripts_tracking_0,data\DB_schema_abbreviation\database_post_perturbation\student_transcripts_tracking_0\student_transcripts_tracking_0.sqlite,"Who is enrolled in a Bachelor degree program? List the first name, middle name, last name.","SELECT DISTINCT Students.first_name , Students.middle_name , Students.last_name FROM Students JOIN Student_Enrolment ON Students.student_id = Student_Enrolment.student_id JOIN Degree_Programs ON Student_Enrolment.degree_program_id = Degree_Programs.degree_pmg_id WHERE Degree_Programs.degree_smry_name = ""Bachelor""","SELECT DISTINCT s.first_name, s.middle_name, s.last_name
+FROM Students AS s
+JOIN Student_Enrolment AS se ON se.student_id = s.student_id
+JOIN Degree_Programs AS dp ON dp.degree_pmg_id = se.degree_program_id
+WHERE dp.degree_smry_name LIKE '%Bachelor%';",True,match,,5,5
+DB_schema_abbreviation-02312-pre,DB_schema_abbreviation,2312,pre,784,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Which cities are in European countries where English is not the official language?,SELECT DISTINCT T2.Name FROM country AS T1 JOIN city AS T2 ON T2.CountryCode = T1.Code WHERE T1.Continent = 'Europe' AND T1.Name NOT IN (SELECT T3.Name FROM country AS T3 JOIN countrylanguage AS T4 ON T3.Code = T4.CountryCode WHERE T4.IsOfficial = 'T' AND T4.Language = 'English'),"SELECT ci.Name
+FROM city AS ci
+JOIN country AS co ON ci.CountryCode = co.Code
+WHERE co.Continent = 'Europe'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = co.Code
+      AND cl.Language = 'English'
+      AND cl.IsOfficial = 'T'
+  );
+--",False,mismatch,,753,755
+DB_schema_abbreviation-02312-post,DB_schema_abbreviation,2312,post,784,world_1_3,data\DB_schema_abbreviation\database_post_perturbation\world_1_3\world_1_3.sqlite,Which cities are in European countries where English is not the official language?,"SELECT DISTINCT city.Name FROM country JOIN city ON city.cntry_code = country.Code WHERE country.Continent = ""Europe"" and country.Name NOT in (SELECT country.Name FROM country JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE countrylanguage.ofcl = ""T"" and countrylanguage.lang = ""English"")","SELECT city.Name
+FROM city
+JOIN country ON city.cntry_code = country.Code
+WHERE country.Continent = 'Europe'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage
+    WHERE countrylanguage.CountryCode = country.Code
+      AND countrylanguage.lang = 'English'
+      AND countrylanguage.ofcl = 'T'
+  );",False,mismatch,,753,755
+DB_schema_abbreviation-00107-pre,DB_schema_abbreviation,107,pre,47,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find the weight of the youngest dog.,SELECT weight FROM pets ORDER BY pet_age LIMIT 1,SELECT weight FROM Pets WHERE PetType = 'dog' ORDER BY pet_age ASC LIMIT 1;,True,match,,1,1
+DB_schema_abbreviation-00107-post,DB_schema_abbreviation,107,post,47,pets_1_1,data\DB_schema_abbreviation\database_post_perturbation\pets_1_1\pets_1_1.sqlite,Find the weight of the youngest dog.,SELECT Pets.wt FROM Pets ORDER BY Pets.pet_age asc LIMIT 1,SELECT wt FROM Pets WHERE PetType = 'dog' ORDER BY pet_age ASC LIMIT 1;,True,match,,1,1
+DB_schema_abbreviation-00381-pre,DB_schema_abbreviation,381,pre,233,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,What are airlines that have some flight departing from airport 'AHD'?,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""AHD""","SELECT DISTINCT a.""Airline""
+FROM ""airlines"" AS a
+JOIN ""flights"" AS f ON f.""Airline"" = a.""uid""
+WHERE f.""SourceAirport"" = 'AHD';",True,match,,0,0
+DB_schema_abbreviation-00381-post,DB_schema_abbreviation,381,post,233,flight_2_0,data\DB_schema_abbreviation\database_post_perturbation\flight_2_0\flight_2_0.sqlite,What are airlines that have some flight departing from airport 'AHD'?,"SELECT airlines.air FROM airlines JOIN flights ON airlines.uid = flights.air WHERE flights.srcapt = ""AHD""","SELECT DISTINCT a.air
+FROM airlines AS a
+JOIN flights AS f ON f.air = a.uid
+WHERE f.srcapt = 'AHD';",True,match,,0,0
+DB_schema_synonym-00234-pre,DB_schema_synonym,234,pre,78,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,What is the id of the pet owned by the student whose last name is 'Smith'?,SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid WHERE T1.Lname = 'Smith',"SELECT hp.PetID
+FROM Has_Pet AS hp
+JOIN Student AS s ON s.StuID = hp.StuID
+WHERE s.LName = 'Smith';",True,match,,1,1
+DB_schema_synonym-00234-post,DB_schema_synonym,234,post,78,pets_1_4,data\DB_schema_synonym\database_post_perturbation\pets_1_4\pets_1_4.sqlite,What is the id of the pet owned by the student whose last name is 'Smith'?,"SELECT Has_Pet.PetID FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID WHERE Student.surname = ""Smith""","SELECT hp.PetID
+FROM Has_Pet AS hp
+JOIN Student AS s ON s.StuID = hp.StuID
+WHERE s.surname = 'Smith';",True,match,,1,1
+DB_schema_synonym-01093-pre,DB_schema_synonym,1093,pre,472,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,"What are the first names of all players, and their total ranking points?","SELECT sum(ranking_points) , T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id GROUP BY T1.first_name","SELECT p.first_name, COALESCE(SUM(r.ranking_points), 0) AS total_ranking_points
+FROM players AS p
+LEFT JOIN rankings AS r ON r.player_id = p.player_id
+GROUP BY p.player_id, p.first_name;",False,mismatch,,1580,20662
+DB_schema_synonym-01093-post,DB_schema_synonym,1093,post,472,wta_1_0,data\DB_schema_synonym\database_post_perturbation\wta_1_0\wta_1_0.sqlite,"What are the first names of all players, and their total ranking points?","SELECT sum(rankings.ranking_points) , players.given_name FROM players JOIN rankings ON players.player_id = rankings.player_id GROUP BY players.given_name","SELECT p.given_name, COALESCE(SUM(r.ranking_points), 0) AS total_ranking_points
+FROM players AS p
+LEFT JOIN rankings AS r ON r.player_id = p.player_id
+GROUP BY p.player_id, p.given_name;",False,mismatch,,1580,20662
+DB_schema_synonym-00508-pre,DB_schema_synonym,508,pre,110,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the number of car models that are produced by each maker and what is the id and full name of each maker?,"SELECT Count(*) , T2.FullName , T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker = T2.Id GROUP BY T2.id","SELECT cm.Id, cm.FullName, COUNT(ml.ModelId) AS model_count
+FROM car_makers AS cm
+LEFT JOIN model_list AS ml ON ml.Maker = cm.Id
+GROUP BY cm.Id, cm.FullName;",True,match,,22,22
+DB_schema_synonym-00508-post,DB_schema_synonym,508,post,110,car_1_4,data\DB_schema_synonym\database_post_perturbation\car_1_4\car_1_4.sqlite,What is the number of car models that are produced by each maker and what is the id and full name of each maker?,"SELECT count(*) , car_makers.FullName , car_makers.Id FROM model_list JOIN car_makers ON model_list.builder = car_makers.Id GROUP BY car_makers.Id","SELECT cm.Id, cm.FullName, COUNT(ml.ModelId) AS model_count
+FROM car_makers AS cm
+LEFT JOIN model_list AS ml ON ml.builder = cm.Id
+GROUP BY cm.Id, cm.FullName;",True,match,,22,22
+DB_schema_synonym-02459-pre,DB_schema_synonym,2459,pre,956,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Which dogs are owned by someone who lives in Virginia? List the owner's first name and the dog's name.,"SELECT T1.first_name , T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id WHERE T1.state = 'Virginia'","SELECT o.first_name, d.name
+FROM Dogs AS d
+JOIN Owners AS o ON d.owner_id = o.owner_id
+WHERE o.state = 'Virginia';",True,match,,1,1
+DB_schema_synonym-02459-post,DB_schema_synonym,2459,post,956,dog_kennels_3,data\DB_schema_synonym\database_post_perturbation\dog_kennels_3\dog_kennels_3.sqlite,Which dogs are owned by someone who lives in Virginia? List the owner's first name and the dog's name.,"SELECT Owners.first_name , Dogs.name FROM Owners JOIN Dogs ON Owners.owner_id = Dogs.owner_id WHERE Owners.province = ""Virginia""","SELECT o.first_name, d.name
+FROM Dogs AS d
+JOIN Owners AS o ON d.owner_id = o.owner_id
+WHERE o.province = 'Virginia';",True,match,,1,1
+DB_schema_synonym-02002-pre,DB_schema_synonym,2002,pre,735,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,How many different forms of governments are there in Africa?,"SELECT count(DISTINCT GovernmentForm) FROM country WHERE Continent = ""Africa""",SELECT COUNT(DISTINCT GovernmentForm) FROM country WHERE Continent = 'Africa';,True,match,,1,1
+DB_schema_synonym-02002-post,DB_schema_synonym,2002,post,735,world_1_3,data\DB_schema_synonym\database_post_perturbation\world_1_3\world_1_3.sqlite,How many different forms of governments are there in Africa?,"SELECT count(DISTINCT country.political_form) FROM country WHERE country.Continent = ""Africa""",SELECT COUNT(DISTINCT political_form) FROM country WHERE Continent = 'Africa';,True,match,,1,1
+DB_schema_synonym-00500-pre,DB_schema_synonym,500,pre,94,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,"What is the full name of each car maker, along with its id and how many models it produces?","SELECT T1.FullName , T1.Id , count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id = T2.Maker GROUP BY T1.Id","SELECT cm.Id, cm.FullName, COUNT(ml.ModelId) AS model_count
+FROM car_makers AS cm
+LEFT JOIN model_list AS ml ON ml.Maker = cm.Id
+GROUP BY cm.Id, cm.FullName;",True,match,,22,22
+DB_schema_synonym-00500-post,DB_schema_synonym,500,post,94,car_1_4,data\DB_schema_synonym\database_post_perturbation\car_1_4\car_1_4.sqlite,"What is the full name of each car maker, along with its id and how many models it produces?","SELECT car_makers.FullName , car_makers.Id , count(*) FROM car_makers JOIN model_list ON car_makers.Id = model_list.builder GROUP BY car_makers.Id","SELECT cm.FullName, cm.Id, COUNT(ml.ModelId) AS model_count
+FROM car_makers AS cm
+LEFT JOIN model_list AS ml ON ml.builder = cm.Id
+GROUP BY cm.Id, cm.FullName;",True,match,,22,22
+DB_schema_synonym-00990-pre,DB_schema_synonym,990,pre,342,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,"What are the different template type codes, and how many documents use each type?","SELECT T1.template_type_code , count(*) FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_type_code","SELECT r.Template_Type_Code, COUNT(d.Document_ID) AS Document_Count
+FROM Ref_Template_Types AS r
+LEFT JOIN Templates AS t ON t.Template_Type_Code = r.Template_Type_Code
+LEFT JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY r.Template_Type_Code;",False,mismatch,,4,5
+DB_schema_synonym-00990-post,DB_schema_synonym,990,post,342,cre_Doc_Template_Mgt_3,data\DB_schema_synonym\database_post_perturbation\cre_Doc_Template_Mgt_3\cre_Doc_Template_Mgt_3.sqlite,"What are the different template type codes, and how many documents use each type?","SELECT Templates.template_kind_codification , count(*) FROM Templates JOIN Documents ON Templates.Template_ID = Documents.Template_ID GROUP BY Templates.template_kind_codification","SELECT r.category_cipher AS template_type_code,
+       COUNT(d.Document_ID) AS document_count
+FROM Ref_Template_Types AS r
+LEFT JOIN Templates AS t
+  ON t.template_kind_codification = r.category_cipher
+LEFT JOIN Documents AS d
+  ON d.Template_ID = t.Template_ID
+GROUP BY r.category_cipher;
+--",False,mismatch,,4,5
+DB_schema_synonym-01959-pre,DB_schema_synonym,1959,pre,780,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What are the country codes of countries where people use languages other than English?,"SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != ""English""","SELECT DISTINCT CountryCode
+FROM countrylanguage
+WHERE Language <> 'English';",True,match,,223,223
+DB_schema_synonym-01959-post,DB_schema_synonym,1959,post,780,world_1_2,data\DB_schema_synonym\database_post_perturbation\world_1_2\world_1_2.sqlite,What are the country codes of countries where people use languages other than English?,"SELECT DISTINCT countrylanguage.country_cipher FROM countrylanguage WHERE countrylanguage.Language != ""English""",SELECT DISTINCT country_cipher FROM countrylanguage WHERE Language <> 'English';,True,match,,223,223
+NLQ_others-00795-pre,NLQ_others,795,pre,305,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,How many different templates do all document use?,SELECT count(DISTINCT template_id) FROM Documents,SELECT COUNT(DISTINCT Template_ID) AS template_count FROM Documents;,True,match,,1,1
+NLQ_others-00795-post,NLQ_others,795,post,305,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,"In all documents which do they use, how many different templates exist?",SELECT count(DISTINCT template_id) FROM Documents,SELECT COUNT(DISTINCT Template_ID) FROM Documents;,True,match,,1,1
+NLQ_others-01725-pre,NLQ_others,1725,pre,614,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What are all of the episodes ordered by ratings?,SELECT Episode FROM TV_series ORDER BY rating,"SELECT ""Episode"" FROM ""TV_series"" ORDER BY ""Rating"";",True,match,,12,12
+NLQ_others-01725-post,NLQ_others,1725,post,614,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,"Show the list of episodes, ordered by ratings.",SELECT Episode FROM TV_series ORDER BY rating,"SELECT ""Episode""
+FROM ""TV_series""
+ORDER BY CAST(""Rating"" AS REAL) DESC;",False,mismatch,,12,12
+NLQ_others-01572-pre,NLQ_others,1572,pre,567,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,How many transcripts are released?,SELECT count(*) FROM Transcripts,SELECT COUNT(*) AS transcript_count FROM Transcripts WHERE transcript_date IS NOT NULL;,True,match,,1,1
+NLQ_others-01572-post,NLQ_others,1572,post,567,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Show me how many transcripts have been released.,SELECT count(*) FROM Transcripts,SELECT COUNT(*) AS transcript_count FROM Transcripts;,True,match,,1,1
+NLQ_others-02614-pre,NLQ_others,2614,pre,951,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"What are each owner's first name, last name, and the size of their dog?","SELECT T1.first_name , T1.last_name , T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id","SELECT o.first_name, o.last_name, s.size_description AS dog_size
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Sizes AS s ON s.size_code = d.size_code;",False,mismatch,,15,15
+NLQ_others-02614-post,NLQ_others,2614,post,951,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"Please list for each person, his/her first name, last name, and the size of their dog.","SELECT T1.first_name , T1.last_name , T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id","SELECT o.first_name, o.last_name, s.size_description AS dog_size
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Sizes AS s ON s.size_code = d.size_code;",False,mismatch,,15,15
+NLQ_others-01213-pre,NLQ_others,1213,pre,438,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What is the average rank for winners in all matches?,SELECT avg(winner_rank) FROM matches,"SELECT AVG(winner_rank) AS average_winner_rank FROM matches;
+--",True,match,,1,1
+NLQ_others-01213-post,NLQ_others,1213,post,438,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,"In all matches, what is the average rank of winners?",SELECT avg(winner_rank) FROM matches,SELECT AVG(winner_rank) AS average_winner_rank FROM matches;,True,match,,1,1
+NLQ_others-02058-pre,NLQ_others,2058,pre,716,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What are the region and population of Angola?,"SELECT Population , Region FROM country WHERE Name = ""Angola""","SELECT Region, Population FROM country WHERE Name = 'Angola';",True,match,,1,1
+NLQ_others-02058-post,NLQ_others,2058,post,716,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give me the information on Angola with regards to region and population.,"SELECT Population , Region FROM country WHERE Name = ""Angola""","SELECT ""Region"", ""Population"" FROM ""country"" WHERE ""Name"" = 'Angola';
+--",True,match,,1,1
+NLQ_others-00595-pre,NLQ_others,595,pre,248,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Give the flight numbers of flights leaving from APG.,"SELECT FlightNo FROM FLIGHTS WHERE SourceAirport = ""APG""",SELECT FlightNo FROM flights WHERE SourceAirport = 'APG';,True,match,,0,0
+NLQ_others-00595-post,NLQ_others,595,post,248,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Can you give me the flight numbers of the flights departing from APG?,"SELECT FlightNo FROM FLIGHTS WHERE SourceAirport = ""APG""","SELECT ""FlightNo"" FROM ""flights"" WHERE ""SourceAirport"" = 'APG';",True,match,,0,0
+NLQ_others-01631-pre,NLQ_others,1631,pre,640,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What is the pixel aspect ratio and country of origin for all TV channels that do not use English?,"SELECT Pixel_aspect_ratio_PAR , country FROM tv_channel WHERE LANGUAGE != 'English'","SELECT ""Pixel_aspect_ratio_PAR"", ""Country""
+FROM ""TV_Channel""
+WHERE ""Language"" <> 'English';",True,match,,12,12
+NLQ_others-01631-post,NLQ_others,1631,post,640,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,Where can I find the pixel aspect ratio and country of origin for all TV channels not using English?,"SELECT Pixel_aspect_ratio_PAR , country FROM tv_channel WHERE LANGUAGE != 'English'","SELECT ""Pixel_aspect_ratio_PAR"", ""Country"" FROM ""TV_Channel"" WHERE ""Language"" <> 'English';",True,match,,12,12

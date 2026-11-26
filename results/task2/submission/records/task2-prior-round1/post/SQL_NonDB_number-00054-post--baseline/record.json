@@ -1,0 +1,66 @@
+{
+  "id": "SQL_NonDB_number-00054-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7333,
+    "completion_tokens": 177,
+    "total_tokens": 7510,
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "prediction_sql": "SELECT winner_name, winner_rank\nFROM matches\nWHERE winner_age IS NOT NULL\nORDER BY winner_age ASC\nLIMIT 5;",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 5,
+  "prediction_row_count": 5,
+  "status": "mismatch",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:38:57+08:00",
+  "gold_rows": [
+    [
+      "Madison Keys",
+      17
+    ],
+    [
+      "Madison Keys",
+      24
+    ],
+    [
+      "Madison Keys",
+      16
+    ],
+    [
+      "Madison Keys",
+      12
+    ],
+    [
+      "Madison Keys",
+      9
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Madison Keys",
+      17
+    ],
+    [
+      "Madison Keys",
+      24
+    ],
+    [
+      "Madison Keys",
+      16
+    ],
+    [
+      "Madison Keys",
+      12
+    ],
+    [
+      "Madison Keys",
+      12
+    ]
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "resp_005f9c39b9a23d7e016b0674bfec9887d1af23e62ba912ba54",
+  "object": "chat.completion",
+  "created": 1795585220,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nLEFT JOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.Maker = 'Honda' OR cd.Weight > 3500;"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7306,
+    "completion_tokens": 219,
+    "total_tokens": 7525,
+    "prompt_tokens_details": {
+      "cached_tokens": 6528
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  }
+}

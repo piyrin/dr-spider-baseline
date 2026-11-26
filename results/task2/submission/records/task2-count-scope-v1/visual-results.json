@@ -1,0 +1,1249 @@
+[
+  {
+    "method": "canvas",
+    "side": "post",
+    "request": {
+      "sample_id": "SQL_comparison-00133-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "count_intent"
+          },
+          {
+            "id": "policy",
+            "kind": "count_policy"
+          },
+          {
+            "id": "generate",
+            "kind": "count_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_comparison-00133-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "count_intent"
+        },
+        {
+          "id": "policy",
+          "kind": "count_policy"
+        },
+        {
+          "id": "generate",
+          "kind": "count_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "ec5434f8dea74edc8a3cb680a5d5747e",
+    "graph_sha256": "63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "count_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "parent_table": "country",
+              "parent_key": "Code",
+              "detail_table": "countrylanguage",
+              "detail_key": "CountryCode",
+              "role": "both",
+              "operator": "<",
+              "threshold": 2,
+              "policy": "observed",
+              "cue": "countries that speak less than 2 languages"
+            }
+          ]
+        },
+        "elapsed_s": 17.149201399999583
+      },
+      {
+        "id": "policy",
+        "kind": "count_policy",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "observed",
+          "role": "both",
+          "operator": "<",
+          "threshold": 2,
+          "cue": "countries that speak less than 2 languages",
+          "parent_table": "country",
+          "parent_key": "Code",
+          "detail_table": "countrylanguage",
+          "detail_key": "CountryCode"
+        },
+        "elapsed_s": 0.0013729999991483055
+      },
+      {
+        "id": "generate",
+        "kind": "count_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+          "route": "observed"
+        },
+        "elapsed_s": 16.369827299999088
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+          "rows": [
+            [
+              "Anguilla",
+              1
+            ],
+            [
+              "Bosnia and Herzegovina",
+              1
+            ],
+            [
+              "Bermuda",
+              1
+            ],
+            [
+              "Cuba",
+              1
+            ],
+            [
+              "Cayman Islands",
+              1
+            ],
+            [
+              "Western Sahara",
+              1
+            ],
+            [
+              "Falkland Islands",
+              1
+            ],
+            [
+              "Grenada",
+              1
+            ],
+            [
+              "Montserrat",
+              1
+            ],
+            [
+              "Norfolk Island",
+              1
+            ],
+            [
+              "Pitcairn",
+              1
+            ],
+            [
+              "Portugal",
+              1
+            ],
+            [
+              "Saudi Arabia",
+              1
+            ],
+            [
+              "Saint Helena",
+              1
+            ],
+            [
+              "San Marino",
+              1
+            ],
+            [
+              "Saint Pierre and Miquelon",
+              1
+            ],
+            [
+              "Turks and Caicos Islands",
+              1
+            ],
+            [
+              "United States Minor Outlying Islands",
+              1
+            ],
+            [
+              "Uruguay",
+              1
+            ],
+            [
+              "Holy See (Vatican City State)",
+              1
+            ],
+            [
+              "Virgin Islands, British",
+              1
+            ]
+          ],
+          "columns": [
+            "Name",
+            "LanguageCount"
+          ],
+          "row_count": 21
+        },
+        "elapsed_s": 0.0014699000003020046
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 21,
+      "prediction_rows": 21
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 10214
+    },
+    "course_flow_id": "TASK2_CANVAS_63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+    "course_flow": {
+      "id": "TASK2_CANVAS_63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "method": "canvas",
+    "side": "pre",
+    "request": {
+      "sample_id": "SQL_comparison-00133-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "count_intent"
+          },
+          {
+            "id": "policy",
+            "kind": "count_policy"
+          },
+          {
+            "id": "generate",
+            "kind": "count_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_comparison-00133-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "count_intent"
+        },
+        {
+          "id": "policy",
+          "kind": "count_policy"
+        },
+        {
+          "id": "generate",
+          "kind": "count_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "4cf2b16498ed43f4bbcc4b765f05f81a",
+    "graph_sha256": "63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "count_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "parent_table": "country",
+              "parent_key": "Code",
+              "detail_table": "countrylanguage",
+              "detail_key": "CountryCode",
+              "role": "both",
+              "operator": ">",
+              "threshold": 2,
+              "policy": "observed",
+              "cue": "speak more than 2 languages"
+            }
+          ]
+        },
+        "elapsed_s": 5.586511800000153
+      },
+      {
+        "id": "policy",
+        "kind": "count_policy",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "zero_cannot_change_supported_filter"
+        },
+        "elapsed_s": 0.00019520000023476314
+      },
+      {
+        "id": "generate",
+        "kind": "count_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "sql": "SELECT c.\"Name\", COUNT(DISTINCT cl.\"Language\") AS \"LanguageCount\"\nFROM \"country\" AS c\nJOIN \"countrylanguage\" AS cl\n  ON cl.\"CountryCode\" = c.\"Code\"\nGROUP BY c.\"Code\", c.\"Name\"\nHAVING COUNT(DISTINCT cl.\"Language\") > 2;",
+          "route": "fallback"
+        },
+        "elapsed_s": 17.02077569999892
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT c.\"Name\", COUNT(DISTINCT cl.\"Language\") AS \"LanguageCount\"\nFROM \"country\" AS c\nJOIN \"countrylanguage\" AS cl\n  ON cl.\"CountryCode\" = c.\"Code\"\nGROUP BY c.\"Code\", c.\"Name\"\nHAVING COUNT(DISTINCT cl.\"Language\") > 2;",
+          "rows": [
+            [
+              "Aruba",
+              4
+            ],
+            [
+              "Afghanistan",
+              5
+            ],
+            [
+              "Angola",
+              9
+            ],
+            [
+              "Albania",
+              3
+            ],
+            [
+              "Andorra",
+              4
+            ],
+            [
+              "Netherlands Antilles",
+              3
+            ],
+            [
+              "Argentina",
+              3
+            ],
+            [
+              "American Samoa",
+              3
+            ],
+            [
+              "Australia",
+              8
+            ],
+            [
+              "Austria",
+              8
+            ],
+            [
+              "Azerbaijan",
+              4
+            ],
+            [
+              "Burundi",
+              3
+            ],
+            [
+              "Belgium",
+              6
+            ],
+            [
+              "Benin",
+              7
+            ],
+            [
+              "Burkina Faso",
+              6
+            ],
+            [
+              "Bangladesh",
+              7
+            ],
+            [
+              "Bulgaria",
+              4
+            ],
+            [
+              "Belarus",
+              4
+            ],
+            [
+              "Belize",
+              4
+            ],
+            [
+              "Bolivia",
+              4
+            ],
+            [
+              "Brazil",
+              5
+            ],
+            [
+              "Brunei",
+              4
+            ],
+            [
+              "Bhutan",
+              3
+            ],
+            [
+              "Botswana",
+              5
+            ],
+            [
+              "Central African Republic",
+              6
+            ],
+            [
+              "Canada",
+              12
+            ],
+            [
+              "Switzerland",
+              4
+            ],
+            [
+              "Chile",
+              4
+            ],
+            [
+              "China",
+              12
+            ],
+            [
+              "Côte d’Ivoire",
+              5
+            ]
+          ],
+          "columns": [
+            "Name",
+            "LanguageCount"
+          ],
+          "row_count": 149
+        },
+        "elapsed_s": 0.0014664999998785788
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 149,
+      "prediction_rows": 149
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 10016
+    },
+    "course_flow_id": "TASK2_CANVAS_63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+    "course_flow": {
+      "id": "TASK2_CANVAS_63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "method": "baseline",
+    "side": "post",
+    "request": {
+      "sample_id": "SQL_comparison-00133-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "generate",
+            "kind": "generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_comparison-00133-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "generate",
+          "kind": "generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "4f9544bd2c7e4f0b94e454b700db7f88",
+    "graph_sha256": "64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "steps": [
+      {
+        "id": "generate",
+        "kind": "generate",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;"
+        },
+        "elapsed_s": 18.35170190000099
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+          "rows": [
+            [
+              "Anguilla",
+              1
+            ],
+            [
+              "Antarctica",
+              0
+            ],
+            [
+              "French Southern territories",
+              0
+            ],
+            [
+              "Bosnia and Herzegovina",
+              1
+            ],
+            [
+              "Bermuda",
+              1
+            ],
+            [
+              "Bouvet Island",
+              0
+            ],
+            [
+              "Cuba",
+              1
+            ],
+            [
+              "Cayman Islands",
+              1
+            ],
+            [
+              "Western Sahara",
+              1
+            ],
+            [
+              "Falkland Islands",
+              1
+            ],
+            [
+              "Grenada",
+              1
+            ],
+            [
+              "Heard Island and McDonald Islands",
+              0
+            ],
+            [
+              "British Indian Ocean Territory",
+              0
+            ],
+            [
+              "Montserrat",
+              1
+            ],
+            [
+              "Norfolk Island",
+              1
+            ],
+            [
+              "Pitcairn",
+              1
+            ],
+            [
+              "Portugal",
+              1
+            ],
+            [
+              "Saudi Arabia",
+              1
+            ],
+            [
+              "South Georgia and the South Sandwich Islands",
+              0
+            ],
+            [
+              "Saint Helena",
+              1
+            ],
+            [
+              "San Marino",
+              1
+            ],
+            [
+              "Saint Pierre and Miquelon",
+              1
+            ],
+            [
+              "Turks and Caicos Islands",
+              1
+            ],
+            [
+              "United States Minor Outlying Islands",
+              1
+            ],
+            [
+              "Uruguay",
+              1
+            ],
+            [
+              "Holy See (Vatican City State)",
+              1
+            ],
+            [
+              "Virgin Islands, British",
+              1
+            ]
+          ],
+          "columns": [
+            "Name",
+            "LanguageCount"
+          ],
+          "row_count": 27
+        },
+        "elapsed_s": 0.001527100001112558
+      }
+    ],
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 21,
+      "prediction_rows": 27
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 4966
+    },
+    "course_flow_id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "course_flow": {
+      "id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "method": "baseline",
+    "side": "pre",
+    "request": {
+      "sample_id": "SQL_comparison-00133-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "generate",
+            "kind": "generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_comparison-00133-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "generate",
+          "kind": "generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "5f153bfbe5214d5488f6ab3fedadd5bd",
+    "graph_sha256": "64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "steps": [
+      {
+        "id": "generate",
+        "kind": "generate",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) > 2;"
+        },
+        "elapsed_s": 15.224110399998608
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) > 2;",
+          "rows": [
+            [
+              "Aruba",
+              4
+            ],
+            [
+              "Afghanistan",
+              5
+            ],
+            [
+              "Angola",
+              9
+            ],
+            [
+              "Albania",
+              3
+            ],
+            [
+              "Andorra",
+              4
+            ],
+            [
+              "Netherlands Antilles",
+              3
+            ],
+            [
+              "Argentina",
+              3
+            ],
+            [
+              "American Samoa",
+              3
+            ],
+            [
+              "Australia",
+              8
+            ],
+            [
+              "Austria",
+              8
+            ],
+            [
+              "Azerbaijan",
+              4
+            ],
+            [
+              "Burundi",
+              3
+            ],
+            [
+              "Belgium",
+              6
+            ],
+            [
+              "Benin",
+              7
+            ],
+            [
+              "Burkina Faso",
+              6
+            ],
+            [
+              "Bangladesh",
+              7
+            ],
+            [
+              "Bulgaria",
+              4
+            ],
+            [
+              "Belarus",
+              4
+            ],
+            [
+              "Belize",
+              4
+            ],
+            [
+              "Bolivia",
+              4
+            ],
+            [
+              "Brazil",
+              5
+            ],
+            [
+              "Brunei",
+              4
+            ],
+            [
+              "Bhutan",
+              3
+            ],
+            [
+              "Botswana",
+              5
+            ],
+            [
+              "Central African Republic",
+              6
+            ],
+            [
+              "Canada",
+              12
+            ],
+            [
+              "Switzerland",
+              4
+            ],
+            [
+              "Chile",
+              4
+            ],
+            [
+              "China",
+              12
+            ],
+            [
+              "Côte d’Ivoire",
+              5
+            ]
+          ],
+          "columns": [
+            "Name",
+            "LanguageCount"
+          ],
+          "row_count": 149
+        },
+        "elapsed_s": 0.00119769999946584
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 149,
+      "prediction_rows": 149
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 4848
+    },
+    "course_flow_id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "course_flow": {
+      "id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

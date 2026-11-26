@@ -1,0 +1,22 @@
+{
+  "run_ids": {
+    "canvas/post": "7115fb25fab54988adc33d8bcc3e0d1c",
+    "canvas/pre": "bb31d94c3c134530acdb9772e0f312d0",
+    "baseline/post": "64427073014b43a5b8009b9bd266c514",
+    "baseline/pre": "d58f115bb1544ced8bf19c1300c9fc8b"
+  },
+  "model": "gpt-6-sol",
+  "code_sha256": {
+    ".local/task2-experiment/boolean_evidence_canvas.py": "1cd5142e5525e39f7b041d842e5f57cafdacf4709fa84997439a19dfd9a75e72",
+    ".local/task2-experiment/serve_canvas.py": "13ef16a13d5acb975568f95bc77c9ef6de056c006641267e1f825c66621eb950",
+    ".local/task2-experiment/web/page.tsx": "ac9560e30f571bdd2cc89854c622cd55515ddb5e02fb3ce2fe385571c7c9e130",
+    ".local/task2-experiment/web/check-boolean.cjs": "06bf6f2fe38a6b8cf5b99537c220c7a82fa3f4a99a7946e3e1e09d83d1c99f0c"
+  },
+  "artifact_sha256": {
+    "browser-results.json": "f821d1722a0d728b49909a91f21288b3a013241068efa6d47985116fc52493b7",
+    "structure-v2.json": "3278e9c526895e256e9582fe6e064fe1915d199a0303b1b0fd7b6d07f6541570",
+    "canvas.png": "be616b6b84921db15856a6d9b0153d9be7d8a1105c4b8f9cd06f211d82af9b31",
+    "post-result.png": "4737f8f25817b8609ec173cc60c47567b40db8a5b379bd2300d519d07705776b",
+    "pre-result.png": "ef096346a68a8b3330029b72bd2fc794efc6e483e0d36ef28b44bb08ce56365d"
+  }
+}

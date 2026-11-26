@@ -1,0 +1,446 @@
+{
+  "seed": "20261122",
+  "known_originals": 540,
+  "main": [
+    "SQL_NonDB_number-00023-pre",
+    "SQL_NonDB_number-00023-post",
+    "SQL_NonDB_number-00022-pre",
+    "SQL_NonDB_number-00022-post",
+    "SQL_NonDB_number-00127-pre",
+    "SQL_NonDB_number-00127-post",
+    "NLQ_column_attribute-00091-pre",
+    "NLQ_column_attribute-00091-post",
+    "NLQ_column_attribute-00019-pre",
+    "NLQ_column_attribute-00019-post",
+    "NLQ_column_attribute-00076-pre",
+    "NLQ_column_attribute-00076-post",
+    "NLQ_column_attribute-00107-pre",
+    "NLQ_column_attribute-00107-post",
+    "NLQ_column_attribute-00074-pre",
+    "NLQ_column_attribute-00074-post",
+    "NLQ_column_attribute-00053-pre",
+    "NLQ_column_attribute-00053-post",
+    "NLQ_column_attribute-00090-pre",
+    "NLQ_column_attribute-00090-post",
+    "SQL_DB_number-00225-pre",
+    "SQL_DB_number-00225-post",
+    "SQL_DB_number-00299-pre",
+    "SQL_DB_number-00299-post",
+    "SQL_DB_number-00061-pre",
+    "SQL_DB_number-00061-post",
+    "SQL_DB_number-00271-pre",
+    "SQL_DB_number-00271-post",
+    "SQL_DB_number-00052-pre",
+    "SQL_DB_number-00052-post",
+    "SQL_DB_number-00033-pre",
+    "SQL_DB_number-00033-post",
+    "SQL_DB_number-00160-pre",
+    "SQL_DB_number-00160-post",
+    "SQL_DB_number-00130-pre",
+    "SQL_DB_number-00130-post",
+    "SQL_comparison-00174-pre",
+    "SQL_comparison-00174-post",
+    "SQL_comparison-00155-pre",
+    "SQL_comparison-00155-post",
+    "SQL_comparison-00086-pre",
+    "SQL_comparison-00086-post",
+    "SQL_comparison-00108-pre",
+    "SQL_comparison-00108-post",
+    "SQL_comparison-00061-pre",
+    "SQL_comparison-00061-post",
+    "SQL_comparison-00122-pre",
+    "SQL_comparison-00122-post",
+    "SQL_comparison-00012-pre",
+    "SQL_comparison-00012-post",
+    "SQL_comparison-00029-pre",
+    "SQL_comparison-00029-post",
+    "NLQ_column_value-00240-pre",
+    "NLQ_column_value-00240-post",
+    "NLQ_column_value-00248-pre",
+    "NLQ_column_value-00248-post",
+    "NLQ_column_value-00196-pre",
+    "NLQ_column_value-00196-post",
+    "NLQ_column_value-00201-pre",
+    "NLQ_column_value-00201-post",
+    "NLQ_column_value-00223-pre",
+    "NLQ_column_value-00223-post",
+    "NLQ_column_value-00152-pre",
+    "NLQ_column_value-00152-post",
+    "NLQ_column_value-00099-pre",
+    "NLQ_column_value-00099-post",
+    "NLQ_column_value-00226-pre",
+    "NLQ_column_value-00226-post",
+    "NLQ_keyword_carrier-00170-pre",
+    "NLQ_keyword_carrier-00170-post",
+    "NLQ_keyword_carrier-00105-pre",
+    "NLQ_keyword_carrier-00105-post",
+    "NLQ_keyword_carrier-00288-pre",
+    "NLQ_keyword_carrier-00288-post",
+    "NLQ_keyword_carrier-00180-pre",
+    "NLQ_keyword_carrier-00180-post",
+    "NLQ_keyword_carrier-00301-pre",
+    "NLQ_keyword_carrier-00301-post",
+    "NLQ_keyword_carrier-00365-pre",
+    "NLQ_keyword_carrier-00365-post",
+    "NLQ_keyword_carrier-00335-pre",
+    "NLQ_keyword_carrier-00335-post",
+    "NLQ_keyword_carrier-00270-pre",
+    "NLQ_keyword_carrier-00270-post",
+    "NLQ_value_synonym-00146-pre",
+    "NLQ_value_synonym-00146-post",
+    "NLQ_value_synonym-00404-pre",
+    "NLQ_value_synonym-00404-post",
+    "NLQ_value_synonym-00324-pre",
+    "NLQ_value_synonym-00324-post",
+    "NLQ_value_synonym-00431-pre",
+    "NLQ_value_synonym-00431-post",
+    "NLQ_value_synonym-00197-pre",
+    "NLQ_value_synonym-00197-post",
+    "NLQ_value_synonym-00172-pre",
+    "NLQ_value_synonym-00172-post",
+    "NLQ_value_synonym-00250-pre",
+    "NLQ_value_synonym-00250-post",
+    "NLQ_value_synonym-00352-pre",
+    "NLQ_value_synonym-00352-post",
+    "DB_DBcontent_equivalence-00372-pre",
+    "DB_DBcontent_equivalence-00372-post",
+    "DB_DBcontent_equivalence-00279-pre",
+    "DB_DBcontent_equivalence-00279-post",
+    "DB_DBcontent_equivalence-00033-pre",
+    "DB_DBcontent_equivalence-00033-post",
+    "DB_DBcontent_equivalence-00103-pre",
+    "DB_DBcontent_equivalence-00103-post",
+    "DB_DBcontent_equivalence-00314-pre",
+    "DB_DBcontent_equivalence-00314-post",
+    "DB_DBcontent_equivalence-00115-pre",
+    "DB_DBcontent_equivalence-00115-post",
+    "DB_DBcontent_equivalence-00332-pre",
+    "DB_DBcontent_equivalence-00332-post",
+    "DB_DBcontent_equivalence-00099-pre",
+    "DB_DBcontent_equivalence-00099-post",
+    "SQL_sort_order-00107-pre",
+    "SQL_sort_order-00107-post",
+    "SQL_sort_order-00054-pre",
+    "SQL_sort_order-00054-post",
+    "SQL_sort_order-00087-pre",
+    "SQL_sort_order-00087-post",
+    "SQL_sort_order-00051-pre",
+    "SQL_sort_order-00051-post",
+    "SQL_sort_order-00088-pre",
+    "SQL_sort_order-00088-post",
+    "SQL_sort_order-00053-pre",
+    "SQL_sort_order-00053-post",
+    "SQL_sort_order-00093-pre",
+    "SQL_sort_order-00093-post",
+    "SQL_sort_order-00059-pre",
+    "SQL_sort_order-00059-post",
+    "SQL_DB_text-00418-pre",
+    "SQL_DB_text-00418-post",
+    "SQL_DB_text-00302-pre",
+    "SQL_DB_text-00302-post",
+    "SQL_DB_text-00008-pre",
+    "SQL_DB_text-00008-post",
+    "SQL_DB_text-00340-pre",
+    "SQL_DB_text-00340-post",
+    "SQL_DB_text-00756-pre",
+    "SQL_DB_text-00756-post",
+    "SQL_DB_text-00229-pre",
+    "SQL_DB_text-00229-post",
+    "SQL_DB_text-00701-pre",
+    "SQL_DB_text-00701-post",
+    "SQL_DB_text-00547-pre",
+    "SQL_DB_text-00547-post",
+    "NLQ_column_carrier-00445-pre",
+    "NLQ_column_carrier-00445-post",
+    "NLQ_column_carrier-00495-pre",
+    "NLQ_column_carrier-00495-post",
+    "NLQ_column_carrier-00065-pre",
+    "NLQ_column_carrier-00065-post",
+    "NLQ_column_carrier-00519-pre",
+    "NLQ_column_carrier-00519-post",
+    "NLQ_column_carrier-00506-pre",
+    "NLQ_column_carrier-00506-post",
+    "NLQ_column_carrier-00470-pre",
+    "NLQ_column_carrier-00470-post",
+    "NLQ_column_carrier-00237-pre",
+    "NLQ_column_carrier-00237-post",
+    "NLQ_column_carrier-00044-pre",
+    "NLQ_column_carrier-00044-post",
+    "NLQ_column_synonym-00128-pre",
+    "NLQ_column_synonym-00128-post",
+    "NLQ_column_synonym-00279-pre",
+    "NLQ_column_synonym-00279-post",
+    "NLQ_column_synonym-00188-pre",
+    "NLQ_column_synonym-00188-post",
+    "NLQ_column_synonym-00271-pre",
+    "NLQ_column_synonym-00271-post",
+    "NLQ_column_synonym-00408-pre",
+    "NLQ_column_synonym-00408-post",
+    "NLQ_column_synonym-00326-pre",
+    "NLQ_column_synonym-00326-post",
+    "NLQ_column_synonym-00176-pre",
+    "NLQ_column_synonym-00176-post",
+    "NLQ_column_synonym-00314-pre",
+    "NLQ_column_synonym-00314-post",
+    "NLQ_multitype-00659-pre",
+    "NLQ_multitype-00659-post",
+    "NLQ_multitype-01027-pre",
+    "NLQ_multitype-01027-post",
+    "NLQ_multitype-00645-pre",
+    "NLQ_multitype-00645-post",
+    "NLQ_multitype-00691-pre",
+    "NLQ_multitype-00691-post",
+    "NLQ_multitype-00099-pre",
+    "NLQ_multitype-00099-post",
+    "NLQ_multitype-01016-pre",
+    "NLQ_multitype-01016-post",
+    "NLQ_multitype-00679-pre",
+    "NLQ_multitype-00679-post",
+    "NLQ_multitype-00540-pre",
+    "NLQ_multitype-00540-post",
+    "NLQ_keyword_synonym-00565-pre",
+    "NLQ_keyword_synonym-00565-post",
+    "NLQ_keyword_synonym-00065-pre",
+    "NLQ_keyword_synonym-00065-post",
+    "NLQ_keyword_synonym-00259-pre",
+    "NLQ_keyword_synonym-00259-post",
+    "NLQ_keyword_synonym-00235-pre",
+    "NLQ_keyword_synonym-00235-post",
+    "NLQ_keyword_synonym-00843-pre",
+    "NLQ_keyword_synonym-00843-post",
+    "NLQ_keyword_synonym-00677-pre",
+    "NLQ_keyword_synonym-00677-post",
+    "NLQ_keyword_synonym-00046-pre",
+    "NLQ_keyword_synonym-00046-post",
+    "NLQ_keyword_synonym-00824-pre",
+    "NLQ_keyword_synonym-00824-post",
+    "DB_schema_abbreviation-00639-pre",
+    "DB_schema_abbreviation-00639-post",
+    "DB_schema_abbreviation-01846-pre",
+    "DB_schema_abbreviation-01846-post",
+    "DB_schema_abbreviation-02728-pre",
+    "DB_schema_abbreviation-02728-post",
+    "DB_schema_abbreviation-00977-pre",
+    "DB_schema_abbreviation-00977-post",
+    "DB_schema_abbreviation-01227-pre",
+    "DB_schema_abbreviation-01227-post",
+    "DB_schema_abbreviation-02312-pre",
+    "DB_schema_abbreviation-02312-post",
+    "DB_schema_abbreviation-00107-pre",
+    "DB_schema_abbreviation-00107-post",
+    "DB_schema_abbreviation-00381-pre",
+    "DB_schema_abbreviation-00381-post",
+    "DB_schema_synonym-00234-pre",
+    "DB_schema_synonym-00234-post",
+    "DB_schema_synonym-01093-pre",
+    "DB_schema_synonym-01093-post",
+    "DB_schema_synonym-00508-pre",
+    "DB_schema_synonym-00508-post",
+    "DB_schema_synonym-02459-pre",
+    "DB_schema_synonym-02459-post",
+    "DB_schema_synonym-02002-pre",
+    "DB_schema_synonym-02002-post",
+    "DB_schema_synonym-00500-pre",
+    "DB_schema_synonym-00500-post",
+    "DB_schema_synonym-00990-pre",
+    "DB_schema_synonym-00990-post",
+    "DB_schema_synonym-01959-pre",
+    "DB_schema_synonym-01959-post",
+    "NLQ_others-00795-pre",
+    "NLQ_others-00795-post",
+    "NLQ_others-01725-pre",
+    "NLQ_others-01725-post",
+    "NLQ_others-01572-pre",
+    "NLQ_others-01572-post",
+    "NLQ_others-02614-pre",
+    "NLQ_others-02614-post",
+    "NLQ_others-01213-pre",
+    "NLQ_others-01213-post",
+    "NLQ_others-02058-pre",
+    "NLQ_others-02058-post",
+    "NLQ_others-00595-pre",
+    "NLQ_others-00595-post",
+    "NLQ_others-01631-pre",
+    "NLQ_others-01631-post"
+  ],
+  "pilot": [
+    "NLQ_keyword_synonym-00281-pre",
+    "DB_DBcontent_equivalence-00037-post",
+    "DB_schema_synonym-02550-post",
+    "DB_schema_synonym-00410-post",
+    "DB_DBcontent_equivalence-00186-post",
+    "NLQ_multitype-00051-post",
+    "SQL_sort_order-00026-post",
+    "NLQ_keyword_carrier-00042-post"
+  ],
+  "ablation": [
+    {
+      "id": "NLQ_keyword_synonym-00247-pre",
+      "stratum": "bind"
+    },
+    {
+      "id": "SQL_NonDB_number-00007-pre",
+      "stratum": "bind"
+    },
+    {
+      "id": "DB_schema_synonym-00822-post",
+      "stratum": "bind"
+    },
+    {
+      "id": "SQL_comparison-00044-post",
+      "stratum": "bind"
+    },
+    {
+      "id": "NLQ_column_synonym-00066-post",
+      "stratum": "bind"
+    },
+    {
+      "id": "NLQ_column_synonym-00367-post",
+      "stratum": "projection"
+    },
+    {
+      "id": "NLQ_column_carrier-00364-post",
+      "stratum": "projection"
+    },
+    {
+      "id": "NLQ_column_carrier-00324-post",
+      "stratum": "projection"
+    },
+    {
+      "id": "NLQ_column_carrier-00474-post",
+      "stratum": "projection"
+    },
+    {
+      "id": "SQL_sort_order-00140-pre",
+      "stratum": "projection"
+    },
+    {
+      "id": "SQL_DB_text-00074-post",
+      "stratum": "projection"
+    },
+    {
+      "id": "SQL_sort_order-00030-post",
+      "stratum": "projection"
+    },
+    {
+      "id": "NLQ_value_synonym-00373-post",
+      "stratum": "projection"
+    },
+    {
+      "id": "NLQ_value_synonym-00060-pre",
+      "stratum": "value"
+    },
+    {
+      "id": "NLQ_value_synonym-00154-post",
+      "stratum": "value"
+    },
+    {
+      "id": "NLQ_value_synonym-00029-post",
+      "stratum": "value"
+    },
+    {
+      "id": "SQL_DB_number-00135-post",
+      "stratum": "value"
+    },
+    {
+      "id": "DB_DBcontent_equivalence-00040-post",
+      "stratum": "value"
+    },
+    {
+      "id": "NLQ_others-01495-pre",
+      "stratum": "value"
+    },
+    {
+      "id": "SQL_DB_number-00112-pre",
+      "stratum": "value"
+    },
+    {
+      "id": "NLQ_value_synonym-00157-post",
+      "stratum": "value"
+    },
+    {
+      "id": "NLQ_column_synonym-00198-post",
+      "stratum": "value"
+    },
+    {
+      "id": "SQL_DB_text-00279-pre",
+      "stratum": "value"
+    },
+    {
+      "id": "NLQ_column_carrier-00275-post",
+      "stratum": "value"
+    },
+    {
+      "id": "NLQ_column_synonym-00003-post",
+      "stratum": "value"
+    },
+    {
+      "id": "NLQ_others-01015-post",
+      "stratum": "join"
+    },
+    {
+      "id": "NLQ_keyword_carrier-00360-pre",
+      "stratum": "join"
+    },
+    {
+      "id": "SQL_comparison-00082-post",
+      "stratum": "join"
+    },
+    {
+      "id": "NLQ_keyword_synonym-00528-pre",
+      "stratum": "join"
+    },
+    {
+      "id": "SQL_comparison-00068-post",
+      "stratum": "join"
+    },
+    {
+      "id": "NLQ_column_synonym-00208-post",
+      "stratum": "correct"
+    },
+    {
+      "id": "NLQ_column_attribute-00057-post",
+      "stratum": "correct"
+    },
+    {
+      "id": "SQL_sort_order-00180-post",
+      "stratum": "correct"
+    },
+    {
+      "id": "NLQ_others-00222-post",
+      "stratum": "correct"
+    },
+    {
+      "id": "SQL_NonDB_number-00029-pre",
+      "stratum": "correct"
+    },
+    {
+      "id": "SQL_comparison-00009-post",
+      "stratum": "correct"
+    },
+    {
+      "id": "SQL_NonDB_number-00050-post",
+      "stratum": "correct"
+    },
+    {
+      "id": "DB_schema_abbreviation-02775-pre",
+      "stratum": "correct"
+    },
+    {
+      "id": "SQL_DB_text-00160-post",
+      "stratum": "correct"
+    },
+    {
+      "id": "NLQ_value_synonym-00291-post",
+      "stratum": "correct"
+    }
+  ],
+  "source": {
+    "repository": "https://github.com/awslabs/diagnostic-robustness-text-to-sql",
+    "commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+    "url": "https://media.githubusercontent.com/media/awslabs/diagnostic-robustness-text-to-sql/c64694a4a278ab0faff08ce7a3501d46f458b431/data.tar.gz",
+    "sha256": "d0f47e4d2c9202f4fd2d956a34e9dd1ff8180c1c9e58cf5b530c13fefaaa3ba9",
+    "bytes": 168450638,
+    "retrieved_date": "2026-11-16"
+  }
+}

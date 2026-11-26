@@ -1,0 +1,838 @@
+{
+  "原题": {
+    "none": {
+      "size": 1,
+      "baseline": {
+        "pre": 1,
+        "post": 0,
+        "both": 0,
+        "mean_tokens": 11069,
+        "token_coverage": 2,
+        "calls": 2,
+        "routes": {},
+        "votes": [
+          [
+            true,
+            false
+          ]
+        ]
+      },
+      "canvas": {
+        "pre": 1,
+        "post": 1,
+        "both": 1,
+        "mean_tokens": 9815,
+        "token_coverage": 2,
+        "calls": 4,
+        "routes": {
+          "unique_exact": 2
+        },
+        "votes": [
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "shifts": {
+        "pre": {},
+        "post": {
+          "repair": 1
+        }
+      }
+    },
+    "high": {
+      "size": 1,
+      "baseline": {
+        "pre": 1,
+        "post": 0,
+        "both": 0,
+        "mean_tokens": 8059,
+        "token_coverage": 2,
+        "calls": 2,
+        "routes": {},
+        "votes": [
+          [
+            true,
+            false
+          ]
+        ]
+      },
+      "canvas": {
+        "pre": 0,
+        "post": 1,
+        "both": 0,
+        "mean_tokens": 10308.5,
+        "token_coverage": 2,
+        "calls": 4,
+        "routes": {
+          "unique_exact": 2
+        },
+        "votes": [
+          [
+            false,
+            true
+          ]
+        ]
+      },
+      "shifts": {
+        "pre": {
+          "harm": 1
+        },
+        "post": {
+          "repair": 1
+        }
+      }
+    }
+  },
+  "同类": {
+    "none": {
+      "size": 8,
+      "baseline": {
+        "pre": 8,
+        "post": 6,
+        "both": 6,
+        "mean_tokens": 5936.1,
+        "token_coverage": 16,
+        "calls": 16,
+        "routes": {},
+        "votes": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "canvas": {
+        "pre": 7,
+        "post": 6,
+        "both": 6,
+        "mean_tokens": 11314.8,
+        "token_coverage": 16,
+        "calls": 32,
+        "routes": {
+          "candidates": 11,
+          "unique_exact": 2,
+          "fallback": 3
+        },
+        "votes": [
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "shifts": {
+        "pre": {
+          "harm": 1
+        },
+        "post": {
+          "harm": 1,
+          "repair": 1
+        }
+      }
+    },
+    "high": {
+      "size": 8,
+      "baseline": {
+        "pre": 6,
+        "post": 7,
+        "both": 5,
+        "mean_tokens": 6001.9,
+        "token_coverage": 16,
+        "calls": 16,
+        "routes": {},
+        "votes": [
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "canvas": {
+        "pre": 8,
+        "post": 6,
+        "both": 6,
+        "mean_tokens": 13083.7,
+        "token_coverage": 16,
+        "calls": 32,
+        "routes": {
+          "candidates": 12,
+          "unique_exact": 3,
+          "fallback": 1
+        },
+        "votes": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "shifts": {
+        "pre": {
+          "repair": 2
+        },
+        "post": {
+          "harm": 1
+        }
+      }
+    }
+  },
+  "混合": {
+    "none": {
+      "size": 8,
+      "baseline": {
+        "pre": 6,
+        "post": 6,
+        "both": 6,
+        "mean_tokens": 5597.4,
+        "token_coverage": 16,
+        "calls": 16,
+        "routes": {},
+        "votes": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "canvas": {
+        "pre": 6,
+        "post": 7,
+        "both": 6,
+        "mean_tokens": 10640.7,
+        "token_coverage": 16,
+        "calls": 32,
+        "routes": {
+          "fallback": 16
+        },
+        "votes": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "shifts": {
+        "pre": {},
+        "post": {
+          "repair": 1
+        }
+      }
+    },
+    "high": {
+      "size": 8,
+      "baseline": {
+        "pre": 6,
+        "post": 7,
+        "both": 6,
+        "mean_tokens": 6105.4,
+        "token_coverage": 16,
+        "calls": 16,
+        "routes": {},
+        "votes": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "canvas": {
+        "pre": 6,
+        "post": 7,
+        "both": 6,
+        "mean_tokens": 12183.1,
+        "token_coverage": 16,
+        "calls": 32,
+        "routes": {
+          "fallback": 16
+        },
+        "votes": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "shifts": {
+        "pre": {},
+        "post": {}
+      }
+    }
+  },
+  "全体": {
+    "none": {
+      "size": 17,
+      "baseline": {
+        "pre": 15,
+        "post": 12,
+        "both": 12,
+        "mean_tokens": 6078.6,
+        "token_coverage": 34,
+        "calls": 34,
+        "routes": {},
+        "votes": [
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "canvas": {
+        "pre": 14,
+        "post": 14,
+        "both": 13,
+        "mean_tokens": 10909.4,
+        "token_coverage": 34,
+        "calls": 68,
+        "routes": {
+          "unique_exact": 4,
+          "candidates": 11,
+          "fallback": 19
+        },
+        "votes": [
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "shifts": {
+        "pre": {
+          "harm": 1
+        },
+        "post": {
+          "repair": 3,
+          "harm": 1
+        }
+      }
+    },
+    "high": {
+      "size": 17,
+      "baseline": {
+        "pre": 13,
+        "post": 14,
+        "both": 11,
+        "mean_tokens": 6171.6,
+        "token_coverage": 34,
+        "calls": 34,
+        "routes": {},
+        "votes": [
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "canvas": {
+        "pre": 14,
+        "post": 14,
+        "both": 12,
+        "mean_tokens": 12496.6,
+        "token_coverage": 34,
+        "calls": 68,
+        "routes": {
+          "unique_exact": 5,
+          "candidates": 12,
+          "fallback": 17
+        },
+        "votes": [
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ]
+        ]
+      },
+      "shifts": {
+        "pre": {
+          "harm": 1,
+          "repair": 2
+        },
+        "post": {
+          "repair": 1,
+          "harm": 1
+        }
+      }
+    }
+  }
+}

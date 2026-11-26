@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    {
+      "id": "intent",
+      "kind": "column_intent"
+    },
+    {
+      "id": "verify",
+      "kind": "column_probe"
+    },
+    {
+      "id": "generate",
+      "kind": "column_generate"
+    },
+    {
+      "id": "execute",
+      "kind": "column_execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "verify",
+      "target": "generate"
+    },
+    {
+      "source": "generate",
+      "target": "execute"
+    },
+    {
+      "source": "intent",
+      "target": "verify"
+    }
+  ]
+}

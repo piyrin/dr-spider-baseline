@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {
+      "id": "intent",
+      "kind": "sort_intent"
+    },
+    {
+      "id": "probe",
+      "kind": "sort_probe"
+    },
+    {
+      "id": "direction",
+      "kind": "sort_meaning_v2"
+    },
+    {
+      "id": "generate",
+      "kind": "sort_generate"
+    },
+    {
+      "id": "execute",
+      "kind": "sort_execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "intent",
+      "target": "probe"
+    },
+    {
+      "source": "probe",
+      "target": "direction"
+    },
+    {
+      "source": "direction",
+      "target": "generate"
+    },
+    {
+      "source": "generate",
+      "target": "execute"
+    }
+  ]
+}

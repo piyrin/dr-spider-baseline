@@ -1,0 +1,26 @@
+{
+  "sample": "NLQ_column_carrier-00499",
+  "version": "v1",
+  "git_head": "2916e4d560330c9aa467f635f001d896fb1d6f0d",
+  "data_commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "sqlite_version": "3.50.4",
+  "frontend": "http://localhost:3000/task2-experiment?case=projection",
+  "frontend_path_updated_after_runs": "Only the visual node coordinates changed before the final screenshot.",
+  "settings": {
+    "model": "gpt-6-sol",
+    "stream": false,
+    "other_parameters": "provider defaults"
+  },
+  "sha256_at_recording": {
+    ".local/task2-experiment/projection_canvas.py": "343b2d099b32414839a7a82b42556437d5361a3834ec31013ac169e076ba2267",
+    ".local/task2-experiment/serve_canvas.py": "97474fa83852f921473e5e0d610ac084fdd7f635db2c5ebe781b41258d9c6b9f",
+    ".local/task2-experiment/web/page.tsx": "c495da4a04e694bc9b6cadd0e13d740be692857d4b0201b9688ce2803596e3ff",
+    ".local/task2-experiment/spring/CanvasExperimentController.java": "9b7f265f249fc2caad21caa073030444dc8e0243285ff4c6a5895c88ea85c582",
+    ".local/task2-experiment/spring/CanvasExperimentNode.java": "1225b67133a3ab3b94d654aebb3b9d1f0a9e7b15b68ee5b34a0b1757654e1eea",
+    "scripts/run_full_evaluation.py": "058dc374bbd6f4c2742b3d53fd2f2248134eb5b8b5d3d2f1235e096a777baa04",
+    ".cache/evaluator/exec_eval.py": "29d034db28904490c28037537a14fbb0150b6e86cef0049076c0511d6b6b77f7",
+    "data/Spider-dev/databases/network_1/network_1.sqlite": "262dc8da550346eb2c289ad8d22fd0d3b8b327576963e80deccb5059726c25e0",
+    ".local/task2-rsi-data/spring-boot/backend/core-starter/target/core-starter-1.0.0-executable.jar": "06665922c80407168a4d147c04f6c3c36ef04589cf507d5b51c2e7564447e791"
+  }
+}

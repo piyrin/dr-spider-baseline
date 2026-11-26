@@ -1,0 +1,3 @@
+{
+  "result": "{\"run_id\":\"e76bfa8cb984400b897b3e1ed107a930\",\"flow_id\":\"TASK2_CANVAS_3d1ac1b1a878edfa619c51feeed7829bfe64a347d190c6e898221eb028814567\",\"route\":{\"route\":\"normalized\",\"field\":\"Highschooler.name\",\"hint\":\"Return only the requested entity name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested.\"},\"final\":{\"status\":\"executed\",\"sql\":\"SELECT name\\nFROM Highschooler\\nWHERE grade = 10;\",\"rows\":[[\"Haley\"],[\"Andrew\"],[\"Kris\"],[\"Brittany\"]],\"columns\":[\"name\"],\"row_count\":4},\"score\":{\"correct\":true,\"status\":\"match\",\"reference_rows\":4,\"prediction_rows\":4},\"cost\":{\"model_calls\":1,\"total_tokens\":4610}}"
+}

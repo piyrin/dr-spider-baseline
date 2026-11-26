@@ -1,0 +1,433 @@
+﻿id,group,index,side,original_id,db_id,database,question,gold_sql,screening,prediction_sql,correct,status,system_fingerprint,gold_row_count,prediction_row_count
+NLQ_keyword_synonym-00097-pre,NLQ_keyword_synonym,97,pre,156,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the horsepower of the car with the greatest accelerate?,SELECT T1.horsepower FROM CARS_DATA AS T1 ORDER BY T1.accelerate DESC LIMIT 1,排序字段含义变化,"SELECT ""Horsepower"" FROM ""cars_data"" ORDER BY ""Accelerate"" DESC LIMIT 1;",True,match,,1,1
+NLQ_keyword_synonym-00097-post,NLQ_keyword_synonym,97,post,156,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the horsepower of the car that can accelerate the fastest?,SELECT T1.horsepower FROM CARS_DATA AS T1 ORDER BY T1.accelerate DESC LIMIT 1,排序字段含义变化,"SELECT ""Horsepower"" FROM ""cars_data"" ORDER BY ""Accelerate"" ASC LIMIT 1;",False,mismatch,,1,1
+NLQ_keyword_synonym-00630-pre,NLQ_keyword_synonym,630,pre,694,voter_1,data\Spider-dev\databases\voter_1\voter_1.sqlite,What are the contestant numbers and names of the contestants who had at least two votes?,"SELECT T1.contestant_number , T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number HAVING count(*) >= 2",独立计数与连接范围,"SELECT c.contestant_number, c.contestant_name
+FROM CONTESTANTS AS c
+JOIN VOTES AS v ON v.contestant_number = c.contestant_number
+GROUP BY c.contestant_number, c.contestant_name
+HAVING COUNT(*) >= 2;",True,match,,1,1
+NLQ_keyword_synonym-00630-post,NLQ_keyword_synonym,630,post,694,voter_1,data\Spider-dev\databases\voter_1\voter_1.sqlite,Give me a list of contestants numbers and names with more or equal to 2 votes.,"SELECT T1.contestant_number , T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number HAVING count(*) >= 2",独立计数与连接范围,"SELECT c.contestant_number, c.contestant_name
+FROM CONTESTANTS AS c
+JOIN VOTES AS v ON v.contestant_number = c.contestant_number
+GROUP BY c.contestant_number, c.contestant_name
+HAVING COUNT(*) >= 2;",True,match,,1,1
+DB_schema_synonym-02206-pre,DB_schema_synonym,2206,pre,861,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,What are years of founding for orchestras that have had more than a single performance?,SELECT Year_of_Founded FROM orchestra AS T1 JOIN performance AS T2 ON T1.Orchestra_ID = T2.Orchestra_ID GROUP BY T2.Orchestra_ID HAVING COUNT(*) > 1,独立计数与连接范围,"SELECT o.Year_of_Founded
+FROM orchestra AS o
+JOIN performance AS p ON p.Orchestra_ID = o.Orchestra_ID
+GROUP BY o.Orchestra_ID, o.Year_of_Founded
+HAVING COUNT(*) > 1;",True,match,,0,0
+DB_schema_synonym-02206-post,DB_schema_synonym,2206,post,861,orchestra_0,data\DB_schema_synonym\database_post_perturbation\orchestra_0\orchestra_0.sqlite,What are years of founding for orchestras that have had more than a single performance?,SELECT orchestra.year_foundation FROM orchestra JOIN performance ON orchestra.Orchestra_ID = performance.Orchestra_ID GROUP BY performance.Orchestra_ID HAVING count(*) > 1,独立计数与连接范围,"SELECT o.year_foundation
+FROM orchestra AS o
+JOIN performance AS p ON p.Orchestra_ID = o.Orchestra_ID
+GROUP BY o.Orchestra_ID, o.year_foundation
+HAVING COUNT(*) > 1;",True,match,,0,0
+DB_schema_abbreviation-00531-pre,DB_schema_abbreviation,531,pre,243,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Find all airlines that have fewer than 200 flights.,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline GROUP BY T1.Airline HAVING count(*) < 200,独立计数与连接范围,"SELECT a.Airline
+FROM airlines AS a
+LEFT JOIN flights AS f ON f.Airline = a.uid
+GROUP BY a.uid, a.Airline
+HAVING COUNT(f.FlightNo) < 200;",True,match,,12,12
+DB_schema_abbreviation-00531-post,DB_schema_abbreviation,531,post,243,flight_2_2,data\DB_schema_abbreviation\database_post_perturbation\flight_2_2\flight_2_2.sqlite,Find all airlines that have fewer than 200 flights.,SELECT airlines.Airline FROM airlines JOIN flights ON airlines.uid = flights.air GROUP BY airlines.Airline HAVING count(*) < 200,独立计数与连接范围,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+LEFT JOIN ""flights"" AS f ON f.""air"" = a.""uid""
+GROUP BY a.""uid"", a.""Airline""
+HAVING COUNT(f.""FlightNo"") < 200;",True,match,,12,12
+DB_schema_abbreviation-02641-pre,DB_schema_abbreviation,2641,pre,909,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,What are the names of students who have 2 or more likes?,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id HAVING count(*) >= 2,独立计数与连接范围,"SELECT h.name
+FROM Highschooler AS h
+JOIN Likes AS l ON l.liked_id = h.ID
+GROUP BY h.ID, h.name
+HAVING COUNT(*) >= 2;",False,mismatch,,0,2
+DB_schema_abbreviation-02641-post,DB_schema_abbreviation,2641,post,909,network_1_3,data\DB_schema_abbreviation\database_post_perturbation\network_1_3\network_1_3.sqlite,What are the names of students who have 2 or more likes?,SELECT Highschooler.name FROM Likes JOIN Highschooler ON Likes.stu_id = Highschooler.ID GROUP BY Likes.stu_id HAVING count(*) >= 2,独立计数与连接范围,"SELECT h.name
+FROM Highschooler AS h
+JOIN Likes AS l ON l.liked_id = h.ID
+GROUP BY h.ID, h.name
+HAVING COUNT(*) >= 2;",False,mismatch,,0,2
+DB_schema_abbreviation-02510-pre,DB_schema_abbreviation,2510,pre,860,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,Show the years in which orchestras that have given more than one performance are founded.,SELECT Year_of_Founded FROM orchestra AS T1 JOIN performance AS T2 ON T1.Orchestra_ID = T2.Orchestra_ID GROUP BY T2.Orchestra_ID HAVING COUNT(*) > 1,独立计数与连接范围,"SELECT o.Year_of_Founded
+FROM orchestra AS o
+JOIN performance AS p ON p.Orchestra_ID = o.Orchestra_ID
+GROUP BY o.Orchestra_ID, o.Year_of_Founded
+HAVING COUNT(*) > 1;",True,match,,0,0
+DB_schema_abbreviation-02510-post,DB_schema_abbreviation,2510,post,860,orchestra_2,data\DB_schema_abbreviation\database_post_perturbation\orchestra_2\orchestra_2.sqlite,Show the years in which orchestras that have given more than one performance are founded.,SELECT orchestra.Year_of_Founded FROM orchestra JOIN performance ON orchestra.Orchestra_ID = performance.orch_id GROUP BY performance.orch_id HAVING count(*) > 1,独立计数与连接范围,"SELECT o.Year_of_Founded
+FROM orchestra AS o
+JOIN performance AS p ON p.orch_id = o.Orchestra_ID
+GROUP BY o.Orchestra_ID, o.Year_of_Founded
+HAVING COUNT(*) > 1;",True,match,,0,0
+DB_schema_synonym-00760-pre,DB_schema_synonym,760,pre,244,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Which airlines have less than 200 flights?,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline GROUP BY T1.Airline HAVING count(*) < 200,独立计数与连接范围,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+LEFT JOIN ""flights"" AS f ON f.""Airline"" = a.""uid""
+GROUP BY a.""uid"", a.""Airline""
+HAVING COUNT(f.""FlightNo"") < 200;",True,match,,12,12
+DB_schema_synonym-00760-post,DB_schema_synonym,760,post,244,flight_2_4,data\DB_schema_synonym\database_post_perturbation\flight_2_4\flight_2_4.sqlite,Which airlines have less than 200 flights?,SELECT airlines.Airline FROM airlines JOIN flights ON airlines.uid = flights.air_service GROUP BY airlines.Airline HAVING count(*) < 200,独立计数与连接范围,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+LEFT JOIN ""flights"" AS f ON f.""air_service"" = a.""uid""
+GROUP BY a.""uid"", a.""Airline""
+HAVING COUNT(f.""FlightNo"") < 200;",True,match,,12,12
+DB_schema_abbreviation-01224-pre,DB_schema_abbreviation,1224,pre,526,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What are the names and ids of every course with less than 2 sections?,"SELECT T1.course_name , T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id = T2.course_id GROUP BY T1.course_id HAVING count(*) <= 2",独立计数与连接范围,"SELECT c.course_name, c.course_id
+FROM Courses AS c
+WHERE (SELECT COUNT(*) FROM Sections AS s WHERE s.course_id = c.course_id) < 2;",False,mismatch,,11,11
+DB_schema_abbreviation-01224-post,DB_schema_abbreviation,1224,post,526,student_transcripts_tracking_0,data\DB_schema_abbreviation\database_post_perturbation\student_transcripts_tracking_0\student_transcripts_tracking_0.sqlite,What are the names and ids of every course with less than 2 sections?,"SELECT Courses.crs_name , Courses.course_id FROM Courses JOIN Sections ON Courses.course_id = Sections.course_id GROUP BY Courses.course_id HAVING count(*) <= 2",独立计数与连接范围,"SELECT c.crs_name, c.course_id
+FROM Courses AS c
+LEFT JOIN Sections AS s ON s.course_id = c.course_id
+GROUP BY c.course_id, c.crs_name
+HAVING COUNT(s.section_id) < 2;",False,mismatch,,11,11
+NLQ_keyword_synonym-00056-pre,NLQ_keyword_synonym,56,pre,81,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find the first name and gender of student who have more than one pet.,"SELECT T1.fname , T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid GROUP BY T1.stuid HAVING count(*) > 1",独立计数与连接范围,"SELECT s.Fname, s.Sex
+FROM Student AS s
+JOIN Has_Pet AS hp ON hp.StuID = s.StuID
+GROUP BY s.StuID, s.Fname, s.Sex
+HAVING COUNT(DISTINCT hp.PetID) > 1;",True,match,,1,1
+NLQ_keyword_synonym-00056-post,NLQ_keyword_synonym,56,post,81,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,List the first name and gender of students who own at least two pets.,"SELECT T1.fname , T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid GROUP BY T1.stuid HAVING count(*) > 1",独立计数与连接范围,"SELECT s.Fname, s.Sex
+FROM Student AS s
+JOIN Has_Pet AS hp ON hp.StuID = s.StuID
+GROUP BY s.StuID, s.Fname, s.Sex
+HAVING COUNT(DISTINCT hp.PetID) >= 2;",True,match,,1,1
+NLQ_others-01144-pre,NLQ_others,1144,pre,419,museum_visit,data\Spider-dev\databases\museum_visit\museum_visit.sqlite,"find the id, name and age for visitors who visited some museums more than once.","SELECT t1.id , t1.name , t1.age FROM visitor AS t1 JOIN visit AS t2 ON t1.id = t2.visitor_id GROUP BY t1.id HAVING count(*) > 1",独立计数与连接范围,"SELECT DISTINCT v.ID, v.Name, v.Age
+FROM visitor AS v
+JOIN visit AS t ON t.visitor_ID = v.ID
+WHERE t.Num_of_Ticket > 1;",True,match,,3,3
+NLQ_others-01144-post,NLQ_others,1144,post,419,museum_visit,data\Spider-dev\databases\museum_visit\museum_visit.sqlite,"Find the id, name and age of visitors who visited at least one museum more than once.","SELECT t1.id , t1.name , t1.age FROM visitor AS t1 JOIN visit AS t2 ON t1.id = t2.visitor_id GROUP BY t1.id HAVING count(*) > 1",独立计数与连接范围,"SELECT DISTINCT v.ID, v.Name, v.Age
+FROM visitor AS v
+JOIN visit AS vi ON vi.visitor_ID = v.ID
+WHERE vi.Num_of_Ticket > 1;
+--",True,match,,3,3
+DB_DBcontent_equivalence-00262-pre,DB_DBcontent_equivalence,262,pre,671,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What are the names of poker players in descending order of earnings?,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Earnings DESC,输出字段拆分,"SELECT p.Name
+FROM poker_player AS pp
+JOIN people AS p ON p.People_ID = pp.People_ID
+ORDER BY pp.Earnings DESC;",True,match,,5,5
+DB_DBcontent_equivalence-00262-post,DB_DBcontent_equivalence,262,post,671,poker_player_0,data\DB_DBcontent_equivalence\database_post_perturbation\poker_player_0\poker_player_0.sqlite,What are the names of poker players in descending order of earnings?,"SELECT people.first_name , people.last_name FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID ORDER BY poker_player.Earnings desc",输出字段拆分,"SELECT p.first_name, p.last_name
+FROM people AS p
+JOIN poker_player AS pp ON pp.People_ID = p.People_ID
+ORDER BY pp.Earnings DESC;",True,match,,5,5
+DB_DBcontent_equivalence-00077-pre,DB_DBcontent_equivalence,77,pre,282,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,What are the names of the employees who never received any evaluation?,SELECT name FROM employee WHERE Employee_ID NOT IN (SELECT Employee_ID FROM evaluation),输出字段拆分,"SELECT e.Name
+FROM employee AS e
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM evaluation AS v
+  WHERE v.Employee_ID = e.Employee_ID
+);",True,match,,5,5
+DB_DBcontent_equivalence-00077-post,DB_DBcontent_equivalence,77,post,282,employee_hire_evaluation_5,data\DB_DBcontent_equivalence\database_post_perturbation\employee_hire_evaluation_5\employee_hire_evaluation_5.sqlite,What are the names of the employees who never received any evaluation?,"SELECT employee.first_name , employee.last_name FROM employee WHERE employee.Employee_ID NOT in (SELECT evaluation.Employee_ID FROM evaluation)",输出字段拆分,"SELECT e.first_name, e.last_name
+FROM employee AS e
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM evaluation AS v
+    WHERE v.Employee_ID = e.Employee_ID
+);",True,match,,5,5
+DB_DBcontent_equivalence-00256-pre,DB_DBcontent_equivalence,256,pre,659,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What are the names of poker players?,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID,输出字段拆分,"SELECT p.Name
+FROM people AS p
+JOIN poker_player AS pp ON pp.People_ID = p.People_ID;",True,match,,5,5
+DB_DBcontent_equivalence-00256-post,DB_DBcontent_equivalence,256,post,659,poker_player_0,data\DB_DBcontent_equivalence\database_post_perturbation\poker_player_0\poker_player_0.sqlite,What are the names of poker players?,"SELECT people.first_name , people.last_name FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID",输出字段拆分,"SELECT p.first_name, p.last_name
+FROM people AS p
+JOIN poker_player AS pp ON pp.People_ID = p.People_ID;",True,match,,5,5
+DB_DBcontent_equivalence-00323-pre,DB_DBcontent_equivalence,323,pre,841,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,What are the names of conductors as well as the corresonding orchestras that they have conducted?,"SELECT T1.Name , T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID",输出字段拆分,"SELECT c.Name, o.Orchestra
+FROM conductor AS c
+JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID;",True,match,,12,12
+DB_DBcontent_equivalence-00323-post,DB_DBcontent_equivalence,323,post,841,orchestra_3,data\DB_DBcontent_equivalence\database_post_perturbation\orchestra_3\orchestra_3.sqlite,What are the names of conductors as well as the corresonding orchestras that they have conducted?,"SELECT conductor.first_name , conductor.last_name , orchestra.Orchestra FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID",输出字段拆分,"SELECT c.first_name || ' ' || c.last_name AS conductor_name, o.Orchestra AS orchestra_name
+FROM conductor AS c
+JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID;
+--",False,mismatch,,12,12
+DB_DBcontent_equivalence-00128-pre,DB_DBcontent_equivalence,128,pre,434,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What are the first names and birth dates of players from the USA?,"SELECT first_name , birth_date FROM players WHERE country_code = 'USA'",输出字段拆分,"SELECT first_name, birth_date FROM players WHERE country_code = 'USA';",True,match,,2217,2217
+DB_DBcontent_equivalence-00128-post,DB_DBcontent_equivalence,128,post,434,wta_1_0,data\DB_DBcontent_equivalence\database_post_perturbation\wta_1_0\wta_1_0.sqlite,What are the first names and birth dates of players from the USA?,"SELECT players.first_name , players.birthyear , players.bithday FROM players WHERE players.country_code = ""USA""",输出字段拆分,"SELECT first_name, birthyear, bithday
+FROM players
+WHERE country_code = 'USA';",True,match,,2217,2217
+DB_DBcontent_equivalence-00274-pre,DB_DBcontent_equivalence,274,pre,695,voter_1,data\Spider-dev\databases\voter_1\voter_1.sqlite,"Of all the contestants who got voted, what is the contestant number and name of the contestant who got least votes?","SELECT T1.contestant_number , T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number ORDER BY count(*) ASC LIMIT 1",输出字段拆分,"SELECT c.contestant_number, c.contestant_name
+FROM CONTESTANTS AS c
+JOIN VOTES AS v ON v.contestant_number = c.contestant_number
+GROUP BY c.contestant_number, c.contestant_name
+ORDER BY COUNT(*) ASC, c.contestant_number ASC
+LIMIT 1;
+--",True,match,,1,1
+DB_DBcontent_equivalence-00274-post,DB_DBcontent_equivalence,274,post,695,voter_1_0,data\DB_DBcontent_equivalence\database_post_perturbation\voter_1_0\voter_1_0.sqlite,"Of all the contestants who got voted, what is the contestant number and name of the contestant who got least votes?","SELECT CONTESTANTS.contestant_number , CONTESTANTS.first_name , CONTESTANTS.last_name FROM CONTESTANTS JOIN VOTES ON CONTESTANTS.contestant_number = VOTES.contestant_number GROUP BY CONTESTANTS.contestant_number ORDER BY count(*) asc LIMIT 1",输出字段拆分,"SELECT c.contestant_number, c.first_name, c.last_name
+FROM CONTESTANTS AS c
+JOIN VOTES AS v ON v.contestant_number = c.contestant_number
+GROUP BY c.contestant_number, c.first_name, c.last_name
+ORDER BY COUNT(*) ASC, c.contestant_number ASC
+LIMIT 1;",True,match,,1,1
+DB_DBcontent_equivalence-00265-pre,DB_DBcontent_equivalence,265,pre,680,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,"What are the names and birth dates of people, ordered by their names in alphabetical order?","SELECT Name , Birth_Date FROM people ORDER BY Name ASC",输出字段拆分,"SELECT ""Name"", ""Birth_Date"" FROM ""people"" ORDER BY ""Name"" ASC;",True,match,,7,7
+DB_DBcontent_equivalence-00265-post,DB_DBcontent_equivalence,265,post,680,poker_player_0,data\DB_DBcontent_equivalence\database_post_perturbation\poker_player_0\poker_player_0.sqlite,"What are the names and birth dates of people, ordered by their names in alphabetical order?","SELECT people.first_name , people.last_name , people.Birth_Date FROM people ORDER BY people.first_name , people.last_name asc",输出字段拆分,"SELECT first_name, last_name, Birth_Date FROM people ORDER BY first_name, last_name;",True,match,,7,7
+DB_DBcontent_equivalence-00357-pre,DB_DBcontent_equivalence,357,pre,947,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,What are the date and the operating professional's first name of each treatment?,"SELECT T1.date_of_treatment , T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id",输出字段拆分,"SELECT t.date_of_treatment, p.first_name
+FROM Treatments AS t
+JOIN Professionals AS p ON p.professional_id = t.professional_id;",True,match,,15,15
+DB_DBcontent_equivalence-00357-post,DB_DBcontent_equivalence,357,post,947,dog_kennels_5,data\DB_DBcontent_equivalence\database_post_perturbation\dog_kennels_5\dog_kennels_5.sqlite,What are the date and the operating professional's first name of each treatment?,"SELECT Treatments.date_of_treatment , Treatments.time_of_treatment , Professionals.first_name FROM Treatments JOIN Professionals ON Treatments.professional_id = Professionals.professional_id",输出字段拆分,"SELECT t.date_of_treatment, p.first_name
+FROM Treatments AS t
+JOIN Professionals AS p ON p.professional_id = t.professional_id;",False,mismatch,,15,15
+DB_DBcontent_equivalence-00300-pre,DB_DBcontent_equivalence,300,pre,844,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,Show the name of the conductor that has conducted the most number of orchestras.,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1,输出字段拆分,"SELECT c.Name
+FROM conductor AS c
+LEFT JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID
+GROUP BY c.Conductor_ID, c.Name
+ORDER BY COUNT(o.Orchestra_ID) DESC
+LIMIT 1;",False,mismatch,,1,1
+DB_DBcontent_equivalence-00300-post,DB_DBcontent_equivalence,300,post,844,orchestra_0,data\DB_DBcontent_equivalence\database_post_perturbation\orchestra_0\orchestra_0.sqlite,Show the name of the conductor that has conducted the most number of orchestras.,"SELECT conductor.first_name , conductor.last_name FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID GROUP BY orchestra.Conductor_ID ORDER BY count(*) desc LIMIT 1",输出字段拆分,"SELECT c.first_name, c.last_name
+FROM conductor AS c
+LEFT JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID
+GROUP BY c.Conductor_ID
+ORDER BY COUNT(o.Orchestra_ID) DESC
+LIMIT 1;",False,mismatch,,1,1
+DB_DBcontent_equivalence-00281-pre,DB_DBcontent_equivalence,281,pre,688,voter_1,data\Spider-dev\databases\voter_1\voter_1.sqlite,"List the contestant numbers and names, ordered by contestant name descending.","SELECT contestant_number , contestant_name FROM contestants ORDER BY contestant_name DESC",输出字段拆分,"SELECT contestant_number, contestant_name
+FROM CONTESTANTS
+ORDER BY contestant_name DESC;",True,match,,11,11
+DB_DBcontent_equivalence-00281-post,DB_DBcontent_equivalence,281,post,688,voter_1_7,data\DB_DBcontent_equivalence\database_post_perturbation\voter_1_7\voter_1_7.sqlite,"List the contestant numbers and names, ordered by contestant name descending.","SELECT CONTESTANTS.contestant_number , CONTESTANTS.first_name , CONTESTANTS.last_name FROM CONTESTANTS ORDER BY CONTESTANTS.first_name , CONTESTANTS.last_name desc",输出字段拆分,"SELECT contestant_number, first_name, last_name
+FROM CONTESTANTS
+ORDER BY last_name DESC, first_name DESC;",False,mismatch,,11,11
+DB_DBcontent_equivalence-00060-pre,DB_DBcontent_equivalence,60,pre,279,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,Find the name of the employee who got the highest one time bonus.,SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID = t2.Employee_ID ORDER BY t2.bonus DESC LIMIT 1,输出字段拆分,"SELECT e.Name
+FROM employee AS e
+JOIN evaluation AS v ON e.Employee_ID = v.Employee_ID
+ORDER BY v.Bonus DESC
+LIMIT 1;",True,match,,1,1
+DB_DBcontent_equivalence-00060-post,DB_DBcontent_equivalence,60,post,279,employee_hire_evaluation_0,data\DB_DBcontent_equivalence\database_post_perturbation\employee_hire_evaluation_0\employee_hire_evaluation_0.sqlite,Find the name of the employee who got the highest one time bonus.,"SELECT employee.first_name , employee.last_name FROM employee JOIN evaluation ON employee.Employee_ID = evaluation.Employee_ID ORDER BY evaluation.Bonus desc LIMIT 1",输出字段拆分,"SELECT e.first_name, e.last_name
+FROM employee AS e
+JOIN evaluation AS v ON e.Employee_ID = v.Employee_ID
+ORDER BY v.Bonus DESC
+LIMIT 1;",True,match,,1,1
+DB_DBcontent_equivalence-00366-pre,DB_DBcontent_equivalence,366,pre,1002,singer,data\Spider-dev\databases\singer\singer.sqlite,List the name of singers in ascending order of net worth.,SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC,输出字段拆分,"SELECT ""Name"" FROM ""singer"" ORDER BY ""Net_Worth_Millions"" ASC;",True,match,,8,8
+DB_DBcontent_equivalence-00366-post,DB_DBcontent_equivalence,366,post,1002,singer_0,data\DB_DBcontent_equivalence\database_post_perturbation\singer_0\singer_0.sqlite,List the name of singers in ascending order of net worth.,"SELECT singer.first_name , singer.last_name FROM singer ORDER BY singer.Net_Worth_Millions asc",输出字段拆分,"SELECT first_name, last_name FROM singer ORDER BY Net_Worth_Millions ASC;",True,match,,8,8
+DB_DBcontent_equivalence-00127-pre,DB_DBcontent_equivalence,127,pre,433,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,List the first name and birth date of all players from the country with code USA.,"SELECT first_name , birth_date FROM players WHERE country_code = 'USA'",输出字段拆分,"SELECT first_name, birth_date
+FROM players
+WHERE country_code = 'USA';",True,match,,2217,2217
+DB_DBcontent_equivalence-00127-post,DB_DBcontent_equivalence,127,post,433,wta_1_0,data\DB_DBcontent_equivalence\database_post_perturbation\wta_1_0\wta_1_0.sqlite,List the first name and birth date of all players from the country with code USA.,"SELECT players.first_name , players.birthyear , players.bithday FROM players WHERE players.country_code = ""USA""",输出字段拆分,"SELECT first_name, birthyear, bithday FROM players WHERE country_code = 'USA';",True,match,,2217,2217
+DB_DBcontent_equivalence-00075-pre,DB_DBcontent_equivalence,75,pre,280,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,Which employee received the biggest bonus? Give me the employee name.,SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID = t2.Employee_ID ORDER BY t2.bonus DESC LIMIT 1,输出字段拆分,"SELECT e.Name
+FROM employee AS e
+JOIN evaluation AS v ON e.Employee_ID = v.Employee_ID
+ORDER BY v.Bonus DESC
+LIMIT 1;",True,match,,1,1
+DB_DBcontent_equivalence-00075-post,DB_DBcontent_equivalence,75,post,280,employee_hire_evaluation_5,data\DB_DBcontent_equivalence\database_post_perturbation\employee_hire_evaluation_5\employee_hire_evaluation_5.sqlite,Which employee received the biggest bonus? Give me the employee name.,"SELECT employee.first_name , employee.last_name FROM employee JOIN evaluation ON employee.Employee_ID = evaluation.Employee_ID ORDER BY evaluation.Bonus desc LIMIT 1",输出字段拆分,"SELECT e.first_name || ' ' || e.last_name AS employee_name
+FROM employee AS e
+JOIN evaluation AS v ON e.Employee_ID = v.Employee_ID
+ORDER BY v.Bonus DESC
+LIMIT 1;",False,mismatch,,1,1
+NLQ_others-01069-pre,NLQ_others,1069,pre,395,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,List the most common hometown of teachers.,SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1,排序并列边界,SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1;,True,match,,1,1
+NLQ_others-01069-post,NLQ_others,1069,post,395,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,Can you give the most common hometowns for teachers?,SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1,排序并列边界,"SELECT ""Hometown"", COUNT(*) AS teacher_count
+FROM ""teacher""
+GROUP BY ""Hometown""
+HAVING COUNT(*) = (
+  SELECT MAX(hometown_count)
+  FROM (
+    SELECT COUNT(*) AS hometown_count
+    FROM ""teacher""
+    GROUP BY ""Hometown""
+  )
+);
+--",False,mismatch,,1,7
+NLQ_others-02213-pre,NLQ_others,2213,pre,789,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"Give the name, year of independence, and surface area of the country that has the lowest population.","SELECT Name , SurfaceArea , IndepYear FROM country ORDER BY Population LIMIT 1",排序并列边界,"SELECT Name, IndepYear, SurfaceArea
+FROM country
+ORDER BY Population ASC
+LIMIT 1;",True,match,,1,1
+NLQ_others-02213-post,NLQ_others,2213,post,789,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"Please tell me the name, year of independence, and surface area of the country with the lowest population.","SELECT Name , SurfaceArea , IndepYear FROM country ORDER BY Population LIMIT 1",排序并列边界,"SELECT Name, IndepYear, SurfaceArea FROM country WHERE Population = (SELECT MIN(Population) FROM country);",False,mismatch,,1,7
+NLQ_others-00873-pre,NLQ_others,873,pre,332,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Return the type code of the template type that the most templates belong to.,SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1,排序并列边界,"SELECT Template_Type_Code
+FROM Templates
+GROUP BY Template_Type_Code
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_others-00873-post,NLQ_others,873,post,332,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,For which template type codes does the most templates belong to?,SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1,排序并列边界,"SELECT Template_Type_Code
+FROM Templates
+GROUP BY Template_Type_Code
+HAVING COUNT(*) = (
+    SELECT MAX(template_count)
+    FROM (
+        SELECT COUNT(*) AS template_count
+        FROM Templates
+        GROUP BY Template_Type_Code
+    )
+);",False,mismatch,,1,2
+SQL_sort_order-00172-pre,SQL_sort_order,172,pre,886,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,What is the name of the high schooler who has the greatest number of friends?,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1,排序并列边界,"SELECT h.name
+FROM Highschooler AS h
+LEFT JOIN Friend AS f ON f.student_id = h.ID
+GROUP BY h.ID, h.name
+ORDER BY COUNT(f.friend_id) DESC, h.ID
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00172-post,SQL_sort_order,172,post,886,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,What is the name of the high schooler who has the fewest number of friends?,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) ASC LIMIT 1,排序并列边界,"SELECT h.name
+FROM Highschooler AS h
+LEFT JOIN Friend AS f ON f.student_id = h.ID
+GROUP BY h.ID, h.name
+ORDER BY COUNT(f.friend_id)
+LIMIT 1;",False,mismatch,,1,1
+NLQ_column_carrier-00353-pre,NLQ_column_carrier,353,pre,740,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is name of the country that speaks the largest number of languages?,SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1,排序并列边界,"SELECT c.Name
+FROM country AS c
+JOIN countrylanguage AS cl ON cl.CountryCode = c.Code
+GROUP BY c.Code, c.Name
+ORDER BY COUNT(*) DESC, c.Name
+LIMIT 1;",False,mismatch,,1,1
+NLQ_column_carrier-00353-post,NLQ_column_carrier,353,post,740,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Name of country which speaks the most languages.,SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1,排序并列边界,"SELECT c.Name
+FROM country AS c
+JOIN countrylanguage AS cl ON cl.CountryCode = c.Code
+GROUP BY c.Code, c.Name
+ORDER BY COUNT(*) DESC
+LIMIT 1;",False,mismatch,,1,1
+NLQ_others-01071-pre,NLQ_others,1071,pre,396,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,What is the most commmon hometowns for teachers?,SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1,排序并列边界,"SELECT ""Hometown""
+FROM ""teacher""
+GROUP BY ""Hometown""
+HAVING COUNT(*) = (
+  SELECT MAX(hometown_count)
+  FROM (
+    SELECT COUNT(*) AS hometown_count
+    FROM ""teacher""
+    GROUP BY ""Hometown""
+  )
+);",False,mismatch,,1,7
+NLQ_others-01071-post,NLQ_others,1071,post,396,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,Could you tell me the most common hometowns for teachers?,SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1,排序并列边界,"WITH hometown_counts AS (
+  SELECT Hometown, COUNT(*) AS teacher_count
+  FROM teacher
+  WHERE Hometown IS NOT NULL
+  GROUP BY Hometown
+)
+SELECT Hometown, teacher_count
+FROM hometown_counts
+WHERE teacher_count = (SELECT MAX(teacher_count) FROM hometown_counts);",False,mismatch,,1,7
+NLQ_others-00815-pre,NLQ_others,815,pre,312,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Return the id and type code of the template that is used for the greatest number of documents.,"SELECT T1.template_id , T2.Template_Type_Code FROM Documents AS T1 JOIN Templates AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_id ORDER BY count(*) DESC LIMIT 1",排序并列边界,"SELECT t.Template_ID, t.Template_Type_Code
+FROM Templates AS t
+LEFT JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY t.Template_ID, t.Template_Type_Code
+ORDER BY COUNT(d.Document_ID) DESC
+LIMIT 1;",False,mismatch,,1,1
+NLQ_others-00815-post,NLQ_others,815,post,312,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What is the template id and template type code of the template used for the greatest number of documents?,"SELECT T1.template_id , T2.Template_Type_Code FROM Documents AS T1 JOIN Templates AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_id ORDER BY count(*) DESC LIMIT 1",排序并列边界,"SELECT t.Template_ID, t.Template_Type_Code
+FROM Templates AS t
+LEFT JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY t.Template_ID, t.Template_Type_Code
+ORDER BY COUNT(d.Document_ID) DESC, t.Template_ID
+LIMIT 1;",False,mismatch,,1,1
+NLQ_others-00050-pre,NLQ_others,50,pre,27,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What is the year that had the most concerts?,SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1,排序并列边界,"SELECT ""Year"" FROM ""concert"" GROUP BY ""Year"" ORDER BY COUNT(*) DESC LIMIT 1;",True,match,,1,1
+NLQ_others-00050-post,NLQ_others,50,post,27,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,In which year had the most concerts occurred.,SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1,排序并列边界,"SELECT ""Year"" FROM ""concert"" GROUP BY ""Year"" ORDER BY COUNT(*) DESC LIMIT 1;",True,match,,1,1
+SQL_sort_order-00179-pre,SQL_sort_order,179,pre,937,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Tell me the owner id and last name of the owner who spent the most on treatments of his or her dogs.,"SELECT T1.owner_id , T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",排序并列边界,"SELECT o.owner_id, o.last_name
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Treatments AS t ON t.dog_id = d.dog_id
+GROUP BY o.owner_id, o.last_name
+ORDER BY SUM(t.cost_of_treatment) DESC
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00179-post,SQL_sort_order,179,post,937,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Tell me the owner id and last name of the owner who spent the least on treatments of his or her dogs.,"SELECT T1.owner_id , T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) ASC LIMIT 1",排序并列边界,"SELECT o.owner_id, o.last_name
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Treatments AS t ON t.dog_id = d.dog_id
+GROUP BY o.owner_id, o.last_name
+ORDER BY SUM(t.cost_of_treatment) ASC, o.owner_id ASC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00043-pre,SQL_sort_order,43,pre,311,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What is the id and type code for the template used by the most documents?,"SELECT T1.template_id , T2.Template_Type_Code FROM Documents AS T1 JOIN Templates AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_id ORDER BY count(*) DESC LIMIT 1",排序并列边界,"SELECT t.Template_ID, t.Template_Type_Code
+FROM Templates AS t
+JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY t.Template_ID, t.Template_Type_Code
+ORDER BY COUNT(*) DESC
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00043-post,SQL_sort_order,43,post,311,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What is the id and type code for the template used by the least documents?,"SELECT T1.template_id , T2.Template_Type_Code FROM Documents AS T1 JOIN Templates AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_id ORDER BY count(*) ASC LIMIT 1",排序并列边界,"SELECT t.Template_ID, t.Template_Type_Code
+FROM Templates AS t
+JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY t.Template_ID, t.Template_Type_Code
+ORDER BY COUNT(d.Document_ID), t.Template_ID
+LIMIT 1;",True,match,,1,1
+DB_schema_synonym-01426-pre,DB_schema_synonym,1426,pre,548,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What is the name of the course with the most students enrolled?,SELECT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id = T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1,排序并列边界,"SELECT c.course_name
+FROM Courses AS c
+JOIN Student_Enrolment_Courses AS sec ON sec.course_id = c.course_id
+JOIN Student_Enrolment AS se ON se.student_enrolment_id = sec.student_enrolment_id
+GROUP BY c.course_id, c.course_name
+ORDER BY COUNT(DISTINCT se.student_id) DESC
+LIMIT 1;",False,mismatch,,1,1
+DB_schema_synonym-01426-post,DB_schema_synonym,1426,post,548,student_transcripts_tracking_4,data\DB_schema_synonym\database_post_perturbation\student_transcripts_tracking_4\student_transcripts_tracking_4.sqlite,What is the name of the course with the most students enrolled?,SELECT Courses.course_name FROM Courses JOIN Student_Enrolment_Courses ON Courses.prerequisite = Student_Enrolment_Courses.course_id GROUP BY Courses.course_name ORDER BY count(*) desc LIMIT 1,排序并列边界,"SELECT c.course_name
+FROM Courses AS c
+JOIN Student_Enrolment_Courses AS sec ON sec.course_id = c.prerequisite
+JOIN Student_Enrolment AS se ON se.student_enrolment_id = sec.student_enrolment_id
+GROUP BY c.prerequisite, c.course_name
+ORDER BY COUNT(DISTINCT se.student_id) DESC
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00022-pre,SQL_sort_order,22,pre,141,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,Which model has the most version(make) of cars?,SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1,排序并列边界,"SELECT Model, COUNT(*) AS version_count
+FROM car_names
+GROUP BY Model
+ORDER BY version_count DESC
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00022-post,SQL_sort_order,22,post,141,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,Which model has the least version(make) of cars?,SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) ASC LIMIT 1,排序并列边界,"SELECT Model
+FROM car_names
+GROUP BY Model
+ORDER BY COUNT(Make) ASC, Model ASC
+LIMIT 1;",True,match,,1,1
+NLQ_others-01272-pre,NLQ_others,1272,pre,463,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Find the name and rank points of the winner who won the most times.,"SELECT winner_name , winner_rank_points FROM matches GROUP BY winner_name ORDER BY count(*) DESC LIMIT 1",分组与统计粒度,"SELECT winner_name, winner_rank_points
+FROM matches
+WHERE winner_id = (
+    SELECT winner_id
+    FROM matches
+    GROUP BY winner_id
+    ORDER BY COUNT(*) DESC, winner_id
+    LIMIT 1
+)
+ORDER BY tourney_date DESC, match_num DESC
+LIMIT 1;",False,mismatch,,1,1
+NLQ_others-01272-post,NLQ_others,1272,post,463,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Who won the most times? Provide his name and points ranking.,"SELECT winner_name , winner_rank_points FROM matches GROUP BY winner_name ORDER BY count(*) DESC LIMIT 1",分组与统计粒度,"WITH top_winner AS (
+  SELECT winner_id, MAX(winner_name) AS name
+  FROM matches
+  GROUP BY winner_id
+  ORDER BY COUNT(*) DESC, winner_id
+  LIMIT 1
+)
+SELECT top_winner.name, r.ranking_points
+FROM top_winner
+LEFT JOIN rankings AS r ON r.player_id = top_winner.winner_id
+  AND r.rowid = (
+    SELECT r2.rowid
+    FROM rankings AS r2
+    WHERE r2.player_id = top_winner.winner_id
+    ORDER BY r2.ranking_date DESC, r2.rowid DESC
+    LIMIT 1
+  );",False,mismatch,,1,1
+NLQ_others-02578-pre,NLQ_others,2578,pre,931,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"Return the owner id, first name and last name of the owner who has the most dogs.","SELECT T1.owner_id , T2.first_name , T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id = T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",分组与统计粒度,"SELECT o.owner_id, o.first_name, o.last_name
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+GROUP BY o.owner_id, o.first_name, o.last_name
+ORDER BY COUNT(*) DESC, o.owner_id
+LIMIT 1;",True,match,,1,1
+NLQ_others-02578-post,NLQ_others,2578,post,931,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"The owner names have been sorted according to the number of dogs they have. Show me first name, last name and owner ID of the owner with the most dogs.","SELECT T1.owner_id , T2.first_name , T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id = T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",分组与统计粒度,"SELECT o.first_name, o.last_name, o.owner_id
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+GROUP BY o.owner_id, o.first_name, o.last_name
+ORDER BY COUNT(*) DESC, o.owner_id
+LIMIT 1;",True,match,,1,1
+NLQ_column_carrier-00139-pre,NLQ_column_carrier,139,pre,283,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,What is the name of the shop that is hiring the largest number of employees?,SELECT t2.name FROM hiring AS t1 JOIN shop AS t2 ON t1.shop_id = t2.shop_id GROUP BY t1.shop_id ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT s.Name
+FROM shop AS s
+JOIN hiring AS h ON h.Shop_ID = s.Shop_ID
+GROUP BY s.Shop_ID, s.Name
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_column_carrier-00139-post,NLQ_column_carrier,139,post,283,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,In which shop do they hire most people,SELECT t2.name FROM hiring AS t1 JOIN shop AS t2 ON t1.shop_id = t2.shop_id GROUP BY t1.shop_id ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT s.""Name"" FROM ""shop"" AS s JOIN ""hiring"" AS h ON s.""Shop_ID"" = h.""Shop_ID"" GROUP BY s.""Shop_ID"", s.""Name"" ORDER BY COUNT(*) DESC LIMIT 1;",True,match,,1,1
+NLQ_others-01305-pre,NLQ_others,1305,pre,476,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What is the code of the country with the most players?,SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT country_code
+FROM players
+GROUP BY country_code
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_others-01305-post,NLQ_others,1305,post,476,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Which countries have the most players? Show them by country code.,SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT country_code, COUNT(*) AS player_count
+FROM players
+GROUP BY country_code
+ORDER BY player_count DESC, country_code;",False,mismatch,,1,153
+NLQ_others-01270-pre,NLQ_others,1270,pre,462,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Which year had the most matches?,SELECT YEAR FROM matches GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT year
+FROM matches
+GROUP BY year
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_others-01270-post,NLQ_others,1270,post,462,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What was the year with the most matches?,SELECT YEAR FROM matches GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,SELECT year FROM matches GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;,True,match,,1,1
+NLQ_others-00528-pre,NLQ_others,528,pre,226,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,What is the airport code of the airport with the most flights?,SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode = T2.DestAirport OR T1.AirportCode = T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT AirportCode
+FROM (
+    SELECT SourceAirport AS AirportCode FROM flights
+    UNION ALL
+    SELECT DestAirport AS AirportCode FROM flights
+)
+GROUP BY AirportCode
+ORDER BY COUNT(*) DESC, AirportCode
+LIMIT 1;",False,mismatch,,0,1
+NLQ_others-00528-post,NLQ_others,528,post,226,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,In which airport has the most flights? Give its airport code.,SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode = T2.DestAirport OR T1.AirportCode = T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT AirportCode
+FROM (
+    SELECT SourceAirport AS AirportCode FROM flights
+    UNION ALL
+    SELECT DestAirport AS AirportCode FROM flights
+)
+GROUP BY AirportCode
+ORDER BY COUNT(*) DESC, AirportCode
+LIMIT 1;
+--",False,mismatch,,0,1
+NLQ_others-02379-pre,NLQ_others,2379,pre,903,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,How many likes correspond to each student id?,"SELECT student_id , count(*) FROM Likes GROUP BY student_id",分组与统计粒度,"SELECT h.ID AS student_id, COUNT(l.liked_id) AS like_count
+FROM Highschooler AS h
+LEFT JOIN Likes AS l ON l.student_id = h.ID
+GROUP BY h.ID
+ORDER BY h.ID;",False,mismatch,,10,16
+NLQ_others-02379-post,NLQ_others,2379,post,903,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Show me the number of likes corresponding to each student id.,"SELECT student_id , count(*) FROM Likes GROUP BY student_id",分组与统计粒度,"SELECT student_id, COUNT(*) AS number_of_likes
+FROM Likes
+GROUP BY student_id;",True,match,,10,10
+NLQ_others-02424-pre,NLQ_others,2424,pre,876,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Show the number of high schoolers for each grade.,"SELECT grade , count(*) FROM Highschooler GROUP BY grade",分组与统计粒度,"SELECT grade, COUNT(*) AS student_count
+FROM Highschooler
+GROUP BY grade
+ORDER BY grade;",True,match,,4,4
+NLQ_others-02424-post,NLQ_others,2424,post,876,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Please show me the number of high schoolers for each grade.,"SELECT grade , count(*) FROM Highschooler GROUP BY grade",分组与统计粒度,"SELECT grade, COUNT(*) AS student_count
+FROM Highschooler
+GROUP BY grade
+ORDER BY grade;",True,match,,4,4

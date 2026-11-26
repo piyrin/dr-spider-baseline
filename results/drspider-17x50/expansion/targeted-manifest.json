@@ -1,0 +1,149 @@
+{
+  "seed": "20261123",
+  "quotas": {
+    "输出字段拆分": 10,
+    "排序字段含义变化": 6,
+    "独立计数与连接范围": 8,
+    "排序并列边界": 8,
+    "分组与统计粒度": 8
+  },
+  "unique_candidate_originals": {
+    "输出字段拆分": 29,
+    "排序字段含义变化": 4,
+    "独立计数与连接范围": 4,
+    "排序并列边界": 0,
+    "分组与统计粒度": 94
+  },
+  "pairs": [
+    {
+      "pair_id": "DB_DBcontent_equivalence-00318",
+      "original_id": 836,
+      "screening": "排序字段含义变化"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00035",
+      "original_id": 68,
+      "screening": "排序字段含义变化"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00009",
+      "original_id": 7,
+      "screening": "排序字段含义变化"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00052",
+      "original_id": 67,
+      "screening": "排序字段含义变化"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01452",
+      "original_id": 542,
+      "screening": "独立计数与连接范围"
+    },
+    {
+      "pair_id": "NLQ_others-01702",
+      "original_id": 606,
+      "screening": "独立计数与连接范围"
+    },
+    {
+      "pair_id": "NLQ_column_carrier-00273",
+      "original_id": 596,
+      "screening": "独立计数与连接范围"
+    },
+    {
+      "pair_id": "NLQ_value_synonym-00141",
+      "original_id": 175,
+      "screening": "独立计数与连接范围"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00183",
+      "original_id": 570,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00327",
+      "original_id": 845,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00378",
+      "original_id": 1024,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00379",
+      "original_id": 1025,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00141",
+      "original_id": 479,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00003",
+      "original_id": 36,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00213",
+      "original_id": 620,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00346",
+      "original_id": 958,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00268",
+      "original_id": 683,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00112",
+      "original_id": 401,
+      "screening": "输出字段拆分"
+    },
+    {
+      "pair_id": "NLQ_multitype-00888",
+      "original_id": 741,
+      "screening": "分组与统计粒度"
+    },
+    {
+      "pair_id": "NLQ_keyword_synonym-00013",
+      "original_id": 26,
+      "screening": "分组与统计粒度"
+    },
+    {
+      "pair_id": "NLQ_column_synonym-00207",
+      "original_id": 394,
+      "screening": "分组与统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-00278",
+      "original_id": 106,
+      "screening": "分组与统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-00231",
+      "original_id": 90,
+      "screening": "分组与统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-01341",
+      "original_id": 490,
+      "screening": "分组与统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-02519",
+      "original_id": 936,
+      "screening": "分组与统计粒度"
+    },
+    {
+      "pair_id": "NLQ_others-02428",
+      "original_id": 877,
+      "screening": "分组与统计粒度"
+    }
+  ]
+}

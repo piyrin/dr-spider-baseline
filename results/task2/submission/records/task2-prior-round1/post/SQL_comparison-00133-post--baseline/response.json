@@ -1,0 +1,24 @@
+{
+  "id": "resp_0d1fd0073c9d9953016b06746aab1c87d1b8db78c99c95d972",
+  "object": "chat.completion",
+  "created": 1795585133,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7403,
+    "completion_tokens": 165,
+    "total_tokens": 7568,
+    "completion_tokens_details": {
+      "reasoning_tokens": 116
+    }
+  }
+}

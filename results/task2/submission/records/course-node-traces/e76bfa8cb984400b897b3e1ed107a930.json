@@ -1,0 +1,237 @@
+{
+  "sample_id": "NLQ_column_carrier-00499-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "match",
+        "kind": "projection_match_v2"
+      },
+      {
+        "id": "normalize",
+        "kind": "projection_normalize"
+      },
+      {
+        "id": "recheck",
+        "kind": "projection_recheck"
+      },
+      {
+        "id": "constraint",
+        "kind": "projection_constraint"
+      },
+      {
+        "id": "generate",
+        "kind": "projection_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "match",
+        "target": "normalize"
+      },
+      {
+        "source": "normalize",
+        "target": "recheck"
+      },
+      {
+        "source": "match",
+        "target": "constraint"
+      },
+      {
+        "source": "recheck",
+        "target": "constraint"
+      },
+      {
+        "source": "constraint",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "e76bfa8cb984400b897b3e1ed107a930",
+  "graph_sha256": "3d1ac1b1a878edfa619c51feeed7829bfe64a347d190c6e898221eb028814567",
+  "steps": [
+    {
+      "id": "match",
+      "kind": "projection_match_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "status": "unresolved",
+        "field": null,
+        "entity": null
+      },
+      "call": null,
+      "elapsed_s": 1.2800002878066152e-05
+    },
+    {
+      "id": "normalize",
+      "kind": "projection_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match"
+      ],
+      "output": {
+        "status": "candidate",
+        "candidate": "students"
+      },
+      "call": null,
+      "elapsed_s": 1.799999881768599e-05
+    },
+    {
+      "id": "recheck",
+      "kind": "projection_recheck",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "normalize"
+      ],
+      "output": {
+        "status": "verified",
+        "field": "Highschooler.name",
+        "entity": "students"
+      },
+      "call": null,
+      "elapsed_s": 0.0019102000005659647
+    },
+    {
+      "id": "constraint",
+      "kind": "projection_constraint",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match",
+        "recheck"
+      ],
+      "output": {
+        "route": "normalized",
+        "field": "Highschooler.name",
+        "hint": "Return only the requested entity name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+      },
+      "call": null,
+      "elapsed_s": 9.60000033956021e-06
+    },
+    {
+      "id": "generate",
+      "kind": "projection_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "constraint"
+      ],
+      "output": {
+        "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Friend\" (\"student_id\" int,\"friend_id\" int,primary key (\"student_id\",\"friend_id\"),foreign key (\"student_id\") references \"Highschooler\" (\"ID\"),foreign key (\"friend_id\") references \"Highschooler\" (\"ID\"))\nCREATE TABLE \"Highschooler\" (\"ID\" int primary key,\"name\" text,\"grade\" int)\nCREATE TABLE \"Likes\" (\"student_id\" int,\"liked_id\" int,primary key (\"student_id\", \"liked_id\"),foreign key (\"liked_id\") references \"Highschooler\" (\"ID\"),foreign key (\"student_id\") references \"Highschooler\" (\"ID\"))\nQuestion\nWho are all students currently in grade ten?\nQuery plan\nReturn only the requested entity name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_03af18b3ec09de50016b06e0e060ec87d19821eed2f6a48454",
+          "object": "chat.completion",
+          "created": 1795612897,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT name\nFROM Highschooler\nWHERE grade = 10;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4592,
+            "completion_tokens": 18,
+            "total_tokens": 4610,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3328
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4592,
+          "completion_tokens": 18,
+          "total_tokens": 4610,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3328
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 3.9693960000004154
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;",
+        "rows": [
+          [
+            "Haley"
+          ],
+          [
+            "Andrew"
+          ],
+          [
+            "Kris"
+          ],
+          [
+            "Brittany"
+          ]
+        ],
+        "columns": [
+          "name"
+        ]
+      },
+      "call": null,
+      "elapsed_s": 0.0016440999970654957
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 4,
+    "prediction_rows": 4
+  },
+  "cost": {
+    "model_calls": 1,
+    "total_tokens": 4610
+  }
+}

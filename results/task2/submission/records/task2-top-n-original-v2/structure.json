@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "id": "intent",
+      "kind": "top_n_intent"
+    },
+    {
+      "id": "inspect",
+      "kind": "top_n_inspect"
+    },
+    {
+      "id": "policy",
+      "kind": "top_n_policy",
+      "hint": "winner_name_rank"
+    },
+    {
+      "id": "generate",
+      "kind": "top_n_generate"
+    },
+    {
+      "id": "execute",
+      "kind": "top_n_execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "intent",
+      "target": "inspect"
+    },
+    {
+      "source": "inspect",
+      "target": "policy"
+    },
+    {
+      "source": "policy",
+      "target": "generate"
+    },
+    {
+      "source": "generate",
+      "target": "execute"
+    }
+  ]
+}

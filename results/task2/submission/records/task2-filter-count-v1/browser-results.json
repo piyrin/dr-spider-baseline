@@ -1,0 +1,614 @@
+[
+  {
+    "side": "post",
+    "request": {
+      "sample_id": "NLQ_keyword_carrier-00248-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "filter_count_intent"
+          },
+          {
+            "id": "verify",
+            "kind": "filter_count_verify"
+          },
+          {
+            "id": "generate",
+            "kind": "filter_count_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "filter_count_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "verify"
+          },
+          {
+            "source": "verify",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "NLQ_keyword_carrier-00248-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "filter_count_intent"
+        },
+        {
+          "id": "verify",
+          "kind": "filter_count_verify"
+        },
+        {
+          "id": "generate",
+          "kind": "filter_count_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "filter_count_execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "verify"
+        },
+        {
+          "source": "verify",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "283f8782df7641e0bc09a0c4c32d9918",
+    "graph_sha256": "782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "filter_count_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "table": "matches",
+              "column": "tourney_name",
+              "term": "WTA",
+              "kind": "name"
+            },
+            {
+              "table": "matches",
+              "column": "winner_hand",
+              "term": "left-handed",
+              "kind": "handedness"
+            }
+          ],
+          "count": {
+            "table": "matches",
+            "column": "winner_id",
+            "term": "participants of the WTA have won this tournament",
+            "unit": "entity"
+          }
+        },
+        "elapsed_s": 6.163015600002836
+      },
+      {
+        "id": "verify",
+        "kind": "filter_count_verify",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "grounded",
+          "table": "matches",
+          "filters": [
+            {
+              "column": "tourney_name",
+              "term": "WTA",
+              "value": "WTA Championships",
+              "evidence": "unique_acronym_token"
+            },
+            {
+              "column": "winner_hand",
+              "term": "left-handed",
+              "value": "L",
+              "evidence": "handedness_code"
+            }
+          ],
+          "count": {
+            "column": "winner_id",
+            "unit": "distinct_entity",
+            "term": "participants of the WTA have won this tournament"
+          }
+        },
+        "elapsed_s": 0.00346229999922798
+      },
+      {
+        "id": "generate",
+        "kind": "filter_count_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "verify"
+        ],
+        "output": {
+          "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+          "contract": {
+            "route": "grounded",
+            "table": "matches",
+            "filters": [
+              {
+                "column": "tourney_name",
+                "term": "WTA",
+                "value": "WTA Championships",
+                "evidence": "unique_acronym_token"
+              },
+              {
+                "column": "winner_hand",
+                "term": "left-handed",
+                "value": "L",
+                "evidence": "handedness_code"
+              }
+            ],
+            "count": {
+              "column": "winner_id",
+              "unit": "distinct_entity",
+              "term": "participants of the WTA have won this tournament"
+            }
+          }
+        },
+        "elapsed_s": 4.244861800001672
+      },
+      {
+        "id": "execute",
+        "kind": "filter_count_execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+          "rows": [
+            [
+              2
+            ]
+          ],
+          "columns": [
+            "COUNT(DISTINCT winner_id)"
+          ],
+          "contract_check": "match",
+          "row_count": 1
+        },
+        "elapsed_s": 0.004994200000510318
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 9989
+    },
+    "course_flow_id": "TASK2_CANVAS_782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+    "course_flow": {
+      "id": "TASK2_CANVAS_782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_verify",
+          "type": "event",
+          "title": "verify",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_verify"
+        },
+        {
+          "source": "canvas_verify",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "side": "pre",
+    "request": {
+      "sample_id": "NLQ_keyword_carrier-00248-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "filter_count_intent"
+          },
+          {
+            "id": "verify",
+            "kind": "filter_count_verify"
+          },
+          {
+            "id": "generate",
+            "kind": "filter_count_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "filter_count_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "verify"
+          },
+          {
+            "source": "verify",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "NLQ_keyword_carrier-00248-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "filter_count_intent"
+        },
+        {
+          "id": "verify",
+          "kind": "filter_count_verify"
+        },
+        {
+          "id": "generate",
+          "kind": "filter_count_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "filter_count_execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "verify"
+        },
+        {
+          "source": "verify",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "91be155bfc284b4d8b3f5ca2fdafdfd2",
+    "graph_sha256": "782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "filter_count_intent",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "table": "matches",
+              "column": "winner_hand",
+              "term": "left handed",
+              "kind": "handedness"
+            },
+            {
+              "table": "matches",
+              "column": "tourney_name",
+              "term": "WTA Championships",
+              "kind": "name"
+            }
+          ],
+          "count": {
+            "table": "matches",
+            "column": "winner_id",
+            "term": "winners",
+            "unit": "entity"
+          }
+        },
+        "elapsed_s": 4.700093399998877
+      },
+      {
+        "id": "verify",
+        "kind": "filter_count_verify",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "grounded",
+          "table": "matches",
+          "filters": [
+            {
+              "column": "winner_hand",
+              "term": "left handed",
+              "value": "L",
+              "evidence": "handedness_code"
+            },
+            {
+              "column": "tourney_name",
+              "term": "WTA Championships",
+              "value": "WTA Championships",
+              "evidence": "exact"
+            }
+          ],
+          "count": {
+            "column": "winner_id",
+            "unit": "distinct_entity",
+            "term": "winners"
+          }
+        },
+        "elapsed_s": 0.00007579999873996712
+      },
+      {
+        "id": "generate",
+        "kind": "filter_count_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "verify"
+        ],
+        "output": {
+          "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+          "contract": {
+            "route": "grounded",
+            "table": "matches",
+            "filters": [
+              {
+                "column": "winner_hand",
+                "term": "left handed",
+                "value": "L",
+                "evidence": "handedness_code"
+              },
+              {
+                "column": "tourney_name",
+                "term": "WTA Championships",
+                "value": "WTA Championships",
+                "evidence": "exact"
+              }
+            ],
+            "count": {
+              "column": "winner_id",
+              "unit": "distinct_entity",
+              "term": "winners"
+            }
+          }
+        },
+        "elapsed_s": 11.08340550000139
+      },
+      {
+        "id": "execute",
+        "kind": "filter_count_execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+          "rows": [
+            [
+              2
+            ]
+          ],
+          "columns": [
+            "COUNT(DISTINCT winner_id)"
+          ],
+          "contract_check": "match",
+          "row_count": 1
+        },
+        "elapsed_s": 0.0018808000022545457
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 9954
+    },
+    "course_flow_id": "TASK2_CANVAS_782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+    "course_flow": {
+      "id": "TASK2_CANVAS_782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_verify",
+          "type": "event",
+          "title": "verify",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_verify"
+        },
+        {
+          "source": "canvas_verify",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

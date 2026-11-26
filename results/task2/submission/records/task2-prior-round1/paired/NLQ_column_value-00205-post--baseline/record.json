@@ -1,0 +1,31 @@
+{
+  "id": "NLQ_column_value-00205-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7235,
+    "completion_tokens": 150,
+    "total_tokens": 7385,
+    "prompt_tokens_details": {
+      "cached_tokens": 6528
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 129
+    }
+  },
+  "prediction_sql": "SELECT \"Package_Option\" FROM \"TV_Channel\" WHERE \"series_name\" = 'Sky radio';",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 0,
+  "status": "mismatch",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:39:24+08:00",
+  "gold_rows": [
+    [
+      "Sky Famiglia"
+    ]
+  ],
+  "prediction_rows": []
+}

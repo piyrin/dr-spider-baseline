@@ -1,0 +1,509 @@
+{
+  "id": "DB_DBcontent_equivalence-00289-post",
+  "method": "canvas_v1",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "split_intent",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "kind": "name",
+            "table": "conductor",
+            "fields": [
+              "first_name",
+              "last_name"
+            ],
+            "role": "output",
+            "cue": "names of conductors",
+            "sole_output": true
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For this node identify a person name in the question. A word like name can name a song or place; only select person names. Return JSON {\"targets\":[]} if no single person name concept is clear. Otherwise return exactly one target with kind \"name\", table (exact identifier), fields (exact identifiers, all stored name components needed for the concept, in display order), role (\"output\", \"filter\", or \"both\"), cue (verbatim contiguous text naming the concept), and sole_output (true only when that name is the only requested output item). A person name may be used for lookup, output, or both. Do not include columns merely used for other filters, joins or sorting. If only one name component was requested, list just that component. If the person name has first and last components, list both; include the middle component if it is part of the requested name. Do not output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"conductor\" (\"Conductor_ID\" int,\"first_name\" text,\"last_name\" text,\"birthyear\" int,\"Nationality\" text,\"year_start_to_work\" int,PRIMARY KEY (\"Conductor_ID\"))\nCREATE TABLE \"orchestra\" (\"Orchestra_ID\" int,\"Orchestra\" text,\"Conductor_ID\" int,\"Record_Company\" text,\"Year_of_Founded\" real,\"Major_Record_Format\" text,PRIMARY KEY (\"Orchestra_ID\"),FOREIGN KEY (\"Conductor_ID\") REFERENCES \"conductor\" (\"Conductor_ID\"))\nCREATE TABLE \"performance\" (\"Performance_ID\" int,\"Orchestra_ID\" int,\"Type\" text,\"day\" int,\"month\" int,\"Official_ratings_in_millions\" real,\"Weekly_rank\" text,\"Share\" text,PRIMARY KEY (\"Performance_ID\"),FOREIGN KEY (\"Orchestra_ID\") REFERENCES \"orchestra\" (\"Orchestra_ID\"))\nCREATE TABLE \"show\" (\"Show_ID\" int,\"Performance_ID\" int,\"If_first_show\" bool,\"Result\" text,\"Attendance\" real,FOREIGN KEY (\"Performance_ID\") REFERENCES \"performance\" (\"Performance_ID\"))\nQuestion\nWhat are the names of conductors, ordered by age?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_ft_5ec02eba615b45cabfbf1aa3686a2d2c",
+          "object": "chat.completion",
+          "created": 1795662855,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": " {\"targets\":[{\"kind\":\"name\",\"table\":\"conductor\",\"fields\":[\"first_name\",\"last_name\"],\"role\":\"output\",\"cue\":\"names of conductors\",\"sole_output\":true}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4898,
+            "completion_tokens": 43,
+            "total_tokens": 4941,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 2560
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4898,
+          "completion_tokens": 43,
+          "total_tokens": 4941,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 2560
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "fields",
+      "kind": "split_fields",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "components",
+        "table": "conductor",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "names of conductors",
+        "sole_output": true
+      },
+      "call": null
+    },
+    {
+      "id": "decide",
+      "kind": "split_decide",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "fields"
+      ],
+      "output": {
+        "route": "split",
+        "table": "conductor",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "names of conductors",
+        "sole_output": true,
+        "decision_cue": "names of conductors",
+        "agent_decision": {
+          "mode": "split",
+          "cue": "names of conductors"
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Choose how to use this one verified group of stored person-name components. Return JSON {\"targets\":[{\"mode\":\"split|lookup|display|fallback\",\"cue\":\"verbatim question fragment\"}]}. split means separate stored fields for an output name in the absence of an explicit request to combine it. lookup means combine components only to match a name supplied as a filter; if the name is also requested as output leave the components separate. display requires explicit wording to concatenate or display one output column. A generic name or full name request uses the experiment default of preserved components. Use fallback for unclear field use. Do not supply SQL or other columns."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"conductor\" (\"Conductor_ID\" int,\"first_name\" text,\"last_name\" text,\"birthyear\" int,\"Nationality\" text,\"year_start_to_work\" int,PRIMARY KEY (\"Conductor_ID\"))\nCREATE TABLE \"orchestra\" (\"Orchestra_ID\" int,\"Orchestra\" text,\"Conductor_ID\" int,\"Record_Company\" text,\"Year_of_Founded\" real,\"Major_Record_Format\" text,PRIMARY KEY (\"Orchestra_ID\"),FOREIGN KEY (\"Conductor_ID\") REFERENCES \"conductor\" (\"Conductor_ID\"))\nCREATE TABLE \"performance\" (\"Performance_ID\" int,\"Orchestra_ID\" int,\"Type\" text,\"day\" int,\"month\" int,\"Official_ratings_in_millions\" real,\"Weekly_rank\" text,\"Share\" text,PRIMARY KEY (\"Performance_ID\"),FOREIGN KEY (\"Orchestra_ID\") REFERENCES \"orchestra\" (\"Orchestra_ID\"))\nCREATE TABLE \"show\" (\"Show_ID\" int,\"Performance_ID\" int,\"If_first_show\" bool,\"Result\" text,\"Attendance\" real,FOREIGN KEY (\"Performance_ID\") REFERENCES \"performance\" (\"Performance_ID\"))\nQuestion\nWhat are the names of conductors, ordered by age?\nField hypotheses\n{\"targets\":[{\"route\":\"components\",\"table\":\"conductor\",\"columns\":[\"first_name\",\"last_name\"],\"role\":\"output\",\"cue\":\"names of conductors\",\"sole_output\":true}]}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0ee966296af82ed3016b07a409b71087d28cc86e5e431540ab",
+          "object": "chat.completion",
+          "created": 1795662858,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"mode\":\"split\",\"cue\":\"names of conductors\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4884,
+            "completion_tokens": 20,
+            "total_tokens": 4904,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4884,
+          "completion_tokens": 20,
+          "total_tokens": 4904,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "contract",
+      "kind": "split_contract",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "decide"
+      ],
+      "output": {
+        "route": "split",
+        "table": "conductor",
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "role": "output",
+        "cue": "names of conductors",
+        "sole_output": true,
+        "decision_cue": "names of conductors",
+        "hint": "Return this requested person name as separate stored columns in this order: conductor.first_name, conductor.last_name. Preserve all other requested outputs and filters."
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "split_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "contract"
+      ],
+      "output": {
+        "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY birthyear DESC;",
+        "route": "split",
+        "contract": {
+          "route": "split",
+          "table": "conductor",
+          "columns": [
+            "first_name",
+            "last_name"
+          ],
+          "role": "output",
+          "cue": "names of conductors",
+          "sole_output": true,
+          "decision_cue": "names of conductors",
+          "hint": "Return this requested person name as separate stored columns in this order: conductor.first_name, conductor.last_name. Preserve all other requested outputs and filters."
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"conductor\" (\"Conductor_ID\" int,\"first_name\" text,\"last_name\" text,\"birthyear\" int,\"Nationality\" text,\"year_start_to_work\" int,PRIMARY KEY (\"Conductor_ID\"))\nCREATE TABLE \"orchestra\" (\"Orchestra_ID\" int,\"Orchestra\" text,\"Conductor_ID\" int,\"Record_Company\" text,\"Year_of_Founded\" real,\"Major_Record_Format\" text,PRIMARY KEY (\"Orchestra_ID\"),FOREIGN KEY (\"Conductor_ID\") REFERENCES \"conductor\" (\"Conductor_ID\"))\nCREATE TABLE \"performance\" (\"Performance_ID\" int,\"Orchestra_ID\" int,\"Type\" text,\"day\" int,\"month\" int,\"Official_ratings_in_millions\" real,\"Weekly_rank\" text,\"Share\" text,PRIMARY KEY (\"Performance_ID\"),FOREIGN KEY (\"Orchestra_ID\") REFERENCES \"orchestra\" (\"Orchestra_ID\"))\nCREATE TABLE \"show\" (\"Show_ID\" int,\"Performance_ID\" int,\"If_first_show\" bool,\"Result\" text,\"Attendance\" real,FOREIGN KEY (\"Performance_ID\") REFERENCES \"performance\" (\"Performance_ID\"))\nQuestion\nWhat are the names of conductors, ordered by age?\nQuery plan\nReturn this requested person name as separate stored columns in this order: conductor.first_name, conductor.last_name. Preserve all other requested outputs and filters."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0f36134c370236f7016b07a40ccb1c87d19b7b8961c4abe456",
+          "object": "chat.completion",
+          "created": 1795662870,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT first_name, last_name\nFROM conductor\nORDER BY birthyear DESC;",
+                "reasoning_content": "**Ordering query by age**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0f36134c370236f7016b07a40ccb5887d1a5b7e01227b6e434": {
+                  "input_tokens": 283,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 283,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0f36134c370236f7016b07a40ccb5887d1b51c5cbb94c991c1": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0f36134c370236f7016b07a4155f0c87d186b20d96f6453224": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 22,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 22
+                    }
+                  ]
+                },
+                "rs_0f36134c370236f7016b07a40f0e7887d19455d01459fe52ed": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 151
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4690,
+            "completion_tokens": 173,
+            "total_tokens": 4863,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 151
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0f36134c370236f7016b07a40ccb5887d1a5b7e01227b6e434": {
+                "input_tokens": 283,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 283,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0f36134c370236f7016b07a40ccb5887d1b51c5cbb94c991c1": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0f36134c370236f7016b07a4155f0c87d186b20d96f6453224": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 22,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 22
+                  }
+                ]
+              },
+              "rs_0f36134c370236f7016b07a40f0e7887d19455d01459fe52ed": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 151
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4690,
+          "completion_tokens": 173,
+          "total_tokens": 4863,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 151
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "split_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY birthyear DESC;",
+        "rows": [
+          [
+            "Antal",
+            "Doráti"
+          ],
+          [
+            "Igor",
+            "Stravinsky"
+          ],
+          [
+            "Colin",
+            "Davis"
+          ],
+          [
+            "Michael",
+            "TilsonThomas"
+          ],
+          [
+            "Paul",
+            "Jorgensen"
+          ],
+          [
+            "Antal",
+            "Brown"
+          ],
+          [
+            "Charles",
+            "Dutoit"
+          ],
+          [
+            "Seiji",
+            "Ozawa"
+          ],
+          [
+            "Valeri",
+            "Gergiev"
+          ],
+          [
+            "Pierre",
+            "Boulez"
+          ],
+          [
+            "Gerard",
+            "Schwarz"
+          ],
+          [
+            "Robert",
+            "Craft"
+          ]
+        ],
+        "columns": [
+          "first_name",
+          "last_name"
+        ],
+        "output_check": "match"
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 14472,
+    "completion_tokens": 236,
+    "total_tokens": 14708
+  },
+  "model_calls": 3,
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 12,
+    "prediction_rows": 12
+  }
+}

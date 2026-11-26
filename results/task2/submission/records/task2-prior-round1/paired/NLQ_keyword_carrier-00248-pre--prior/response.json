@@ -1,0 +1,22 @@
+{
+  "id": "resp_0ab9512b6600b717016b06757421e487d18830d0f84505b81f",
+  "object": "chat.completion",
+  "created": 1795585397,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT COUNT(*) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L';"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 395,
+    "completion_tokens": 26,
+    "total_tokens": 421
+  },
+  "service_tier": "default"
+}

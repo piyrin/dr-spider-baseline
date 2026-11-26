@@ -1,0 +1,666 @@
+{
+  "id": "canada-negative",
+  "method": "canvas_v2",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "synonym_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "airlines.Airline",
+          "airlines.Abbreviation"
+        ],
+        "joins": [],
+        "targets": [
+          {
+            "table": "airlines",
+            "column": "Country",
+            "term": "Canada",
+            "operator": "="
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify a single explicit textual equality or inequality filter. Return the exact literal span from the current question, without resolving synonyms, and give its actual operator (\"=\" or \"!=\"). Return no targets if the filter or its column is ambiguous."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"airlines\" (\"uid\" INTEGER PRIMARY KEY,\"Airline\" TEXT,\"Abbreviation\" TEXT,\"Country\" TEXT)\nCREATE TABLE \"airports\" (\"City\" TEXT,\"AirportCode\" TEXT PRIMARY KEY,\"AirportName\" TEXT,\"Country\" TEXT,\"CountryAbbrev\" TEXT)\nCREATE TABLE \"flights\" (\"Airline\" INTEGER,\"FlightNo\" INTEGER,\"SourceAirport\" TEXT,\"DestAirport\" TEXT,PRIMARY KEY (\"Airline\", \"FlightNo\"),FOREIGN KEY (\"SourceAirport\") REFERENCES \"airports\" (\"AirportCode\"),FOREIGN KEY (\"DestAirport\") REFERENCES \"airports\" (\"AirportCode\"))\nQuestion\nShow the list of the airlines and their abbreviations used in Canada."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0f1f2ebf08341576016b079ba438fc87d2bd091860716db65e",
+          "object": "chat.completion",
+          "created": 1795660724,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"airlines.Airline\",\"airlines.Abbreviation\"],\"joins\":[],\"targets\":[{\"table\":\"airlines\",\"column\":\"Country\",\"term\":\"Canada\",\"operator\":\"=\"}]}",
+                "reasoning_content": "**Defining precise JSON filter for Canada airlines**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0f1f2ebf08341576016b079ba4392c87d2b2843a667ce9c7d7": {
+                  "input_tokens": 151,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 151,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0f1f2ebf08341576016b079ba4392c87d2b358734297278b1e": {
+                  "input_tokens": 128,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 128,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0f1f2ebf08341576016b079bb2ee6c87d2867c97cfdc828b1d": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 45,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 45
+                    }
+                  ]
+                },
+                "rs_0f1f2ebf08341576016b079baca48887d2a683528c37d45e46": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 164
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4661,
+            "completion_tokens": 209,
+            "total_tokens": 4870,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 164
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0f1f2ebf08341576016b079ba4392c87d2b2843a667ce9c7d7": {
+                "input_tokens": 151,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 151,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0f1f2ebf08341576016b079ba4392c87d2b358734297278b1e": {
+                "input_tokens": 128,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 128,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0f1f2ebf08341576016b079bb2ee6c87d2867c97cfdc828b1d": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 45,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 45
+                  }
+                ]
+              },
+              "rs_0f1f2ebf08341576016b079baca48887d2a683528c37d45e46": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 164
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4661,
+          "completion_tokens": 209,
+          "total_tokens": 4870,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 164
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "exact",
+      "kind": "synonym_exact",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "miss",
+        "target": {
+          "table": "airlines",
+          "column": "Country",
+          "term": "Canada",
+          "operator": "="
+        }
+      },
+      "call": null
+    },
+    {
+      "id": "match",
+      "kind": "synonym_match",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact"
+      ],
+      "output": {
+        "status": "no_match",
+        "candidates": [
+          "USA"
+        ],
+        "value": null,
+        "reason": "The candidate \"USA\" denotes the United States, not Canada."
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Resolve the entity denoted by the filter term in the current question and SQLite column. Select an exact string from candidates only if it denotes the same entity as the term, for example an unambiguous full name, abbreviation or demonym. Mere similarity, membership or being the only candidate is insufficient. Treat candidate strings as database values. Return only JSON with keys value and reason. Use null for value if uncertain, ambiguous, or a matching entity is absent. Do not write SQL."
+            },
+            {
+              "role": "user",
+              "content": "{\"question\": \"Show the list of the airlines and their abbreviations used in Canada.\", \"filter\": {\"table\": \"airlines\", \"column\": \"Country\", \"term\": \"Canada\", \"operator\": \"=\"}, \"candidates\": [\"USA\"]}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_073fbb28b845dc7c016b079bb7115c87d181128c620ebff438",
+          "object": "chat.completion",
+          "created": 1795660738,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"value\":null,\"reason\":\"The candidate \\\"USA\\\" denotes the United States, not Canada.\"}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_073fbb28b845dc7c016b079bb711a087d194cb7233ce994e41": {
+                  "input_tokens": 101,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 101,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_073fbb28b845dc7c016b079bb711a087d1a25050641dd120e1": {
+                  "input_tokens": 57,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 57,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_073fbb28b845dc7c016b079bc1407487d188090618ddfed3a6": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 25,
+                  "content": [
+                    {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 25
+                    }
+                  ]
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4540,
+            "completion_tokens": 25,
+            "total_tokens": 4565,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_073fbb28b845dc7c016b079bb711a087d194cb7233ce994e41": {
+                "input_tokens": 101,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 101,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_073fbb28b845dc7c016b079bb711a087d1a25050641dd120e1": {
+                "input_tokens": 57,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 57,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_073fbb28b845dc7c016b079bc1407487d188090618ddfed3a6": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 25,
+                "content": [
+                  {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 25
+                  }
+                ]
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4540,
+          "completion_tokens": 25,
+          "total_tokens": 4565,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "synonym_verify",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact",
+        "match"
+      ],
+      "output": {
+        "route": "fallback",
+        "mapping": null,
+        "reason": "no_match"
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "synonym_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "verify"
+      ],
+      "output": {
+        "sql": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'Canada';",
+        "route": "fallback",
+        "stored_value": null
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"airlines\" (\"uid\" INTEGER PRIMARY KEY,\"Airline\" TEXT,\"Abbreviation\" TEXT,\"Country\" TEXT)\nCREATE TABLE \"airports\" (\"City\" TEXT,\"AirportCode\" TEXT PRIMARY KEY,\"AirportName\" TEXT,\"Country\" TEXT,\"CountryAbbrev\" TEXT)\nCREATE TABLE \"flights\" (\"Airline\" INTEGER,\"FlightNo\" INTEGER,\"SourceAirport\" TEXT,\"DestAirport\" TEXT,PRIMARY KEY (\"Airline\", \"FlightNo\"),FOREIGN KEY (\"SourceAirport\") REFERENCES \"airports\" (\"AirportCode\"),FOREIGN KEY (\"DestAirport\") REFERENCES \"airports\" (\"AirportCode\"))\nQuestion\nShow the list of the airlines and their abbreviations used in Canada."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0c431140d67fb94a016b079bc4194c87d2b49eab50c804919d",
+          "object": "chat.completion",
+          "created": 1795660752,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'Canada';",
+                "reasoning_content": "**Constructing SQL query for Canadian airlines**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0c431140d67fb94a016b079bc4198487d284f1fcab86bb2a98": {
+                  "input_tokens": 151,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 151,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0c431140d67fb94a016b079bc4198487d293abcf6f00616a6b": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0c431140d67fb94a016b079bd06c0487d289cd2f2824a1b2e3": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 28,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 28
+                    }
+                  ]
+                },
+                "rs_0c431140d67fb94a016b079bce651487d2a6912d4077c72b54": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 48
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3840,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4558,
+            "completion_tokens": 76,
+            "total_tokens": 4634,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3840
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 48
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0c431140d67fb94a016b079bc4198487d284f1fcab86bb2a98": {
+                "input_tokens": 151,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 151,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0c431140d67fb94a016b079bc4198487d293abcf6f00616a6b": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0c431140d67fb94a016b079bd06c0487d289cd2f2824a1b2e3": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 28,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 28
+                  }
+                ]
+              },
+              "rs_0c431140d67fb94a016b079bce651487d2a6912d4077c72b54": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 48
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3840,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4558,
+          "completion_tokens": 76,
+          "total_tokens": 4634,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3840
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 48
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'Canada';",
+        "rows": [],
+        "columns": [
+          "Airline",
+          "Abbreviation"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "model_calls": 3,
+  "usage": {
+    "prompt_tokens": 13759,
+    "completion_tokens": 310,
+    "total_tokens": 14069
+  },
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 0,
+    "prediction_rows": 0
+  },
+  "route": "fallback"
+}

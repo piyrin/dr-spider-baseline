@@ -1,0 +1,145 @@
+{
+  "question_sides": 30538,
+  "original_ids": 1034,
+  "database_files": 250,
+  "unique_reference_queries": 4787,
+  "subsets": {
+    "DB_DBcontent_equivalence": {
+      "pre_cases": 382,
+      "pre_empty_gold": 8,
+      "pre_gold_executable": 382,
+      "post_cases": 382,
+      "post_empty_gold": 8,
+      "post_gold_executable": 382
+    },
+    "DB_schema_abbreviation": {
+      "pre_cases": 2853,
+      "pre_empty_gold": 202,
+      "pre_gold_executable": 2853,
+      "post_cases": 2853,
+      "post_empty_gold": 202,
+      "post_gold_executable": 2853
+    },
+    "DB_schema_synonym": {
+      "pre_cases": 2619,
+      "pre_empty_gold": 133,
+      "pre_gold_executable": 2619,
+      "post_cases": 2619,
+      "post_empty_gold": 133,
+      "post_gold_executable": 2619
+    },
+    "NLQ_column_attribute": {
+      "pre_cases": 119,
+      "pre_empty_gold": 0,
+      "pre_gold_executable": 119,
+      "post_cases": 119,
+      "post_empty_gold": 0,
+      "post_gold_executable": 119
+    },
+    "NLQ_column_carrier": {
+      "pre_cases": 579,
+      "pre_empty_gold": 34,
+      "pre_gold_executable": 579,
+      "post_cases": 579,
+      "post_empty_gold": 34,
+      "post_gold_executable": 579
+    },
+    "NLQ_column_synonym": {
+      "pre_cases": 563,
+      "pre_empty_gold": 30,
+      "pre_gold_executable": 563,
+      "post_cases": 563,
+      "post_empty_gold": 30,
+      "post_gold_executable": 563
+    },
+    "NLQ_column_value": {
+      "pre_cases": 304,
+      "pre_empty_gold": 30,
+      "pre_gold_executable": 304,
+      "post_cases": 304,
+      "post_empty_gold": 30,
+      "post_gold_executable": 304
+    },
+    "NLQ_keyword_carrier": {
+      "pre_cases": 399,
+      "pre_empty_gold": 0,
+      "pre_gold_executable": 399,
+      "post_cases": 399,
+      "post_empty_gold": 0,
+      "post_gold_executable": 399
+    },
+    "NLQ_keyword_synonym": {
+      "pre_cases": 953,
+      "pre_empty_gold": 49,
+      "pre_gold_executable": 953,
+      "post_cases": 953,
+      "post_empty_gold": 49,
+      "post_gold_executable": 953
+    },
+    "NLQ_multitype": {
+      "pre_cases": 1351,
+      "pre_empty_gold": 61,
+      "pre_gold_executable": 1351,
+      "post_cases": 1351,
+      "post_empty_gold": 61,
+      "post_gold_executable": 1351
+    },
+    "NLQ_others": {
+      "pre_cases": 2819,
+      "pre_empty_gold": 162,
+      "pre_gold_executable": 2819,
+      "post_cases": 2819,
+      "post_empty_gold": 162,
+      "post_gold_executable": 2819
+    },
+    "NLQ_value_synonym": {
+      "pre_cases": 506,
+      "pre_empty_gold": 21,
+      "pre_gold_executable": 506,
+      "post_cases": 506,
+      "post_empty_gold": 21,
+      "post_gold_executable": 506
+    },
+    "SQL_comparison": {
+      "pre_cases": 178,
+      "pre_empty_gold": 0,
+      "pre_gold_executable": 178,
+      "post_cases": 178,
+      "post_empty_gold": 0,
+      "post_gold_executable": 178
+    },
+    "SQL_DB_number": {
+      "pre_cases": 410,
+      "pre_empty_gold": 0,
+      "pre_gold_executable": 410,
+      "post_cases": 410,
+      "post_empty_gold": 0,
+      "post_gold_executable": 410
+    },
+    "SQL_DB_text": {
+      "pre_cases": 911,
+      "pre_empty_gold": 0,
+      "pre_gold_executable": 911,
+      "post_cases": 911,
+      "post_empty_gold": 0,
+      "post_gold_executable": 911
+    },
+    "SQL_NonDB_number": {
+      "pre_cases": 131,
+      "pre_empty_gold": 0,
+      "pre_gold_executable": 131,
+      "post_cases": 131,
+      "post_empty_gold": 0,
+      "post_gold_executable": 131
+    },
+    "SQL_sort_order": {
+      "pre_cases": 192,
+      "pre_empty_gold": 0,
+      "pre_gold_executable": 192,
+      "post_cases": 192,
+      "post_empty_gold": 0,
+      "post_gold_executable": 192
+    }
+  },
+  "reference_execution_failures": []
+}

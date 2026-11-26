@@ -1,0 +1,35 @@
+{
+  "id": "NLQ_keyword_carrier-00248-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7408,
+    "completion_tokens": 140,
+    "total_tokens": 7548,
+    "prompt_tokens_details": {
+      "cached_tokens": 6784
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 113
+    }
+  },
+  "prediction_sql": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L';",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 1,
+  "status": "match",
+  "condition": "prior",
+  "prior": "The WTA tournament referred to in the question matches the unique WTA tournament name 'WTA Championships' in matches.tourney_name. The winner being left-handed is encoded as 'L' in matches.winner_hand. Both constraints apply.",
+  "recorded_at": "2026-11-25T13:40:17+08:00",
+  "gold_rows": [
+    [
+      2
+    ]
+  ],
+  "prediction_rows": [
+    [
+      2
+    ]
+  ]
+}

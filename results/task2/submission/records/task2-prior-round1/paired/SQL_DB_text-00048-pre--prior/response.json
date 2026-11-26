@@ -1,0 +1,24 @@
+{
+  "id": "resp_04858c1212682697016b0674c0335487d0a6a1628939b379b8",
+  "object": "chat.completion",
+  "created": 1795585222,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nWHERE cm.FullName = 'General Motors'\n   OR EXISTS (\n       SELECT 1\n       FROM car_names AS cn\n       JOIN cars_data AS cd ON cd.Id = cn.MakeId\n       WHERE cn.Model = ml.Model AND cd.Weight > 3500\n   );"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7358,
+    "completion_tokens": 231,
+    "total_tokens": 7589,
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  }
+}

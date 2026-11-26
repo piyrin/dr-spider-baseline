@@ -1,0 +1,188 @@
+{
+  "id": "NLQ_column_carrier-00499-post",
+  "side": "post",
+  "original_id": 871,
+  "method": "canvas_v2",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "match",
+      "kind": "projection_match_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "status": "unresolved",
+        "field": null,
+        "entity": null
+      }
+    },
+    {
+      "id": "normalize",
+      "kind": "projection_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match"
+      ],
+      "output": {
+        "status": "candidate",
+        "candidate": "students"
+      }
+    },
+    {
+      "id": "recheck",
+      "kind": "projection_recheck",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "normalize"
+      ],
+      "output": {
+        "status": "verified",
+        "field": "Highschooler.name",
+        "entity": "students"
+      }
+    },
+    {
+      "id": "constraint",
+      "kind": "projection_constraint",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match",
+        "recheck"
+      ],
+      "output": {
+        "route": "normalized",
+        "field": "Highschooler.name",
+        "hint": "Return only the requested entity name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "projection_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "constraint"
+      ],
+      "output": {
+        "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;",
+        "rows": [
+          [
+            "Haley"
+          ],
+          [
+            "Andrew"
+          ],
+          [
+            "Kris"
+          ],
+          [
+            "Brittany"
+          ]
+        ],
+        "columns": [
+          "name"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 4,
+    "prediction_rows": 4
+  },
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_0f0a8b2e604ec464016b06ddb1cd7887d2a3f29337f93fb99d": {
+          "input_tokens": 185,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 185,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_0f0a8b2e604ec464016b06ddb1cd7887d2bbde6060044c2b26": {
+          "input_tokens": 25,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 25,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_0f0a8b2e604ec464016b06ddb8ee6487d2b0b960ff12bd30fc": {
+          "input_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 20,
+          "content": [
+            {
+              "input_tokens": 0,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 20
+            }
+          ]
+        },
+        "rs_0f0a8b2e604ec464016b06ddb78d2887d2a7ad57ff421e742b": {
+          "input_tokens": 2,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 38
+        }
+      },
+      "request_fields": {
+        "instructions": {
+          "input_tokens": 4380,
+          "cached_tokens": 3840,
+          "cache_write_tokens": 0,
+          "output_tokens": 0
+        }
+      }
+    },
+    "prompt_tokens": 8816,
+    "completion_tokens": 58,
+    "total_tokens": 8874,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      },
+      "cached_tokens": 7552
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 38
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 9.963
+}

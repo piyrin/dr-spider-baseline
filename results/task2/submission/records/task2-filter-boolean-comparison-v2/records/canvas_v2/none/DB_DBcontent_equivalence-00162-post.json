@@ -1,0 +1,325 @@
+{
+  "id": "DB_DBcontent_equivalence-00162-post",
+  "side": "post",
+  "original_id": 575,
+  "method": "canvas_v2",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "boolean_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "semester_term",
+          "semester_year"
+        ],
+        "joins": [
+          "Student_Enrolment.semester_id = Semesters.semester_id",
+          "Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id"
+        ],
+        "targets": [
+          {
+            "table": "Degree_Programs",
+            "column": "is_master",
+            "term": "Master",
+            "operator": "=",
+            "truth": true
+          },
+          {
+            "table": "Degree_Programs",
+            "column": "is_bachelor",
+            "term": "Bachelor",
+            "operator": "=",
+            "truth": true
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For a single clear equality condition describing an entity status or property, return one target with table, column, term, operator \"=\", and truth (JSON true or false). Term must be the exact unquoted status word or phrase in the question. For a status column with literal text and for an affirmative boolean flag, represent the positive status with true. For an explicitly negated affirmative flag use false and keep the status term itself without negation. When the condition or its column is uncertain, or several conditions are equally plausible, return zero targets. Do not guess how the value is stored."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Addresses\" (\"address_id\" INTEGER PRIMARY KEY,\"line_1\" VARCHAR(255),\"line_2\" VARCHAR(255),\"line_3\" VARCHAR(255),\"city\" VARCHAR(255),\"zip_postcode\" VARCHAR(20),\"state_province_county\" VARCHAR(255),\"country\" VARCHAR(255),\"other_address_details\" VARCHAR(255))\nCREATE TABLE \"Courses\" (\"course_id\" INTEGER PRIMARY KEY,\"course_name\" VARCHAR(255),\"course_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Degree_Programs\" (\"degree_program_id\" INTEGER PRIMARY KEY,\"department_id\" INTEGER NOT NULL,\"is_bachelor\" bool,\"is_master\" bool,\"is_phd\" bool,\"degree_summary_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"department_id\") REFERENCES \"Departments\"(\"department_id\"))\nCREATE TABLE \"Departments\" (\"department_id\" INTEGER PRIMARY KEY,\"department_name\" VARCHAR(255),\"department_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Sections\" (\"section_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"section_name\" VARCHAR(255),\"section_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"))\nCREATE TABLE \"Semesters\" (\"semester_id\" INTEGER PRIMARY KEY,\"semester_term\" text,\"semester_year\" text,\"semester_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Student_Enrolment\" (\"student_enrolment_id\" INTEGER PRIMARY KEY,\"degree_program_id\" INTEGER NOT NULL,\"semester_id\" INTEGER NOT NULL,\"student_id\" INTEGER NOT NULL,\"other_details\" VARCHAR(255),FOREIGN KEY (\"degree_program_id\") REFERENCES \"Degree_Programs\"(\"degree_program_id\"),FOREIGN KEY (\"semester_id\") REFERENCES \"Semesters\"(\"semester_id\"),FOREIGN KEY (\"student_id\") REFERENCES \"Students\"(\"student_id\"))\nCREATE TABLE \"Student_Enrolment_Courses\" (\"student_course_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"student_enrolment_id\" INTEGER NOT NULL,FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"),FOREIGN KEY (\"student_enrolment_id\") REFERENCES \"Student_Enrolment\"(\"student_enrolment_id\"))\nCREATE TABLE \"Students\" (\"student_id\" INTEGER PRIMARY KEY,\"current_address_id\" INTEGER NOT NULL,\"permanent_address_id\" INTEGER NOT NULL,\"first_name\" VARCHAR(80),\"middle_name\" VARCHAR(40),\"last_name\" VARCHAR(40),\"cell_mobile_number\" VARCHAR(40),\"email_address\" VARCHAR(40),\"ssn\" VARCHAR(40),\"date_first_registered\" int,\"time_first_registered\" int,\"date_left\" DATETIME,\"other_student_details\" VARCHAR(255),FOREIGN KEY (\"current_address_id\") REFERENCES \"Addresses\"(\"address_id\"),FOREIGN KEY (\"permanent_address_id\") REFERENCES \"Addresses\"(\"address_id\"))\nCREATE TABLE \"Transcript_Contents\" (\"student_course_id\" INTEGER NOT NULL,\"transcript_id\" INTEGER NOT NULL,FOREIGN KEY (\"student_course_id\") REFERENCES \"Student_Enrolment_Courses\"(\"student_course_id\"),FOREIGN KEY (\"transcript_id\") REFERENCES \"Transcripts\"(\"transcript_id\"))\nCREATE TABLE \"Transcripts\" (\"transcript_id\" INTEGER PRIMARY KEY,\"transcript_date\" int,\"transcript_time\" int,\"other_details\" VARCHAR(255))\nQuestion\nFind the semester when both Master students and Bachelor students got enrolled in."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0dad4f8fb055d662016b079f48c20087d090227d31ce449728",
+          "object": "chat.completion",
+          "created": 1795661643,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"semester_term\",\"semester_year\"],\"joins\":[\"Student_Enrolment.semester_id = Semesters.semester_id\",\"Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id\"],\"targets\":[{\"table\":\"Degree_Programs\",\"column\":\"is_master\",\"term\":\"Master\",\"operator\":\"=\",\"truth\":true},{\"table\":\"Degree_Programs\",\"column\":\"is_bachelor\",\"term\":\"Bachelor\",\"operator\":\"=\",\"truth\":true}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0dad4f8fb055d662016b079f48c23487d0b3fe9c7f5d662873": {
+                  "input_tokens": 199,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 199,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0dad4f8fb055d662016b079f48c23487d0bd45344cd5612bf8": {
+                  "input_tokens": 736,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 736,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0dad4f8fb055d662016b079f49cf0c87d09821b13b819121f2": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 99,
+                  "content": [
+                    {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 99
+                    }
+                  ]
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5317,
+            "completion_tokens": 99,
+            "total_tokens": 5416,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0dad4f8fb055d662016b079f48c23487d0b3fe9c7f5d662873": {
+                "input_tokens": 199,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 199,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0dad4f8fb055d662016b079f48c23487d0bd45344cd5612bf8": {
+                "input_tokens": 736,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 736,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0dad4f8fb055d662016b079f49cf0c87d09821b13b819121f2": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 99,
+                "content": [
+                  {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 99
+                  }
+                ]
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 5317,
+          "completion_tokens": 99,
+          "total_tokens": 5416,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "lookup",
+      "kind": "boolean_lookup",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "fallback",
+        "reason": "no_unique_target"
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "boolean_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "lookup"
+      ],
+      "output": {
+        "sql": "SELECT s.semester_id, s.semester_term, s.semester_year\nFROM Semesters AS s\nJOIN Student_Enrolment AS e ON e.semester_id = s.semester_id\nJOIN Degree_Programs AS d ON d.degree_program_id = e.degree_program_id\nGROUP BY s.semester_id, s.semester_term, s.semester_year\nHAVING MAX(CASE WHEN d.is_master = 1 THEN 1 ELSE 0 END) = 1\n   AND MAX(CASE WHEN d.is_bachelor = 1 THEN 1 ELSE 0 END) = 1;\n--",
+        "route": "fallback",
+        "stored_value": null
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Addresses\" (\"address_id\" INTEGER PRIMARY KEY,\"line_1\" VARCHAR(255),\"line_2\" VARCHAR(255),\"line_3\" VARCHAR(255),\"city\" VARCHAR(255),\"zip_postcode\" VARCHAR(20),\"state_province_county\" VARCHAR(255),\"country\" VARCHAR(255),\"other_address_details\" VARCHAR(255))\nCREATE TABLE \"Courses\" (\"course_id\" INTEGER PRIMARY KEY,\"course_name\" VARCHAR(255),\"course_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Degree_Programs\" (\"degree_program_id\" INTEGER PRIMARY KEY,\"department_id\" INTEGER NOT NULL,\"is_bachelor\" bool,\"is_master\" bool,\"is_phd\" bool,\"degree_summary_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"department_id\") REFERENCES \"Departments\"(\"department_id\"))\nCREATE TABLE \"Departments\" (\"department_id\" INTEGER PRIMARY KEY,\"department_name\" VARCHAR(255),\"department_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Sections\" (\"section_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"section_name\" VARCHAR(255),\"section_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"))\nCREATE TABLE \"Semesters\" (\"semester_id\" INTEGER PRIMARY KEY,\"semester_term\" text,\"semester_year\" text,\"semester_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Student_Enrolment\" (\"student_enrolment_id\" INTEGER PRIMARY KEY,\"degree_program_id\" INTEGER NOT NULL,\"semester_id\" INTEGER NOT NULL,\"student_id\" INTEGER NOT NULL,\"other_details\" VARCHAR(255),FOREIGN KEY (\"degree_program_id\") REFERENCES \"Degree_Programs\"(\"degree_program_id\"),FOREIGN KEY (\"semester_id\") REFERENCES \"Semesters\"(\"semester_id\"),FOREIGN KEY (\"student_id\") REFERENCES \"Students\"(\"student_id\"))\nCREATE TABLE \"Student_Enrolment_Courses\" (\"student_course_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"student_enrolment_id\" INTEGER NOT NULL,FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"),FOREIGN KEY (\"student_enrolment_id\") REFERENCES \"Student_Enrolment\"(\"student_enrolment_id\"))\nCREATE TABLE \"Students\" (\"student_id\" INTEGER PRIMARY KEY,\"current_address_id\" INTEGER NOT NULL,\"permanent_address_id\" INTEGER NOT NULL,\"first_name\" VARCHAR(80),\"middle_name\" VARCHAR(40),\"last_name\" VARCHAR(40),\"cell_mobile_number\" VARCHAR(40),\"email_address\" VARCHAR(40),\"ssn\" VARCHAR(40),\"date_first_registered\" int,\"time_first_registered\" int,\"date_left\" DATETIME,\"other_student_details\" VARCHAR(255),FOREIGN KEY (\"current_address_id\") REFERENCES \"Addresses\"(\"address_id\"),FOREIGN KEY (\"permanent_address_id\") REFERENCES \"Addresses\"(\"address_id\"))\nCREATE TABLE \"Transcript_Contents\" (\"student_course_id\" INTEGER NOT NULL,\"transcript_id\" INTEGER NOT NULL,FOREIGN KEY (\"student_course_id\") REFERENCES \"Student_Enrolment_Courses\"(\"student_course_id\"),FOREIGN KEY (\"transcript_id\") REFERENCES \"Transcripts\"(\"transcript_id\"))\nCREATE TABLE \"Transcripts\" (\"transcript_id\" INTEGER PRIMARY KEY,\"transcript_date\" int,\"transcript_time\" int,\"other_details\" VARCHAR(255))\nQuestion\nFind the semester when both Master students and Bachelor students got enrolled in."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0ebc84c10e3c0a80016b079f54208087d0ab0826386544cc00",
+          "object": "chat.completion",
+          "created": 1795661656,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT s.semester_id, s.semester_term, s.semester_year\nFROM Semesters AS s\nJOIN Student_Enrolment AS e ON e.semester_id = s.semester_id\nJOIN Degree_Programs AS d ON d.degree_program_id = e.degree_program_id\nGROUP BY s.semester_id, s.semester_term, s.semester_year\nHAVING MAX(CASE WHEN d.is_master = 1 THEN 1 ELSE 0 END) = 1\n   AND MAX(CASE WHEN d.is_bachelor = 1 THEN 1 ELSE 0 END) = 1;\n--"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 7884,
+            "completion_tokens": 165,
+            "total_tokens": 8049,
+            "prompt_tokens_details": {
+              "cached_tokens": 6016
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 40
+            }
+          }
+        },
+        "usage": {
+          "prompt_tokens": 7884,
+          "completion_tokens": 165,
+          "total_tokens": 8049,
+          "prompt_tokens_details": {
+            "cached_tokens": 6016
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 40
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT s.semester_id, s.semester_term, s.semester_year\nFROM Semesters AS s\nJOIN Student_Enrolment AS e ON e.semester_id = s.semester_id\nJOIN Degree_Programs AS d ON d.degree_program_id = e.degree_program_id\nGROUP BY s.semester_id, s.semester_term, s.semester_year\nHAVING MAX(CASE WHEN d.is_master = 1 THEN 1 ELSE 0 END) = 1\n   AND MAX(CASE WHEN d.is_bachelor = 1 THEN 1 ELSE 0 END) = 1;\n--",
+        "rows": [],
+        "columns": [
+          "semester_id",
+          "semester_term",
+          "semester_year"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 13201,
+    "completion_tokens": 264,
+    "total_tokens": 13465
+  },
+  "model_calls": 2,
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 1,
+    "prediction_rows": 0
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "intent",
+      "kind": "split_intent"
+    },
+    {
+      "id": "fields",
+      "kind": "split_fields"
+    },
+    {
+      "id": "decide",
+      "kind": "split_decide"
+    },
+    {
+      "id": "contract",
+      "kind": "split_contract"
+    },
+    {
+      "id": "generate",
+      "kind": "split_generate"
+    },
+    {
+      "id": "execute",
+      "kind": "split_execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "intent",
+      "target": "fields"
+    },
+    {
+      "source": "fields",
+      "target": "decide"
+    },
+    {
+      "source": "decide",
+      "target": "contract"
+    },
+    {
+      "source": "contract",
+      "target": "generate"
+    },
+    {
+      "source": "generate",
+      "target": "execute"
+    }
+  ]
+}

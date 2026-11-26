@@ -1,0 +1,43 @@
+{
+  "case": "DB_DBcontent_equivalence-00143",
+  "design_version": 1,
+  "frozen_implementation_label": "v2",
+  "date": "2026-11-26",
+  "scope": "4 course Visual runs, 8 original-case Thinking conditions, 128 frozen extension conditions",
+  "artifacts": {
+    "node_source_snapshot": {
+      "path": "runs/task2-filter-boolean-v2/boolean_canvas-first-version.py",
+      "sha256": "2d31b11c48f7e69a19dac9a79834294ca1eda1fb3dea075389c9bf31648815dc"
+    },
+    "canvas_structure": {
+      "path": "runs/task2-filter-boolean-v2/structure-v2.json",
+      "sha256": "bd8ab8a37435946f11d0c11a5a3e681a273b06449cfac67ed282d8260a8849e2"
+    },
+    "canvas_image": {
+      "path": "runs/task2-filter-boolean-v2/canvas.png",
+      "sha256": "0747bb8b87e67883616c50c0fdad054c2c2568af921c0eeb565288fa00a6096b"
+    },
+    "browser_results": {
+      "path": "runs/task2-filter-boolean-v2/browser-results.json",
+      "sha256": "3c270e0c9c4fb77a4d6ea6edd0ea78a557173370535eccecb2b1f7f19e4051fc"
+    },
+    "visual_provenance": {
+      "path": "runs/task2-filter-boolean-v2/run-meta.json",
+      "sha256": "d59b34e894ef0a2fea79a4f979510bc383befef4f0a71f82e9ba574ced626989"
+    },
+    "frozen_plan": {
+      "path": "runs/task2-filter-boolean-comparison-v2/plan.json",
+      "sha256": "c9d29b19289225df790471d3a8ef8fdc8f0ab2b6f5239af14f84e74ddd14a706"
+    },
+    "experiment_config": {
+      "path": "runs/task2-filter-boolean-comparison-v2/config.json",
+      "sha256": "285a80bc00b623066923e55601ed42de212c99b0ef37c0d1d7cad5deab2e8e89"
+    },
+    "scoring_summary": {
+      "path": "runs/task2-filter-boolean-comparison-v2/summary.json",
+      "sha256": "4814bfdbe8616fe300a7ca92ff2557934355fe11e45c6813973362687f71f1cb"
+    }
+  },
+  "records_dir": "runs/task2-filter-boolean-comparison-v2/records",
+  "requests_dir": "runs/task2-filter-boolean-comparison-v2/requests"
+}

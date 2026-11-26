@@ -1,0 +1,948 @@
+[
+  {
+    "condition": "canvas",
+    "side": "post",
+    "request": {
+      "sample_id": "NLQ_column_value-00205-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "extract",
+            "kind": "format_extract"
+          },
+          {
+            "id": "exact",
+            "kind": "format_exact"
+          },
+          {
+            "id": "normalize",
+            "kind": "format_normalize"
+          },
+          {
+            "id": "generate",
+            "kind": "format_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "extract",
+            "target": "exact"
+          },
+          {
+            "source": "exact",
+            "target": "normalize"
+          },
+          {
+            "source": "exact",
+            "target": "generate"
+          },
+          {
+            "source": "normalize",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "NLQ_column_value-00205-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "extract",
+          "kind": "format_extract"
+        },
+        {
+          "id": "exact",
+          "kind": "format_exact"
+        },
+        {
+          "id": "normalize",
+          "kind": "format_normalize"
+        },
+        {
+          "id": "generate",
+          "kind": "format_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "extract",
+          "target": "exact"
+        },
+        {
+          "source": "exact",
+          "target": "normalize"
+        },
+        {
+          "source": "exact",
+          "target": "generate"
+        },
+        {
+          "source": "normalize",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "1492122c5af6432bb6ca2b345b4112af",
+    "graph_sha256": "cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+    "steps": [
+      {
+        "id": "extract",
+        "kind": "format_extract",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": [
+            {
+              "table": "TV_Channel",
+              "column": "Package_Option"
+            }
+          ],
+          "joins": [],
+          "targets": [
+            {
+              "table": "TV_Channel",
+              "column": "series_name",
+              "term": "Sky radio",
+              "operator": "="
+            }
+          ]
+        },
+        "elapsed_s": 48.248411199994734
+      },
+      {
+        "id": "exact",
+        "kind": "format_exact",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "extract"
+        ],
+        "output": {
+          "status": "miss",
+          "target": {
+            "table": "TV_Channel",
+            "column": "series_name",
+            "term": "Sky radio"
+          },
+          "value": null
+        },
+        "elapsed_s": 0.003396199994313065
+      },
+      {
+        "id": "normalize",
+        "kind": "format_normalize",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "exact"
+        ],
+        "output": {
+          "status": "normalized",
+          "candidates": [
+            "Sky Radio"
+          ],
+          "value": "Sky Radio"
+        },
+        "elapsed_s": 19.413409699998738
+      },
+      {
+        "id": "generate",
+        "kind": "format_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "exact",
+          "normalize"
+        ],
+        "output": {
+          "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+          "route": "normalized",
+          "stored_value": "Sky Radio"
+        },
+        "elapsed_s": 8.804906299999857
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+          "rows": [
+            [
+              "Sky Famiglia"
+            ]
+          ],
+          "columns": [
+            "Package_Option"
+          ],
+          "row_count": 1
+        },
+        "elapsed_s": 0.0010309999997843988
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 3,
+      "total_tokens": 19707
+    },
+    "course_flow_id": "TASK2_CANVAS_cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+    "course_flow": {
+      "id": "TASK2_CANVAS_cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_extract",
+          "type": "event",
+          "title": "extract",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_exact",
+          "type": "event",
+          "title": "exact",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_normalize",
+          "type": "event",
+          "title": "normalize",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_extract"
+        },
+        {
+          "source": "canvas_extract",
+          "target": "canvas_exact"
+        },
+        {
+          "source": "canvas_exact",
+          "target": "canvas_normalize"
+        },
+        {
+          "source": "canvas_normalize",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "canvas",
+    "side": "pre",
+    "request": {
+      "sample_id": "NLQ_column_value-00205-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "extract",
+            "kind": "format_extract"
+          },
+          {
+            "id": "exact",
+            "kind": "format_exact"
+          },
+          {
+            "id": "normalize",
+            "kind": "format_normalize"
+          },
+          {
+            "id": "generate",
+            "kind": "format_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "extract",
+            "target": "exact"
+          },
+          {
+            "source": "exact",
+            "target": "normalize"
+          },
+          {
+            "source": "exact",
+            "target": "generate"
+          },
+          {
+            "source": "normalize",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "NLQ_column_value-00205-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "extract",
+          "kind": "format_extract"
+        },
+        {
+          "id": "exact",
+          "kind": "format_exact"
+        },
+        {
+          "id": "normalize",
+          "kind": "format_normalize"
+        },
+        {
+          "id": "generate",
+          "kind": "format_generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "extract",
+          "target": "exact"
+        },
+        {
+          "source": "exact",
+          "target": "normalize"
+        },
+        {
+          "source": "exact",
+          "target": "generate"
+        },
+        {
+          "source": "normalize",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "e9b2c71925a74ee8ad1818675751dd08",
+    "graph_sha256": "cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+    "steps": [
+      {
+        "id": "extract",
+        "kind": "format_extract",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": [
+            {
+              "table": "TV_Channel",
+              "column": "Package_Option"
+            }
+          ],
+          "joins": [],
+          "targets": [
+            {
+              "table": "TV_Channel",
+              "column": "series_name",
+              "term": "Sky Radio",
+              "operator": "="
+            }
+          ]
+        },
+        "elapsed_s": 6.028057299998181
+      },
+      {
+        "id": "exact",
+        "kind": "format_exact",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "extract"
+        ],
+        "output": {
+          "status": "exact",
+          "target": {
+            "table": "TV_Channel",
+            "column": "series_name",
+            "term": "Sky Radio"
+          },
+          "value": "Sky Radio"
+        },
+        "elapsed_s": 0.0016482999999425374
+      },
+      {
+        "id": "normalize",
+        "kind": "format_normalize",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "exact"
+        ],
+        "output": {
+          "status": "skipped",
+          "reason": "exact",
+          "value": null
+        },
+        "elapsed_s": 8.600000001024455e-06
+      },
+      {
+        "id": "generate",
+        "kind": "format_generate",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "exact",
+          "normalize"
+        ],
+        "output": {
+          "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+          "route": "exact",
+          "stored_value": "Sky Radio"
+        },
+        "elapsed_s": 4.13512510000146
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+          "rows": [
+            [
+              "Sky Famiglia"
+            ]
+          ],
+          "columns": [
+            "Package_Option"
+          ],
+          "row_count": 1
+        },
+        "elapsed_s": 0.0013285000022733584
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 13603
+    },
+    "course_flow_id": "TASK2_CANVAS_cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+    "course_flow": {
+      "id": "TASK2_CANVAS_cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_extract",
+          "type": "event",
+          "title": "extract",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_exact",
+          "type": "event",
+          "title": "exact",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_normalize",
+          "type": "event",
+          "title": "normalize",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_extract"
+        },
+        {
+          "source": "canvas_extract",
+          "target": "canvas_exact"
+        },
+        {
+          "source": "canvas_exact",
+          "target": "canvas_normalize"
+        },
+        {
+          "source": "canvas_normalize",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "baseline",
+    "side": "post",
+    "request": {
+      "sample_id": "NLQ_column_value-00205-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "generate",
+            "kind": "generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "NLQ_column_value-00205-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "generate",
+          "kind": "generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "5ae6354fd42549a694a7c9a76b67bead",
+    "graph_sha256": "64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "steps": [
+      {
+        "id": "generate",
+        "kind": "generate",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky radio';"
+        },
+        "elapsed_s": 5.100511599994206
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky radio';",
+          "rows": [],
+          "columns": [
+            "Package_Option"
+          ],
+          "row_count": 0
+        },
+        "elapsed_s": 0.0009964999990188517
+      }
+    ],
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 0
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 4647
+    },
+    "course_flow_id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "course_flow": {
+      "id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "baseline",
+    "side": "pre",
+    "request": {
+      "sample_id": "NLQ_column_value-00205-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "generate",
+            "kind": "generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "NLQ_column_value-00205-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "generate",
+          "kind": "generate"
+        },
+        {
+          "id": "execute",
+          "kind": "execute"
+        }
+      ],
+      "links": [
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "c929996ad0da406893568509446e7de6",
+    "graph_sha256": "64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "steps": [
+      {
+        "id": "generate",
+        "kind": "generate",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "sql": "SELECT \"Package_Option\" FROM \"TV_Channel\" WHERE \"series_name\" = 'Sky Radio';"
+        },
+        "elapsed_s": 31.55482249999477
+      },
+      {
+        "id": "execute",
+        "kind": "execute",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"Package_Option\" FROM \"TV_Channel\" WHERE \"series_name\" = 'Sky Radio';",
+          "rows": [
+            [
+              "Sky Famiglia"
+            ]
+          ],
+          "columns": [
+            "Package_Option"
+          ],
+          "row_count": 1
+        },
+        "elapsed_s": 0.0014195999974617735
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 8946
+    },
+    "course_flow_id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+    "course_flow": {
+      "id": "TASK2_CANVAS_64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

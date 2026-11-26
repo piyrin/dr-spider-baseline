@@ -1,0 +1,24 @@
+{
+  "id": "resp_06229f7737f14c39016b06749f2ec487d0b0de1b59f2da4bb0",
+  "object": "chat.completion",
+  "created": 1795585185,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7183,
+    "completion_tokens": 110,
+    "total_tokens": 7293,
+    "completion_tokens_details": {
+      "reasoning_tokens": 97
+    }
+  }
+}

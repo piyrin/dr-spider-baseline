@@ -1,0 +1,510 @@
+{
+  "id": "DB_DBcontent_equivalence-00148-post",
+  "side": "post",
+  "original_id": 535,
+  "method": "canvas_v2",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "boolean_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "Students.first_name",
+          "Students.middle_name",
+          "Students.last_name"
+        ],
+        "joins": [
+          "Students.student_id = Student_Enrolment.student_id",
+          "Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id"
+        ],
+        "targets": [
+          {
+            "table": "Degree_Programs",
+            "column": "is_bachelor",
+            "term": "Bachelor",
+            "operator": "=",
+            "truth": true
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For a single clear equality condition describing an entity status or property, return one target with table, column, term, operator \"=\", and truth (JSON true or false). Term must be the exact unquoted status word or phrase in the question. For a status column with literal text and for an affirmative boolean flag, represent the positive status with true. For an explicitly negated affirmative flag use false and keep the status term itself without negation. When the condition or its column is uncertain, or several conditions are equally plausible, return zero targets. Do not guess how the value is stored."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Addresses\" (\"address_id\" INTEGER PRIMARY KEY,\"line_1\" VARCHAR(255),\"line_2\" VARCHAR(255),\"line_3\" VARCHAR(255),\"city\" VARCHAR(255),\"zip_postcode\" VARCHAR(20),\"state_province_county\" VARCHAR(255),\"country\" VARCHAR(255),\"other_address_details\" VARCHAR(255))\nCREATE TABLE \"Courses\" (\"course_id\" INTEGER PRIMARY KEY,\"course_name\" VARCHAR(255),\"course_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Degree_Programs\" (\"degree_program_id\" INTEGER PRIMARY KEY,\"department_id\" INTEGER NOT NULL,\"is_bachelor\" bool,\"is_master\" bool,\"is_phd\" bool,\"degree_summary_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"department_id\") REFERENCES \"Departments\"(\"department_id\"))\nCREATE TABLE \"Departments\" (\"department_id\" INTEGER PRIMARY KEY,\"department_name\" VARCHAR(255),\"department_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Sections\" (\"section_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"section_name\" VARCHAR(255),\"section_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"))\nCREATE TABLE \"Semesters\" (\"semester_id\" INTEGER PRIMARY KEY,\"semester_term\" text,\"semester_year\" text,\"semester_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Student_Enrolment\" (\"student_enrolment_id\" INTEGER PRIMARY KEY,\"degree_program_id\" INTEGER NOT NULL,\"semester_id\" INTEGER NOT NULL,\"student_id\" INTEGER NOT NULL,\"other_details\" VARCHAR(255),FOREIGN KEY (\"degree_program_id\") REFERENCES \"Degree_Programs\"(\"degree_program_id\"),FOREIGN KEY (\"semester_id\") REFERENCES \"Semesters\"(\"semester_id\"),FOREIGN KEY (\"student_id\") REFERENCES \"Students\"(\"student_id\"))\nCREATE TABLE \"Student_Enrolment_Courses\" (\"student_course_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"student_enrolment_id\" INTEGER NOT NULL,FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"),FOREIGN KEY (\"student_enrolment_id\") REFERENCES \"Student_Enrolment\"(\"student_enrolment_id\"))\nCREATE TABLE \"Students\" (\"student_id\" INTEGER PRIMARY KEY,\"current_address_id\" INTEGER NOT NULL,\"permanent_address_id\" INTEGER NOT NULL,\"first_name\" VARCHAR(80),\"middle_name\" VARCHAR(40),\"last_name\" VARCHAR(40),\"cell_mobile_number\" VARCHAR(40),\"email_address\" VARCHAR(40),\"ssn\" VARCHAR(40),\"date_first_registered\" int,\"time_first_registered\" int,\"date_left\" DATETIME,\"other_student_details\" VARCHAR(255),FOREIGN KEY (\"current_address_id\") REFERENCES \"Addresses\"(\"address_id\"),FOREIGN KEY (\"permanent_address_id\") REFERENCES \"Addresses\"(\"address_id\"))\nCREATE TABLE \"Transcript_Contents\" (\"student_course_id\" INTEGER NOT NULL,\"transcript_id\" INTEGER NOT NULL,FOREIGN KEY (\"student_course_id\") REFERENCES \"Student_Enrolment_Courses\"(\"student_course_id\"),FOREIGN KEY (\"transcript_id\") REFERENCES \"Transcripts\"(\"transcript_id\"))\nCREATE TABLE \"Transcripts\" (\"transcript_id\" INTEGER PRIMARY KEY,\"transcript_date\" int,\"transcript_time\" int,\"other_details\" VARCHAR(255))\nQuestion\nWho is enrolled in a Bachelor degree program? List the first name, middle name, last name."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0465d5d89a6f9edf016b079ec16dbc87d1b87de0c8bca7f2a8",
+          "object": "chat.completion",
+          "created": 1795661530,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"Students.first_name\",\"Students.middle_name\",\"Students.last_name\"],\"joins\":[\"Students.student_id = Student_Enrolment.student_id\",\"Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id\"],\"targets\":[{\"table\":\"Degree_Programs\",\"column\":\"is_bachelor\",\"term\":\"Bachelor\",\"operator\":\"=\",\"truth\":true}]}",
+                "reasoning_content": "**Clarifying bachelor status mapping****Constructing precise JSON query output**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0465d5d89a6f9edf016b079ec16df087d18467b3f691a13ee4": {
+                  "input_tokens": 742,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 742,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0465d5d89a6f9edf016b079ec16df087d1a5f1547baa6df63c": {
+                  "input_tokens": 199,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 199,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0465d5d89a6f9edf016b079ed7a16c87d189a4c73f512e4b16": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 81,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 81
+                    }
+                  ]
+                },
+                "rs_0465d5d89a6f9edf016b079eca15bc87d18ff331d91983a9e5": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 396
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5323,
+            "completion_tokens": 477,
+            "total_tokens": 5800,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 396
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0465d5d89a6f9edf016b079ec16df087d18467b3f691a13ee4": {
+                "input_tokens": 742,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 742,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0465d5d89a6f9edf016b079ec16df087d1a5f1547baa6df63c": {
+                "input_tokens": 199,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 199,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0465d5d89a6f9edf016b079ed7a16c87d189a4c73f512e4b16": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 81,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 81
+                  }
+                ]
+              },
+              "rs_0465d5d89a6f9edf016b079eca15bc87d18ff331d91983a9e5": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 396
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 5323,
+          "completion_tokens": 477,
+          "total_tokens": 5800,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 396
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "lookup",
+      "kind": "boolean_lookup",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "table": "Degree_Programs",
+        "column": "is_bachelor",
+        "term": "Bachelor",
+        "truth": true,
+        "declared_type": "bool",
+        "status": "boolean",
+        "value": "T",
+        "storage": "text",
+        "observed": [
+          {
+            "value": "F",
+            "storage": "text"
+          },
+          {
+            "value": "T",
+            "storage": "text"
+          }
+        ]
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "boolean_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "lookup"
+      ],
+      "output": {
+        "sql": "SELECT DISTINCT s.first_name, s.middle_name, s.last_name\nFROM Students AS s\nJOIN Student_Enrolment AS se ON se.student_id = s.student_id\nJOIN Degree_Programs AS dp ON dp.degree_program_id = se.degree_program_id\nWHERE dp.is_bachelor = 'T';",
+        "route": "boolean",
+        "stored_value": "T"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Addresses\" (\"address_id\" INTEGER PRIMARY KEY,\"line_1\" VARCHAR(255),\"line_2\" VARCHAR(255),\"line_3\" VARCHAR(255),\"city\" VARCHAR(255),\"zip_postcode\" VARCHAR(20),\"state_province_county\" VARCHAR(255),\"country\" VARCHAR(255),\"other_address_details\" VARCHAR(255))\nCREATE TABLE \"Courses\" (\"course_id\" INTEGER PRIMARY KEY,\"course_name\" VARCHAR(255),\"course_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Degree_Programs\" (\"degree_program_id\" INTEGER PRIMARY KEY,\"department_id\" INTEGER NOT NULL,\"is_bachelor\" bool,\"is_master\" bool,\"is_phd\" bool,\"degree_summary_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"department_id\") REFERENCES \"Departments\"(\"department_id\"))\nCREATE TABLE \"Departments\" (\"department_id\" INTEGER PRIMARY KEY,\"department_name\" VARCHAR(255),\"department_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Sections\" (\"section_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"section_name\" VARCHAR(255),\"section_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"))\nCREATE TABLE \"Semesters\" (\"semester_id\" INTEGER PRIMARY KEY,\"semester_term\" text,\"semester_year\" text,\"semester_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Student_Enrolment\" (\"student_enrolment_id\" INTEGER PRIMARY KEY,\"degree_program_id\" INTEGER NOT NULL,\"semester_id\" INTEGER NOT NULL,\"student_id\" INTEGER NOT NULL,\"other_details\" VARCHAR(255),FOREIGN KEY (\"degree_program_id\") REFERENCES \"Degree_Programs\"(\"degree_program_id\"),FOREIGN KEY (\"semester_id\") REFERENCES \"Semesters\"(\"semester_id\"),FOREIGN KEY (\"student_id\") REFERENCES \"Students\"(\"student_id\"))\nCREATE TABLE \"Student_Enrolment_Courses\" (\"student_course_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"student_enrolment_id\" INTEGER NOT NULL,FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"),FOREIGN KEY (\"student_enrolment_id\") REFERENCES \"Student_Enrolment\"(\"student_enrolment_id\"))\nCREATE TABLE \"Students\" (\"student_id\" INTEGER PRIMARY KEY,\"current_address_id\" INTEGER NOT NULL,\"permanent_address_id\" INTEGER NOT NULL,\"first_name\" VARCHAR(80),\"middle_name\" VARCHAR(40),\"last_name\" VARCHAR(40),\"cell_mobile_number\" VARCHAR(40),\"email_address\" VARCHAR(40),\"ssn\" VARCHAR(40),\"date_first_registered\" int,\"time_first_registered\" int,\"date_left\" DATETIME,\"other_student_details\" VARCHAR(255),FOREIGN KEY (\"current_address_id\") REFERENCES \"Addresses\"(\"address_id\"),FOREIGN KEY (\"permanent_address_id\") REFERENCES \"Addresses\"(\"address_id\"))\nCREATE TABLE \"Transcript_Contents\" (\"student_course_id\" INTEGER NOT NULL,\"transcript_id\" INTEGER NOT NULL,FOREIGN KEY (\"student_course_id\") REFERENCES \"Student_Enrolment_Courses\"(\"student_course_id\"),FOREIGN KEY (\"transcript_id\") REFERENCES \"Transcripts\"(\"transcript_id\"))\nCREATE TABLE \"Transcripts\" (\"transcript_id\" INTEGER PRIMARY KEY,\"transcript_date\" int,\"transcript_time\" int,\"other_details\" VARCHAR(255))\nQuestion\nWho is enrolled in a Bachelor degree program? List the first name, middle name, last name.\nQuery plan\nVerified knowledge: Degree_Programs.is_bachelor stores the matching value for 'Bachelor' as 'T' (SQLite storage type text). Use that value and type for the verified equality condition. Keep the requested output, other filters and aggregation."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_05a065dd41404304016b079eddbe3c87d088ef5488f88e44a5",
+          "object": "chat.completion",
+          "created": 1795661539,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT DISTINCT s.first_name, s.middle_name, s.last_name\nFROM Students AS s\nJOIN Student_Enrolment AS se ON se.student_id = s.student_id\nJOIN Degree_Programs AS dp ON dp.degree_program_id = se.degree_program_id\nWHERE dp.is_bachelor = 'T';",
+                "reasoning_content": "**Joining student enrollment records**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_05a065dd41404304016b079eddbe7887d085f6a3252795c2ca": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_05a065dd41404304016b079eddbe7c87d0a953af40f28de687": {
+                  "input_tokens": 793,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 793,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_05a065dd41404304016b079ee335ec87d08d9dc51d82ac249d": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 68,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 68
+                    }
+                  ]
+                },
+                "rs_05a065dd41404304016b079ede901487d0aa852f35afc71e52": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 39
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5200,
+            "completion_tokens": 107,
+            "total_tokens": 5307,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 39
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_05a065dd41404304016b079eddbe7887d085f6a3252795c2ca": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_05a065dd41404304016b079eddbe7c87d0a953af40f28de687": {
+                "input_tokens": 793,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 793,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_05a065dd41404304016b079ee335ec87d08d9dc51d82ac249d": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 68,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 68
+                  }
+                ]
+              },
+              "rs_05a065dd41404304016b079ede901487d0aa852f35afc71e52": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 39
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 5200,
+          "completion_tokens": 107,
+          "total_tokens": 5307,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 39
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT DISTINCT s.first_name, s.middle_name, s.last_name\nFROM Students AS s\nJOIN Student_Enrolment AS se ON se.student_id = s.student_id\nJOIN Degree_Programs AS dp ON dp.degree_program_id = se.degree_program_id\nWHERE dp.is_bachelor = 'T';",
+        "rows": [
+          [
+            "Reva",
+            "Golda",
+            "Osinski"
+          ],
+          [
+            "Frida",
+            "Aisha",
+            "Huel"
+          ],
+          [
+            "Jarvis",
+            "Aaliyah",
+            "Carroll"
+          ],
+          [
+            "Milton",
+            "Vaughn",
+            "Christiansen"
+          ],
+          [
+            "Stanford",
+            "Mona",
+            "Rogahn"
+          ]
+        ],
+        "columns": [
+          "first_name",
+          "middle_name",
+          "last_name"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 10523,
+    "completion_tokens": 584,
+    "total_tokens": 11107
+  },
+  "model_calls": 2,
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 5,
+    "prediction_rows": 5
+  }
+}

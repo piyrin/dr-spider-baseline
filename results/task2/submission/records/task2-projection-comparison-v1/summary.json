@@ -1,0 +1,762 @@
+{
+  "target": {
+    "arms": {
+      "基线 none": {
+        "n": 8,
+        "states": {
+          "CW": 1,
+          "CC": 5,
+          "WW": 2
+        },
+        "clean": 6,
+        "post": 5,
+        "both": 5,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 4881.0625,
+          "completion_tokens": 60.9375,
+          "total_tokens": 4942
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 5,
+        "reasoning_token_coverage": 5
+      },
+      "基线 high": {
+        "n": 8,
+        "states": {
+          "CW": 2,
+          "CC": 4,
+          "WW": 2
+        },
+        "clean": 6,
+        "post": 4,
+        "both": 4,
+        "cw": 2,
+        "token_means": {
+          "prompt_tokens": 4881.0625,
+          "completion_tokens": 90.25,
+          "total_tokens": 4971.3125
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 12,
+        "reasoning_token_coverage": 12
+      },
+      "编排 v2 none": {
+        "n": 8,
+        "states": {
+          "CC": 6,
+          "WC": 1,
+          "WW": 1
+        },
+        "clean": 6,
+        "post": 7,
+        "both": 6,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 4650.8125,
+          "completion_tokens": 60.25,
+          "total_tokens": 4711.0625
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 5,
+        "reasoning_token_coverage": 5
+      },
+      "编排 v2 high": {
+        "n": 8,
+        "states": {
+          "CC": 6,
+          "CW": 1,
+          "WW": 1
+        },
+        "clean": 7,
+        "post": 6,
+        "both": 6,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 5442.8125,
+          "completion_tokens": 94.4375,
+          "total_tokens": 5537.25
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 13,
+        "reasoning_token_coverage": 13
+      }
+    },
+    "contrasts": {
+      "基线 none → 编排 v2 none": {
+        "n": 8,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 2,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.375
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 5,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 1
+          }
+        },
+        "median_total_token_delta": 34.0,
+        "token_delta_coverage": 16
+      },
+      "基线 high → 编排 v2 high": {
+        "n": 8,
+        "repair": 2,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 2,
+        "post_regression": 0,
+        "net_cc": 2,
+        "cc_delta_ci": [
+          0,
+          0.625
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 4,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 2,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 1
+          }
+        },
+        "median_total_token_delta": 54.5,
+        "token_delta_coverage": 16
+      },
+      "基线 none → 基线 high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 1,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": -1,
+        "cc_delta_ci": [
+          -0.375,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 4,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 25.5,
+        "token_delta_coverage": 16
+      },
+      "编排 v2 none → 编排 v2 high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 6,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          }
+        },
+        "median_total_token_delta": 35.5,
+        "token_delta_coverage": 16
+      }
+    }
+  },
+  "control": {
+    "arms": {
+      "基线 none": {
+        "n": 8,
+        "states": {
+          "CC": 5,
+          "WW": 2,
+          "CW": 1
+        },
+        "clean": 6,
+        "post": 5,
+        "both": 5,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 5046.6875,
+          "completion_tokens": 75.625,
+          "total_tokens": 5122.3125
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 5,
+        "reasoning_token_coverage": 5
+      },
+      "基线 high": {
+        "n": 8,
+        "states": {
+          "CC": 5,
+          "WW": 2,
+          "CW": 1
+        },
+        "clean": 6,
+        "post": 5,
+        "both": 5,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 5108.8125,
+          "completion_tokens": 123.875,
+          "total_tokens": 5232.6875
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 13,
+        "reasoning_token_coverage": 13
+      },
+      "编排 v2 none": {
+        "n": 8,
+        "states": {
+          "CC": 5,
+          "WW": 3
+        },
+        "clean": 5,
+        "post": 5,
+        "both": 5,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 5030.6875,
+          "completion_tokens": 83.25,
+          "total_tokens": 5113.9375
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 5,
+        "reasoning_token_coverage": 5
+      },
+      "编排 v2 high": {
+        "n": 8,
+        "states": {
+          "CC": 6,
+          "WW": 2
+        },
+        "clean": 6,
+        "post": 6,
+        "both": 6,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 5108.8125,
+          "completion_tokens": 122.6875,
+          "total_tokens": 5231.5
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 14,
+        "reasoning_token_coverage": 14
+      }
+    },
+    "contrasts": {
+      "基线 none → 编排 v2 none": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 1,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 5,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 1.5,
+        "token_delta_coverage": 16
+      },
+      "基线 high → 编排 v2 high": {
+        "n": 8,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.375
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 5,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 10.0,
+        "token_delta_coverage": 16
+      },
+      "基线 none → 基线 high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 5,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 53.0,
+        "token_delta_coverage": 16
+      },
+      "编排 v2 none → 编排 v2 high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.375
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 5,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 46.5,
+        "token_delta_coverage": 16
+      }
+    }
+  },
+  "all": {
+    "arms": {
+      "基线 none": {
+        "n": 16,
+        "states": {
+          "CW": 2,
+          "CC": 10,
+          "WW": 4
+        },
+        "clean": 12,
+        "post": 10,
+        "both": 10,
+        "cw": 2,
+        "token_means": {
+          "prompt_tokens": 4963.875,
+          "completion_tokens": 68.28125,
+          "total_tokens": 5032.15625
+        },
+        "token_coverage": 32,
+        "positive_reasoning_token_reports": 10,
+        "reasoning_token_coverage": 10
+      },
+      "基线 high": {
+        "n": 16,
+        "states": {
+          "CW": 3,
+          "CC": 9,
+          "WW": 4
+        },
+        "clean": 12,
+        "post": 9,
+        "both": 9,
+        "cw": 3,
+        "token_means": {
+          "prompt_tokens": 4994.9375,
+          "completion_tokens": 107.0625,
+          "total_tokens": 5102
+        },
+        "token_coverage": 32,
+        "positive_reasoning_token_reports": 25,
+        "reasoning_token_coverage": 25
+      },
+      "编排 v2 none": {
+        "n": 16,
+        "states": {
+          "CC": 11,
+          "WC": 1,
+          "WW": 4
+        },
+        "clean": 11,
+        "post": 12,
+        "both": 11,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 4840.75,
+          "completion_tokens": 71.75,
+          "total_tokens": 4912.5
+        },
+        "token_coverage": 32,
+        "positive_reasoning_token_reports": 10,
+        "reasoning_token_coverage": 10
+      },
+      "编排 v2 high": {
+        "n": 16,
+        "states": {
+          "CC": 12,
+          "CW": 1,
+          "WW": 3
+        },
+        "clean": 13,
+        "post": 12,
+        "both": 12,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 5275.8125,
+          "completion_tokens": 108.5625,
+          "total_tokens": 5384.375
+        },
+        "token_coverage": 32,
+        "positive_reasoning_token_reports": 27,
+        "reasoning_token_coverage": 27
+      }
+    },
+    "contrasts": {
+      "基线 none → 编排 v2 none": {
+        "n": 16,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 1,
+        "post_repair": 2,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.1875
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 10,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 3
+          }
+        },
+        "median_total_token_delta": 11.5,
+        "token_delta_coverage": 32
+      },
+      "基线 high → 编排 v2 high": {
+        "n": 16,
+        "repair": 3,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 3,
+        "post_regression": 0,
+        "net_cc": 3,
+        "cc_delta_ci": [
+          0,
+          0.375
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 9,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 3,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 3
+          }
+        },
+        "median_total_token_delta": 23.5,
+        "token_delta_coverage": 32
+      },
+      "基线 none → 基线 high": {
+        "n": 16,
+        "repair": 0,
+        "harm_post": 1,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": -1,
+        "cc_delta_ci": [
+          -0.1875,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 9,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 2,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 4
+          }
+        },
+        "median_total_token_delta": 31.5,
+        "token_delta_coverage": 32
+      },
+      "编排 v2 none → 编排 v2 high": {
+        "n": 16,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 1,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.1875
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 11,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 3
+          }
+        },
+        "median_total_token_delta": 43.0,
+        "token_delta_coverage": 32
+      }
+    }
+  }
+}

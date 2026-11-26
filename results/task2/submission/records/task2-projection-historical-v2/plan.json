@@ -1,0 +1,287 @@
+{
+  "selected": [
+    {
+      "pair": "NLQ_column_carrier-00127",
+      "original_id": 262,
+      "db_id": "employee_hire_evaluation",
+      "pre": {
+        "id": "NLQ_column_carrier-00127-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_column_carrier-00127-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_column_carrier-00324",
+      "original_id": 692,
+      "db_id": "voter_1",
+      "pre": {
+        "id": "NLQ_column_carrier-00324-pre",
+        "route": "direct",
+        "field": "CONTESTANTS.contestant_name"
+      },
+      "post": {
+        "id": "NLQ_column_carrier-00324-post",
+        "route": "normalized",
+        "field": "CONTESTANTS.contestant_name"
+      }
+    },
+    {
+      "pair": "NLQ_column_carrier-00326",
+      "original_id": 692,
+      "db_id": "voter_1",
+      "pre": {
+        "id": "NLQ_column_carrier-00326-pre",
+        "route": "direct",
+        "field": "CONTESTANTS.contestant_name"
+      },
+      "post": {
+        "id": "NLQ_column_carrier-00326-post",
+        "route": "normalized",
+        "field": "CONTESTANTS.contestant_name"
+      }
+    },
+    {
+      "pair": "NLQ_column_carrier-00364",
+      "original_id": 802,
+      "db_id": "world_1",
+      "pre": {
+        "id": "NLQ_column_carrier-00364-pre",
+        "route": "direct",
+        "field": "country.Name"
+      },
+      "post": {
+        "id": "NLQ_column_carrier-00364-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_column_carrier-00467",
+      "original_id": 889,
+      "db_id": "network_1",
+      "pre": {
+        "id": "NLQ_column_carrier-00467-pre",
+        "route": "direct",
+        "field": "Highschooler.name"
+      },
+      "post": {
+        "id": "NLQ_column_carrier-00467-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_column_carrier-00474",
+      "original_id": 901,
+      "db_id": "network_1",
+      "pre": {
+        "id": "NLQ_column_carrier-00474-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_column_carrier-00474-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_column_carrier-00499",
+      "original_id": 871,
+      "db_id": "network_1",
+      "pre": {
+        "id": "NLQ_column_carrier-00499-pre",
+        "route": "direct",
+        "field": "Highschooler.name"
+      },
+      "post": {
+        "id": "NLQ_column_carrier-00499-post",
+        "route": "normalized",
+        "field": "Highschooler.name"
+      }
+    },
+    {
+      "pair": "NLQ_column_synonym-00198",
+      "original_id": 365,
+      "db_id": "cre_Doc_Template_Mgt",
+      "pre": {
+        "id": "NLQ_column_synonym-00198-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_column_synonym-00198-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_column_synonym-00200",
+      "original_id": 365,
+      "db_id": "cre_Doc_Template_Mgt",
+      "pre": {
+        "id": "NLQ_column_synonym-00200-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_column_synonym-00200-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_column_synonym-00367",
+      "original_id": 681,
+      "db_id": "poker_player",
+      "pre": {
+        "id": "NLQ_column_synonym-00367-pre",
+        "route": "direct",
+        "field": "people.Name"
+      },
+      "post": {
+        "id": "NLQ_column_synonym-00367-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_keyword_synonym-00053",
+      "original_id": 82,
+      "db_id": "pets_1",
+      "pre": {
+        "id": "NLQ_keyword_synonym-00053-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_keyword_synonym-00053-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_keyword_synonym-00419",
+      "original_id": 383,
+      "db_id": "course_teach",
+      "pre": {
+        "id": "NLQ_keyword_synonym-00419-pre",
+        "route": "direct",
+        "field": "teacher.Name"
+      },
+      "post": {
+        "id": "NLQ_keyword_synonym-00419-post",
+        "route": "normalized",
+        "field": "teacher.Name"
+      }
+    },
+    {
+      "pair": "NLQ_multitype-00519",
+      "original_id": 383,
+      "db_id": "course_teach",
+      "pre": {
+        "id": "NLQ_multitype-00519-pre",
+        "route": "direct",
+        "field": "teacher.Name"
+      },
+      "post": {
+        "id": "NLQ_multitype-00519-post",
+        "route": "normalized",
+        "field": "teacher.Name"
+      }
+    },
+    {
+      "pair": "NLQ_multitype-01142",
+      "original_id": 910,
+      "db_id": "network_1",
+      "pre": {
+        "id": "NLQ_multitype-01142-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_multitype-01142-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_multitype-01294",
+      "original_id": 1006,
+      "db_id": "singer",
+      "pre": {
+        "id": "NLQ_multitype-01294-pre",
+        "route": "direct",
+        "field": "singer.Name"
+      },
+      "post": {
+        "id": "NLQ_multitype-01294-post",
+        "route": "normalized",
+        "field": "singer.Name"
+      }
+    },
+    {
+      "pair": "NLQ_others-02589",
+      "original_id": 939,
+      "db_id": "dog_kennels",
+      "pre": {
+        "id": "NLQ_others-02589-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_others-02589-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_others-02664",
+      "original_id": 965,
+      "db_id": "dog_kennels",
+      "pre": {
+        "id": "NLQ_others-02664-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_others-02664-post",
+        "route": "fallback",
+        "field": null
+      }
+    },
+    {
+      "pair": "NLQ_value_synonym-00454",
+      "original_id": 910,
+      "db_id": "network_1",
+      "pre": {
+        "id": "NLQ_value_synonym-00454-pre",
+        "route": "fallback",
+        "field": null
+      },
+      "post": {
+        "id": "NLQ_value_synonym-00454-post",
+        "route": "fallback",
+        "field": null
+      }
+    }
+  ],
+  "selection": "all 18 of 134 historical reviewed output-cue widening pairs",
+  "effort": "none",
+  "source_sha256": {
+    ".local\\task2-experiment\\问题子类与开发样本.md": "5ec0899636a1cfb8889abe4c146f4ca510ea1c9b1c55f2bc9b7fc74236bd4e04",
+    "results\\drspider-17x50\\prepass-postfail-review.csv": "33f7f15fd2982b2fa4ca85b36e2513e9399649145f1f929ed1756b49fa8f89f9",
+    "results\\drspider-17x50\\predictions.csv": "5e65c2e4b9c25b832eb9317ca2fc7d2fdea1adbeb940cc34e2e6786d3d5eaa91",
+    "scripts\\run_full_evaluation.py": "058dc374bbd6f4c2742b3d53fd2f2248134eb5b8b5d3d2f1235e096a777baa04",
+    ".local\\task2-experiment\\projection_history.py": "7bcbf2609098843570683fa2218fa52bff1d644a1826cd865a69c66a6ec0c341",
+    ".local\\task2-experiment\\projection_compare.py": "9a0954322e8520bf747ee56ad00c4ddcae58e1dac8ae3753703d7cd8f2980771",
+    ".local\\task2-experiment\\projection_generalization.py": "b040b817640f38777cd205cf7b8a87ce157823cea1190f1d09d336ca371c5848",
+    ".local\\task2-experiment\\projection_canvas.py": "343b2d099b32414839a7a82b42556437d5361a3834ec31013ac169e076ba2267",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4"
+  }
+}

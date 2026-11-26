@@ -1,0 +1,79 @@
+{
+  "id": "NLQ_column_carrier-00499-post",
+  "side": "post",
+  "original_id": 871,
+  "method": "baseline",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "generate",
+      "kind": "generate",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT ID, name, grade\nFROM Highschooler\nWHERE grade = 10;"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT ID, name, grade\nFROM Highschooler\nWHERE grade = 10;",
+        "rows": [
+          [
+            1101,
+            "Haley",
+            10
+          ],
+          [
+            1782,
+            "Andrew",
+            10
+          ],
+          [
+            1468,
+            "Kris",
+            10
+          ],
+          [
+            1641,
+            "Brittany",
+            10
+          ]
+        ],
+        "columns": [
+          "ID",
+          "name",
+          "grade"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 4,
+    "prediction_rows": 4
+  },
+  "usage": {
+    "prompt_tokens": 4557,
+    "completion_tokens": 22,
+    "total_tokens": 4579,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      },
+      "cached_tokens": 2560
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 3.504
+}

@@ -1,0 +1,585 @@
+{
+  "sample_id": "SQL_comparison-00133-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "count_intent"
+      },
+      {
+        "id": "policy",
+        "kind": "count_policy"
+      },
+      {
+        "id": "generate",
+        "kind": "count_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "ec5434f8dea74edc8a3cb680a5d5747e",
+  "graph_sha256": "63761c4e6b367caf50ac139637cf6c395a8f5a1926222772ed991f84cdd4d58a",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "count_intent",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "parent_table": "country",
+            "parent_key": "Code",
+            "detail_table": "countrylanguage",
+            "detail_key": "CountryCode",
+            "role": "both",
+            "operator": "<",
+            "threshold": 2,
+            "policy": "observed",
+            "cue": "countries that speak less than 2 languages"
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For this node replace the default field-hypothesis task with a scope analysis for one count of related records per parent entity. Return JSON {\"targets\":[]} if no single applicable count or parent/detail key is clear. Otherwise return one target with parent_table, parent_key, detail_table, detail_key (exact schema identifiers connected by equality), role (\"result\", \"filter\", or \"both\"), operator (comparison to count, or null), threshold (nonnegative integer or null), policy (\"observed\", \"zero\", or \"unknown\"), and cue (exact contiguous original question text supporting the choice). Use observed when counting recorded observations about a parent, no detail makes that measurement unknown, and the question does not require inclusion of unobserved parents. Use zero when the question expressly includes zero counts or absence of related events, or asks to report a count for each parent even without matching records. Use unknown if coverage, intended population, or the effect of a compound condition is unclear. An upper bound alone does not decide whether no detail means zero. Do not provide SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"city\" (\"ID\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"Name\" char(35) NOT NULL DEFAULT '',\"CountryCode\" char(3) NOT NULL DEFAULT '',\"District\" char(20) NOT NULL DEFAULT '',\"Population\" integer NOT NULL DEFAULT '0',FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nCREATE TABLE \"country\" (\"Code\" char(3) NOT NULL DEFAULT '',\"Name\" char(52) NOT NULL DEFAULT '',\"Continent\" text NOT NULL DEFAULT 'Asia',\"Region\" char(26) NOT NULL DEFAULT '',\"SurfaceArea\" float(10,2) NOT NULL DEFAULT '0.00',\"IndepYear\" integer DEFAULT NULL,\"Population\" integer NOT NULL DEFAULT '0',\"LifeExpectancy\" float(3,1) DEFAULT NULL,\"GNP\" float(10,2) DEFAULT NULL,\"GNPOld\" float(10,2) DEFAULT NULL,\"LocalName\" char(45) NOT NULL DEFAULT '',\"GovernmentForm\" char(45) NOT NULL DEFAULT '',\"HeadOfState\" char(60) DEFAULT NULL,\"Capital\" integer DEFAULT NULL,\"Code2\" char(2) NOT NULL DEFAULT '',PRIMARY KEY (\"Code\"))\nCREATE TABLE \"countrylanguage\" (\"CountryCode\" char(3) NOT NULL DEFAULT '',\"Language\" char(30) NOT NULL DEFAULT '',\"IsOfficial\" text NOT NULL DEFAULT 'F',\"Percentage\" float(4,1) NOT NULL DEFAULT '0.0',PRIMARY KEY (\"CountryCode\",\"Language\"),FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nQuestion\nWhat are the names of countries that speak less than 2 languages, as well as how many languages they speak?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_03d6efd3e4972813016b07a358bed087d2a14d695e73b2e1de",
+          "object": "chat.completion",
+          "created": 1795662694,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"parent_table\":\"country\",\"parent_key\":\"Code\",\"detail_table\":\"countrylanguage\",\"detail_key\":\"CountryCode\",\"role\":\"both\",\"operator\":\"<\",\"threshold\":2,\"policy\":\"observed\",\"cue\":\"countries that speak less than 2 languages\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_03d6efd3e4972813016b07a358bf1487d2a9e967fab9b9be80": {
+                  "input_tokens": 295,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 295,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_03d6efd3e4972813016b07a358bf1887d280d4e9b09c76c2a1": {
+                  "input_tokens": 361,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 361,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_03d6efd3e4972813016b07a364f1b887d2a5013084fad0edfd": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 61,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 61
+                    }
+                  ]
+                },
+                "rs_03d6efd3e4972813016b07a364c29c87d2a808170ffc4eb291": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 145
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5038,
+            "completion_tokens": 206,
+            "total_tokens": 5244,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 145
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_03d6efd3e4972813016b07a358bf1487d2a9e967fab9b9be80": {
+                "input_tokens": 295,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 295,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_03d6efd3e4972813016b07a358bf1887d280d4e9b09c76c2a1": {
+                "input_tokens": 361,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 361,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_03d6efd3e4972813016b07a364f1b887d2a5013084fad0edfd": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 61,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 61
+                  }
+                ]
+              },
+              "rs_03d6efd3e4972813016b07a364c29c87d2a808170ffc4eb291": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 145
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 5038,
+          "completion_tokens": 206,
+          "total_tokens": 5244,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 145
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 17.149201399999583
+    },
+    {
+      "id": "policy",
+      "kind": "count_policy",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "observed",
+        "role": "both",
+        "operator": "<",
+        "threshold": 2,
+        "cue": "countries that speak less than 2 languages",
+        "parent_table": "country",
+        "parent_key": "Code",
+        "detail_table": "countrylanguage",
+        "detail_key": "CountryCode"
+      },
+      "call": null,
+      "elapsed_s": 0.0013729999991483055
+    },
+    {
+      "id": "generate",
+      "kind": "count_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "policy"
+      ],
+      "output": {
+        "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+        "route": "observed"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"city\" (\"ID\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"Name\" char(35) NOT NULL DEFAULT '',\"CountryCode\" char(3) NOT NULL DEFAULT '',\"District\" char(20) NOT NULL DEFAULT '',\"Population\" integer NOT NULL DEFAULT '0',FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nCREATE TABLE \"country\" (\"Code\" char(3) NOT NULL DEFAULT '',\"Name\" char(52) NOT NULL DEFAULT '',\"Continent\" text NOT NULL DEFAULT 'Asia',\"Region\" char(26) NOT NULL DEFAULT '',\"SurfaceArea\" float(10,2) NOT NULL DEFAULT '0.00',\"IndepYear\" integer DEFAULT NULL,\"Population\" integer NOT NULL DEFAULT '0',\"LifeExpectancy\" float(3,1) DEFAULT NULL,\"GNP\" float(10,2) DEFAULT NULL,\"GNPOld\" float(10,2) DEFAULT NULL,\"LocalName\" char(45) NOT NULL DEFAULT '',\"GovernmentForm\" char(45) NOT NULL DEFAULT '',\"HeadOfState\" char(60) DEFAULT NULL,\"Capital\" integer DEFAULT NULL,\"Code2\" char(2) NOT NULL DEFAULT '',PRIMARY KEY (\"Code\"))\nCREATE TABLE \"countrylanguage\" (\"CountryCode\" char(3) NOT NULL DEFAULT '',\"Language\" char(30) NOT NULL DEFAULT '',\"IsOfficial\" text NOT NULL DEFAULT 'F',\"Percentage\" float(4,1) NOT NULL DEFAULT '0.0',PRIMARY KEY (\"CountryCode\",\"Language\"),FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nQuestion\nWhat are the names of countries that speak less than 2 languages, as well as how many languages they speak?\nQuery plan\nCount scope for the relation from country.Code to countrylanguage.CountryCode. Use parents with matching recorded detail for this count filter. Absence of detail is an unknown observation and must not pass as zero. Keep the question’s output, comparison and other conditions."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0afe656ae34390e7016b07a36a66e087d1aa52be2485069b9c",
+          "object": "chat.completion",
+          "created": 1795662711,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0afe656ae34390e7016b07a36a672487d18c0bebf3219df402": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0afe656ae34390e7016b07a36a672487d193fa146936626061": {
+                  "input_tokens": 415,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 415,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0afe656ae34390e7016b07a376742487d1bd2d14510e1c6996": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 56,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 56
+                    }
+                  ]
+                },
+                "rs_0afe656ae34390e7016b07a376431c87d1b119ff43af07bc69": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 92
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4822,
+            "completion_tokens": 148,
+            "total_tokens": 4970,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 92
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0afe656ae34390e7016b07a36a672487d18c0bebf3219df402": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0afe656ae34390e7016b07a36a672487d193fa146936626061": {
+                "input_tokens": 415,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 415,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0afe656ae34390e7016b07a376742487d1bd2d14510e1c6996": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 56,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 56
+                  }
+                ]
+              },
+              "rs_0afe656ae34390e7016b07a376431c87d1b119ff43af07bc69": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 92
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4822,
+          "completion_tokens": 148,
+          "total_tokens": 4970,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 92
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 16.369827299999088
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+        "rows": [
+          [
+            "Anguilla",
+            1
+          ],
+          [
+            "Bosnia and Herzegovina",
+            1
+          ],
+          [
+            "Bermuda",
+            1
+          ],
+          [
+            "Cuba",
+            1
+          ],
+          [
+            "Cayman Islands",
+            1
+          ],
+          [
+            "Western Sahara",
+            1
+          ],
+          [
+            "Falkland Islands",
+            1
+          ],
+          [
+            "Grenada",
+            1
+          ],
+          [
+            "Montserrat",
+            1
+          ],
+          [
+            "Norfolk Island",
+            1
+          ],
+          [
+            "Pitcairn",
+            1
+          ],
+          [
+            "Portugal",
+            1
+          ],
+          [
+            "Saudi Arabia",
+            1
+          ],
+          [
+            "Saint Helena",
+            1
+          ],
+          [
+            "San Marino",
+            1
+          ],
+          [
+            "Saint Pierre and Miquelon",
+            1
+          ],
+          [
+            "Turks and Caicos Islands",
+            1
+          ],
+          [
+            "United States Minor Outlying Islands",
+            1
+          ],
+          [
+            "Uruguay",
+            1
+          ],
+          [
+            "Holy See (Vatican City State)",
+            1
+          ],
+          [
+            "Virgin Islands, British",
+            1
+          ]
+        ],
+        "columns": [
+          "Name",
+          "LanguageCount"
+        ]
+      },
+      "call": null,
+      "elapsed_s": 0.0014699000003020046
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 21,
+    "prediction_rows": 21
+  },
+  "cost": {
+    "model_calls": 2,
+    "total_tokens": 10214
+  }
+}

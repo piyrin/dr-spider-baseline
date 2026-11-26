@@ -1,0 +1,53 @@
+{
+  "id": "NLQ_column_carrier-00499-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7221,
+    "completion_tokens": 76,
+    "total_tokens": 7297,
+    "prompt_tokens_details": {
+      "cached_tokens": 6272
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 62
+    }
+  },
+  "prediction_sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 4,
+  "prediction_row_count": 4,
+  "status": "match",
+  "condition": "prior",
+  "prior": "Highschooler.name is the human-readable identity for a who question about students. ID is a technical identifier and grade is a filter.",
+  "recorded_at": "2026-11-25T13:39:19+08:00",
+  "gold_rows": [
+    [
+      "Haley"
+    ],
+    [
+      "Andrew"
+    ],
+    [
+      "Kris"
+    ],
+    [
+      "Brittany"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Haley"
+    ],
+    [
+      "Andrew"
+    ],
+    [
+      "Kris"
+    ],
+    [
+      "Brittany"
+    ]
+  ]
+}

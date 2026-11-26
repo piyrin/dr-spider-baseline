@@ -1,0 +1,116 @@
+{
+  "id": "NLQ_column_carrier-00111-post",
+  "side": "post",
+  "original_id": 277,
+  "method": "canvas_v2",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "match",
+      "kind": "projection_match_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "status": "unresolved",
+        "field": null,
+        "entity": null
+      }
+    },
+    {
+      "id": "normalize",
+      "kind": "projection_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match"
+      ],
+      "output": {
+        "status": "candidate",
+        "candidate": "employee"
+      }
+    },
+    {
+      "id": "recheck",
+      "kind": "projection_recheck",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "normalize"
+      ],
+      "output": {
+        "status": "verified",
+        "field": "employee.Name",
+        "entity": "employee"
+      }
+    },
+    {
+      "id": "constraint",
+      "kind": "projection_constraint",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match",
+        "recheck"
+      ],
+      "output": {
+        "route": "normalized",
+        "field": "employee.Name",
+        "hint": "Return only the requested entity name from employee.Name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "projection_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "constraint"
+      ],
+      "output": {
+        "sql": "SELECT e.Name\nFROM employee AS e\nJOIN evaluation AS ev ON e.Employee_ID = ev.Employee_ID\nGROUP BY e.Employee_ID, e.Name\nORDER BY COUNT(*) DESC\nLIMIT 1;"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT e.Name\nFROM employee AS e\nJOIN evaluation AS ev ON e.Employee_ID = ev.Employee_ID\nGROUP BY e.Employee_ID, e.Name\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+        "rows": [
+          [
+            "George Chuter"
+          ]
+        ],
+        "columns": [
+          "Name"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "usage": {
+    "prompt_tokens": 4639,
+    "completion_tokens": 45,
+    "total_tokens": 4684,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      },
+      "cached_tokens": 2560
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 7.435
+}

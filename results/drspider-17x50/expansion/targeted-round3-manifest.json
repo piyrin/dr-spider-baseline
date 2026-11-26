@@ -1,0 +1,438 @@
+{
+  "seed": "20261123-round3",
+  "quotas": {
+    "第3类 · 去重": 12,
+    "第4类 · 表列定位": 15,
+    "第5类 · 筛选范围": 15,
+    "第6类 · 分组粒度": 12,
+    "第7类 · 零明细与缺失值": 12,
+    "第8、10类 · 字段拆分": 12,
+    "第9类 · 排序并列": 14
+  },
+  "unique_candidate_originals": {
+    "第3类 · 去重": 82,
+    "第4类 · 表列定位": 122,
+    "第5类 · 筛选范围": 69,
+    "第6类 · 分组粒度": 55,
+    "第7类 · 零明细与缺失值": 25,
+    "第8、10类 · 字段拆分": 3,
+    "第9类 · 排序并列": 15
+  },
+  "pairs": [
+    {
+      "pair_id": "DB_DBcontent_equivalence-00261",
+      "original_id": 664,
+      "screening": "第8、10类 · 字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00381",
+      "original_id": 1027,
+      "screening": "第8、10类 · 字段拆分"
+    },
+    {
+      "pair_id": "DB_DBcontent_equivalence-00260",
+      "original_id": 663,
+      "screening": "第8、10类 · 字段拆分"
+    },
+    {
+      "pair_id": "NLQ_keyword_synonym-00269",
+      "original_id": 229,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00157",
+      "original_id": 815,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00023",
+      "original_id": 142,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "NLQ_keyword_synonym-00355",
+      "original_id": 331,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02656",
+      "original_id": 878,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01705",
+      "original_id": 698,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00007",
+      "original_id": 25,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00174",
+      "original_id": 930,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00048",
+      "original_id": 344,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00076",
+      "original_id": 475,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00067",
+      "original_id": 460,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00092",
+      "original_id": 539,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00047",
+      "original_id": 343,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "SQL_sort_order-00168",
+      "original_id": 852,
+      "screening": "第9类 · 排序并列"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01250",
+      "original_id": 505,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02468",
+      "original_id": 854,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-00631",
+      "original_id": 258,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-00053",
+      "original_id": 29,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-00202",
+      "original_id": 85,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-00560",
+      "original_id": 239,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_column_synonym-00181",
+      "original_id": 346,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00448",
+      "original_id": 228,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-02537",
+      "original_id": 980,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-01813",
+      "original_id": 645,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-00131",
+      "original_id": 63,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-02508",
+      "original_id": 914,
+      "screening": "第7类 · 零明细与缺失值"
+    },
+    {
+      "pair_id": "NLQ_others-01985",
+      "original_id": 757,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "NLQ_others-01892",
+      "original_id": 674,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00218",
+      "original_id": 128,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "NLQ_others-00190",
+      "original_id": 80,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01130",
+      "original_id": 469,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00037",
+      "original_id": 10,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "NLQ_others-01300",
+      "original_id": 474,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "NLQ_multitype-01327",
+      "original_id": 1012,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "NLQ_others-00810",
+      "original_id": 309,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "NLQ_multitype-00134",
+      "original_id": 74,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00703",
+      "original_id": 267,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "NLQ_others-00866",
+      "original_id": 329,
+      "screening": "第6类 · 分组粒度"
+    },
+    {
+      "pair_id": "SQL_DB_text-00832",
+      "original_id": 859,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_others-02540",
+      "original_id": 918,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_keyword_synonym-00662",
+      "original_id": 811,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_others-00706",
+      "original_id": 285,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "SQL_DB_text-00684",
+      "original_id": 764,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_others-02687",
+      "original_id": 978,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "SQL_DB_text-00424",
+      "original_id": 637,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_others-02695",
+      "original_id": 981,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_keyword_synonym-00603",
+      "original_id": 678,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "SQL_DB_text-00256",
+      "original_id": 485,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "SQL_DB_text-00769",
+      "original_id": 783,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_others-00564",
+      "original_id": 240,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_others-01592",
+      "original_id": 575,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_others-02458",
+      "original_id": 894,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_others-00409",
+      "original_id": 212,
+      "screening": "第5类 · 筛选范围"
+    },
+    {
+      "pair_id": "NLQ_keyword_carrier-00225",
+      "original_id": 441,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02264",
+      "original_id": 732,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01001",
+      "original_id": 353,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "NLQ_others-01447",
+      "original_id": 518,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "DB_schema_synonym-02341",
+      "original_id": 948,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01373",
+      "original_id": 517,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02201",
+      "original_id": 781,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "NLQ_others-02255",
+      "original_id": 817,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "NLQ_keyword_carrier-00173",
+      "original_id": 306,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "NLQ_others-01597",
+      "original_id": 578,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "DB_schema_synonym-02467",
+      "original_id": 966,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00970",
+      "original_id": 322,
+      "screening": "第3类 · 去重"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02246",
+      "original_id": 714,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02787",
+      "original_id": 929,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01037",
+      "original_id": 423,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01851",
+      "original_id": 736,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02352",
+      "original_id": 712,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00365",
+      "original_id": 217,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-01658",
+      "original_id": 612,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-02522",
+      "original_id": 957,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01557",
+      "original_id": 639,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00495",
+      "original_id": 207,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-00572",
+      "original_id": 216,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-00905",
+      "original_id": 355,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02761",
+      "original_id": 985,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_synonym-01223",
+      "original_id": 470,
+      "screening": "第4类 · 表列定位"
+    },
+    {
+      "pair_id": "DB_schema_abbreviation-02582",
+      "original_id": 892,
+      "screening": "第4类 · 表列定位"
+    }
+  ]
+}

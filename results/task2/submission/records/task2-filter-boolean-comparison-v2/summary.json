@@ -1,0 +1,1091 @@
+{
+  "anchor": {
+    "arms": {
+      "baseline none": {
+        "n": 1,
+        "states": {
+          "CW": 1
+        },
+        "clean": 1,
+        "post": 0,
+        "both": 0,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 4598.5,
+          "completion_tokens": 29.5,
+          "total_tokens": 4628
+        },
+        "token_coverage": 2,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 2
+        }
+      },
+      "baseline high": {
+        "n": 1,
+        "states": {
+          "CW": 1
+        },
+        "clean": 1,
+        "post": 0,
+        "both": 0,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 4598.5,
+          "completion_tokens": 62,
+          "total_tokens": 4660.5
+        },
+        "token_coverage": 2,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 2
+        }
+      },
+      "canvas_v2 none": {
+        "n": 1,
+        "states": {
+          "CC": 1
+        },
+        "clean": 1,
+        "post": 1,
+        "both": 1,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 10727,
+          "completion_tokens": 93,
+          "total_tokens": 10820
+        },
+        "token_coverage": 2,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "exact": 1,
+          "boolean": 1
+        }
+      },
+      "canvas_v2 high": {
+        "n": 1,
+        "states": {
+          "CC": 1
+        },
+        "clean": 1,
+        "post": 1,
+        "both": 1,
+        "cw": 0,
+        "token_means": {
+          "prompt_tokens": 10727,
+          "completion_tokens": 356,
+          "total_tokens": 11083
+        },
+        "token_coverage": 2,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "exact": 1,
+          "boolean": 1
+        }
+      }
+    },
+    "changes": {
+      "编排 none": {
+        "n": 1,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          1,
+          1
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 6192.0,
+        "token_delta_coverage": 2
+      },
+      "编排 high": {
+        "n": 1,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          1,
+          1
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 6422.5,
+        "token_delta_coverage": 2
+      },
+      "baseline none→high": {
+        "n": 1,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 32.5,
+        "token_delta_coverage": 2
+      },
+      "canvas_v2 none→high": {
+        "n": 1,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          }
+        },
+        "median_total_token_delta": 263.0,
+        "token_delta_coverage": 2
+      }
+    }
+  },
+  "visual_verified": 4,
+  "target": {
+    "arms": {
+      "baseline none": {
+        "n": 8,
+        "states": {
+          "CW": 6,
+          "WW": 2
+        },
+        "clean": 6,
+        "post": 0,
+        "both": 0,
+        "cw": 6,
+        "token_means": {
+          "prompt_tokens": 5982.125,
+          "completion_tokens": 109.1875,
+          "total_tokens": 6091.3125
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 16
+        }
+      },
+      "baseline high": {
+        "n": 8,
+        "states": {
+          "CW": 5,
+          "WW": 3
+        },
+        "clean": 5,
+        "post": 0,
+        "both": 0,
+        "cw": 5,
+        "token_means": {
+          "prompt_tokens": 5422.3125,
+          "completion_tokens": 190,
+          "total_tokens": 5612.3125
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 16
+        }
+      },
+      "canvas_v2 none": {
+        "n": 8,
+        "states": {
+          "CW": 4,
+          "CC": 2,
+          "WW": 2
+        },
+        "clean": 6,
+        "post": 2,
+        "both": 2,
+        "cw": 4,
+        "token_means": {
+          "prompt_tokens": 12275.4375,
+          "completion_tokens": 332.75,
+          "total_tokens": 12608.1875
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 12,
+          "exact": 2,
+          "boolean": 2
+        }
+      },
+      "canvas_v2 high": {
+        "n": 8,
+        "states": {
+          "CW": 5,
+          "CC": 1,
+          "WW": 2
+        },
+        "clean": 6,
+        "post": 1,
+        "both": 1,
+        "cw": 5,
+        "token_means": {
+          "prompt_tokens": 12689.8125,
+          "completion_tokens": 553,
+          "total_tokens": 13242.8125
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 14,
+          "boolean": 1,
+          "exact": 1
+        }
+      }
+    },
+    "changes": {
+      "编排 none": {
+        "n": 8,
+        "repair": 2,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 2,
+        "post_regression": 0,
+        "net_cc": 2,
+        "cc_delta_ci": [
+          0,
+          0.625
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 2,
+            "CW": 4,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 5696.0,
+        "token_delta_coverage": 16
+      },
+      "编排 high": {
+        "n": 8,
+        "repair": 1,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 1,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.375
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 4,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 7743.0,
+        "token_delta_coverage": 16
+      },
+      "baseline none→high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 1,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 5,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 41.0,
+        "token_delta_coverage": 16
+      },
+      "canvas_v2 none→high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 1,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": -1,
+        "cc_delta_ci": [
+          -0.375,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 1,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 4,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 283.5,
+        "token_delta_coverage": 16
+      }
+    }
+  },
+  "control": {
+    "arms": {
+      "baseline none": {
+        "n": 8,
+        "states": {
+          "CC": 3,
+          "WW": 2,
+          "WC": 1,
+          "CW": 2
+        },
+        "clean": 5,
+        "post": 4,
+        "both": 3,
+        "cw": 2,
+        "token_means": {
+          "prompt_tokens": 5852.9375,
+          "completion_tokens": 66.5,
+          "total_tokens": 5919.4375
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 16
+        }
+      },
+      "baseline high": {
+        "n": 8,
+        "states": {
+          "CC": 4,
+          "WW": 2,
+          "CW": 2
+        },
+        "clean": 6,
+        "post": 4,
+        "both": 4,
+        "cw": 2,
+        "token_means": {
+          "prompt_tokens": 6961.8125,
+          "completion_tokens": 166.1875,
+          "total_tokens": 7128
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 16
+        }
+      },
+      "canvas_v2 none": {
+        "n": 8,
+        "states": {
+          "CC": 3,
+          "WW": 3,
+          "WC": 1,
+          "CW": 1
+        },
+        "clean": 4,
+        "post": 4,
+        "both": 3,
+        "cw": 1,
+        "token_means": {
+          "prompt_tokens": 12337.125,
+          "completion_tokens": 143.9375,
+          "total_tokens": 12481.0625
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 16
+        }
+      },
+      "canvas_v2 high": {
+        "n": 8,
+        "states": {
+          "CC": 2,
+          "WW": 3,
+          "WC": 1,
+          "CW": 2
+        },
+        "clean": 4,
+        "post": 3,
+        "both": 2,
+        "cw": 2,
+        "token_means": {
+          "prompt_tokens": 13434.8125,
+          "completion_tokens": 422.875,
+          "total_tokens": 13857.6875
+        },
+        "token_coverage": 16,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 15,
+          "exact": 1
+        }
+      }
+    },
+    "changes": {
+      "编排 none": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 1,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 0,
+        "cc_delta_ci": [
+          0,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 3,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 5031.0,
+        "token_delta_coverage": 16
+      },
+      "编排 high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 1,
+        "harm_pre": 1,
+        "all_pre_regressions": 2,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": -2,
+        "cc_delta_ci": [
+          -0.625,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 2,
+            "CW": 1,
+            "WC": 1,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 5232.5,
+        "token_delta_coverage": 16
+      },
+      "baseline none→high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.375
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 3,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 2,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 2
+          }
+        },
+        "median_total_token_delta": 109.0,
+        "token_delta_coverage": 16
+      },
+      "canvas_v2 none→high": {
+        "n": 8,
+        "repair": 0,
+        "harm_post": 1,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 1,
+        "net_cc": -1,
+        "cc_delta_ci": [
+          -0.375,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 2,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 3
+          }
+        },
+        "median_total_token_delta": 335.0,
+        "token_delta_coverage": 16
+      }
+    }
+  },
+  "all": {
+    "arms": {
+      "baseline none": {
+        "n": 16,
+        "states": {
+          "CW": 8,
+          "WW": 4,
+          "CC": 3,
+          "WC": 1
+        },
+        "clean": 11,
+        "post": 4,
+        "both": 3,
+        "cw": 8,
+        "token_means": {
+          "prompt_tokens": 5917.53125,
+          "completion_tokens": 87.84375,
+          "total_tokens": 6005.375
+        },
+        "token_coverage": 32,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 32
+        }
+      },
+      "baseline high": {
+        "n": 16,
+        "states": {
+          "CW": 7,
+          "WW": 5,
+          "CC": 4
+        },
+        "clean": 11,
+        "post": 4,
+        "both": 4,
+        "cw": 7,
+        "token_means": {
+          "prompt_tokens": 6192.0625,
+          "completion_tokens": 178.09375,
+          "total_tokens": 6370.15625
+        },
+        "token_coverage": 32,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 1,
+        "routes": {
+          "baseline": 32
+        }
+      },
+      "canvas_v2 none": {
+        "n": 16,
+        "states": {
+          "CW": 5,
+          "CC": 5,
+          "WW": 5,
+          "WC": 1
+        },
+        "clean": 10,
+        "post": 6,
+        "both": 5,
+        "cw": 5,
+        "token_means": {
+          "prompt_tokens": 12306.28125,
+          "completion_tokens": 238.34375,
+          "total_tokens": 12544.625
+        },
+        "token_coverage": 32,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 28,
+          "exact": 2,
+          "boolean": 2
+        }
+      },
+      "canvas_v2 high": {
+        "n": 16,
+        "states": {
+          "CW": 7,
+          "CC": 3,
+          "WW": 5,
+          "WC": 1
+        },
+        "clean": 10,
+        "post": 4,
+        "both": 3,
+        "cw": 7,
+        "token_means": {
+          "prompt_tokens": 13062.3125,
+          "completion_tokens": 487.9375,
+          "total_tokens": 13550.25
+        },
+        "token_coverage": 32,
+        "positive_reasoning_token_reports": 0,
+        "reasoning_token_coverage": 0,
+        "mean_calls": 2,
+        "routes": {
+          "fallback": 29,
+          "boolean": 1,
+          "exact": 2
+        }
+      }
+    },
+    "changes": {
+      "编排 none": {
+        "n": 16,
+        "repair": 2,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 1,
+        "post_repair": 2,
+        "post_regression": 0,
+        "net_cc": 2,
+        "cc_delta_ci": [
+          0,
+          0.3125
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 3,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 2,
+            "CW": 5,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 4
+          }
+        },
+        "median_total_token_delta": 5371.5,
+        "token_delta_coverage": 32
+      },
+      "编排 high": {
+        "n": 16,
+        "repair": 1,
+        "harm_post": 1,
+        "harm_pre": 1,
+        "all_pre_regressions": 2,
+        "post_repair": 1,
+        "post_regression": 1,
+        "net_cc": -1,
+        "cc_delta_ci": [
+          -0.25,
+          0.125
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 2,
+            "CW": 1,
+            "WC": 1,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 1,
+            "CW": 5,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 1,
+            "WC": 0,
+            "WW": 4
+          }
+        },
+        "median_total_token_delta": 6691.5,
+        "token_delta_coverage": 32
+      },
+      "baseline none→high": {
+        "n": 16,
+        "repair": 0,
+        "harm_post": 0,
+        "harm_pre": 0,
+        "all_pre_regressions": 1,
+        "post_repair": 0,
+        "post_regression": 0,
+        "net_cc": 1,
+        "cc_delta_ci": [
+          0,
+          0.1875
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 3,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 7,
+            "WC": 0,
+            "WW": 1
+          },
+          "WC": {
+            "CC": 1,
+            "CW": 0,
+            "WC": 0,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 4
+          }
+        },
+        "median_total_token_delta": 41.0,
+        "token_delta_coverage": 32
+      },
+      "canvas_v2 none→high": {
+        "n": 16,
+        "repair": 0,
+        "harm_post": 2,
+        "harm_pre": 0,
+        "all_pre_regressions": 0,
+        "post_repair": 0,
+        "post_regression": 2,
+        "net_cc": -2,
+        "cc_delta_ci": [
+          -0.3125,
+          0
+        ],
+        "transitions": {
+          "CC": {
+            "CC": 3,
+            "CW": 2,
+            "WC": 0,
+            "WW": 0
+          },
+          "CW": {
+            "CC": 0,
+            "CW": 5,
+            "WC": 0,
+            "WW": 0
+          },
+          "WC": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 1,
+            "WW": 0
+          },
+          "WW": {
+            "CC": 0,
+            "CW": 0,
+            "WC": 0,
+            "WW": 5
+          }
+        },
+        "median_total_token_delta": 302.5,
+        "token_delta_coverage": 32
+      }
+    }
+  },
+  "verified_batch_conditions": 136
+}

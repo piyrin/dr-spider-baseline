@@ -1,0 +1,218 @@
+{
+  "id": "SQL_comparison-00133-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7403,
+    "completion_tokens": 165,
+    "total_tokens": 7568,
+    "completion_tokens_details": {
+      "reasoning_tokens": 116
+    }
+  },
+  "prediction_sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 21,
+  "prediction_row_count": 27,
+  "status": "mismatch",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:38:43+08:00",
+  "gold_rows": [
+    [
+      1,
+      "Anguilla"
+    ],
+    [
+      1,
+      "Bermuda"
+    ],
+    [
+      1,
+      "Bosnia and Herzegovina"
+    ],
+    [
+      1,
+      "Cayman Islands"
+    ],
+    [
+      1,
+      "Cuba"
+    ],
+    [
+      1,
+      "Falkland Islands"
+    ],
+    [
+      1,
+      "Grenada"
+    ],
+    [
+      1,
+      "Holy See (Vatican City State)"
+    ],
+    [
+      1,
+      "Montserrat"
+    ],
+    [
+      1,
+      "Norfolk Island"
+    ],
+    [
+      1,
+      "Pitcairn"
+    ],
+    [
+      1,
+      "Portugal"
+    ],
+    [
+      1,
+      "Saint Helena"
+    ],
+    [
+      1,
+      "Saint Pierre and Miquelon"
+    ],
+    [
+      1,
+      "San Marino"
+    ],
+    [
+      1,
+      "Saudi Arabia"
+    ],
+    [
+      1,
+      "Turks and Caicos Islands"
+    ],
+    [
+      1,
+      "United States Minor Outlying Islands"
+    ],
+    [
+      1,
+      "Uruguay"
+    ],
+    [
+      1,
+      "Virgin Islands, British"
+    ],
+    [
+      1,
+      "Western Sahara"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Anguilla",
+      1
+    ],
+    [
+      "Antarctica",
+      0
+    ],
+    [
+      "French Southern territories",
+      0
+    ],
+    [
+      "Bosnia and Herzegovina",
+      1
+    ],
+    [
+      "Bermuda",
+      1
+    ],
+    [
+      "Bouvet Island",
+      0
+    ],
+    [
+      "Cuba",
+      1
+    ],
+    [
+      "Cayman Islands",
+      1
+    ],
+    [
+      "Western Sahara",
+      1
+    ],
+    [
+      "Falkland Islands",
+      1
+    ],
+    [
+      "Grenada",
+      1
+    ],
+    [
+      "Heard Island and McDonald Islands",
+      0
+    ],
+    [
+      "British Indian Ocean Territory",
+      0
+    ],
+    [
+      "Montserrat",
+      1
+    ],
+    [
+      "Norfolk Island",
+      1
+    ],
+    [
+      "Pitcairn",
+      1
+    ],
+    [
+      "Portugal",
+      1
+    ],
+    [
+      "Saudi Arabia",
+      1
+    ],
+    [
+      "South Georgia and the South Sandwich Islands",
+      0
+    ],
+    [
+      "Saint Helena",
+      1
+    ],
+    [
+      "San Marino",
+      1
+    ],
+    [
+      "Saint Pierre and Miquelon",
+      1
+    ],
+    [
+      "Turks and Caicos Islands",
+      1
+    ],
+    [
+      "United States Minor Outlying Islands",
+      1
+    ],
+    [
+      "Uruguay",
+      1
+    ],
+    [
+      "Holy See (Vatican City State)",
+      1
+    ],
+    [
+      "Virgin Islands, British",
+      1
+    ]
+  ]
+}

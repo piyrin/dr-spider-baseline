@@ -1,0 +1,24 @@
+{
+  "id": "resp_0f53023ffa9c2107016b067486ecd487d1a4050e7448b993b7",
+  "object": "chat.completion",
+  "created": 1795585164,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE winner_hand = 'L';"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7335,
+    "completion_tokens": 167,
+    "total_tokens": 7502,
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  }
+}

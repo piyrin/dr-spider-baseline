@@ -1,0 +1,548 @@
+{
+  "id": "NLQ_column_value-00176-post",
+  "side": "post",
+  "original_id": 403,
+  "method": "canvas_v2",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "format_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "teacher.Name"
+        ],
+        "joins": [
+          "course.Course_ID = course_arrange.Course_ID",
+          "course_arrange.Teacher_ID = teacher.Teacher_ID"
+        ],
+        "targets": [
+          {
+            "table": "course",
+            "column": "Course",
+            "term": "math",
+            "operator": "="
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one explicit textual equality filter. Use the exact term as written in the question, including case and whitespace, with operator \"=\". Return zero targets if there is no such unique filter. The requested output field is not a filter."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"course\" (\"Course_ID\" int,\"Staring_Date\" text,\"Course\" text,PRIMARY KEY (\"Course_ID\"))\nCREATE TABLE \"course_arrange\" (\"Course_ID\" int,\"Teacher_ID\" int,\"Grade\" int,PRIMARY KEY (\"Course_ID\",\"Teacher_ID\",\"Grade\"),FOREIGN KEY (\"Course_ID\") REFERENCES \"course\" (\"Course_ID\"),FOREIGN KEY (\"Teacher_ID\") REFERENCES \"teacher\" (\"Teacher_ID\"))\nCREATE TABLE \"teacher\" (\"Teacher_ID\" int,\"Name\" text,\"Age\" text,\"Hometown\" text,PRIMARY KEY (\"Teacher_ID\"))\nQuestion\nWhat's the name of the teacher for math?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0c82485e92f443a7016b0700d35f2c87d1b94b9d01f6e4e592",
+          "object": "chat.completion",
+          "created": 1795621078,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"teacher.Name\"],\"joins\":[\"course.Course_ID = course_arrange.Course_ID\",\"course_arrange.Teacher_ID = teacher.Teacher_ID\"],\"targets\":[{\"table\":\"course\",\"column\":\"Course\",\"term\":\"math\",\"operator\":\"=\"}]}",
+                "reasoning_content": "**Planning JSON output with math filter**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0c82485e92f443a7016b0700d35f6487d1831af05e5f068e73": {
+                  "input_tokens": 127,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 127,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0c82485e92f443a7016b0700d35f6487d18ec02e525ca053eb": {
+                  "input_tokens": 137,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 137,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0c82485e92f443a7016b0700d5349487d1bb346e811c523d3c": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 58,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 58
+                    }
+                  ]
+                },
+                "rs_0c82485e92f443a7016b0700d3b9ac87d1bab81c975be91821": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 67
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4646,
+            "completion_tokens": 125,
+            "total_tokens": 4771,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 67
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0c82485e92f443a7016b0700d35f6487d1831af05e5f068e73": {
+                "input_tokens": 127,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 127,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0c82485e92f443a7016b0700d35f6487d18ec02e525ca053eb": {
+                "input_tokens": 137,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 137,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0c82485e92f443a7016b0700d5349487d1bb346e811c523d3c": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 58,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 58
+                  }
+                ]
+              },
+              "rs_0c82485e92f443a7016b0700d3b9ac87d1bab81c975be91821": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 67
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4646,
+          "completion_tokens": 125,
+          "total_tokens": 4771,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 67
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "exact",
+      "kind": "format_exact",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "miss",
+        "target": {
+          "table": "course",
+          "column": "Course",
+          "term": "math"
+        },
+        "value": null
+      },
+      "call": null
+    },
+    {
+      "id": "normalize",
+      "kind": "format_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact"
+      ],
+      "output": {
+        "status": "normalized",
+        "candidates": [
+          "Math"
+        ],
+        "value": "Math"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Check whether the unique SQLite value is a formatting variant of the quoted filter term in the current question. Compare case and whitespace only. Reject if the term, column or comparison is unsupported. Return only JSON with one boolean key accept. Do not invent or change a value."
+            },
+            {
+              "role": "user",
+              "content": "{\"question\": \"What's the name of the teacher for math?\", \"filter\": {\"table\": \"course\", \"column\": \"Course\", \"term\": \"math\"}, \"stored_value\": \"Math\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0d1c9d610402afa2016b0700d8404087d2bc3b5ba92dfaa58f",
+          "object": "chat.completion",
+          "created": 1795621088,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"accept\":true}",
+                "reasoning_content": "**Assessing SQLite filter case sensitivity**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0d1c9d610402afa2016b0700d8408487d2aacdb0f3b76bacc3": {
+                  "input_tokens": 45,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 45,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0d1c9d610402afa2016b0700d8408487d2b58fce4616c051fd": {
+                  "input_tokens": 58,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 58,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0d1c9d610402afa2016b0700e00ee887d28533c969dd637e74": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 11,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 11
+                    }
+                  ]
+                },
+                "rs_0d1c9d610402afa2016b0700ddc9ac87d2bfcae57ac24b0336": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 66
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4485,
+            "completion_tokens": 77,
+            "total_tokens": 4562,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 66
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0d1c9d610402afa2016b0700d8408487d2aacdb0f3b76bacc3": {
+                "input_tokens": 45,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 45,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0d1c9d610402afa2016b0700d8408487d2b58fce4616c051fd": {
+                "input_tokens": 58,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 58,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0d1c9d610402afa2016b0700e00ee887d28533c969dd637e74": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 11,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 11
+                  }
+                ]
+              },
+              "rs_0d1c9d610402afa2016b0700ddc9ac87d2bfcae57ac24b0336": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 66
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4485,
+          "completion_tokens": 77,
+          "total_tokens": 4562,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 66
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "format_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact",
+        "normalize"
+      ],
+      "output": {
+        "sql": "SELECT t.\"Name\" FROM \"teacher\" AS t JOIN \"course_arrange\" AS ca ON ca.\"Teacher_ID\" = t.\"Teacher_ID\" JOIN \"course\" AS c ON c.\"Course_ID\" = ca.\"Course_ID\" WHERE c.\"Course\" = 'Math';",
+        "route": "normalized",
+        "stored_value": "Math"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"course\" (\"Course_ID\" int,\"Staring_Date\" text,\"Course\" text,PRIMARY KEY (\"Course_ID\"))\nCREATE TABLE \"course_arrange\" (\"Course_ID\" int,\"Teacher_ID\" int,\"Grade\" int,PRIMARY KEY (\"Course_ID\",\"Teacher_ID\",\"Grade\"),FOREIGN KEY (\"Course_ID\") REFERENCES \"course\" (\"Course_ID\"),FOREIGN KEY (\"Teacher_ID\") REFERENCES \"teacher\" (\"Teacher_ID\"))\nCREATE TABLE \"teacher\" (\"Teacher_ID\" int,\"Name\" text,\"Age\" text,\"Hometown\" text,PRIMARY KEY (\"Teacher_ID\"))\nQuestion\nWhat's the name of the teacher for math?\nQuery plan\nVerified knowledge: in course.Course, the exact stored text corresponding to 'math' is 'Math'. Use the stored text for that equality filter."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0",
+          "object": "chat.completion",
+          "created": 1795621094,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT t.\"Name\" FROM \"teacher\" AS t JOIN \"course_arrange\" AS ca ON ca.\"Teacher_ID\" = t.\"Teacher_ID\" JOIN \"course\" AS c ON c.\"Course_ID\" = ca.\"Course_ID\" WHERE c.\"Course\" = 'Math';",
+                "reasoning_content": "**Designing compact JSON with SQL output**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 6181,
+            "completion_tokens": 78,
+            "total_tokens": 6259,
+            "prompt_tokens_details": {
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 20
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 6181,
+          "completion_tokens": 78,
+          "total_tokens": 6259,
+          "prompt_tokens_details": {
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 20
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT t.\"Name\" FROM \"teacher\" AS t JOIN \"course_arrange\" AS ca ON ca.\"Teacher_ID\" = t.\"Teacher_ID\" JOIN \"course\" AS c ON c.\"Course_ID\" = ca.\"Course_ID\" WHERE c.\"Course\" = 'Math';",
+        "rows": [
+          [
+            "Kearsley Brown"
+          ],
+          [
+            "Vicente Carretero"
+          ]
+        ],
+        "columns": [
+          "Name"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "model_calls": 3,
+  "usage": {
+    "prompt_tokens": 15312,
+    "completion_tokens": 280,
+    "total_tokens": 15592
+  },
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 2,
+    "prediction_rows": 2
+  }
+}

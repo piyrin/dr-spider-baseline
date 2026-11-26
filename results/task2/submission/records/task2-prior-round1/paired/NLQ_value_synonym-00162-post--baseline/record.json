@@ -1,0 +1,76 @@
+{
+  "id": "NLQ_value_synonym-00162-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7185,
+    "completion_tokens": 152,
+    "total_tokens": 7337,
+    "prompt_tokens_details": {
+      "cached_tokens": 6400
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 136
+    }
+  },
+  "prediction_sql": "SELECT Airline, Abbreviation\nFROM airlines\nWHERE Country = 'United States';",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 12,
+  "prediction_row_count": 0,
+  "status": "mismatch",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:39:28+08:00",
+  "gold_rows": [
+    [
+      "United Airlines",
+      "UAL"
+    ],
+    [
+      "US Airways",
+      "USAir"
+    ],
+    [
+      "Delta Airlines",
+      "Delta"
+    ],
+    [
+      "Southwest Airlines",
+      "Southwest"
+    ],
+    [
+      "American Airlines",
+      "American"
+    ],
+    [
+      "Northwest Airlines",
+      "Northwest"
+    ],
+    [
+      "Continental Airlines",
+      "Continental"
+    ],
+    [
+      "JetBlue Airways",
+      "JetBlue"
+    ],
+    [
+      "Frontier Airlines",
+      "Frontier"
+    ],
+    [
+      "AirTran Airways",
+      "AirTran"
+    ],
+    [
+      "Allegiant Air",
+      "Allegiant"
+    ],
+    [
+      "Virgin America",
+      "Virgin"
+    ]
+  ],
+  "prediction_rows": []
+}

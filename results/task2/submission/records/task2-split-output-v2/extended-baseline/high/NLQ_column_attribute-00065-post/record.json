@@ -1,0 +1,232 @@
+{
+  "id": "NLQ_column_attribute-00065-post",
+  "effort": "high",
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "model_calls": 1,
+  "total_tokens": 5277,
+  "steps": [
+    {
+      "id": "generate",
+      "kind": "generate",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT TRIM(first_name || ' ' || COALESCE(middle_name || ' ', '') || last_name) AS full_name\nFROM Students\nWHERE date_first_registered = (\n    SELECT MIN(date_first_registered)\n    FROM Students\n    WHERE date_first_registered IS NOT NULL\n);"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Addresses\" (\"address_id\" INTEGER PRIMARY KEY,\"line_1\" VARCHAR(255),\"line_2\" VARCHAR(255),\"line_3\" VARCHAR(255),\"city\" VARCHAR(255),\"zip_postcode\" VARCHAR(20),\"state_province_county\" VARCHAR(255),\"country\" VARCHAR(255),\"other_address_details\" VARCHAR(255))\nCREATE TABLE \"Courses\" (\"course_id\" INTEGER PRIMARY KEY,\"course_name\" VARCHAR(255),\"course_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Degree_Programs\" (\"degree_program_id\" INTEGER PRIMARY KEY,\"department_id\" INTEGER NOT NULL,\"degree_summary_name\" VARCHAR(255),\"degree_summary_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"department_id\") REFERENCES \"Departments\"(\"department_id\"))\nCREATE TABLE \"Departments\" (\"department_id\" INTEGER PRIMARY KEY,\"department_name\" VARCHAR(255),\"department_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Sections\" (\"section_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"section_name\" VARCHAR(255),\"section_description\" VARCHAR(255),\"other_details\" VARCHAR(255),FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"))\nCREATE TABLE \"Semesters\" (\"semester_id\" INTEGER PRIMARY KEY,\"semester_name\" VARCHAR(255),\"semester_description\" VARCHAR(255),\"other_details\" VARCHAR(255))\nCREATE TABLE \"Student_Enrolment\" (\"student_enrolment_id\" INTEGER PRIMARY KEY,\"degree_program_id\" INTEGER NOT NULL,\"semester_id\" INTEGER NOT NULL,\"student_id\" INTEGER NOT NULL,\"other_details\" VARCHAR(255),FOREIGN KEY (\"degree_program_id\") REFERENCES \"Degree_Programs\"(\"degree_program_id\"),FOREIGN KEY (\"semester_id\") REFERENCES \"Semesters\"(\"semester_id\"),FOREIGN KEY (\"student_id\") REFERENCES \"Students\"(\"student_id\"))\nCREATE TABLE \"Student_Enrolment_Courses\" (\"student_course_id\" INTEGER PRIMARY KEY,\"course_id\" INTEGER NOT NULL,\"student_enrolment_id\" INTEGER NOT NULL,FOREIGN KEY (\"course_id\") REFERENCES \"Courses\"(\"course_id\"),FOREIGN KEY (\"student_enrolment_id\") REFERENCES \"Student_Enrolment\"(\"student_enrolment_id\"))\nCREATE TABLE \"Students\" (\"student_id\" INTEGER PRIMARY KEY,\"current_address_id\" INTEGER NOT NULL,\"permanent_address_id\" INTEGER NOT NULL,\"first_name\" VARCHAR(80),\"middle_name\" VARCHAR(40),\"last_name\" VARCHAR(40),\"cell_mobile_number\" VARCHAR(40),\"email_address\" VARCHAR(40),\"ssn\" VARCHAR(40),\"date_first_registered\" DATETIME,\"date_left\" DATETIME,\"other_student_details\" VARCHAR(255),FOREIGN KEY (\"current_address_id\") REFERENCES \"Addresses\"(\"address_id\"),FOREIGN KEY (\"permanent_address_id\") REFERENCES \"Addresses\"(\"address_id\"))\nCREATE TABLE \"Transcript_Contents\" (\"student_course_id\" INTEGER NOT NULL,\"transcript_id\" INTEGER NOT NULL,FOREIGN KEY (\"student_course_id\") REFERENCES \"Student_Enrolment_Courses\"(\"student_course_id\"),FOREIGN KEY (\"transcript_id\") REFERENCES \"Transcripts\"(\"transcript_id\"))\nCREATE TABLE \"Transcripts\" (\"transcript_id\" INTEGER PRIMARY KEY,\"transcript_date\" DATETIME,\"other_details\" VARCHAR(255))\nQuestion\nFull name of students who register earliest."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_09faa87237d91d0b016b0827ba1ba487d194b45ca442987481",
+          "object": "chat.completion",
+          "created": 1795696583,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT TRIM(first_name || ' ' || COALESCE(middle_name || ' ', '') || last_name) AS full_name\nFROM Students\nWHERE date_first_registered = (\n    SELECT MIN(date_first_registered)\n    FROM Students\n    WHERE date_first_registered IS NOT NULL\n);",
+                "reasoning_content": "**Designing SQL for earliest registration**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_09faa87237d91d0b016b0827ba1bdc87d197d04a9d67df24be": {
+                  "input_tokens": 708,
+                  "cached_tokens": 527,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 708,
+                      "cached_tokens": 527,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_09faa87237d91d0b016b0827ba1bdc87d1b6a354ed0adc316f": {
+                  "input_tokens": 25,
+                  "cached_tokens": 22,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 22,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_09faa87237d91d0b016b0827c6345087d1b7104a21b3a59308": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 63,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 63
+                    }
+                  ]
+                },
+                "rs_09faa87237d91d0b016b0827c2773887d1bb497ffe5915a99e": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 99
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3931,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5115,
+            "completion_tokens": 162,
+            "total_tokens": 5277,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 4480
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 99
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_09faa87237d91d0b016b0827ba1bdc87d197d04a9d67df24be": {
+                "input_tokens": 708,
+                "cached_tokens": 527,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 708,
+                    "cached_tokens": 527,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_09faa87237d91d0b016b0827ba1bdc87d1b6a354ed0adc316f": {
+                "input_tokens": 25,
+                "cached_tokens": 22,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 22,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_09faa87237d91d0b016b0827c6345087d1b7104a21b3a59308": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 63,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 63
+                  }
+                ]
+              },
+              "rs_09faa87237d91d0b016b0827c2773887d1bb497ffe5915a99e": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 99
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3931,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 5115,
+          "completion_tokens": 162,
+          "total_tokens": 5277,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 4480
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 99
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT TRIM(first_name || ' ' || COALESCE(middle_name || ' ', '') || last_name) AS full_name\nFROM Students\nWHERE date_first_registered = (\n    SELECT MIN(date_first_registered)\n    FROM Students\n    WHERE date_first_registered IS NOT NULL\n);",
+        "rows": [
+          [
+            "Timmothy Anna Ward"
+          ]
+        ],
+        "columns": [
+          "full_name"
+        ]
+      },
+      "call": null
+    }
+  ]
+}

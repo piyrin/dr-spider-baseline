@@ -1,0 +1,360 @@
+{
+  "sample_id": "SQL_comparison-00133-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "generate",
+        "kind": "generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "4f9544bd2c7e4f0b94e454b700db7f88",
+  "graph_sha256": "64b06f079796471a6de5f566c409e5bdad14d5c123e4346b444801059b37ea66",
+  "steps": [
+    {
+      "id": "generate",
+      "kind": "generate",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"city\" (\"ID\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"Name\" char(35) NOT NULL DEFAULT '',\"CountryCode\" char(3) NOT NULL DEFAULT '',\"District\" char(20) NOT NULL DEFAULT '',\"Population\" integer NOT NULL DEFAULT '0',FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nCREATE TABLE \"country\" (\"Code\" char(3) NOT NULL DEFAULT '',\"Name\" char(52) NOT NULL DEFAULT '',\"Continent\" text NOT NULL DEFAULT 'Asia',\"Region\" char(26) NOT NULL DEFAULT '',\"SurfaceArea\" float(10,2) NOT NULL DEFAULT '0.00',\"IndepYear\" integer DEFAULT NULL,\"Population\" integer NOT NULL DEFAULT '0',\"LifeExpectancy\" float(3,1) DEFAULT NULL,\"GNP\" float(10,2) DEFAULT NULL,\"GNPOld\" float(10,2) DEFAULT NULL,\"LocalName\" char(45) NOT NULL DEFAULT '',\"GovernmentForm\" char(45) NOT NULL DEFAULT '',\"HeadOfState\" char(60) DEFAULT NULL,\"Capital\" integer DEFAULT NULL,\"Code2\" char(2) NOT NULL DEFAULT '',PRIMARY KEY (\"Code\"))\nCREATE TABLE \"countrylanguage\" (\"CountryCode\" char(3) NOT NULL DEFAULT '',\"Language\" char(30) NOT NULL DEFAULT '',\"IsOfficial\" text NOT NULL DEFAULT 'F',\"Percentage\" float(4,1) NOT NULL DEFAULT '0.0',PRIMARY KEY (\"CountryCode\",\"Language\"),FOREIGN KEY (\"CountryCode\") REFERENCES \"country\" (\"Code\"))\nQuestion\nWhat are the names of countries that speak less than 2 languages, as well as how many languages they speak?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0ece3c4e542affff016b07a391179487d2917527352b0916eb",
+          "object": "chat.completion",
+          "created": 1795662753,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0ece3c4e542affff016b07a39117d887d282f043666a53c8be": {
+                  "input_tokens": 361,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 361,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0ece3c4e542affff016b07a39117d887d2a3dbd8cec7d3781c": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0ece3c4e542affff016b07a39fa93087d2bc525a9230117648": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 57,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 57
+                    }
+                  ]
+                },
+                "rs_0ece3c4e542affff016b07a39f785487d28aaa3f781b20cd48": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 141
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4768,
+            "completion_tokens": 198,
+            "total_tokens": 4966,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 141
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0ece3c4e542affff016b07a39117d887d282f043666a53c8be": {
+                "input_tokens": 361,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 361,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0ece3c4e542affff016b07a39117d887d2a3dbd8cec7d3781c": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0ece3c4e542affff016b07a39fa93087d2bc525a9230117648": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 57,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 57
+                  }
+                ]
+              },
+              "rs_0ece3c4e542affff016b07a39f785487d28aaa3f781b20cd48": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 141
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4768,
+          "completion_tokens": 198,
+          "total_tokens": 4966,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 141
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 18.35170190000099
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+        "rows": [
+          [
+            "Anguilla",
+            1
+          ],
+          [
+            "Antarctica",
+            0
+          ],
+          [
+            "French Southern territories",
+            0
+          ],
+          [
+            "Bosnia and Herzegovina",
+            1
+          ],
+          [
+            "Bermuda",
+            1
+          ],
+          [
+            "Bouvet Island",
+            0
+          ],
+          [
+            "Cuba",
+            1
+          ],
+          [
+            "Cayman Islands",
+            1
+          ],
+          [
+            "Western Sahara",
+            1
+          ],
+          [
+            "Falkland Islands",
+            1
+          ],
+          [
+            "Grenada",
+            1
+          ],
+          [
+            "Heard Island and McDonald Islands",
+            0
+          ],
+          [
+            "British Indian Ocean Territory",
+            0
+          ],
+          [
+            "Montserrat",
+            1
+          ],
+          [
+            "Norfolk Island",
+            1
+          ],
+          [
+            "Pitcairn",
+            1
+          ],
+          [
+            "Portugal",
+            1
+          ],
+          [
+            "Saudi Arabia",
+            1
+          ],
+          [
+            "South Georgia and the South Sandwich Islands",
+            0
+          ],
+          [
+            "Saint Helena",
+            1
+          ],
+          [
+            "San Marino",
+            1
+          ],
+          [
+            "Saint Pierre and Miquelon",
+            1
+          ],
+          [
+            "Turks and Caicos Islands",
+            1
+          ],
+          [
+            "United States Minor Outlying Islands",
+            1
+          ],
+          [
+            "Uruguay",
+            1
+          ],
+          [
+            "Holy See (Vatican City State)",
+            1
+          ],
+          [
+            "Virgin Islands, British",
+            1
+          ]
+        ],
+        "columns": [
+          "Name",
+          "LanguageCount"
+        ]
+      },
+      "call": null,
+      "elapsed_s": 0.001527100001112558
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 21,
+    "prediction_rows": 27
+  },
+  "cost": {
+    "model_calls": 1,
+    "total_tokens": 4966
+  }
+}

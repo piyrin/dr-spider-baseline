@@ -1,0 +1,503 @@
+{
+  "id": "NLQ_keyword_synonym-00240-pre",
+  "side": "pre",
+  "original_id": 241,
+  "method": "canvas_v2",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "boolean_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "airlines.Airline"
+        ],
+        "joins": [
+          "airlines.uid = flights.Airline"
+        ],
+        "targets": []
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For a single clear equality condition describing an entity status or property, return one target with table, column, term, operator \"=\", and truth (JSON true or false). Term must be the exact unquoted status word or phrase in the question. For a status column with literal text and for an affirmative boolean flag, represent the positive status with true. For an explicitly negated affirmative flag use false and keep the status term itself without negation. When the condition or its column is uncertain, or several conditions are equally plausible, return zero targets. Do not guess how the value is stored."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"airlines\" (\"uid\" INTEGER PRIMARY KEY,\"Airline\" TEXT,\"Abbreviation\" TEXT,\"Country\" TEXT)\nCREATE TABLE \"airports\" (\"City\" TEXT,\"AirportCode\" TEXT PRIMARY KEY,\"AirportName\" TEXT,\"Country\" TEXT,\"CountryAbbrev\" TEXT)\nCREATE TABLE \"flights\" (\"Airline\" INTEGER,\"FlightNo\" INTEGER,\"SourceAirport\" TEXT,\"DestAirport\" TEXT,PRIMARY KEY (\"Airline\", \"FlightNo\"),FOREIGN KEY (\"SourceAirport\") REFERENCES \"airports\" (\"AirportCode\"),FOREIGN KEY (\"DestAirport\") REFERENCES \"airports\" (\"AirportCode\"))\nQuestion\nFind all airlines that have at least 10 flights."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0f00a10bd04b3d13016b079ff91b4087d09a4a25c08cd9deac",
+          "object": "chat.completion",
+          "created": 1795661837,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"airlines.Airline\"],\"joins\":[\"airlines.uid = flights.Airline\"],\"targets\":[]}",
+                "reasoning_content": "**Planning JSON output with flight filters****Refining filter target for flight count**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0f00a10bd04b3d13016b079ff91b7487d08743c6732b1039a1": {
+                  "input_tokens": 199,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 199,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0f00a10bd04b3d13016b079ff91b7487d0b099fea0976c18b1": {
+                  "input_tokens": 148,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 148,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0f00a10bd04b3d13016b07a00c7b2c87d090118bf26c50fa4b": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 31,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 31
+                    }
+                  ]
+                },
+                "rs_0f00a10bd04b3d13016b07a003b8c487d0ac8829d0ecd84b5f": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 215
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4729,
+            "completion_tokens": 246,
+            "total_tokens": 4975,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 215
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0f00a10bd04b3d13016b079ff91b7487d08743c6732b1039a1": {
+                "input_tokens": 199,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 199,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0f00a10bd04b3d13016b079ff91b7487d0b099fea0976c18b1": {
+                "input_tokens": 148,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 148,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0f00a10bd04b3d13016b07a00c7b2c87d090118bf26c50fa4b": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 31,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 31
+                  }
+                ]
+              },
+              "rs_0f00a10bd04b3d13016b07a003b8c487d0ac8829d0ecd84b5f": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 215
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4729,
+          "completion_tokens": 246,
+          "total_tokens": 4975,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 215
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "lookup",
+      "kind": "boolean_lookup",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "fallback",
+        "reason": "no_unique_target"
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "boolean_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "lookup"
+      ],
+      "output": {
+        "sql": "SELECT a.\"Airline\", COUNT(*) AS flight_count\nFROM \"airlines\" AS a\nJOIN \"flights\" AS f ON f.\"Airline\" = a.\"uid\"\nGROUP BY a.\"uid\", a.\"Airline\"\nHAVING COUNT(*) >= 10;",
+        "route": "fallback",
+        "stored_value": null
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"airlines\" (\"uid\" INTEGER PRIMARY KEY,\"Airline\" TEXT,\"Abbreviation\" TEXT,\"Country\" TEXT)\nCREATE TABLE \"airports\" (\"City\" TEXT,\"AirportCode\" TEXT PRIMARY KEY,\"AirportName\" TEXT,\"Country\" TEXT,\"CountryAbbrev\" TEXT)\nCREATE TABLE \"flights\" (\"Airline\" INTEGER,\"FlightNo\" INTEGER,\"SourceAirport\" TEXT,\"DestAirport\" TEXT,PRIMARY KEY (\"Airline\", \"FlightNo\"),FOREIGN KEY (\"SourceAirport\") REFERENCES \"airports\" (\"AirportCode\"),FOREIGN KEY (\"DestAirport\") REFERENCES \"airports\" (\"AirportCode\"))\nQuestion\nFind all airlines that have at least 10 flights."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0652846316f0ef44016b07a00f63a487d0b7c5c49fb2965202",
+          "object": "chat.completion",
+          "created": 1795661841,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT a.\"Airline\", COUNT(*) AS flight_count\nFROM \"airlines\" AS a\nJOIN \"flights\" AS f ON f.\"Airline\" = a.\"uid\"\nGROUP BY a.\"uid\", a.\"Airline\"\nHAVING COUNT(*) >= 10;",
+                "reasoning_content": "**Designing SQL query for flight counts by airline**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0652846316f0ef44016b07a00f63f887d09e5eef590df6d269": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0652846316f0ef44016b07a00f63f887d0a66a8bfc59ba07e6": {
+                  "input_tokens": 148,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 148,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0652846316f0ef44016b07a010ceb887d0998018ac33959bda": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 63,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 63
+                    }
+                  ]
+                },
+                "rs_0652846316f0ef44016b07a00fa90887d08ed19a745bb37f93": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 47
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4555,
+            "completion_tokens": 110,
+            "total_tokens": 4665,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 47
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0652846316f0ef44016b07a00f63f887d09e5eef590df6d269": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0652846316f0ef44016b07a00f63f887d0a66a8bfc59ba07e6": {
+                "input_tokens": 148,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 148,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0652846316f0ef44016b07a010ceb887d0998018ac33959bda": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 63,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 63
+                  }
+                ]
+              },
+              "rs_0652846316f0ef44016b07a00fa90887d08ed19a745bb37f93": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 47
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4555,
+          "completion_tokens": 110,
+          "total_tokens": 4665,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 47
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT a.\"Airline\", COUNT(*) AS flight_count\nFROM \"airlines\" AS a\nJOIN \"flights\" AS f ON f.\"Airline\" = a.\"uid\"\nGROUP BY a.\"uid\", a.\"Airline\"\nHAVING COUNT(*) >= 10;",
+        "rows": [
+          [
+            "United Airlines",
+            100
+          ],
+          [
+            "US Airways",
+            100
+          ],
+          [
+            "Delta Airlines",
+            100
+          ],
+          [
+            "Southwest Airlines",
+            100
+          ],
+          [
+            "American Airlines",
+            100
+          ],
+          [
+            "Northwest Airlines",
+            100
+          ],
+          [
+            "Continental Airlines",
+            100
+          ],
+          [
+            "JetBlue Airways",
+            100
+          ],
+          [
+            "Frontier Airlines",
+            100
+          ],
+          [
+            "AirTran Airways",
+            100
+          ],
+          [
+            "Allegiant Air",
+            100
+          ],
+          [
+            "Virgin America",
+            100
+          ]
+        ],
+        "columns": [
+          "Airline",
+          "flight_count"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9284,
+    "completion_tokens": 356,
+    "total_tokens": 9640
+  },
+  "model_calls": 2,
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 12,
+    "prediction_rows": 12
+  }
+}

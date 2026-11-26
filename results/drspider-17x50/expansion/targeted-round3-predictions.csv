@@ -1,0 +1,745 @@
+﻿id,group,index,side,original_id,db_id,database,question,gold_sql,screening,prediction_sql,correct,status,system_fingerprint,gold_row_count,prediction_row_count
+DB_DBcontent_equivalence-00261-pre,DB_DBcontent_equivalence,261,pre,664,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,"What are the names of poker players, ordered ascending by the number of final tables they have made?",SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Final_Table_Made,第8、10类 · 字段拆分,"SELECT p.Name
+FROM people AS p
+JOIN poker_player AS pp ON pp.People_ID = p.People_ID
+ORDER BY pp.Final_Table_Made ASC;",True,match,,5,5
+DB_DBcontent_equivalence-00261-post,DB_DBcontent_equivalence,261,post,664,poker_player_0,data\DB_DBcontent_equivalence\database_post_perturbation\poker_player_0\poker_player_0.sqlite,"What are the names of poker players, ordered ascending by the number of final tables they have made?","SELECT people.first_name , people.last_name FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID ORDER BY poker_player.Final_Table_Made asc",第8、10类 · 字段拆分,"SELECT p.first_name, p.last_name
+FROM people AS p
+JOIN poker_player AS pp ON pp.People_ID = p.People_ID
+ORDER BY pp.Final_Table_Made ASC;",True,match,,5,5
+DB_DBcontent_equivalence-00381-pre,DB_DBcontent_equivalence,381,pre,1027,singer,data\Spider-dev\databases\singer\singer.sqlite,What is the sname of every sing that does not have any song?,SELECT Name FROM singer WHERE Singer_ID NOT IN (SELECT Singer_ID FROM song),第8、10类 · 字段拆分,"SELECT s.""Name"" FROM ""singer"" AS s WHERE NOT EXISTS (SELECT 1 FROM ""song"" AS so WHERE so.""Singer_ID"" = s.""Singer_ID"");",True,match,,2,2
+DB_DBcontent_equivalence-00381-post,DB_DBcontent_equivalence,381,post,1027,singer_0,data\DB_DBcontent_equivalence\database_post_perturbation\singer_0\singer_0.sqlite,What is the sname of every sing that does not have any song?,"SELECT singer.first_name , singer.last_name FROM singer WHERE singer.Singer_ID NOT in (SELECT song.Singer_ID FROM song)",第8、10类 · 字段拆分,"SELECT s.first_name || ' ' || s.last_name AS sname
+FROM singer AS s
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM song AS so
+    WHERE so.Singer_ID = s.Singer_ID
+);",False,mismatch,,2,2
+DB_DBcontent_equivalence-00260-pre,DB_DBcontent_equivalence,260,pre,663,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,List the names of poker players ordered by the final tables made in ascending order.,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Final_Table_Made,第8、10类 · 字段拆分,"SELECT p.""Name""
+FROM ""people"" AS p
+JOIN ""poker_player"" AS pp ON pp.""People_ID"" = p.""People_ID""
+ORDER BY pp.""Final_Table_Made"" ASC;",True,match,,5,5
+DB_DBcontent_equivalence-00260-post,DB_DBcontent_equivalence,260,post,663,poker_player_0,data\DB_DBcontent_equivalence\database_post_perturbation\poker_player_0\poker_player_0.sqlite,List the names of poker players ordered by the final tables made in ascending order.,"SELECT people.first_name , people.last_name FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID ORDER BY poker_player.Final_Table_Made asc",第8、10类 · 字段拆分,"SELECT p.first_name, p.last_name
+FROM people AS p
+JOIN poker_player AS pp ON pp.People_ID = p.People_ID
+ORDER BY pp.Final_Table_Made ASC;",True,match,,5,5
+NLQ_keyword_synonym-00269-pre,NLQ_keyword_synonym,269,pre,229,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Which airline has most number of flights?,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline GROUP BY T1.Airline ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+JOIN ""flights"" AS f ON f.""Airline"" = a.""uid""
+GROUP BY a.""uid"", a.""Airline""
+ORDER BY COUNT(*) DESC
+LIMIT 1;",False,mismatch,,1,1
+NLQ_keyword_synonym-00269-post,NLQ_keyword_synonym,269,post,229,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,What is the airline with the most flights?,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline GROUP BY T1.Airline ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+JOIN ""flights"" AS f ON f.""Airline"" = a.""uid""
+GROUP BY a.""uid"", a.""Airline""
+ORDER BY COUNT(*) DESC
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00157-pre,SQL_sort_order,157,pre,815,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give the language that is spoken in the most countries.,SELECT LANGUAGE FROM countrylanguage GROUP BY LANGUAGE ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT Language
+FROM countrylanguage
+GROUP BY Language
+ORDER BY COUNT(DISTINCT CountryCode) DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00157-post,SQL_sort_order,157,post,815,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give the language that is spoken in the least countries.,SELECT LANGUAGE FROM countrylanguage GROUP BY LANGUAGE ORDER BY count(*) ASC LIMIT 1,第9类 · 排序并列,"SELECT Language
+FROM countrylanguage
+GROUP BY Language
+ORDER BY COUNT(DISTINCT CountryCode) ASC, Language ASC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00023-pre,SQL_sort_order,23,pre,142,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What model has the most different versions?,SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT Model
+FROM car_names
+GROUP BY Model
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00023-post,SQL_sort_order,23,post,142,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What model has the least different versions?,SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) ASC LIMIT 1,第9类 · 排序并列,"SELECT ""Model"" FROM ""car_names"" GROUP BY ""Model"" ORDER BY COUNT(DISTINCT ""Make"") ASC, ""Model"" ASC LIMIT 1;",True,match,,1,1
+NLQ_keyword_synonym-00355-pre,NLQ_keyword_synonym,355,pre,331,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Which template type code has most number of templates?,SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT Template_Type_Code
+FROM Templates
+GROUP BY Template_Type_Code
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_keyword_synonym-00355-post,NLQ_keyword_synonym,355,post,331,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What is the code of a type with most templates?,SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT Template_Type_Code
+FROM Templates
+GROUP BY Template_Type_Code
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+DB_schema_abbreviation-02656-pre,DB_schema_abbreviation,2656,pre,878,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Which grade has the most high schoolers?,SELECT grade FROM Highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT grade
+FROM Highschooler
+GROUP BY grade
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+DB_schema_abbreviation-02656-post,DB_schema_abbreviation,2656,post,878,network_1_5,data\DB_schema_abbreviation\database_post_perturbation\network_1_5\network_1_5.sqlite,Which grade has the most high schoolers?,SELECT Highschooler.gr FROM Highschooler GROUP BY Highschooler.gr ORDER BY count(*) desc LIMIT 1,第9类 · 排序并列,"SELECT gr
+FROM Highschooler
+GROUP BY gr
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+DB_schema_synonym-01705-pre,DB_schema_synonym,1705,pre,698,voter_1,data\Spider-dev\databases\voter_1\voter_1.sqlite,What is the area code in which the most voters voted?,SELECT T1.area_code FROM area_code_state AS T1 JOIN votes AS T2 ON T1.state = T2.state GROUP BY T1.area_code ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT CAST(phone_number / 10000000 AS INTEGER) AS area_code
+FROM VOTES
+GROUP BY area_code
+ORDER BY COUNT(DISTINCT phone_number) DESC, area_code
+LIMIT 1;",False,mismatch,,1,1
+DB_schema_synonym-01705-post,DB_schema_synonym,1705,post,698,voter_1_3,data\DB_schema_synonym\database_post_perturbation\voter_1_3\voter_1_3.sqlite,What is the area code in which the most voters voted?,SELECT AREA_CODE_STATE.region_digits FROM AREA_CODE_STATE JOIN VOTES ON AREA_CODE_STATE.state = VOTES.state GROUP BY AREA_CODE_STATE.region_digits ORDER BY count(*) desc LIMIT 1,第9类 · 排序并列,"SELECT SUBSTR(PRINTF('%010d', phone_number), -10, 3) AS area_code
+FROM VOTES
+GROUP BY area_code
+ORDER BY COUNT(DISTINCT phone_number) DESC, area_code
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00007-pre,SQL_sort_order,7,pre,25,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What is the name and capacity of the stadium with the most concerts after 2013 ?,"select t2.name , t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id = t2.stadium_id where t1.year > 2013 group by t2.stadium_id order by count(*) desc limit 1",第9类 · 排序并列,"SELECT s.Name, s.Capacity
+FROM stadium AS s
+JOIN concert AS c ON c.Stadium_ID = s.Stadium_ID
+WHERE CAST(c.Year AS INTEGER) > 2013
+GROUP BY s.Stadium_ID
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00007-post,SQL_sort_order,7,post,25,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What is the name and capacity of the stadium with the least concerts after 2013 ?,"select t2.name , t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id = t2.stadium_id where t1.year > 2013 group by t2.stadium_id order by count(*) ASC limit 1",第9类 · 排序并列,"SELECT s.Name, s.Capacity
+FROM stadium AS s
+JOIN concert AS c ON c.Stadium_ID = s.Stadium_ID
+WHERE CAST(c.Year AS INTEGER) > 2013
+GROUP BY s.Stadium_ID, s.Name, s.Capacity
+ORDER BY COUNT(*) ASC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00174-pre,SQL_sort_order,174,pre,930,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"Which owner owns the most dogs? List the owner id, first name and last name.","SELECT T1.owner_id , T2.first_name , T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id = T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",第9类 · 排序并列,"SELECT o.owner_id, o.first_name, o.last_name
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+GROUP BY o.owner_id, o.first_name, o.last_name
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00174-post,SQL_sort_order,174,post,930,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"Which owner owns the least dogs? List the owner id, first name and last name.","SELECT T1.owner_id , T2.first_name , T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id = T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) ASC LIMIT 1",第9类 · 排序并列,"SELECT o.owner_id, o.first_name, o.last_name
+FROM Owners AS o
+LEFT JOIN Dogs AS d ON d.owner_id = o.owner_id
+GROUP BY o.owner_id, o.first_name, o.last_name
+ORDER BY COUNT(d.dog_id), o.owner_id
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00048-pre,SQL_sort_order,48,pre,344,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Return the code of the template type that is most commonly used in documents.,SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_type_code ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT t.Template_Type_Code
+FROM Documents AS d
+JOIN Templates AS t ON t.Template_ID = d.Template_ID
+GROUP BY t.Template_Type_Code
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00048-post,SQL_sort_order,48,post,344,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Return the code of the template type that is least commonly used in documents.,SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_type_code ORDER BY count(*) ASC LIMIT 1,第9类 · 排序并列,"SELECT t.Template_Type_Code
+FROM Templates AS t
+JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY t.Template_Type_Code
+ORDER BY COUNT(*) ASC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00076-pre,SQL_sort_order,76,pre,475,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,find the code of the country where has the greatest number of players.,SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT country_code
+FROM players
+GROUP BY country_code
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00076-post,SQL_sort_order,76,post,475,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,find the code of the country where has the fewest number of players.,SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) ASC LIMIT 1,第9类 · 排序并列,"SELECT country_code
+FROM players
+WHERE country_code IS NOT NULL
+GROUP BY country_code
+ORDER BY COUNT(*) ASC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00067-pre,SQL_sort_order,67,pre,460,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What is the first name and country code of the player with the most tours?,"SELECT T1.country_code , T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id ORDER BY T2.tours DESC LIMIT 1",第9类 · 排序并列,"SELECT p.first_name, p.country_code
+FROM players AS p
+JOIN rankings AS r ON r.player_id = p.player_id
+ORDER BY r.tours DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00067-post,SQL_sort_order,67,post,460,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,What is the first name and country code of the player with the least tours?,"SELECT T1.country_code , T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id ORDER BY T2.tours ASC LIMIT 1",第9类 · 排序并列,"SELECT p.first_name, p.country_code
+FROM players AS p
+JOIN rankings AS r ON r.player_id = p.player_id
+WHERE r.tours IS NOT NULL
+ORDER BY r.tours ASC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00092-pre,SQL_sort_order,92,pre,539,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Find the program which most number of students are enrolled in. List both the id and the summary.,"SELECT T1.degree_program_id , T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1",第9类 · 排序并列,"SELECT dp.degree_program_id, dp.degree_summary_name
+FROM Degree_Programs AS dp
+JOIN Student_Enrolment AS se ON se.degree_program_id = dp.degree_program_id
+GROUP BY dp.degree_program_id, dp.degree_summary_name
+ORDER BY COUNT(DISTINCT se.student_id) DESC, dp.degree_program_id
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00092-post,SQL_sort_order,92,post,539,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Find the program which least number of students are enrolled in. List both the id and the summary.,"SELECT T1.degree_program_id , T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) ASC LIMIT 1",第9类 · 排序并列,"SELECT dp.degree_program_id, dp.degree_summary_name
+FROM Degree_Programs AS dp
+LEFT JOIN Student_Enrolment AS se ON se.degree_program_id = dp.degree_program_id
+GROUP BY dp.degree_program_id, dp.degree_summary_name
+ORDER BY COUNT(DISTINCT se.student_id) ASC, dp.degree_program_id ASC
+LIMIT 1;",False,mismatch,,1,1
+SQL_sort_order-00047-pre,SQL_sort_order,47,pre,343,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Which template type code is used by most number of documents?,SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_type_code ORDER BY count(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT t.Template_Type_Code
+FROM Documents AS d
+JOIN Templates AS t ON t.Template_ID = d.Template_ID
+GROUP BY t.Template_Type_Code
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00047-post,SQL_sort_order,47,post,343,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Which template type code is used by least number of documents?,SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id GROUP BY T1.template_type_code ORDER BY count(*) ASC LIMIT 1,第9类 · 排序并列,"SELECT t.Template_Type_Code
+FROM Templates AS t
+JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY t.Template_Type_Code
+ORDER BY COUNT(d.Document_ID) ASC, t.Template_Type_Code ASC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00168-pre,SQL_sort_order,168,pre,852,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,List the record company shared by the most number of orchestras.,SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1,第9类 · 排序并列,"SELECT ""Record_Company""
+FROM ""orchestra""
+GROUP BY ""Record_Company""
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+SQL_sort_order-00168-post,SQL_sort_order,168,post,852,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,List the record company shared by the least number of orchestras.,SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) ASC LIMIT 1,第9类 · 排序并列,"SELECT Record_Company
+FROM orchestra
+GROUP BY Record_Company
+ORDER BY COUNT(*) ASC
+LIMIT 1;",True,match,,1,1
+DB_schema_synonym-01250-pre,DB_schema_synonym,1250,pre,505,battle_death,data\Spider-dev\databases\battle_death\battle_death.sqlite,"Show names, results and bulgarian commanders of the battles with no ships lost in the 'English Channel'.","SELECT name , RESULT , bulgarian_commander FROM battle EXCEPT SELECT T1.name , T1.result , T1.bulgarian_commander FROM battle AS T1 JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.location = 'English Channel'",第7类 · 零明细与缺失值,"SELECT b.name, b.result, b.bulgarian_commander
+FROM battle AS b
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM ship AS s
+    WHERE s.lost_in_battle = b.id
+      AND s.location = 'English Channel'
+);",True,match,,3,3
+DB_schema_synonym-01250-post,DB_schema_synonym,1250,post,505,battle_death_1,data\DB_schema_synonym\database_post_perturbation\battle_death_1\battle_death_1.sqlite,"Show names, results and bulgarian commanders of the battles with no ships lost in the 'English Channel'.","SELECT battle.name , battle.result , battle.bulgarian_commander FROM battle EXCEPT SELECT battle.name , battle.result , battle.bulgarian_commander FROM battle JOIN ship ON battle.id = ship.lost_in_battle WHERE ship.site = ""English Channel""",第7类 · 零明细与缺失值,"SELECT b.name, b.result, b.bulgarian_commander
+FROM battle AS b
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM ship AS s
+    WHERE s.lost_in_battle = b.id
+      AND s.site = 'English Channel'
+);
+--",True,match,,3,3
+DB_schema_abbreviation-02468-pre,DB_schema_abbreviation,2468,pre,854,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,List the names of orchestras that have no performance.,SELECT Orchestra FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance),第7类 · 零明细与缺失值,"SELECT o.""Orchestra""
+FROM ""orchestra"" AS o
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM ""performance"" AS p
+    WHERE p.""Orchestra_ID"" = o.""Orchestra_ID""
+);",True,match,,1,1
+DB_schema_abbreviation-02468-post,DB_schema_abbreviation,2468,post,854,orchestra_0,data\DB_schema_abbreviation\database_post_perturbation\orchestra_0\orchestra_0.sqlite,List the names of orchestras that have no performance.,SELECT orchestra.orch FROM orchestra WHERE orchestra.orch_id NOT in (SELECT performance.orch_id FROM performance),第7类 · 零明细与缺失值,"SELECT o.orch
+FROM orchestra AS o
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM performance AS p
+    WHERE p.orch_id = o.orch_id
+);",True,match,,1,1
+NLQ_others-00631-pre,NLQ_others,631,pre,258,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Which airports do not have departing or arriving flights?,SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights),第7类 · 零明细与缺失值,"SELECT a.AirportCode, a.AirportName
+FROM airports AS a
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM flights AS f
+  WHERE f.SourceAirport = a.AirportCode
+     OR f.DestAirport = a.AirportCode
+);",False,mismatch,,100,100
+NLQ_others-00631-post,NLQ_others,631,post,258,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,List the airports which are source or destination airports without any flight at all.,SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights),第7类 · 零明细与缺失值,"SELECT a.*
+FROM airports AS a
+WHERE NOT EXISTS (
+    SELECT 1 FROM flights AS f WHERE f.SourceAirport = a.AirportCode
+)
+AND NOT EXISTS (
+    SELECT 1 FROM flights AS f WHERE f.DestAirport = a.AirportCode
+);",False,mismatch,,100,100
+NLQ_others-00053-pre,NLQ_others,53,pre,29,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What are the names of the stadiums without any concerts?,SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert),第7类 · 零明细与缺失值,SELECT s.Name FROM stadium AS s WHERE NOT EXISTS (SELECT 1 FROM concert AS c WHERE c.Stadium_ID = s.Stadium_ID);,True,match,,4,4
+NLQ_others-00053-post,NLQ_others,53,post,29,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,Can you tell me the name of the stadiums without concerts?,SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert),第7类 · 零明细与缺失值,"SELECT s.""Name"" FROM ""stadium"" AS s WHERE NOT EXISTS (SELECT 1 FROM ""concert"" AS c WHERE c.""Stadium_ID"" = s.""Stadium_ID"");",True,match,,4,4
+NLQ_others-00202-pre,NLQ_others,202,pre,85,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find the average age of students who do not have any pet .,select avg(age) from student where stuid not in (select stuid from has_pet),第7类 · 零明细与缺失值,SELECT AVG(s.Age) FROM Student AS s WHERE NOT EXISTS (SELECT 1 FROM Has_Pet AS hp WHERE hp.StuID = s.StuID);,True,match,,1,1
+NLQ_others-00202-post,NLQ_others,202,post,85,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Show me the average age of the students who have no pets.,select avg(age) from student where stuid not in (select stuid from has_pet),第7类 · 零明细与缺失值,"SELECT AVG(s.Age) AS average_age
+FROM Student AS s
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Has_Pet AS hp
+    WHERE hp.StuID = s.StuID
+);",True,match,,1,1
+NLQ_others-00560-pre,NLQ_others,560,pre,239,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Find all airlines that have flights from airport 'CVO' but not from 'APG'.,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""CVO"" EXCEPT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""APG""",第7类 · 零明细与缺失值,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+WHERE EXISTS (
+    SELECT 1 FROM ""flights"" AS f
+    WHERE f.""Airline"" = a.""uid"" AND f.""SourceAirport"" = 'CVO'
+)
+AND NOT EXISTS (
+    SELECT 1 FROM ""flights"" AS f
+    WHERE f.""Airline"" = a.""uid"" AND f.""SourceAirport"" = 'APG'
+);",True,match,,0,0
+NLQ_others-00560-post,NLQ_others,560,post,239,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,"For all airlines where flight was originating from 'CVO', can you show the ones whose flight had no origin from 'APG'?","SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""CVO"" EXCEPT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""APG""",第7类 · 零明细与缺失值,"SELECT a.Airline
+FROM airlines AS a
+WHERE EXISTS (
+    SELECT 1
+    FROM flights AS f
+    WHERE f.Airline = a.uid AND f.SourceAirport = 'CVO'
+)
+AND NOT EXISTS (
+    SELECT 1
+    FROM flights AS f
+    WHERE f.Airline = a.uid AND f.SourceAirport = 'APG'
+);
+--",True,match,,0,0
+NLQ_column_synonym-00181-pre,NLQ_column_synonym,181,pre,346,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What are the codes of template types that are not used for any document?,SELECT template_type_code FROM Templates EXCEPT SELECT template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id,第7类 · 零明细与缺失值,"SELECT r.Template_Type_Code
+FROM Ref_Template_Types AS r
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Templates AS t
+    JOIN Documents AS d ON d.Template_ID = t.Template_ID
+    WHERE t.Template_Type_Code = r.Template_Type_Code
+);",True,match,,1,1
+NLQ_column_synonym-00181-post,NLQ_column_synonym,181,post,346,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Can you provide codes for template categories which have no documents associated with them?,SELECT template_type_code FROM Templates EXCEPT SELECT template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id = T2.template_id,第7类 · 零明细与缺失值,"SELECT r.Template_Type_Code
+FROM Ref_Template_Types AS r
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Templates AS t
+    JOIN Documents AS d ON d.Template_ID = t.Template_ID
+    WHERE t.Template_Type_Code = r.Template_Type_Code
+);",True,match,,1,1
+DB_schema_abbreviation-00448-pre,DB_schema_abbreviation,448,pre,228,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Give the code of the airport with the least flights.,SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode = T2.DestAirport OR T1.AirportCode = T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1,第7类 · 零明细与缺失值,"SELECT a.AirportCode
+FROM airports AS a
+LEFT JOIN flights AS f
+  ON f.SourceAirport = a.AirportCode OR f.DestAirport = a.AirportCode
+GROUP BY a.AirportCode
+ORDER BY COUNT(f.FlightNo), a.AirportCode
+LIMIT 1;",False,mismatch,,0,1
+DB_schema_abbreviation-00448-post,DB_schema_abbreviation,448,post,228,flight_2_1,data\DB_schema_abbreviation\database_post_perturbation\flight_2_1\flight_2_1.sqlite,Give the code of the airport with the least flights.,SELECT airports.apt_code FROM airports JOIN flights ON airports.apt_code = flights.destapt GROUP BY airports.apt_code ORDER BY count(*) asc LIMIT 1,第7类 · 零明细与缺失值,"SELECT a.apt_code
+FROM airports AS a
+LEFT JOIN flights AS f
+  ON f.srcapt = a.apt_code OR f.destapt = a.apt_code
+GROUP BY a.apt_code
+ORDER BY COUNT(f.rowid), a.apt_code
+LIMIT 1;",False,mismatch,,0,1
+NLQ_others-02537-pre,NLQ_others,2537,pre,980,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,How many owners temporarily do not have any dogs?,SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs ),第7类 · 零明细与缺失值,"SELECT COUNT(*) AS owner_count
+FROM Owners AS o
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Dogs AS d
+    WHERE d.owner_id = o.owner_id
+);",True,match,,1,1
+NLQ_others-02537-post,NLQ_others,2537,post,980,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,List all the dog ownership ids where at least one owner has no dog.,SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs ),第7类 · 零明细与缺失值,"SELECT o.owner_id
+FROM Owners AS o
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Dogs AS d
+    WHERE d.owner_id = o.owner_id
+);",False,mismatch,,1,3
+NLQ_others-01813-pre,NLQ_others,1813,pre,645,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,find the package option of the tv channel that do not have any cartoon directed by Ben Jones.,SELECT package_option FROM TV_Channel WHERE id NOT IN (SELECT channel FROM cartoon WHERE directed_by = 'Ben Jones'),第7类 · 零明细与缺失值,"SELECT t.""Package_Option""
+FROM ""TV_Channel"" AS t
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM ""Cartoon"" AS c
+    WHERE c.""Channel"" = t.""id""
+      AND c.""Directed_by"" = 'Ben Jones'
+);",True,match,,11,11
+NLQ_others-01813-post,NLQ_others,1813,post,645,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,Find the package option of the TV channel which has no cartoon directed by Ben Jones.,SELECT package_option FROM TV_Channel WHERE id NOT IN (SELECT channel FROM cartoon WHERE directed_by = 'Ben Jones'),第7类 · 零明细与缺失值,"SELECT DISTINCT tc.Package_Option
+FROM TV_Channel AS tc
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM Cartoon AS c
+  WHERE c.Channel = tc.id
+    AND c.Directed_by = 'Ben Jones'
+);",False,mismatch,,11,3
+NLQ_others-00131-pre,NLQ_others,131,pre,63,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find the id of students who do not have a cat pet.,SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat',第7类 · 零明细与缺失值,"SELECT s.StuID
+FROM Student AS s
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM Has_Pet AS hp
+  JOIN Pets AS p ON p.PetID = hp.PetID
+  WHERE hp.StuID = s.StuID AND p.PetType = 'cat'
+);",True,match,,33,33
+NLQ_others-00131-post,NLQ_others,131,post,63,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Can you find the id of students who have no cat pets?,SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat',第7类 · 零明细与缺失值,"SELECT s.StuID
+FROM Student AS s
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Has_Pet AS hp
+    JOIN Pets AS p ON p.PetID = hp.PetID
+    WHERE hp.StuID = s.StuID AND p.PetType = 'cat'
+);",True,match,,33,33
+NLQ_others-02508-pre,NLQ_others,2508,pre,914,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Find the average grade of all students who have some friends.,SELECT avg(grade) FROM Highschooler WHERE id IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id),第7类 · 零明细与缺失值,"SELECT AVG(h.grade) AS average_grade
+FROM Highschooler AS h
+WHERE EXISTS (
+  SELECT 1
+  FROM Friend AS f
+  WHERE f.student_id = h.ID OR f.friend_id = h.ID
+);",False,mismatch,,1,1
+NLQ_others-02508-post,NLQ_others,2508,post,914,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Show me the average grade of all students who have at least one friend.,SELECT avg(grade) FROM Highschooler WHERE id IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id),第7类 · 零明细与缺失值,"SELECT AVG(h.grade) AS average_grade
+FROM Highschooler AS h
+WHERE EXISTS (
+    SELECT 1
+    FROM Friend AS f
+    WHERE f.student_id = h.ID OR f.friend_id = h.ID
+);",False,mismatch,,1,1
+NLQ_others-01985-pre,NLQ_others,1985,pre,757,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is the language that is used by the largest number of Asian nations?,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Continent = ""Asia"" GROUP BY T2.Language ORDER BY COUNT (*) DESC LIMIT 1",第6类 · 分组粒度,"SELECT cl.Language
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+WHERE c.Continent = 'Asia'
+GROUP BY cl.Language
+ORDER BY COUNT(DISTINCT c.Code) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_others-01985-post,NLQ_others,1985,post,757,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Which language is spoken in the largest number of nations in Asia?,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Continent = ""Asia"" GROUP BY T2.Language ORDER BY COUNT (*) DESC LIMIT 1",第6类 · 分组粒度,"SELECT cl.Language
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+WHERE c.Continent = 'Asia' AND cl.Percentage > 0
+GROUP BY cl.Language
+ORDER BY COUNT(DISTINCT c.Code) DESC, cl.Language
+LIMIT 1;",True,match,,1,1
+NLQ_others-01892-pre,NLQ_others,1892,pre,674,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,How many people are there of each nationality?,"SELECT Nationality , COUNT(*) FROM people GROUP BY Nationality",第6类 · 分组粒度,"SELECT Nationality, COUNT(*) AS people_count
+FROM people
+GROUP BY Nationality;",True,match,,2,2
+NLQ_others-01892-post,NLQ_others,1892,post,674,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,What is the number of people in each nationality?,"SELECT Nationality , COUNT(*) FROM people GROUP BY Nationality",第6类 · 分组粒度,"SELECT Nationality, COUNT(*) AS people_count
+FROM people
+GROUP BY Nationality;",True,match,,2,2
+DB_schema_abbreviation-00218-pre,DB_schema_abbreviation,218,pre,128,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the average weight and year for each year?,"SELECT avg(Weight) , YEAR FROM CARS_DATA GROUP BY YEAR",第6类 · 分组粒度,"SELECT Year, AVG(Weight) AS average_weight, AVG(Year) AS average_year
+FROM cars_data
+GROUP BY Year;",False,mismatch,,13,13
+DB_schema_abbreviation-00218-post,DB_schema_abbreviation,218,post,128,car_1_2,data\DB_schema_abbreviation\database_post_perturbation\car_1_2\car_1_2.sqlite,What is the average weight and year for each year?,"SELECT avg(cars_data.wt) , cars_data.Year FROM cars_data GROUP BY cars_data.Year",第6类 · 分组粒度,"SELECT Year, AVG(wt) AS average_weight
+FROM cars_data
+GROUP BY Year
+ORDER BY Year;",True,match,,13,13
+NLQ_others-00190-pre,NLQ_others,190,pre,80,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,"For students who have pets , how many pets does each student have ? list their ids instead of names .","select count(*) , t1.stuid from student as t1 join has_pet as t2 on t1.stuid = t2.stuid group by t1.stuid",第6类 · 分组粒度,"SELECT StuID, COUNT(*) AS pet_count
+FROM Has_Pet
+GROUP BY StuID;",True,match,,2,2
+NLQ_others-00190-post,NLQ_others,190,post,80,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,"For students who have pets, how many pets do they possess? List their ids instead of names.","select count(*) , t1.stuid from student as t1 join has_pet as t2 on t1.stuid = t2.stuid group by t1.stuid",第6类 · 分组粒度,"SELECT StuID, COUNT(*) AS pet_count
+FROM Has_Pet
+GROUP BY StuID;",True,match,,2,2
+DB_schema_synonym-01130-pre,DB_schema_synonym,1130,pre,469,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Find the average ranking for each player and their first name.,"SELECT avg(ranking) , T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id GROUP BY T1.first_name",第6类 · 分组粒度,"SELECT p.player_id, p.first_name, AVG(r.ranking) AS average_ranking
+FROM players AS p
+JOIN rankings AS r ON r.player_id = p.player_id
+GROUP BY p.player_id, p.first_name;",False,mismatch,,1580,2775
+DB_schema_synonym-01130-post,DB_schema_synonym,1130,post,469,wta_1_1,data\DB_schema_synonym\database_post_perturbation\wta_1_1\wta_1_1.sqlite,Find the average ranking for each player and their first name.,"SELECT avg(rankings.position) , players.given_name FROM players JOIN rankings ON players.player_id = rankings.player_id GROUP BY players.given_name",第6类 · 分组粒度,"SELECT p.given_name, AVG(r.position) AS average_ranking
+FROM players AS p
+JOIN rankings AS r ON r.player_id = p.player_id
+GROUP BY p.player_id, p.given_name;",False,mismatch,,1580,2775
+DB_schema_abbreviation-00037-pre,DB_schema_abbreviation,37,pre,10,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,Show all countries and the number of singers in each country.,"SELECT country , count(*) FROM singer GROUP BY country",第6类 · 分组粒度,"SELECT Country, COUNT(*) AS singer_count FROM singer GROUP BY Country;",True,match,,3,3
+DB_schema_abbreviation-00037-post,DB_schema_abbreviation,37,post,10,concert_singer_1,data\DB_schema_abbreviation\database_post_perturbation\concert_singer_1\concert_singer_1.sqlite,Show all countries and the number of singers in each country.,"SELECT singer.cntry , count(*) FROM singer GROUP BY singer.cntry",第6类 · 分组粒度,"SELECT cntry, COUNT(*) AS singer_count FROM singer GROUP BY cntry;",True,match,,3,3
+NLQ_others-01300-pre,NLQ_others,1300,pre,474,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,How many players are from each country?,"SELECT count(*) , country_code FROM players GROUP BY country_code",第6类 · 分组粒度,"SELECT country_code, COUNT(*) AS player_count
+FROM players
+GROUP BY country_code;",True,match,,153,153
+NLQ_others-01300-post,NLQ_others,1300,post,474,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Please give me information on how many players are from which countries?,"SELECT count(*) , country_code FROM players GROUP BY country_code",第6类 · 分组粒度,"SELECT country_code, COUNT(*) AS player_count
+FROM players
+GROUP BY country_code
+ORDER BY player_count DESC, country_code;",True,match,,153,153
+NLQ_multitype-01327-pre,NLQ_multitype,1327,pre,1012,singer,data\Spider-dev\databases\singer\singer.sqlite,Show different citizenship of singers and the number of singers of each citizenship.,"SELECT Citizenship , COUNT(*) FROM singer GROUP BY Citizenship",第6类 · 分组粒度,"SELECT ""Citizenship"", COUNT(*) AS singer_count
+FROM ""singer""
+GROUP BY ""Citizenship"";",True,match,,5,5
+NLQ_multitype-01327-post,NLQ_multitype,1327,post,1012,singer,data\Spider-dev\databases\singer\singer.sqlite,Show me different nationalities and their numbers of singers in each.,"SELECT Citizenship , COUNT(*) FROM singer GROUP BY Citizenship",第6类 · 分组粒度,"SELECT ""Citizenship"", COUNT(*) AS ""Singer_Count""
+FROM ""singer""
+GROUP BY ""Citizenship"";",True,match,,5,5
+NLQ_others-00810-pre,NLQ_others,810,pre,309,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Show all template ids and number of documents using each template.,"SELECT template_id , count(*) FROM Documents GROUP BY template_id",第6类 · 分组粒度,"SELECT t.Template_ID, COUNT(d.Document_ID) AS document_count
+FROM Templates AS t
+LEFT JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY t.Template_ID;",False,mismatch,,12,20
+NLQ_others-00810-post,NLQ_others,810,post,309,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Can I see all template ids and number of document made using these templates?,"SELECT template_id , count(*) FROM Documents GROUP BY template_id",第6类 · 分组粒度,"SELECT t.Template_ID, COUNT(d.Document_ID) AS document_count
+FROM Templates AS t
+LEFT JOIN Documents AS d ON d.Template_ID = t.Template_ID
+GROUP BY t.Template_ID;",False,mismatch,,12,20
+NLQ_multitype-00134-pre,NLQ_multitype,134,pre,74,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,What is the average weight for each type of pet?,"SELECT avg(weight) , pettype FROM pets GROUP BY pettype",第6类 · 分组粒度,"SELECT PetType, AVG(weight) AS average_weight FROM Pets GROUP BY PetType;",True,match,,2,2
+NLQ_multitype-00134-post,NLQ_multitype,134,post,74,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,How much does each type of pet weigh,"SELECT avg(weight) , pettype FROM pets GROUP BY pettype",第6类 · 分组粒度,"SELECT PetType, AVG(weight) AS average_weight FROM Pets GROUP BY PetType;",True,match,,2,2
+DB_schema_abbreviation-00703-pre,DB_schema_abbreviation,703,pre,267,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,Find the number of shops in each location.,"SELECT count(*) , LOCATION FROM shop GROUP BY LOCATION",第6类 · 分组粒度,"SELECT ""Location"", COUNT(*) AS shop_count
+FROM ""shop""
+GROUP BY ""Location"";",True,match,,9,9
+DB_schema_abbreviation-00703-post,DB_schema_abbreviation,703,post,267,employee_hire_evaluation_1,data\DB_schema_abbreviation\database_post_perturbation\employee_hire_evaluation_1\employee_hire_evaluation_1.sqlite,Find the number of shops in each location.,"SELECT count(*) , shop.loc FROM shop GROUP BY shop.loc",第6类 · 分组粒度,"SELECT ""loc"", COUNT(*) AS shop_count FROM ""shop"" GROUP BY ""loc"";",True,match,,9,9
+NLQ_others-00866-pre,NLQ_others,866,pre,329,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Show all template type codes and number of templates for each.,"SELECT template_type_code , count(*) FROM Templates GROUP BY template_type_code",第6类 · 分组粒度,"SELECT r.Template_Type_Code, COUNT(t.Template_ID) AS template_count
+FROM Ref_Template_Types AS r
+LEFT JOIN Templates AS t ON t.Template_Type_Code = r.Template_Type_Code
+GROUP BY r.Template_Type_Code;",True,match,,5,5
+NLQ_others-00866-post,NLQ_others,866,post,329,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Can you show me all template type codes and number of templates for each?,"SELECT template_type_code , count(*) FROM Templates GROUP BY template_type_code",第6类 · 分组粒度,"SELECT r.Template_Type_Code, COUNT(t.Template_ID) AS template_count
+FROM Ref_Template_Types AS r
+LEFT JOIN Templates AS t ON t.Template_Type_Code = r.Template_Type_Code
+GROUP BY r.Template_Type_Code;",True,match,,5,5
+SQL_DB_text-00832-pre,SQL_DB_text,832,pre,859,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,Count the number of orchestras that have CD or DVD as their record format.,"SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format = ""CD"" OR Major_Record_Format = ""DVD""",第5类 · 筛选范围,"SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format IN ('CD', 'DVD');",True,match,,1,1
+SQL_DB_text-00832-post,SQL_DB_text,832,post,859,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,Count the number of orchestras that have CD / LP or DVD as their record format.,"SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format = ""CD / LP"" OR Major_Record_Format = ""DVD""",第5类 · 筛选范围,"SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format IN ('CD / LP', 'DVD');",True,match,,1,1
+NLQ_others-02540-pre,NLQ_others,2540,pre,918,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Which states have both owners and professionals living there?,SELECT state FROM Owners INTERSECT SELECT state FROM Professionals,第5类 · 筛选范围,"SELECT DISTINCT o.state
+FROM Owners AS o
+JOIN Professionals AS p ON p.state = o.state;",True,match,,3,3
+NLQ_others-02540-post,NLQ_others,2540,post,918,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Which states contain people from both the owner and professional group?,SELECT state FROM Owners INTERSECT SELECT state FROM Professionals,第5类 · 筛选范围,SELECT state FROM Owners WHERE state IS NOT NULL INTERSECT SELECT state FROM Professionals WHERE state IS NOT NULL;,True,match,,3,3
+NLQ_keyword_synonym-00662-pre,NLQ_keyword_synonym,662,pre,811,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give the total population and average surface area corresponding to countries in North America that have a surface area greater than 3000 .,"select sum(population) , avg(surfacearea) from country where continent = ""north america"" and surfacearea > 3000",第5类 · 筛选范围,"SELECT SUM(Population) AS total_population, AVG(SurfaceArea) AS average_surface_area
+FROM country
+WHERE Continent = 'North America' AND SurfaceArea > 3000;",False,mismatch,,1,1
+NLQ_keyword_synonym-00662-post,NLQ_keyword_synonym,662,post,811,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give the populations and averages of the countries in North America with a surface area larger than 3000.,"select sum(population) , avg(surfacearea) from country where continent = ""north america"" and surfacearea > 3000",第5类 · 筛选范围,"SELECT Name, Population, AVG(Population) OVER () AS AveragePopulation
+FROM country
+WHERE Continent = 'North America' AND SurfaceArea > 3000;",False,mismatch,,1,18
+NLQ_others-00706-pre,NLQ_others,706,pre,285,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,Find the name of the shops that do not hire any employee.,SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring),第5类 · 筛选范围,"SELECT s.Name
+FROM shop AS s
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM hiring AS h
+    WHERE h.Shop_ID = s.Shop_ID
+);",True,match,,3,3
+NLQ_others-00706-post,NLQ_others,706,post,285,employee_hire_evaluation,data\Spider-dev\databases\employee_hire_evaluation\employee_hire_evaluation.sqlite,Can you find out the names of the shops that don't hire anyone?,SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring),第5类 · 筛选范围,"SELECT s.""Name""
+FROM ""shop"" AS s
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM ""hiring"" AS h
+    WHERE h.""Shop_ID"" = s.""Shop_ID""
+);",True,match,,3,3
+SQL_DB_text-00684-pre,SQL_DB_text,684,pre,764,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is average life expectancy in the countries where English is not the official language?,"SELECT avg(LifeExpectancy) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = ""English"" AND T2.IsOfficial = ""T"")",第5类 · 筛选范围,"SELECT AVG(c.LifeExpectancy) AS average_life_expectancy
+FROM country AS c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = c.Code
+      AND cl.Language = 'English'
+      AND cl.IsOfficial = 'T'
+);",True,match,,1,1
+SQL_DB_text-00684-post,SQL_DB_text,684,post,764,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is average life expectancy in the countries where Nepali is not the official language?,"SELECT avg(LifeExpectancy) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = ""Nepali"" AND T2.IsOfficial = ""T"")",第5类 · 筛选范围,"SELECT AVG(c.LifeExpectancy) AS AverageLifeExpectancy
+FROM country AS c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = c.Code
+      AND cl.Language = 'Nepali'
+      AND cl.IsOfficial = 'T'
+);",True,match,,1,1
+NLQ_others-02687-pre,NLQ_others,2687,pre,978,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,How many dogs have not gone through any treatment?,SELECT count(*) FROM Dogs WHERE dog_id NOT IN ( SELECT dog_id FROM Treatments ),第5类 · 筛选范围,SELECT COUNT(*) FROM Dogs AS d WHERE NOT EXISTS (SELECT 1 FROM Treatments AS t WHERE t.dog_id = d.dog_id);,True,match,,1,1
+NLQ_others-02687-post,NLQ_others,2687,post,978,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,How many dogs have not been treated?,SELECT count(*) FROM Dogs WHERE dog_id NOT IN ( SELECT dog_id FROM Treatments ),第5类 · 筛选范围,SELECT COUNT(*) FROM Dogs AS d WHERE NOT EXISTS (SELECT 1 FROM Treatments AS t WHERE t.dog_id = d.dog_id);,True,match,,1,1
+SQL_DB_text-00424-pre,SQL_DB_text,424,pre,637,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,Find the series name and country of the tv channel that is playing some cartoons directed by Ben Jones and Michael Chang?,"SELECT T1.series_name , T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by = 'Michael Chang' INTERSECT SELECT T1.series_name , T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by = 'Ben Jones'",第5类 · 筛选范围,"SELECT DISTINCT t.series_name, t.Country
+FROM TV_Channel AS t
+JOIN Cartoon AS c ON c.Channel = t.id
+WHERE c.Directed_by IN ('Ben Jones', 'Michael Chang');",False,mismatch,,1,6
+SQL_DB_text-00424-post,SQL_DB_text,424,post,637,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,Find the series name and country of the tv channel that is playing some cartoons directed by Ben Jones and Ben Jones?,"SELECT T1.series_name , T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by = 'Ben Jones' INTERSECT SELECT T1.series_name , T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by = 'Ben Jones'",第5类 · 筛选范围,"SELECT DISTINCT t.series_name, t.Country
+FROM TV_Channel AS t
+JOIN Cartoon AS c ON c.Channel = t.id
+WHERE c.Directed_by LIKE '%Ben Jones%';",True,match,,4,4
+NLQ_others-02695-pre,NLQ_others,2695,pre,981,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Find the number of owners who do not own any dogs at this moment.,SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs ),第5类 · 筛选范围,"SELECT COUNT(*) AS owner_count
+FROM Owners AS o
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Dogs AS d
+    WHERE d.owner_id = o.owner_id
+);",True,match,,1,1
+NLQ_others-02695-post,NLQ_others,2695,post,981,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Please find out the number of owners who don't own any dogs now.,SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs ),第5类 · 筛选范围,"SELECT COUNT(*) AS owner_count
+FROM Owners AS o
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Dogs AS d
+    WHERE d.owner_id = o.owner_id
+);",True,match,,1,1
+NLQ_keyword_synonym-00603-pre,NLQ_keyword_synonym,603,pre,678,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,Return the nationalities for which there are two or more people.,SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*) >= 2,第5类 · 筛选范围,"SELECT Nationality
+FROM people
+GROUP BY Nationality
+HAVING COUNT(*) >= 2;",True,match,,1,1
+NLQ_keyword_synonym-00603-post,NLQ_keyword_synonym,603,post,678,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,Return all nationalities for which there are multiple people.,SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*) >= 2,第5类 · 筛选范围,"SELECT Nationality
+FROM people
+GROUP BY Nationality
+HAVING COUNT(*) > 1;",True,match,,1,1
+SQL_DB_text-00256-pre,SQL_DB_text,256,pre,485,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,How many different winners both participated in the WTA Championships and were left handed?,SELECT count(DISTINCT winner_name) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L',第5类 · 筛选范围,SELECT COUNT(DISTINCT winner_id) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L';,True,match,,1,1
+SQL_DB_text-00256-post,SQL_DB_text,256,post,485,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,How many different winners both participated in the Monterrey and were left handed?,SELECT count(DISTINCT winner_name) FROM matches WHERE tourney_name = 'Monterrey' AND winner_hand = 'L',第5类 · 筛选范围,SELECT COUNT(DISTINCT winner_id) FROM matches WHERE tourney_name = 'Monterrey' AND winner_hand = 'L';,True,match,,1,1
+SQL_DB_text-00769-pre,SQL_DB_text,769,pre,783,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Return the codes of countries that do not speak English and do not have Republics for governments.,"SELECT Code FROM country WHERE GovernmentForm != ""Republic"" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE = ""English""",第5类 · 筛选范围,"SELECT c.Code
+FROM country AS c
+WHERE c.GovernmentForm NOT LIKE '%Republic%'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = c.Code
+      AND cl.Language = 'English'
+  );",False,mismatch,,69,49
+SQL_DB_text-00769-post,SQL_DB_text,769,post,783,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Return the codes of countries that do not speak Maranao and do not have Republics for governments.,"SELECT Code FROM country WHERE GovernmentForm != ""Republic"" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE = ""Maranao""",第5类 · 筛选范围,"SELECT c.Code
+FROM country AS c
+WHERE c.GovernmentForm NOT LIKE '%Republic%'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM countrylanguage AS cl
+    WHERE cl.CountryCode = c.Code
+      AND cl.Language = 'Maranao'
+  );",False,mismatch,,117,96
+NLQ_others-00564-pre,NLQ_others,564,pre,240,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Which airlines have departures from CVO but not from APG airports?,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""CVO"" EXCEPT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""APG""",第5类 · 筛选范围,"SELECT a.Airline
+FROM airlines AS a
+WHERE EXISTS (
+    SELECT 1 FROM flights AS f
+    WHERE f.Airline = a.uid AND f.SourceAirport = 'CVO'
+)
+AND NOT EXISTS (
+    SELECT 1 FROM flights AS f
+    WHERE f.Airline = a.uid AND f.SourceAirport = 'APG'
+);",True,match,,0,0
+NLQ_others-00564-post,NLQ_others,564,post,240,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,What are the names of airlines leaving CVO and not leaving APG?,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""CVO"" EXCEPT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.SourceAirport = ""APG""",第5类 · 筛选范围,"SELECT a.""Airline""
+FROM ""airlines"" AS a
+WHERE EXISTS (
+    SELECT 1 FROM ""flights"" AS f
+    WHERE f.""Airline"" = a.""uid"" AND f.""SourceAirport"" = 'CVO'
+)
+AND NOT EXISTS (
+    SELECT 1 FROM ""flights"" AS f
+    WHERE f.""Airline"" = a.""uid"" AND f.""SourceAirport"" = 'APG'
+);",True,match,,0,0
+NLQ_others-01592-pre,NLQ_others,1592,pre,575,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,Find the semester when both Master students and Bachelor students got enrolled in.,SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE degree_summary_name = 'Master' INTERSECT SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE degree_summary_name = 'Bachelor',第5类 · 筛选范围,"SELECT s.semester_name
+FROM Semesters AS s
+WHERE EXISTS (
+    SELECT 1
+    FROM Student_Enrolment AS e
+    JOIN Degree_Programs AS d ON d.degree_program_id = e.degree_program_id
+    WHERE e.semester_id = s.semester_id
+      AND d.degree_summary_name LIKE '%Master%'
+)
+AND EXISTS (
+    SELECT 1
+    FROM Student_Enrolment AS e
+    JOIN Degree_Programs AS d ON d.degree_program_id = e.degree_program_id
+    WHERE e.semester_id = s.semester_id
+      AND d.degree_summary_name LIKE '%Bachelor%'
+);",False,mismatch,,1,1
+NLQ_others-01592-post,NLQ_others,1592,post,575,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,"Show me the name, semester ID, enrolled students, who are at least Master's and Bachelor's.",SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE degree_summary_name = 'Master' INTERSECT SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE degree_summary_name = 'Bachelor',第5类 · 筛选范围,"SELECT dp.degree_summary_name AS name,
+       se.semester_id,
+       COUNT(DISTINCT se.student_id) AS enrolled_students
+FROM Degree_Programs AS dp
+JOIN Student_Enrolment AS se
+  ON se.degree_program_id = dp.degree_program_id
+WHERE dp.degree_summary_name LIKE '%Master%'
+   OR dp.degree_summary_name LIKE '%Bachelor%'
+GROUP BY dp.degree_program_id, dp.degree_summary_name, se.semester_id;",False,mismatch,,1,15
+NLQ_others-02458-pre,NLQ_others,2458,pre,894,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Show ids of all students who do not have any friends.,SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend,第5类 · 筛选范围,"SELECT h.ID
+FROM Highschooler AS h
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM Friend AS f
+  WHERE f.student_id = h.ID OR f.friend_id = h.ID
+);",False,mismatch,,2,0
+NLQ_others-02458-post,NLQ_others,2458,post,894,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,Show me the ids of all the students who do not have any friends.,SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend,第5类 · 筛选范围,"SELECT h.ID
+FROM Highschooler AS h
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Friend AS f
+    WHERE f.student_id = h.ID
+);",True,match,,2,2
+NLQ_others-00409-pre,NLQ_others,409,pre,212,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,How many flights fly from Aberdeen to Ashley?,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport = T2.AirportCode JOIN AIRPORTS AS T3 ON T1.SourceAirport = T3.AirportCode WHERE T2.City = ""Ashley"" AND T3.City = ""Aberdeen""",第5类 · 筛选范围,"SELECT COUNT(*) AS flight_count
+FROM flights AS f
+JOIN airports AS src ON f.SourceAirport = src.AirportCode
+JOIN airports AS dst ON f.DestAirport = dst.AirportCode
+WHERE src.City = 'Aberdeen' AND dst.City = 'Ashley';",True,match,,1,1
+NLQ_others-00409-post,NLQ_others,409,post,212,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,There are how many flights that fly from Aberdeen to Ashley?,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport = T2.AirportCode JOIN AIRPORTS AS T3 ON T1.SourceAirport = T3.AirportCode WHERE T2.City = ""Ashley"" AND T3.City = ""Aberdeen""",第5类 · 筛选范围,SELECT COUNT(*) FROM flights AS f JOIN airports AS src ON f.SourceAirport = src.AirportCode JOIN airports AS dst ON f.DestAirport = dst.AirportCode WHERE src.City = 'Aberdeen' AND dst.City = 'Ashley';,True,match,,1,1
+NLQ_keyword_carrier-00225-pre,NLQ_keyword_carrier,225,pre,441,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,find the number of distinct country codes of all players.,SELECT count(DISTINCT country_code) FROM players,第3类 · 去重,SELECT COUNT(DISTINCT country_code) FROM players;,True,match,,1,1
+NLQ_keyword_carrier-00225-post,NLQ_keyword_carrier,225,post,441,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,How many different country codes do all players have?,SELECT count(DISTINCT country_code) FROM players,第3类 · 去重,SELECT COUNT(DISTINCT country_code) FROM players;,True,match,,1,1
+DB_schema_abbreviation-02264-pre,DB_schema_abbreviation,2264,pre,732,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,How many unique languages are spoken in the world?,SELECT count(DISTINCT LANGUAGE) FROM countrylanguage,第3类 · 去重,SELECT COUNT(DISTINCT Language) AS unique_language_count FROM countrylanguage;,True,match,,1,1
+DB_schema_abbreviation-02264-post,DB_schema_abbreviation,2264,post,732,world_1_3,data\DB_schema_abbreviation\database_post_perturbation\world_1_3\world_1_3.sqlite,How many unique languages are spoken in the world?,SELECT count(DISTINCT countrylanguage.lang) FROM countrylanguage,第3类 · 去重,SELECT COUNT(DISTINCT lang) AS unique_languages FROM countrylanguage;,True,match,,1,1
+DB_schema_synonym-01001-pre,DB_schema_synonym,1001,pre,353,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What are the distinct template type descriptions for the templates ever used by any document?,SELECT DISTINCT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID = T3.template_ID,第3类 · 去重,"SELECT DISTINCT r.Template_Type_Description
+FROM Ref_Template_Types AS r
+JOIN Templates AS t ON t.Template_Type_Code = r.Template_Type_Code
+JOIN Documents AS d ON d.Template_ID = t.Template_ID;",True,match,,4,4
+DB_schema_synonym-01001-post,DB_schema_synonym,1001,post,353,cre_Doc_Template_Mgt_3,data\DB_schema_synonym\database_post_perturbation\cre_Doc_Template_Mgt_3\cre_Doc_Template_Mgt_3.sqlite,What are the distinct template type descriptions for the templates ever used by any document?,SELECT DISTINCT Ref_Template_Types.Template_Type_Description FROM Ref_Template_Types JOIN Templates ON Ref_Template_Types.category_cipher = Templates.template_kind_codification JOIN Documents ON Templates.Template_ID = Documents.Template_ID,第3类 · 去重,"SELECT DISTINCT r.Template_Type_Description
+FROM Ref_Template_Types AS r
+JOIN Templates AS t ON t.template_kind_codification = r.category_cipher
+JOIN Documents AS d ON d.Template_ID = t.Template_ID;",True,match,,4,4
+NLQ_others-01447-pre,NLQ_others,1447,pre,518,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,How many different departments offer degrees?,SELECT count(DISTINCT department_id) FROM Degree_Programs,第3类 · 去重,SELECT COUNT(DISTINCT department_id) FROM Degree_Programs;,True,match,,1,1
+NLQ_others-01447-post,NLQ_others,1447,post,518,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,In what number of departments does one study to receive a degree?,SELECT count(DISTINCT department_id) FROM Degree_Programs,第3类 · 去重,SELECT COUNT(DISTINCT department_id) FROM Degree_Programs;,True,match,,1,1
+DB_schema_synonym-02341-pre,DB_schema_synonym,2341,pre,948,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,List the cost of each treatment and the corresponding treatment type description.,"SELECT T1.cost_of_treatment , T2.treatment_type_description FROM Treatments AS T1 JOIN treatment_types AS T2 ON T1.treatment_type_code = T2.treatment_type_code",第3类 · 去重,"SELECT t.cost_of_treatment, tt.treatment_type_description
+FROM Treatments AS t
+JOIN Treatment_Types AS tt ON t.treatment_type_code = tt.treatment_type_code;",True,match,,15,15
+DB_schema_synonym-02341-post,DB_schema_synonym,2341,post,948,dog_kennels_0,data\DB_schema_synonym\database_post_perturbation\dog_kennels_0\dog_kennels_0.sqlite,List the cost of each treatment and the corresponding treatment type description.,"SELECT Treatments.cost_of_treatment , Treatment_Types.treatment_category_description FROM Treatments JOIN Treatment_Types ON Treatments.care_type_encipher = Treatment_Types.medical_category_code",第3类 · 去重,"SELECT t.cost_of_treatment, tt.treatment_category_description
+FROM Treatments AS t
+JOIN Treatment_Types AS tt ON t.care_type_encipher = tt.medical_category_code;",True,match,,15,15
+DB_schema_abbreviation-01373-pre,DB_schema_abbreviation,1373,pre,517,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,How many departments offer any degree?,SELECT count(DISTINCT department_id) FROM Degree_Programs,第3类 · 去重,SELECT COUNT(DISTINCT department_id) FROM Degree_Programs;,True,match,,1,1
+DB_schema_abbreviation-01373-post,DB_schema_abbreviation,1373,post,517,student_transcripts_tracking_3,data\DB_schema_abbreviation\database_post_perturbation\student_transcripts_tracking_3\student_transcripts_tracking_3.sqlite,How many departments offer any degree?,SELECT count(DISTINCT Degree_Programs.dept_id) FROM Degree_Programs,第3类 · 去重,SELECT COUNT(DISTINCT dept_id) FROM Degree_Programs;,True,match,,1,1
+DB_schema_abbreviation-02201-pre,DB_schema_abbreviation,2201,pre,781,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give the country codes for countries in which people speak langauges that are not English.,"SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != ""English""",第3类 · 去重,"SELECT DISTINCT CountryCode
+FROM countrylanguage
+WHERE Language <> 'English';",True,match,,223,223
+DB_schema_abbreviation-02201-post,DB_schema_abbreviation,2201,post,781,world_1_2,data\DB_schema_abbreviation\database_post_perturbation\world_1_2\world_1_2.sqlite,Give the country codes for countries in which people speak langauges that are not English.,"SELECT DISTINCT countrylanguage.cntry_code FROM countrylanguage WHERE countrylanguage.lang != ""English""",第3类 · 去重,"SELECT DISTINCT cntry_code
+FROM countrylanguage
+WHERE lang <> 'English';",True,match,,223,223
+NLQ_others-02255-pre,NLQ_others,2255,pre,817,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"What are the country codes of the different countries, and what are the languages spoken by the greatest percentage of people for each?","SELECT LANGUAGE , CountryCode , max(Percentage) FROM countrylanguage GROUP BY CountryCode",第3类 · 去重,"SELECT cl.CountryCode, cl.Language
+FROM countrylanguage AS cl
+WHERE cl.Percentage = (
+    SELECT MAX(cl2.Percentage)
+    FROM countrylanguage AS cl2
+    WHERE cl2.CountryCode = cl.CountryCode
+);",False,mismatch,,233,241
+NLQ_others-02255-post,NLQ_others,2255,post,817,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,"Which country codes belong to which countries, and what languages does the largest percentage of the population speak for each country?","SELECT LANGUAGE , CountryCode , max(Percentage) FROM countrylanguage GROUP BY CountryCode",第3类 · 去重,"SELECT c.Code, c.Name, cl.Language
+FROM country AS c
+LEFT JOIN countrylanguage AS cl
+  ON cl.CountryCode = c.Code
+ AND cl.Percentage = (
+   SELECT MAX(cl2.Percentage)
+   FROM countrylanguage AS cl2
+   WHERE cl2.CountryCode = c.Code
+ )
+ORDER BY c.Code, cl.Language;",False,mismatch,,233,247
+NLQ_keyword_carrier-00173-pre,NLQ_keyword_carrier,173,pre,306,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,Count the number of different templates used for documents.,SELECT count(DISTINCT template_id) FROM Documents,第3类 · 去重,SELECT COUNT(DISTINCT Template_ID) FROM Documents;,True,match,,1,1
+NLQ_keyword_carrier-00173-post,NLQ_keyword_carrier,173,post,306,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,How many different templates have been used for documents?,SELECT count(DISTINCT template_id) FROM Documents,第3类 · 去重,SELECT COUNT(DISTINCT Template_ID) FROM Documents;,True,match,,1,1
+NLQ_others-01597-pre,NLQ_others,1597,pre,578,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What are the different addresses that have students living there?,SELECT count(DISTINCT current_address_id) FROM Students,第3类 · 去重,"SELECT DISTINCT a.*
+FROM Addresses AS a
+JOIN Students AS s ON s.current_address_id = a.address_id;",False,mismatch,,1,9
+NLQ_others-01597-post,NLQ_others,1597,post,578,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,What are all the different addresses with students at their residence?,SELECT count(DISTINCT current_address_id) FROM Students,第3类 · 去重,"SELECT DISTINCT a.*
+FROM Addresses AS a
+JOIN Students AS s ON s.current_address_id = a.address_id;",False,mismatch,,1,9
+DB_schema_synonym-02467-pre,DB_schema_synonym,2467,pre,966,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,How many dogs went through any treatments?,SELECT count(DISTINCT dog_id) FROM Treatments,第3类 · 去重,"SELECT COUNT(DISTINCT dog_id) AS dog_count
+FROM Treatments;",True,match,,1,1
+DB_schema_synonym-02467-post,DB_schema_synonym,2467,post,966,dog_kennels_3,data\DB_schema_synonym\database_post_perturbation\dog_kennels_3\dog_kennels_3.sqlite,How many dogs went through any treatments?,SELECT count(DISTINCT Treatments.dog_included) FROM Treatments,第3类 · 去重,SELECT COUNT(DISTINCT dog_included) AS dog_count FROM Treatments;,True,match,,1,1
+DB_schema_synonym-00970-pre,DB_schema_synonym,970,pre,322,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,What are the different template type codes?,SELECT DISTINCT template_type_code FROM Templates,第3类 · 去重,SELECT DISTINCT Template_Type_Code FROM Ref_Template_Types;,True,match,,5,5
+DB_schema_synonym-00970-post,DB_schema_synonym,970,post,322,cre_Doc_Template_Mgt_3,data\DB_schema_synonym\database_post_perturbation\cre_Doc_Template_Mgt_3\cre_Doc_Template_Mgt_3.sqlite,What are the different template type codes?,SELECT DISTINCT Templates.template_kind_codification FROM Templates,第3类 · 去重,SELECT DISTINCT template_kind_codification FROM Templates;,True,match,,5,5
+DB_schema_abbreviation-02246-pre,DB_schema_abbreviation,2246,pre,714,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What are the population and life expectancies in Brazil?,"SELECT Population , LifeExpectancy FROM country WHERE Name = ""Brazil""",第4类 · 表列定位,"SELECT Population, LifeExpectancy FROM country WHERE Name = 'Brazil';",True,match,,1,1
+DB_schema_abbreviation-02246-post,DB_schema_abbreviation,2246,post,714,world_1_3,data\DB_schema_abbreviation\database_post_perturbation\world_1_3\world_1_3.sqlite,What are the population and life expectancies in Brazil?,"SELECT country.popn , country.le FROM country WHERE country.Name = ""Brazil""",第4类 · 表列定位,"SELECT popn, le FROM country WHERE Name = 'Brazil';",True,match,,1,1
+DB_schema_abbreviation-02787-pre,DB_schema_abbreviation,2787,pre,929,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"Give me the id, role and email of the professionals who did not perform any treatment on dogs.","SELECT professional_id , role_code , email_address FROM Professionals EXCEPT SELECT T1.professional_id , T1.role_code , T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id",第4类 · 表列定位,"SELECT p.professional_id, p.role_code, p.email_address
+FROM Professionals AS p
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Treatments AS t
+    WHERE t.professional_id = p.professional_id
+);",True,match,,7,7
+DB_schema_abbreviation-02787-post,DB_schema_abbreviation,2787,post,929,dog_kennels_4,data\DB_schema_abbreviation\database_post_perturbation\dog_kennels_4\dog_kennels_4.sqlite,"Give me the id, role and email of the professionals who did not perform any treatment on dogs.","SELECT Professionals.pro_id , Professionals.role_code , Professionals.email_adr FROM Professionals EXCEPT SELECT Professionals.pro_id , Professionals.role_code , Professionals.email_adr FROM Professionals JOIN Treatments ON Professionals.pro_id = Treatments.pro_id",第4类 · 表列定位,"SELECT p.pro_id, p.role_code, p.email_adr
+FROM Professionals AS p
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM Treatments AS t
+  WHERE t.pro_id = p.pro_id
+);",True,match,,7,7
+DB_schema_synonym-01037-pre,DB_schema_synonym,1037,pre,423,museum_visit,data\Spider-dev\databases\museum_visit\museum_visit.sqlite,Find the name and age of the visitor who bought the most tickets at once.,"SELECT t1.name , t1.age FROM visitor AS t1 JOIN visit AS t2 ON t1.id = t2.visitor_id ORDER BY t2.num_of_ticket DESC LIMIT 1",第4类 · 表列定位,"SELECT visitor.Name, visitor.Age
+FROM visitor
+JOIN visit ON visitor.ID = visit.visitor_ID
+ORDER BY visit.Num_of_Ticket DESC
+LIMIT 1;",True,match,,1,1
+DB_schema_synonym-01037-post,DB_schema_synonym,1037,post,423,museum_visit_1,data\DB_schema_synonym\database_post_perturbation\museum_visit_1\museum_visit_1.sqlite,Find the name and age of the visitor who bought the most tickets at once.,"SELECT visitor.Name , visitor.Age FROM visitor JOIN visit ON visitor.ID = visit.visitor_ID ORDER BY visit.coupon_quantity desc LIMIT 1",第4类 · 表列定位,"SELECT v.Name, v.Age
+FROM visitor AS v
+JOIN visit AS vi ON CAST(vi.visitor_ID AS INTEGER) = v.ID
+WHERE vi.coupon_quantity = (SELECT MAX(coupon_quantity) FROM visit);",True,match,,1,1
+DB_schema_synonym-01851-pre,DB_schema_synonym,1851,pre,736,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,What is the total number of languages used in Aruba?,"SELECT COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Name = ""Aruba""",第4类 · 表列定位,"SELECT COUNT(*) AS total_languages
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+WHERE c.Name = 'Aruba';",True,match,,1,1
+DB_schema_synonym-01851-post,DB_schema_synonym,1851,post,736,world_1_1,data\DB_schema_synonym\database_post_perturbation\world_1_1\world_1_1.sqlite,What is the total number of languages used in Aruba?,"SELECT count(countrylanguage.dialect) FROM country JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE country.Name = ""Aruba""",第4类 · 表列定位,"SELECT COUNT(*) AS language_count
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+WHERE c.Name = 'Aruba';",True,match,,1,1
+DB_schema_abbreviation-02352-pre,DB_schema_abbreviation,2352,pre,712,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Which language is the most popular in Aruba?,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Name = ""Aruba"" ORDER BY Percentage DESC LIMIT 1",第4类 · 表列定位,"SELECT cl.Language
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.CountryCode
+WHERE c.Name = 'Aruba'
+ORDER BY cl.Percentage DESC
+LIMIT 1;",True,match,,1,1
+DB_schema_abbreviation-02352-post,DB_schema_abbreviation,2352,post,712,world_1_4,data\DB_schema_abbreviation\database_post_perturbation\world_1_4\world_1_4.sqlite,Which language is the most popular in Aruba?,"SELECT countrylanguage.lang FROM country JOIN countrylanguage ON country.Code = countrylanguage.cntry_code WHERE country.Name = ""Aruba"" ORDER BY countrylanguage.pct desc LIMIT 1",第4类 · 表列定位,"SELECT cl.lang
+FROM countrylanguage AS cl
+JOIN country AS c ON c.Code = cl.cntry_code
+WHERE c.Name = 'Aruba'
+ORDER BY cl.pct DESC
+LIMIT 1;",True,match,,1,1
+DB_schema_abbreviation-00365-pre,DB_schema_abbreviation,365,pre,217,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,How many 'United Airlines' flights depart from Airport 'AHD'?,"SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline = T1.uid WHERE T1.Airline = ""United Airlines"" AND T2.SourceAirport = ""AHD""",第4类 · 表列定位,SELECT COUNT(*) FROM flights AS f JOIN airlines AS a ON f.Airline = a.uid WHERE a.Airline = 'United Airlines' AND f.SourceAirport = 'AHD';,True,match,,1,1
+DB_schema_abbreviation-00365-post,DB_schema_abbreviation,365,post,217,flight_2_0,data\DB_schema_abbreviation\database_post_perturbation\flight_2_0\flight_2_0.sqlite,How many 'United Airlines' flights depart from Airport 'AHD'?,"SELECT count(*) FROM airlines JOIN flights ON flights.air = airlines.uid WHERE airlines.air = ""United Airlines"" and flights.srcapt = ""AHD""",第4类 · 表列定位,"SELECT COUNT(*) AS flight_count
+FROM flights AS f
+JOIN airlines AS a ON f.air = a.uid
+WHERE a.air = 'United Airlines'
+  AND f.srcapt = 'AHD';",True,match,,1,1
+DB_schema_abbreviation-01658-pre,DB_schema_abbreviation,1658,pre,612,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,"What is the title of all the cartools that are on the TV Channel with the series name ""Sky Radio""?","SELECT T2.Title FROM TV_Channel AS T1 JOIN Cartoon AS T2 ON T1.id = T2.Channel WHERE T1.series_name = ""Sky Radio""",第4类 · 表列定位,"SELECT c.""Title""
+FROM ""Cartoon"" AS c
+JOIN ""TV_Channel"" AS ch ON c.""Channel"" = ch.""id""
+WHERE ch.""series_name"" = 'Sky Radio';",True,match,,2,2
+DB_schema_abbreviation-01658-post,DB_schema_abbreviation,1658,post,612,tvshow_4,data\DB_schema_abbreviation\database_post_perturbation\tvshow_4\tvshow_4.sqlite,"What is the title of all the cartools that are on the TV Channel with the series name ""Sky Radio""?","SELECT Cartoon.Title FROM TV_Channel JOIN Cartoon ON TV_Channel.id = Cartoon.chnl WHERE TV_Channel.ser_name = ""Sky Radio""",第4类 · 表列定位,"SELECT c.""Title""
+FROM ""Cartoon"" AS c
+JOIN ""TV_Channel"" AS t ON c.""chnl"" = t.""id""
+WHERE t.""ser_name"" = 'Sky Radio';",True,match,,2,2
+DB_schema_synonym-02522-pre,DB_schema_synonym,2522,pre,957,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Find the first names of owners living in Virginia and the names of dogs they own.,"SELECT T1.first_name , T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id WHERE T1.state = 'Virginia'",第4类 · 表列定位,"SELECT o.first_name, d.name
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+WHERE o.state = 'Virginia';",True,match,,1,1
+DB_schema_synonym-02522-post,DB_schema_synonym,2522,post,957,dog_kennels_4,data\DB_schema_synonym\database_post_perturbation\dog_kennels_4\dog_kennels_4.sqlite,Find the first names of owners living in Virginia and the names of dogs they own.,"SELECT Owners.forename , Dogs.name FROM Owners JOIN Dogs ON Owners.owner_id = Dogs.owner_id WHERE Owners.province = ""Virginia""",第4类 · 表列定位,"SELECT o.forename, d.name
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+WHERE o.province = 'Virginia';",True,match,,1,1
+DB_schema_synonym-01557-pre,DB_schema_synonym,1557,pre,639,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,find the pixel aspect ratio and nation of the tv channels that do not use English.,"SELECT Pixel_aspect_ratio_PAR , country FROM tv_channel WHERE LANGUAGE != 'English'",第4类 · 表列定位,"SELECT Pixel_aspect_ratio_PAR, Country
+FROM TV_Channel
+WHERE Language <> 'English';",True,match,,12,12
+DB_schema_synonym-01557-post,DB_schema_synonym,1557,post,639,tvshow_3,data\DB_schema_synonym\database_post_perturbation\tvshow_3\tvshow_3.sqlite,find the pixel aspect ratio and nation of the tv channels that do not use English.,"SELECT TV_Channel.pixel_aspect_percentage_par , TV_Channel.Country FROM TV_Channel WHERE TV_Channel.Language != ""English""",第4类 · 表列定位,"SELECT ""pixel_aspect_percentage_par"", ""Country""
+FROM ""TV_Channel""
+WHERE ""Language"" <> 'English';",True,match,,12,12
+DB_schema_abbreviation-00495-pre,DB_schema_abbreviation,495,pre,207,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,How many flights depart from City Aberdeen?,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.SourceAirport = T2.AirportCode WHERE T2.City = ""Aberdeen""",第4类 · 表列定位,SELECT COUNT(*) FROM flights AS f JOIN airports AS a ON f.SourceAirport = a.AirportCode WHERE a.City = 'Aberdeen';,True,match,,1,1
+DB_schema_abbreviation-00495-post,DB_schema_abbreviation,495,post,207,flight_2_2,data\DB_schema_abbreviation\database_post_perturbation\flight_2_2\flight_2_2.sqlite,How many flights depart from City Aberdeen?,"SELECT count(*) FROM flights JOIN airports ON flights.SourceAirport = airports.apt_code WHERE airports.City = ""Aberdeen""",第4类 · 表列定位,SELECT COUNT(*) FROM flights AS f JOIN airports AS a ON f.SourceAirport = a.apt_code WHERE a.City = 'Aberdeen';,True,match,,1,1
+DB_schema_synonym-00572-pre,DB_schema_synonym,572,pre,216,flight_2,data\Spider-dev\databases\flight_2\flight_2.sqlite,Count the number of United Airlines flights arriving in ASY Airport.,"SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline = T1.uid WHERE T1.Airline = ""United Airlines"" AND T2.DestAirport = ""ASY""",第4类 · 表列定位,SELECT COUNT(*) FROM flights AS f JOIN airlines AS a ON f.Airline = a.uid WHERE a.Airline = 'United Airlines' AND f.DestAirport = 'ASY';,True,match,,1,1
+DB_schema_synonym-00572-post,DB_schema_synonym,572,post,216,flight_2_0,data\DB_schema_synonym\database_post_perturbation\flight_2_0\flight_2_0.sqlite,Count the number of United Airlines flights arriving in ASY Airport.,"SELECT count(*) FROM airlines JOIN flights ON flights.aircraft_company = airlines.uid WHERE airlines.air_service = ""United Airlines"" and flights.DestAirport = ""ASY""",第4类 · 表列定位,SELECT COUNT(*) FROM flights AS f JOIN airlines AS a ON f.aircraft_company = a.uid WHERE a.air_service = 'United Airlines' AND f.DestAirport = 'ASY';,True,match,,1,1
+DB_schema_abbreviation-00905-pre,DB_schema_abbreviation,905,pre,355,cre_Doc_Template_Mgt,data\Spider-dev\databases\cre_Doc_Template_Mgt\cre_Doc_Template_Mgt.sqlite,"What are the template ids with template type description ""Presentation"".","SELECT T2.template_id FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code = T2.template_type_code WHERE T1.template_type_description = ""Presentation""",第4类 · 表列定位,"SELECT t.Template_ID
+FROM Templates AS t
+JOIN Ref_Template_Types AS r ON t.Template_Type_Code = r.Template_Type_Code
+WHERE r.Template_Type_Description = 'Presentation';",True,match,,3,3
+DB_schema_abbreviation-00905-post,DB_schema_abbreviation,905,post,355,cre_Doc_Template_Mgt_2,data\DB_schema_abbreviation\database_post_perturbation\cre_Doc_Template_Mgt_2\cre_Doc_Template_Mgt_2.sqlite,"What are the template ids with template type description ""Presentation"".","SELECT Templates.Template_ID FROM Ref_Template_Types JOIN Templates ON Ref_Template_Types.tpl_type_code = Templates.tpl_tpye_code WHERE Ref_Template_Types.Template_Type_Description = ""Presentation""",第4类 · 表列定位,"SELECT t.Template_ID
+FROM Templates AS t
+JOIN Ref_Template_Types AS r ON t.tpl_tpye_code = r.tpl_type_code
+WHERE r.Template_Type_Description = 'Presentation';",True,match,,3,3
+DB_schema_abbreviation-02761-pre,DB_schema_abbreviation,2761,pre,985,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,"What are the dog name, age and weight of the dogs that were abandoned? Note that 1 stands for yes, and 0 stands for no in the tables.","SELECT name , age , weight FROM Dogs WHERE abandoned_yn = 1",第4类 · 表列定位,"SELECT name, age, weight
+FROM Dogs
+WHERE abandoned_yn = '1';",True,match,,3,3
+DB_schema_abbreviation-02761-post,DB_schema_abbreviation,2761,post,985,dog_kennels_2,data\DB_schema_abbreviation\database_post_perturbation\dog_kennels_2\dog_kennels_2.sqlite,"What are the dog name, age and weight of the dogs that were abandoned? Note that 1 stands for yes, and 0 stands for no in the tables.","SELECT Dogs.name , Dogs.age , Dogs.wt FROM Dogs WHERE Dogs.abandoned_yn = 1",第4类 · 表列定位,"SELECT name, age, wt
+FROM Dogs
+WHERE abandoned_yn = '1';",True,match,,3,3
+DB_schema_synonym-01223-pre,DB_schema_synonym,1223,pre,470,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,"What are the first names of all players, and their average rankings?","SELECT avg(ranking) , T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id GROUP BY T1.first_name",第4类 · 表列定位,"SELECT p.first_name, AVG(r.ranking) AS average_ranking
+FROM players AS p
+LEFT JOIN rankings AS r ON r.player_id = p.player_id
+GROUP BY p.player_id, p.first_name;",False,mismatch,,1580,20662
+DB_schema_synonym-01223-post,DB_schema_synonym,1223,post,470,wta_1_4,data\DB_schema_synonym\database_post_perturbation\wta_1_4\wta_1_4.sqlite,"What are the first names of all players, and their average rankings?","SELECT avg(rankings.rank) , players.given_name FROM players JOIN rankings ON players.player_id = rankings.player_id GROUP BY players.given_name",第4类 · 表列定位,"SELECT p.given_name, AVG(r.rank) AS average_ranking
+FROM players AS p
+LEFT JOIN rankings AS r ON r.player_id = p.player_id
+GROUP BY p.player_id, p.given_name;",False,mismatch,,1580,20662
+DB_schema_abbreviation-02582-pre,DB_schema_abbreviation,2582,pre,892,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,How many friends does the high school student Kyle have?,"SELECT count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id WHERE T2.name = ""Kyle""",第4类 · 表列定位,SELECT COUNT(*) FROM Friend AS f JOIN Highschooler AS h ON h.ID = f.student_id WHERE h.name = 'Kyle';,True,match,,1,1
+DB_schema_abbreviation-02582-post,DB_schema_abbreviation,2582,post,892,network_1_0,data\DB_schema_abbreviation\database_post_perturbation\network_1_0\network_1_0.sqlite,How many friends does the high school student Kyle have?,"SELECT count(*) FROM Friend JOIN Highschooler ON Friend.stu_id = Highschooler.ID WHERE Highschooler.name = ""Kyle""",第4类 · 表列定位,SELECT COUNT(*) FROM Friend AS f JOIN Highschooler AS h ON f.stu_id = h.ID WHERE h.name = 'Kyle';,True,match,,1,1

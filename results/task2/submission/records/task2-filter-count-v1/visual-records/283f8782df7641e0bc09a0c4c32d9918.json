@@ -1,0 +1,299 @@
+{
+  "sample_id": "NLQ_keyword_carrier-00248-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "filter_count_intent"
+      },
+      {
+        "id": "verify",
+        "kind": "filter_count_verify"
+      },
+      {
+        "id": "generate",
+        "kind": "filter_count_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "filter_count_execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "verify"
+      },
+      {
+        "source": "verify",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "283f8782df7641e0bc09a0c4c32d9918",
+  "graph_sha256": "782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "filter_count_intent",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "table": "matches",
+            "column": "tourney_name",
+            "term": "WTA",
+            "kind": "name"
+          },
+          {
+            "table": "matches",
+            "column": "winner_hand",
+            "term": "left-handed",
+            "kind": "handedness"
+          }
+        ],
+        "count": {
+          "table": "matches",
+          "column": "winner_id",
+          "term": "participants of the WTA have won this tournament",
+          "unit": "entity"
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: For a question asking for a count of distinct real-world entities from one SQLite table, extract ALL required conjunctive text equality filters AND the counted entity. Return JSON {\"targets\":[{\"table\":\"exact table\",\"column\":\"exact column\",\"term\":\"verbatim words from the question\",\"kind\":\"name|handedness\"}],\"count\":{\"table\":\"exact table\",\"column\":\"exact entity identifier column\",\"term\":\"verbatim cue about the counted entity\",\"unit\":\"entity\"}}. Use an entity ID if available. A competition referred to by an acronym and \"this tournament\" still constrains the tournament name. For a right- or left-handed condition, use the exact hand description from the question. Preserve every independent filter and use the table that stores both the entities and filters. Only handle a single total, positive text equalities joined by AND, and a single table. If unsupported or uncertain about the column or whether an entity count is requested, return {\"targets\":[],\"count\":null}. Do not write SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"matches\" (\"best_of\" INT,\"draw_size\" INT,\"loser_age\" FLOAT,\"loser_entry\" TEXT,\"loser_hand\" TEXT,\"loser_ht\" INT,\"loser_id\" INT,\"loser_ioc\" TEXT,\"loser_name\" TEXT,\"loser_rank\" INT,\"loser_rank_points\" INT,\"loser_seed\" INT,\"match_num\" INT,\"minutes\" INT,\"round\" TEXT,\"score\" TEXT,\"surface\" TEXT,\"tourney_date\" DATE,\"tourney_id\" TEXT,\"tourney_level\" TEXT,\"tourney_name\" TEXT,\"winner_age\" FLOAT,\"winner_entry\" TEXT,\"winner_hand\" TEXT,\"winner_ht\" INT,\"winner_id\" INT,\"winner_ioc\" TEXT,\"winner_name\" TEXT,\"winner_rank\" INT,\"winner_rank_points\" INT,\"winner_seed\" INT,\"year\" INT,FOREIGN KEY (\"loser_id\") REFERENCES \"players\"(\"player_id\"),FOREIGN KEY (\"winner_id\") REFERENCES \"players\"(\"player_id\"))\nCREATE TABLE \"players\" (\"player_id\" INT PRIMARY KEY,\"first_name\" TEXT,\"last_name\" TEXT,\"hand\" TEXT,\"birth_date\" DATE,\"country_code\" TEXT)\nCREATE TABLE \"rankings\" (\"ranking_date\" DATE,\"ranking\" INT,\"player_id\" INT,\"ranking_points\" INT,\"tours\" INT,FOREIGN KEY (\"player_id\") REFERENCES \"players\"(\"player_id\"))\nQuestion\nHow many participants of the WTA have won this tournament is left-handed?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0b28ce9f55a253b3016b07e69af30c87d2bd5eb57f964f1328",
+          "object": "chat.completion",
+          "created": 1795679901,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"table\":\"matches\",\"column\":\"tourney_name\",\"term\":\"WTA\",\"kind\":\"name\"},{\"table\":\"matches\",\"column\":\"winner_hand\",\"term\":\"left-handed\",\"kind\":\"handedness\"}],\"count\":{\"table\":\"matches\",\"column\":\"winner_id\",\"term\":\"participants of the WTA have won this tournament\",\"unit\":\"entity\"}}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4980,
+            "completion_tokens": 119,
+            "total_tokens": 5099,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 42
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4980,
+          "completion_tokens": 119,
+          "total_tokens": 5099,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 42
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 6.163015600002836
+    },
+    {
+      "id": "verify",
+      "kind": "filter_count_verify",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "tourney_name",
+            "term": "WTA",
+            "value": "WTA Championships",
+            "evidence": "unique_acronym_token"
+          },
+          {
+            "column": "winner_hand",
+            "term": "left-handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "participants of the WTA have won this tournament"
+        }
+      },
+      "call": null,
+      "elapsed_s": 0.00346229999922798
+    },
+    {
+      "id": "generate",
+      "kind": "filter_count_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "verify"
+      ],
+      "output": {
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+        "contract": {
+          "route": "grounded",
+          "table": "matches",
+          "filters": [
+            {
+              "column": "tourney_name",
+              "term": "WTA",
+              "value": "WTA Championships",
+              "evidence": "unique_acronym_token"
+            },
+            {
+              "column": "winner_hand",
+              "term": "left-handed",
+              "value": "L",
+              "evidence": "handedness_code"
+            }
+          ],
+          "count": {
+            "column": "winner_id",
+            "unit": "distinct_entity",
+            "term": "participants of the WTA have won this tournament"
+          }
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"matches\" (\"best_of\" INT,\"draw_size\" INT,\"loser_age\" FLOAT,\"loser_entry\" TEXT,\"loser_hand\" TEXT,\"loser_ht\" INT,\"loser_id\" INT,\"loser_ioc\" TEXT,\"loser_name\" TEXT,\"loser_rank\" INT,\"loser_rank_points\" INT,\"loser_seed\" INT,\"match_num\" INT,\"minutes\" INT,\"round\" TEXT,\"score\" TEXT,\"surface\" TEXT,\"tourney_date\" DATE,\"tourney_id\" TEXT,\"tourney_level\" TEXT,\"tourney_name\" TEXT,\"winner_age\" FLOAT,\"winner_entry\" TEXT,\"winner_hand\" TEXT,\"winner_ht\" INT,\"winner_id\" INT,\"winner_ioc\" TEXT,\"winner_name\" TEXT,\"winner_rank\" INT,\"winner_rank_points\" INT,\"winner_seed\" INT,\"year\" INT,FOREIGN KEY (\"loser_id\") REFERENCES \"players\"(\"player_id\"),FOREIGN KEY (\"winner_id\") REFERENCES \"players\"(\"player_id\"))\nCREATE TABLE \"players\" (\"player_id\" INT PRIMARY KEY,\"first_name\" TEXT,\"last_name\" TEXT,\"hand\" TEXT,\"birth_date\" DATE,\"country_code\" TEXT)\nCREATE TABLE \"rankings\" (\"ranking_date\" DATE,\"ranking\" INT,\"player_id\" INT,\"ranking_points\" INT,\"tours\" INT,FOREIGN KEY (\"player_id\") REFERENCES \"players\"(\"player_id\"))\nQuestion\nHow many participants of the WTA have won this tournament is left-handed?\nQuery plan\nUse this verified query plan. Return a direct single-table SELECT with one COUNT(DISTINCT entity identifier) and exactly the verified equalities joined by AND. Preserve the verified stored text values, using single-quoted SQLite literals. {\"route\":\"grounded\",\"table\":\"matches\",\"filters\":[{\"column\":\"tourney_name\",\"term\":\"WTA\",\"value\":\"WTA Championships\",\"evidence\":\"unique_acronym_token\"},{\"column\":\"winner_hand\",\"term\":\"left-handed\",\"value\":\"L\",\"evidence\":\"handedness_code\"}],\"count\":{\"column\":\"winner_id\",\"unit\":\"distinct_entity\",\"term\":\"participants of the WTA have won this tournament\"}}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_06d4bb74f8c25b2d016b07e69fc9a087d08c8ca2f4d5b31ffe",
+          "object": "chat.completion",
+          "created": 1795679905,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4857,
+            "completion_tokens": 33,
+            "total_tokens": 4890,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4857,
+          "completion_tokens": 33,
+          "total_tokens": 4890,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 4.244861800001672
+    },
+    {
+      "id": "execute",
+      "kind": "filter_count_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      },
+      "call": null,
+      "elapsed_s": 0.004994200000510318
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "cost": {
+    "model_calls": 2,
+    "total_tokens": 9989
+  }
+}

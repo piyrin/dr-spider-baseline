@@ -1,0 +1,27 @@
+{
+  "id": "resp_01f00f56c7b3dd7e016b067497c45487d199565cee570517b3",
+  "object": "chat.completion",
+  "created": 1795585178,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'USA';"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7209,
+    "completion_tokens": 172,
+    "total_tokens": 7381,
+    "prompt_tokens_details": {
+      "cached_tokens": 6272
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  }
+}

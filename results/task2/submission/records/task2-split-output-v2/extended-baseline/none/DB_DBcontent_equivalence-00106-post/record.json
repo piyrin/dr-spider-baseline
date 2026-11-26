@@ -1,0 +1,237 @@
+{
+  "id": "DB_DBcontent_equivalence-00106-post",
+  "effort": "none",
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 7,
+    "prediction_rows": 7
+  },
+  "model_calls": 1,
+  "total_tokens": 4592,
+  "steps": [
+    {
+      "id": "generate",
+      "kind": "generate",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT \"first_name\", \"last_name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> ' Little Lever Urban District ';"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"course\" (\"Course_ID\" int,\"starting_day\" int,\"staring_month\" int,\"Course\" text,PRIMARY KEY (\"Course_ID\"))\nCREATE TABLE \"course_arrange\" (\"Course_ID\" int,\"Teacher_ID\" int,\"Grade\" int,PRIMARY KEY (\"Course_ID\",\"Teacher_ID\",\"Grade\"),FOREIGN KEY (\"Course_ID\") REFERENCES \"course\" (\"Course_ID\"),FOREIGN KEY (\"Teacher_ID\") REFERENCES \"teacher\" (\"Teacher_ID\"))\nCREATE TABLE \"teacher\" (\"Teacher_ID\" int,\"first_name\" text,\"last_name\" text,\"birthyear\" int,\"Hometown\" text,PRIMARY KEY (\"Teacher_ID\"))\nQuestion\nList the name of teachers whose hometown is not `` Little Lever Urban District '' ."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_05e90ed37fddbd6c016b0826e203dc87d2bf6ff4eb54d3b816",
+          "object": "chat.completion",
+          "created": 1795696355,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"first_name\", \"last_name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> ' Little Lever Urban District ';\n"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_05e90ed37fddbd6c016b0826e2042087d284a490a9329cb853": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_05e90ed37fddbd6c016b0826e2042087d2959627aa85802de8": {
+                  "input_tokens": 156,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 156,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_05e90ed37fddbd6c016b0826e2907487d292d433c267365872": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 29,
+                  "content": [
+                    {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 29
+                    }
+                  ]
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4563,
+            "completion_tokens": 29,
+            "total_tokens": 4592,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_05e90ed37fddbd6c016b0826e2042087d284a490a9329cb853": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_05e90ed37fddbd6c016b0826e2042087d2959627aa85802de8": {
+                "input_tokens": 156,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 156,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_05e90ed37fddbd6c016b0826e2907487d292d433c267365872": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 29,
+                "content": [
+                  {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 29
+                  }
+                ]
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4563,
+          "completion_tokens": 29,
+          "total_tokens": 4592,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"first_name\", \"last_name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> ' Little Lever Urban District ';",
+        "rows": [
+          [
+            "Joseph",
+            "Huts"
+          ],
+          [
+            "Gustaaf",
+            "Deloor"
+          ],
+          [
+            "Vicente",
+            "Carretero"
+          ],
+          [
+            "John",
+            "Deloor"
+          ],
+          [
+            "Kearsley",
+            "Brown"
+          ],
+          [
+            "Anne",
+            "Walker"
+          ],
+          [
+            "Lucy",
+            "Wong"
+          ]
+        ],
+        "columns": [
+          "first_name",
+          "last_name"
+        ]
+      },
+      "call": null
+    }
+  ]
+}

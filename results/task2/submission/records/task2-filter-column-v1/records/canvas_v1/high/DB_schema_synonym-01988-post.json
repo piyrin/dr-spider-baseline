@@ -1,0 +1,494 @@
+{
+  "id": "DB_schema_synonym-01988-post",
+  "method": "canvas_v1",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "column_intent",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": "country.Continent (region) and country.how_many_people (population)",
+        "conditions": [
+          "Angola"
+        ],
+        "connective": "single",
+        "targets": [
+          {
+            "term": "Angola",
+            "candidates": [
+              {
+                "table": "country",
+                "column": "Name"
+              },
+              {
+                "table": "country",
+                "column": "LocalName"
+              }
+            ]
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify the requested output, all explicit filters and their logical connective. For this node propose up to four distinct plausible text columns for one explicitly named entity or other textual equality filter. Only include columns whose meanings could reasonably encode that term, such as a full name and short code; omit unrelated columns. Use exact schema identifiers and a case-sensitive verbatim contiguous term from the question. Return only JSON {\"output\":\"requested result\",\"conditions\":[\"verbatim filter cues\"],\"connective\":\"AND|OR|single\",\"targets\":[{\"term\":\"verbatim literal\",\"candidates\":[{\"table\":\"schema table\",\"column\":\"schema column\"}]}]}. Return empty targets unless one explicit filter has at least two plausible columns. Never write SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"city\" (\"ID\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"Name\" char(35) NOT NULL DEFAULT '',\"CountryCode\" char(3) NOT NULL DEFAULT '',\"District\" char(20) NOT NULL DEFAULT '',\"total_citizens\" integer NOT NULL DEFAULT '0',FOREIGN KEY (\"CountryCode\") REFERENCES \"country\"(\"Code\"))\nCREATE TABLE \"country\" (\"Code\" char(3) NOT NULL DEFAULT '',\"Name\" char(52) NOT NULL DEFAULT '',\"Continent\" text NOT NULL DEFAULT 'Asia',\"place\" char(26) NOT NULL DEFAULT '',\"SurfaceArea\" float(10,2) NOT NULL DEFAULT '0.00',\"IndepYear\" integer DEFAULT NULL,\"how_many_people\" integer NOT NULL DEFAULT '0',\"LifeExpectancy\" float(3,1) DEFAULT NULL,\"GNP\" float(10,2) DEFAULT NULL,\"GNPOld\" float(10,2) DEFAULT NULL,\"LocalName\" char(45) NOT NULL DEFAULT '',\"political_form\" char(45) NOT NULL DEFAULT '',\"nation_president\" char(60) DEFAULT NULL,\"Capital\" integer DEFAULT NULL,\"Code2\" char(2) NOT NULL DEFAULT '',PRIMARY KEY (\"Code\"))\nCREATE TABLE \"countrylanguage\" (\"CountryCode\" char(3) NOT NULL DEFAULT '',\"dialect\" char(30) NOT NULL DEFAULT '',\"formal\" text NOT NULL DEFAULT 'F',\"Percentage\" float(4,1) NOT NULL DEFAULT '0.0',PRIMARY KEY (\"CountryCode\",\"dialect\"),FOREIGN KEY (\"CountryCode\") REFERENCES \"country\"(\"Code\"))\nQuestion\nWhat region does Angola belong to and what is its population?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_062721ed6d65d234016b0827ba790887d0a7f756fcb86a767a",
+          "object": "chat.completion",
+          "created": 1795696580,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":\"country.Continent (region) and country.how_many_people (population)\",\"conditions\":[\"Angola\"],\"connective\":\"single\",\"targets\":[{\"term\":\"Angola\",\"candidates\":[{\"table\":\"country\",\"column\":\"Name\"},{\"table\":\"country\",\"column\":\"LocalName\"}]}]}",
+                "reasoning_content": "**Checking country field names**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_062721ed6d65d234016b0827ba794487d0a0f5f314d53a500c": {
+                  "input_tokens": 226,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 226,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_062721ed6d65d234016b0827ba794487d0abc942ffb2716f20": {
+                  "input_tokens": 357,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 357,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_062721ed6d65d234016b0827c45d7c87d0a994ef9a1bd2d1e6": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 68,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 68
+                    }
+                  ]
+                },
+                "rs_062721ed6d65d234016b0827bbee2887d0b00aa890d149fd34": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 194
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4965,
+            "completion_tokens": 262,
+            "total_tokens": 5227,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 194
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_062721ed6d65d234016b0827ba794487d0a0f5f314d53a500c": {
+                "input_tokens": 226,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 226,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_062721ed6d65d234016b0827ba794487d0abc942ffb2716f20": {
+                "input_tokens": 357,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 357,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_062721ed6d65d234016b0827c45d7c87d0a994ef9a1bd2d1e6": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 68,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 68
+                  }
+                ]
+              },
+              "rs_062721ed6d65d234016b0827bbee2887d0b00aa890d149fd34": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 194
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4965,
+          "completion_tokens": 262,
+          "total_tokens": 5227,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 194
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "column_probe",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "candidates",
+        "term": "Angola",
+        "chosen": null,
+        "matches": [
+          {
+            "table": "country",
+            "column": "Name",
+            "term": "Angola",
+            "exact": [
+              "Angola"
+            ],
+            "normalized": [
+              "Angola"
+            ]
+          },
+          {
+            "table": "country",
+            "column": "LocalName",
+            "term": "Angola",
+            "exact": [
+              "Angola"
+            ],
+            "normalized": [
+              "Angola"
+            ]
+          }
+        ]
+      },
+      "call": null
+    },
+    {
+      "id": "generate",
+      "kind": "column_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "verify"
+      ],
+      "output": {
+        "sql": "SELECT \"Continent\", \"how_many_people\"\nFROM \"country\"\nWHERE \"Name\" = 'Angola';",
+        "column_route": "candidates"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"city\" (\"ID\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"Name\" char(35) NOT NULL DEFAULT '',\"CountryCode\" char(3) NOT NULL DEFAULT '',\"District\" char(20) NOT NULL DEFAULT '',\"total_citizens\" integer NOT NULL DEFAULT '0',FOREIGN KEY (\"CountryCode\") REFERENCES \"country\"(\"Code\"))\nCREATE TABLE \"country\" (\"Code\" char(3) NOT NULL DEFAULT '',\"Name\" char(52) NOT NULL DEFAULT '',\"Continent\" text NOT NULL DEFAULT 'Asia',\"place\" char(26) NOT NULL DEFAULT '',\"SurfaceArea\" float(10,2) NOT NULL DEFAULT '0.00',\"IndepYear\" integer DEFAULT NULL,\"how_many_people\" integer NOT NULL DEFAULT '0',\"LifeExpectancy\" float(3,1) DEFAULT NULL,\"GNP\" float(10,2) DEFAULT NULL,\"GNPOld\" float(10,2) DEFAULT NULL,\"LocalName\" char(45) NOT NULL DEFAULT '',\"political_form\" char(45) NOT NULL DEFAULT '',\"nation_president\" char(60) DEFAULT NULL,\"Capital\" integer DEFAULT NULL,\"Code2\" char(2) NOT NULL DEFAULT '',PRIMARY KEY (\"Code\"))\nCREATE TABLE \"countrylanguage\" (\"CountryCode\" char(3) NOT NULL DEFAULT '',\"dialect\" char(30) NOT NULL DEFAULT '',\"formal\" text NOT NULL DEFAULT 'F',\"Percentage\" float(4,1) NOT NULL DEFAULT '0.0',PRIMARY KEY (\"CountryCode\",\"dialect\"),FOREIGN KEY (\"CountryCode\") REFERENCES \"country\"(\"Code\"))\nQuestion\nWhat region does Angola belong to and what is its population?\nQuery plan\nVerified SQLite evidence for the question term 'Angola': [{\"table\": \"country\", \"column\": \"Name\", \"exact\": [\"Angola\"], \"normalized\": [\"Angola\"]}, {\"table\": \"country\", \"column\": \"LocalName\", \"exact\": [\"Angola\"], \"normalized\": [\"Angola\"]}]. Choose the column whose meaning matches the question. Prefer an exact match over a format-only match when it fits the requested attribute. Preserve all other predicates, their AND/OR relationships and the requested output and deduplication. Use the original question to decide which rows each branch can draw from."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0a2f722663667415016b0827c6945887d0817a80733d04e461",
+          "object": "chat.completion",
+          "created": 1795696594,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"Continent\", \"how_many_people\"\nFROM \"country\"\nWHERE \"Name\" = 'Angola';",
+                "reasoning_content": "**Formulating SQL query for Angola region and population**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0a2f722663667415016b0827c6949487d09e41f4a87405051b": {
+                  "input_tokens": 485,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 485,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0a2f722663667415016b0827c6949487d0b87843681b750460": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0a2f722663667415016b0827d1fe8887d08bab076e90ca87f9": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 29,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 29
+                    }
+                  ]
+                },
+                "rs_0a2f722663667415016b0827cf389087d0af36a0431f895efc": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 87
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3787,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 10806,
+            "completion_tokens": 116,
+            "total_tokens": 10922,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 9088
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 87
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0a2f722663667415016b0827c6949487d09e41f4a87405051b": {
+                "input_tokens": 485,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 485,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0a2f722663667415016b0827c6949487d0b87843681b750460": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0a2f722663667415016b0827d1fe8887d08bab076e90ca87f9": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 29,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 29
+                  }
+                ]
+              },
+              "rs_0a2f722663667415016b0827cf389087d0af36a0431f895efc": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 87
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3787,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 10806,
+          "completion_tokens": 116,
+          "total_tokens": 10922,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 9088
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 87
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "column_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"Continent\", \"how_many_people\"\nFROM \"country\"\nWHERE \"Name\" = 'Angola';",
+        "rows": [
+          [
+            "Africa",
+            12878000
+          ]
+        ],
+        "columns": [
+          "Continent",
+          "how_many_people"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 15771,
+    "completion_tokens": 378,
+    "total_tokens": 16149
+  },
+  "model_calls": 2,
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  }
+}

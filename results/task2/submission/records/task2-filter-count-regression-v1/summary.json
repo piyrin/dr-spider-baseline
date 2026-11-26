@@ -1,0 +1,948 @@
+{
+  "verified": 136,
+  "by_group": {
+    "原题": {
+      "none": {
+        "pairs": 1,
+        "transitions": {
+          "CW→CC": 1
+        },
+        "by_side": {
+          "pre": {
+            "1→1": 1
+          },
+          "post": {
+            "0→1": 1
+          }
+        },
+        "costs": {
+          "baseline": {
+            "n": 2,
+            "n_tokens": 2,
+            "mean_tokens": 8135,
+            "mean_calls": 1
+          },
+          "canvas_v1": {
+            "n": 2,
+            "n_tokens": 2,
+            "mean_tokens": 9953,
+            "mean_calls": 2
+          }
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "transitions": {
+          "CW→CC": 1
+        },
+        "by_side": {
+          "pre": {
+            "1→1": 1
+          },
+          "post": {
+            "0→1": 1
+          }
+        },
+        "costs": {
+          "baseline": {
+            "n": 2,
+            "n_tokens": 2,
+            "mean_tokens": 11551.5,
+            "mean_calls": 1
+          },
+          "canvas_v1": {
+            "n": 2,
+            "n_tokens": 2,
+            "mean_tokens": 13238,
+            "mean_calls": 2
+          }
+        }
+      }
+    },
+    "同类": {
+      "none": {
+        "pairs": 8,
+        "transitions": {
+          "CW→CW": 3,
+          "CC→CC": 3,
+          "WC→CC": 2
+        },
+        "by_side": {
+          "pre": {
+            "1→1": 6,
+            "0→1": 2
+          },
+          "post": {
+            "0→0": 3,
+            "1→1": 5
+          }
+        },
+        "costs": {
+          "baseline": {
+            "n": 16,
+            "n_tokens": 16,
+            "mean_tokens": 6594.8125,
+            "mean_calls": 1
+          },
+          "canvas_v1": {
+            "n": 16,
+            "n_tokens": 16,
+            "mean_tokens": 12340.9375,
+            "mean_calls": 2
+          }
+        }
+      },
+      "high": {
+        "pairs": 8,
+        "transitions": {
+          "CW→CW": 1,
+          "CC→CC": 3,
+          "CC→CW": 1,
+          "WW→CW": 1,
+          "CW→CC": 1,
+          "WW→CC": 1
+        },
+        "by_side": {
+          "pre": {
+            "1→1": 6,
+            "0→1": 2
+          },
+          "post": {
+            "0→0": 2,
+            "1→1": 3,
+            "1→0": 1,
+            "0→1": 2
+          }
+        },
+        "costs": {
+          "baseline": {
+            "n": 16,
+            "n_tokens": 16,
+            "mean_tokens": 7358.5,
+            "mean_calls": 1
+          },
+          "canvas_v1": {
+            "n": 16,
+            "n_tokens": 16,
+            "mean_tokens": 12710.0625,
+            "mean_calls": 2
+          }
+        }
+      }
+    },
+    "混合": {
+      "none": {
+        "pairs": 8,
+        "transitions": {
+          "CC→CC": 7,
+          "CW→CW": 1
+        },
+        "by_side": {
+          "pre": {
+            "1→1": 8
+          },
+          "post": {
+            "1→1": 7,
+            "0→0": 1
+          }
+        },
+        "costs": {
+          "baseline": {
+            "n": 16,
+            "n_tokens": 16,
+            "mean_tokens": 5999.5625,
+            "mean_calls": 1
+          },
+          "canvas_v1": {
+            "n": 16,
+            "n_tokens": 16,
+            "mean_tokens": 12607.125,
+            "mean_calls": 2
+          }
+        }
+      },
+      "high": {
+        "pairs": 8,
+        "transitions": {
+          "CC→CC": 7,
+          "CW→CW": 1
+        },
+        "by_side": {
+          "pre": {
+            "1→1": 8
+          },
+          "post": {
+            "1→1": 7,
+            "0→0": 1
+          }
+        },
+        "costs": {
+          "baseline": {
+            "n": 16,
+            "n_tokens": 16,
+            "mean_tokens": 6026.8125,
+            "mean_calls": 1
+          },
+          "canvas_v1": {
+            "n": 16,
+            "n_tokens": 16,
+            "mean_tokens": 12599.6875,
+            "mean_calls": 2
+          }
+        }
+      }
+    },
+    "全体": {
+      "none": {
+        "pairs": 17,
+        "transitions": {
+          "CW→CC": 1,
+          "CW→CW": 4,
+          "CC→CC": 10,
+          "WC→CC": 2
+        },
+        "by_side": {
+          "pre": {
+            "1→1": 15,
+            "0→1": 2
+          },
+          "post": {
+            "0→1": 1,
+            "0→0": 4,
+            "1→1": 12
+          }
+        },
+        "costs": {
+          "baseline": {
+            "n": 34,
+            "n_tokens": 34,
+            "mean_tokens": 6405.294117647059,
+            "mean_calls": 1
+          },
+          "canvas_v1": {
+            "n": 34,
+            "n_tokens": 34,
+            "mean_tokens": 12325.735294117647,
+            "mean_calls": 2
+          }
+        }
+      },
+      "high": {
+        "pairs": 17,
+        "transitions": {
+          "CW→CC": 2,
+          "CW→CW": 2,
+          "CC→CC": 10,
+          "CC→CW": 1,
+          "WW→CW": 1,
+          "WW→CC": 1
+        },
+        "by_side": {
+          "pre": {
+            "1→1": 15,
+            "0→1": 2
+          },
+          "post": {
+            "0→1": 3,
+            "0→0": 3,
+            "1→1": 10,
+            "1→0": 1
+          }
+        },
+        "costs": {
+          "baseline": {
+            "n": 34,
+            "n_tokens": 34,
+            "mean_tokens": 6978.470588235294,
+            "mean_calls": 1
+          },
+          "canvas_v1": {
+            "n": 34,
+            "n_tokens": 34,
+            "mean_tokens": 12689.176470588236,
+            "mean_calls": 2
+          }
+        }
+      }
+    }
+  },
+  "changes": [
+    {
+      "group": "原题",
+      "pair": "NLQ_keyword_carrier-00248",
+      "side": "post",
+      "effort": "none",
+      "baseline": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "tourney_name",
+            "term": "WTA",
+            "value": "WTA Championships",
+            "evidence": "unique_acronym_token"
+          },
+          {
+            "column": "winner_hand",
+            "term": "left-handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "participants of the WTA have won this tournament"
+        }
+      },
+      "same_generation_prompt": false,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id) AS left_handed_winners\nFROM matches\nWHERE winner_hand = 'L';",
+        "rows": [
+          [
+            5
+          ]
+        ],
+        "columns": [
+          "left_handed_winners"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      }
+    },
+    {
+      "group": "原题",
+      "pair": "NLQ_keyword_carrier-00248",
+      "side": "post",
+      "effort": "high",
+      "baseline": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "tourney_name",
+            "term": "WTA",
+            "value": "WTA Championships",
+            "evidence": "unique_acronym_token"
+          },
+          {
+            "column": "winner_hand",
+            "term": "left-handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "participants"
+        }
+      },
+      "same_generation_prompt": false,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id) AS left_handed_winners\nFROM matches\nWHERE winner_hand = 'L';",
+        "rows": [
+          [
+            5
+          ]
+        ],
+        "columns": [
+          "left_handed_winners"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      }
+    },
+    {
+      "group": "同类",
+      "pair": "NLQ_others-01327",
+      "side": "post",
+      "effort": "high",
+      "baseline": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "fallback",
+        "reason": "unverified_entity_count"
+      },
+      "same_generation_prompt": true,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id) AS different_left_handed_winners\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND round = 'F'\n  AND winner_hand = 'L';",
+        "rows": [
+          [
+            0
+          ]
+        ],
+        "columns": [
+          "different_left_handed_winners"
+        ],
+        "contract_check": "not_applicable"
+      }
+    },
+    {
+      "group": "同类",
+      "pair": "DB_DBcontent_equivalence-00136",
+      "side": "pre",
+      "effort": "high",
+      "baseline": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "winner_hand",
+            "term": "left handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          },
+          {
+            "column": "tourney_name",
+            "term": "WTA Championships",
+            "value": "WTA Championships",
+            "evidence": "exact"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "winners"
+        }
+      },
+      "same_generation_prompt": false,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*) AS left_handed_winners\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+        "rows": [
+          [
+            3
+          ]
+        ],
+        "columns": [
+          "left_handed_winners"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      }
+    },
+    {
+      "group": "同类",
+      "pair": "DB_schema_synonym-01193",
+      "side": "pre",
+      "effort": "none",
+      "baseline": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "winner_hand",
+            "term": "left handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          },
+          {
+            "column": "tourney_name",
+            "term": "WTA Championships",
+            "value": "WTA Championships",
+            "evidence": "exact"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "winners"
+        }
+      },
+      "same_generation_prompt": false,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            3
+          ]
+        ],
+        "columns": [
+          "COUNT(*)"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      }
+    },
+    {
+      "group": "同类",
+      "pair": "DB_schema_synonym-01193",
+      "side": "post",
+      "effort": "high",
+      "baseline": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "winner_hand",
+            "term": "left handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          },
+          {
+            "column": "tourney_name",
+            "term": "WTA Championships",
+            "value": "WTA Championships",
+            "evidence": "exact"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "winners"
+        }
+      },
+      "same_generation_prompt": false,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L'",
+        "rows": [
+          [
+            3
+          ]
+        ],
+        "columns": [
+          "COUNT(*)"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE winner_hand = 'L' AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      }
+    },
+    {
+      "group": "同类",
+      "pair": "NLQ_keyword_carrier-00247",
+      "side": "pre",
+      "effort": "none",
+      "baseline": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "winner_hand",
+            "term": "left handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          },
+          {
+            "column": "tourney_name",
+            "term": "WTA Championships",
+            "value": "WTA Championships",
+            "evidence": "exact"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "winners"
+        }
+      },
+      "same_generation_prompt": false,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*) AS left_handed_winners\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            3
+          ]
+        ],
+        "columns": [
+          "left_handed_winners"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      }
+    },
+    {
+      "group": "同类",
+      "pair": "NLQ_keyword_carrier-00247",
+      "side": "pre",
+      "effort": "high",
+      "baseline": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "winner_hand",
+            "term": "left handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          },
+          {
+            "column": "tourney_name",
+            "term": "WTA Championships",
+            "value": "WTA Championships",
+            "evidence": "exact"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "winners"
+        }
+      },
+      "same_generation_prompt": false,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            3
+          ]
+        ],
+        "columns": [
+          "COUNT(*)"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      }
+    },
+    {
+      "group": "同类",
+      "pair": "NLQ_keyword_carrier-00247",
+      "side": "post",
+      "effort": "high",
+      "baseline": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "canvas": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "evidence": {
+        "route": "grounded",
+        "table": "matches",
+        "filters": [
+          {
+            "column": "winner_hand",
+            "term": "left-handed",
+            "value": "L",
+            "evidence": "handedness_code"
+          },
+          {
+            "column": "tourney_name",
+            "term": "WTA Championships",
+            "value": "WTA Championships",
+            "evidence": "exact"
+          }
+        ],
+        "count": {
+          "column": "winner_id",
+          "unit": "distinct_entity",
+          "term": "winners"
+        }
+      },
+      "same_generation_prompt": false,
+      "baseline_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+        "rows": [
+          [
+            3
+          ]
+        ],
+        "columns": [
+          "COUNT(*)"
+        ]
+      },
+      "canvas_output": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L'\n  AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ],
+        "contract_check": "match"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "group": "原题",
+      "effort": "high",
+      "route": "grounded",
+      "reason": "",
+      "n": 2
+    },
+    {
+      "group": "原题",
+      "effort": "none",
+      "route": "grounded",
+      "reason": "",
+      "n": 2
+    },
+    {
+      "group": "同类",
+      "effort": "high",
+      "route": "fallback",
+      "reason": "unresolved_or_duplicate_filter",
+      "n": 2
+    },
+    {
+      "group": "同类",
+      "effort": "high",
+      "route": "fallback",
+      "reason": "unverified_entity_count",
+      "n": 1
+    },
+    {
+      "group": "同类",
+      "effort": "high",
+      "route": "grounded",
+      "reason": "",
+      "n": 13
+    },
+    {
+      "group": "同类",
+      "effort": "none",
+      "route": "fallback",
+      "reason": "unresolved_or_duplicate_filter",
+      "n": 2
+    },
+    {
+      "group": "同类",
+      "effort": "none",
+      "route": "fallback",
+      "reason": "unverified_entity_count",
+      "n": 1
+    },
+    {
+      "group": "同类",
+      "effort": "none",
+      "route": "grounded",
+      "reason": "",
+      "n": 13
+    },
+    {
+      "group": "混合",
+      "effort": "high",
+      "route": "fallback",
+      "reason": "unverified_entity_count",
+      "n": 14
+    },
+    {
+      "group": "混合",
+      "effort": "high",
+      "route": "fallback",
+      "reason": "unverified_filters",
+      "n": 2
+    },
+    {
+      "group": "混合",
+      "effort": "none",
+      "route": "fallback",
+      "reason": "unsupported_count_identifier",
+      "n": 1
+    },
+    {
+      "group": "混合",
+      "effort": "none",
+      "route": "fallback",
+      "reason": "unverified_entity_count",
+      "n": 14
+    },
+    {
+      "group": "混合",
+      "effort": "none",
+      "route": "fallback",
+      "reason": "unverified_filters",
+      "n": 1
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+﻿id,group,index,side,original_id,db_id,database,question,gold_sql,screening,prediction_sql,correct,status,system_fingerprint,gold_row_count,prediction_row_count
+DB_DBcontent_equivalence-00318-pre,DB_DBcontent_equivalence,318,pre,836,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,List names of conductors in descending order of years of work.,SELECT Name FROM conductor ORDER BY Year_of_Work DESC,排序字段含义变化,"SELECT ""Name"" FROM ""conductor"" ORDER BY ""Year_of_Work"" DESC;",True,match,,12,12
+DB_DBcontent_equivalence-00318-post,DB_DBcontent_equivalence,318,post,836,orchestra_3,data\DB_DBcontent_equivalence\database_post_perturbation\orchestra_3\orchestra_3.sqlite,List names of conductors in descending order of years of work.,"SELECT conductor.first_name , conductor.last_name FROM conductor ORDER BY conductor.year_start_to_work asc",排序字段含义变化,"SELECT first_name, last_name
+FROM conductor
+ORDER BY year_start_to_work ASC;",True,match,,12,12
+DB_DBcontent_equivalence-00035-pre,DB_DBcontent_equivalence,35,pre,68,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,"What type of pet is the youngest animal, and how much does it weigh?","SELECT pettype , weight FROM pets ORDER BY pet_age LIMIT 1",排序字段含义变化,"SELECT PetType, weight FROM Pets ORDER BY pet_age ASC LIMIT 1;",True,match,,1,1
+DB_DBcontent_equivalence-00035-post,DB_DBcontent_equivalence,35,post,68,pets_1_1,data\DB_DBcontent_equivalence\database_post_perturbation\pets_1_1\pets_1_1.sqlite,"What type of pet is the youngest animal, and how much does it weigh?","SELECT Pets.PetType , Pets.weight FROM Pets ORDER BY Pets.birthyear desc LIMIT 1",排序字段含义变化,"SELECT PetType, weight
+FROM Pets
+ORDER BY birthyear DESC
+LIMIT 1;",True,match,,1,1
+DB_DBcontent_equivalence-00009-pre,DB_DBcontent_equivalence,9,pre,7,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What are the names and release years for all the songs of the youngest singer?,"SELECT song_name , song_release_year FROM singer ORDER BY age LIMIT 1",排序字段含义变化,"SELECT Song_Name, Song_release_year
+FROM singer
+WHERE Age = (SELECT MIN(Age) FROM singer);",True,match,,1,1
+DB_DBcontent_equivalence-00009-post,DB_DBcontent_equivalence,9,post,7,concert_singer_1,data\DB_DBcontent_equivalence\database_post_perturbation\concert_singer_1\concert_singer_1.sqlite,What are the names and release years for all the songs of the youngest singer?,"SELECT singer.Song_Name , singer.Song_release_year FROM singer ORDER BY singer.birthyear desc LIMIT 1",排序字段含义变化,"SELECT Song_Name, Song_release_year
+FROM singer
+WHERE birthyear = (SELECT MAX(birthyear) FROM singer);",True,match,,1,1
+DB_DBcontent_equivalence-00052-pre,DB_DBcontent_equivalence,52,pre,67,pets_1,data\Spider-dev\databases\pets_1\pets_1.sqlite,Find the type and weight of the youngest pet.,"SELECT pettype , weight FROM pets ORDER BY pet_age LIMIT 1",排序字段含义变化,"SELECT PetType, weight FROM Pets WHERE pet_age = (SELECT MIN(pet_age) FROM Pets);",True,match,,1,1
+DB_DBcontent_equivalence-00052-post,DB_DBcontent_equivalence,52,post,67,pets_1_5,data\DB_DBcontent_equivalence\database_post_perturbation\pets_1_5\pets_1_5.sqlite,Find the type and weight of the youngest pet.,"SELECT Pets.PetType , Pets.weight FROM Pets ORDER BY Pets.birthyear desc LIMIT 1",排序字段含义变化,"SELECT PetType, weight
+FROM Pets
+WHERE birthyear = (SELECT MAX(birthyear) FROM Pets);",True,match,,1,1
+DB_schema_abbreviation-01452-pre,DB_schema_abbreviation,1452,pre,542,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,"What is the first, middle, and last name, along with the id and number of enrollments, for the student who enrolled the most in any program?","SELECT T1.student_id , T1.first_name , T1.middle_name , T1.last_name , count(*) , T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",独立计数与连接范围,"SELECT s.first_name, s.middle_name, s.last_name, s.student_id, COUNT(*) AS number_of_enrollments
+FROM Students AS s
+JOIN Student_Enrolment AS se ON se.student_id = s.student_id
+GROUP BY s.student_id
+ORDER BY number_of_enrollments DESC, s.student_id
+LIMIT 1;",False,mismatch,,1,1
+DB_schema_abbreviation-01452-post,DB_schema_abbreviation,1452,post,542,student_transcripts_tracking_4,data\DB_schema_abbreviation\database_post_perturbation\student_transcripts_tracking_4\student_transcripts_tracking_4.sqlite,"What is the first, middle, and last name, along with the id and number of enrollments, for the student who enrolled the most in any program?","SELECT Students.stuid , Students.first_name , Students.middle_name , Students.last_name , count(*) , Students.stuid FROM Students JOIN Student_Enrolment ON Students.stuid = Student_Enrolment.stu_id GROUP BY Students.stuid ORDER BY count(*) desc LIMIT 1",独立计数与连接范围,"SELECT s.first_name, s.middle_name, s.last_name, s.stuid, COUNT(*) AS enrollment_count
+FROM Students AS s
+JOIN Student_Enrolment AS se ON se.stu_id = s.stuid
+GROUP BY s.stuid, s.first_name, s.middle_name, s.last_name
+ORDER BY enrollment_count DESC, s.stuid
+LIMIT 1;",False,mismatch,,1,1
+NLQ_others-01702-pre,NLQ_others,1702,pre,606,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What are the languages used by the least number of TV Channels and how many channels use it?,"SELECT LANGUAGE , count(*) FROM TV_Channel GROUP BY LANGUAGE ORDER BY count(*) ASC LIMIT 1",独立计数与连接范围,"WITH language_counts AS (
+  SELECT ""Language"", COUNT(*) AS channel_count
+  FROM ""TV_Channel""
+  GROUP BY ""Language""
+)
+SELECT ""Language"", channel_count
+FROM language_counts
+WHERE channel_count = (SELECT MIN(channel_count) FROM language_counts);",True,match,,1,1
+NLQ_others-01702-post,NLQ_others,1702,post,606,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What languages are used by the least number of TV channels and how many channels speak them?,"SELECT LANGUAGE , count(*) FROM TV_Channel GROUP BY LANGUAGE ORDER BY count(*) ASC LIMIT 1",独立计数与连接范围,"WITH language_counts AS (
+  SELECT Language, COUNT(*) AS channel_count
+  FROM TV_Channel
+  GROUP BY Language
+)
+SELECT Language, channel_count
+FROM language_counts
+WHERE channel_count = (SELECT MIN(channel_count) FROM language_counts);",True,match,,1,1
+NLQ_column_carrier-00273-pre,NLQ_column_carrier,273,pre,596,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What is the country with the most number of TV Channels and how many does it have?,"SELECT Country , count(*) FROM TV_Channel GROUP BY Country ORDER BY count(*) DESC LIMIT 1",独立计数与连接范围,"SELECT ""Country"", COUNT(*) AS channel_count
+FROM ""TV_Channel""
+GROUP BY ""Country""
+ORDER BY channel_count DESC
+LIMIT 1;",True,match,,1,1
+NLQ_column_carrier-00273-post,NLQ_column_carrier,273,post,596,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,What countries has the most TV channels and how many does it have?,"SELECT Country , count(*) FROM TV_Channel GROUP BY Country ORDER BY count(*) DESC LIMIT 1",独立计数与连接范围,"WITH country_counts AS (
+  SELECT Country, COUNT(*) AS channel_count
+  FROM TV_Channel
+  GROUP BY Country
+)
+SELECT Country, channel_count
+FROM country_counts
+WHERE channel_count = (SELECT MAX(channel_count) FROM country_counts);",True,match,,1,1
+NLQ_value_synonym-00141-pre,NLQ_value_synonym,141,pre,175,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,Which are the car makers which produce at least 2 models and more than 3 car makers ? List the id and the maker .,"select t1.id , t1.maker from car_makers as t1 join model_list as t2 on t1.id = t2.maker group by t1.id having count(*) >= 2 intersect select t1.id , t1.maker from car_makers as t1 join model_list as t2 on t1.id = t2.maker join car_names as t3 on t2.model = t3.model group by t1.id having count(*) > 3",独立计数与连接范围,"SELECT cm.Id, cm.Maker
+FROM car_makers AS cm
+JOIN model_list AS ml ON ml.Maker = cm.Id
+JOIN car_names AS cn ON cn.Model = ml.Model
+JOIN cars_data AS cd ON cd.Id = cn.MakeId
+GROUP BY cm.Id, cm.Maker
+HAVING COUNT(DISTINCT ml.ModelId) >= 2
+   AND COUNT(DISTINCT cd.Id) > 3;",False,mismatch,,6,5
+NLQ_value_synonym-00141-post,NLQ_value_synonym,141,post,175,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,Which are the auto-makers which produce two or more models and more three auto makers? List the ids along with the makes.,"select t1.id , t1.maker from car_makers as t1 join model_list as t2 on t1.id = t2.maker group by t1.id having count(*) >= 2 intersect select t1.id , t1.maker from car_makers as t1 join model_list as t2 on t1.id = t2.maker join car_names as t3 on t2.model = t3.model group by t1.id having count(*) > 3",独立计数与连接范围,"SELECT cm.Id, cm.Maker
+FROM car_makers AS cm
+JOIN model_list AS ml ON ml.Maker = cm.Id
+JOIN car_names AS cn ON cn.Model = ml.Model
+GROUP BY cm.Id, cm.Maker
+HAVING COUNT(DISTINCT ml.ModelId) >= 2
+   AND COUNT(DISTINCT cn.MakeId) > 3;",False,mismatch,,6,5
+DB_DBcontent_equivalence-00183-pre,DB_DBcontent_equivalence,183,pre,570,student_transcripts_tracking,data\Spider-dev\databases\student_transcripts_tracking\student_transcripts_tracking.sqlite,When was the last transcript released?,SELECT transcript_date FROM Transcripts ORDER BY transcript_date DESC LIMIT 1,输出字段拆分,SELECT MAX(transcript_date) AS last_transcript_released FROM Transcripts;,True,match,,1,1
+DB_DBcontent_equivalence-00183-post,DB_DBcontent_equivalence,183,post,570,student_transcripts_tracking_4,data\DB_DBcontent_equivalence\database_post_perturbation\student_transcripts_tracking_4\student_transcripts_tracking_4.sqlite,When was the last transcript released?,"SELECT Transcripts.transcript_year , Transcripts.transcript_month , Transcripts.transcript_day , Transcripts.transcript_time FROM Transcripts ORDER BY Transcripts.transcript_year , Transcripts.transcript_month , Transcripts.transcript_day , Transcripts.transcript_time desc LIMIT 1",输出字段拆分,"SELECT transcript_year, transcript_month, transcript_day, transcript_time
+FROM Transcripts
+ORDER BY transcript_year DESC, transcript_month DESC, transcript_day DESC, transcript_time DESC
+LIMIT 1;",False,mismatch,,1,1
+DB_DBcontent_equivalence-00327-pre,DB_DBcontent_equivalence,327,pre,845,orchestra,data\Spider-dev\databases\orchestra\orchestra.sqlite,What is the name of the conductor who has conducted the most orchestras?,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1,输出字段拆分,"SELECT c.Name
+FROM conductor AS c
+LEFT JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID
+GROUP BY c.Conductor_ID, c.Name
+ORDER BY COUNT(o.Orchestra_ID) DESC
+LIMIT 1;",False,mismatch,,1,1
+DB_DBcontent_equivalence-00327-post,DB_DBcontent_equivalence,327,post,845,orchestra_3,data\DB_DBcontent_equivalence\database_post_perturbation\orchestra_3\orchestra_3.sqlite,What is the name of the conductor who has conducted the most orchestras?,"SELECT conductor.first_name , conductor.last_name FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID GROUP BY orchestra.Conductor_ID ORDER BY count(*) desc LIMIT 1",输出字段拆分,"SELECT c.first_name || ' ' || c.last_name AS conductor_name
+FROM conductor AS c
+JOIN orchestra AS o ON o.Conductor_ID = c.Conductor_ID
+GROUP BY c.Conductor_ID
+ORDER BY COUNT(DISTINCT o.Orchestra_ID) DESC
+LIMIT 1;",False,mismatch,,1,1
+DB_DBcontent_equivalence-00378-pre,DB_DBcontent_equivalence,378,pre,1024,singer,data\Spider-dev\databases\singer\singer.sqlite,Show the names of singers and the total sales of their songs.,"SELECT T1.Name , sum(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Name",输出字段拆分,"SELECT s.Name, COALESCE(SUM(g.Sales), 0) AS Total_Sales
+FROM singer AS s
+LEFT JOIN song AS g ON g.Singer_ID = s.Singer_ID
+GROUP BY s.Singer_ID, s.Name;",False,mismatch,,6,8
+DB_DBcontent_equivalence-00378-post,DB_DBcontent_equivalence,378,post,1024,singer_0,data\DB_DBcontent_equivalence\database_post_perturbation\singer_0\singer_0.sqlite,Show the names of singers and the total sales of their songs.,"SELECT singer.first_name , singer.last_name , sum(song.Sales) FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID GROUP BY singer.first_name , singer.last_name",输出字段拆分,"SELECT s.first_name, s.last_name, COALESCE(SUM(so.Sales), 0) AS total_sales
+FROM singer AS s
+LEFT JOIN song AS so ON so.Singer_ID = s.Singer_ID
+GROUP BY s.Singer_ID, s.first_name, s.last_name;",False,mismatch,,6,8
+DB_DBcontent_equivalence-00379-pre,DB_DBcontent_equivalence,379,pre,1025,singer,data\Spider-dev\databases\singer\singer.sqlite,"For each singer name, what is the total sales for their songs?","SELECT T1.Name , sum(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Name",输出字段拆分,"SELECT s.Name, COALESCE(SUM(so.Sales), 0) AS Total_Sales
+FROM singer AS s
+LEFT JOIN song AS so ON so.Singer_ID = s.Singer_ID
+GROUP BY s.Singer_ID, s.Name;",False,mismatch,,6,8
+DB_DBcontent_equivalence-00379-post,DB_DBcontent_equivalence,379,post,1025,singer_0,data\DB_DBcontent_equivalence\database_post_perturbation\singer_0\singer_0.sqlite,"For each singer name, what is the total sales for their songs?","SELECT singer.first_name , singer.last_name , sum(song.Sales) FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID GROUP BY singer.first_name , singer.last_name",输出字段拆分,"SELECT s.first_name, s.last_name, COALESCE(SUM(so.Sales), 0) AS total_sales
+FROM singer AS s
+LEFT JOIN song AS so ON so.Singer_ID = s.Singer_ID
+GROUP BY s.Singer_ID, s.first_name, s.last_name;",False,mismatch,,6,8
+DB_DBcontent_equivalence-00141-pre,DB_DBcontent_equivalence,141,pre,479,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,Find the total number of tours for each ranking date.,"SELECT sum(tours) , ranking_date FROM rankings GROUP BY ranking_date",输出字段拆分,"SELECT ranking_date, SUM(tours) AS total_tours
+FROM rankings
+GROUP BY ranking_date
+ORDER BY ranking_date;",True,match,,1504,1504
+DB_DBcontent_equivalence-00141-post,DB_DBcontent_equivalence,141,post,479,wta_1_4,data\DB_DBcontent_equivalence\database_post_perturbation\wta_1_4\wta_1_4.sqlite,Find the total number of tours for each ranking date.,"SELECT sum(rankings.tours) , rankings.year , rankings.month , rankings.day FROM rankings GROUP BY rankings.year , rankings.month , rankings.day",输出字段拆分,"SELECT date(printf('%04d-%02d-%02d', year, month, day)) AS ranking_date, SUM(tours) AS total_tours
+FROM rankings
+GROUP BY year, month, day
+ORDER BY year, month, day;",False,mismatch,,1504,1504
+DB_DBcontent_equivalence-00003-pre,DB_DBcontent_equivalence,3,pre,36,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What are the names of the singers and number of concerts for each person?,"SELECT T2.name , count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id = T2.singer_id GROUP BY T2.singer_id",输出字段拆分,"SELECT s.Name, COUNT(sc.concert_ID) AS concert_count
+FROM singer AS s
+LEFT JOIN singer_in_concert AS sc ON sc.Singer_ID = s.Singer_ID
+GROUP BY s.Singer_ID, s.Name;",False,mismatch,,5,6
+DB_DBcontent_equivalence-00003-post,DB_DBcontent_equivalence,3,post,36,concert_singer_0,data\DB_DBcontent_equivalence\database_post_perturbation\concert_singer_0\concert_singer_0.sqlite,What are the names of the singers and number of concerts for each person?,"SELECT singer.first_name , singer.last_name , count(*) FROM singer_in_concert JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID GROUP BY singer.Singer_ID",输出字段拆分,"SELECT s.first_name, s.last_name, COUNT(sc.concert_ID) AS concert_count
+FROM singer AS s
+LEFT JOIN singer_in_concert AS sc ON sc.Singer_ID = s.Singer_ID
+GROUP BY s.Singer_ID, s.first_name, s.last_name;",False,mismatch,,5,6
+DB_DBcontent_equivalence-00213-pre,DB_DBcontent_equivalence,213,pre,620,tvshow,data\Spider-dev\databases\tvshow\tvshow.sqlite,"When did the episode ""A Love of a Lifetime"" air?","SELECT Air_Date FROM TV_series WHERE Episode = ""A Love of a Lifetime""",输出字段拆分,"SELECT ""Air_Date"" FROM ""TV_series"" WHERE ""Episode"" = 'A Love of a Lifetime';",True,match,,1,1
+DB_DBcontent_equivalence-00213-post,DB_DBcontent_equivalence,213,post,620,tvshow_1,data\DB_DBcontent_equivalence\database_post_perturbation\tvshow_1\tvshow_1.sqlite,"When did the episode ""A Love of a Lifetime"" air?","SELECT TV_series.air_month , TV_series.air_day , TV_series.air_year FROM TV_series WHERE TV_series.Episode = ""A Love of a Lifetime""",输出字段拆分,"SELECT printf('%04d-%02d-%02d', air_year, air_month, air_day) AS air_date
+FROM TV_series
+WHERE Episode = 'A Love of a Lifetime';",False,mismatch,,1,1
+DB_DBcontent_equivalence-00346-pre,DB_DBcontent_equivalence,346,pre,958,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,What are the arriving date and the departing date of the dogs who have gone through a treatment?,"SELECT DISTINCT T1.date_arrived , T1.date_departed FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id",输出字段拆分,"SELECT DISTINCT d.date_arrived, d.date_departed
+FROM Dogs AS d
+WHERE EXISTS (
+    SELECT 1
+    FROM Treatments AS t
+    WHERE t.dog_id = d.dog_id
+);",True,match,,9,9
+DB_DBcontent_equivalence-00346-post,DB_DBcontent_equivalence,346,post,958,dog_kennels_1,data\DB_DBcontent_equivalence\database_post_perturbation\dog_kennels_1\dog_kennels_1.sqlite,What are the arriving date and the departing date of the dogs who have gone through a treatment?,"SELECT DISTINCT Dogs.date_arrived , Dogs.time_arrived , Dogs.date_departed FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id",输出字段拆分,"SELECT DISTINCT d.date_arrived, d.date_departed
+FROM Dogs AS d
+WHERE EXISTS (
+    SELECT 1
+    FROM Treatments AS t
+    WHERE t.dog_id = d.dog_id
+);",False,mismatch,,9,9
+DB_DBcontent_equivalence-00268-pre,DB_DBcontent_equivalence,268,pre,683,poker_player,data\Spider-dev\databases\poker_player\poker_player.sqlite,List the names of people that are not poker players.,SELECT Name FROM people WHERE People_ID NOT IN (SELECT People_ID FROM poker_player),输出字段拆分,"SELECT p.Name
+FROM people AS p
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM poker_player AS pp
+  WHERE pp.People_ID = p.People_ID
+);",True,match,,2,2
+DB_DBcontent_equivalence-00268-post,DB_DBcontent_equivalence,268,post,683,poker_player_0,data\DB_DBcontent_equivalence\database_post_perturbation\poker_player_0\poker_player_0.sqlite,List the names of people that are not poker players.,"SELECT people.first_name , people.last_name FROM people WHERE people.People_ID NOT in (SELECT poker_player.People_ID FROM poker_player)",输出字段拆分,"SELECT p.first_name, p.last_name
+FROM people AS p
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM poker_player AS pp
+    WHERE pp.People_ID = p.People_ID
+);",True,match,,2,2
+DB_DBcontent_equivalence-00112-pre,DB_DBcontent_equivalence,112,pre,401,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,Show names of teachers and the courses they are arranged to teach in ascending alphabetical order of the teacher's name.,"SELECT T3.Name , T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID = T3.Teacher_ID ORDER BY T3.Name",输出字段拆分,"SELECT teacher.Name, course.Course
+FROM teacher
+JOIN course_arrange ON teacher.Teacher_ID = course_arrange.Teacher_ID
+JOIN course ON course_arrange.Course_ID = course.Course_ID
+ORDER BY teacher.Name ASC;",True,match,,6,6
+DB_DBcontent_equivalence-00112-post,DB_DBcontent_equivalence,112,post,401,course_teach_5,data\DB_DBcontent_equivalence\database_post_perturbation\course_teach_5\course_teach_5.sqlite,Show names of teachers and the courses they are arranged to teach in ascending alphabetical order of the teacher's name.,"SELECT teacher.first_name , teacher.last_name , course.Course FROM course_arrange JOIN course ON course_arrange.Course_ID = course.Course_ID JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID ORDER BY teacher.first_name , teacher.last_name asc",输出字段拆分,"SELECT DISTINCT t.first_name, t.last_name, c.Course
+FROM teacher AS t
+JOIN course_arrange AS ca ON ca.Teacher_ID = t.Teacher_ID
+JOIN course AS c ON c.Course_ID = ca.Course_ID
+ORDER BY t.first_name ASC, t.last_name ASC, c.Course ASC;",False,mismatch,,6,6
+NLQ_multitype-00888-pre,NLQ_multitype,888,pre,741,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Give the name of the nation that uses the greatest amount of languages.,SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1,分组与统计粒度,"SELECT c.Name
+FROM country AS c
+JOIN countrylanguage AS cl ON cl.CountryCode = c.Code
+GROUP BY c.Code, c.Name
+ORDER BY COUNT(*) DESC
+LIMIT 1;",False,mismatch,,1,1
+NLQ_multitype-00888-post,NLQ_multitype,888,post,741,world_1,data\Spider-dev\databases\world_1\world_1.sqlite,Which nation use the most languages,SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1,分组与统计粒度,"SELECT c.Name
+FROM country AS c
+JOIN countrylanguage AS cl ON cl.CountryCode = c.Code
+GROUP BY c.Code, c.Name
+ORDER BY COUNT(*) DESC
+LIMIT 1;",False,mismatch,,1,1
+NLQ_keyword_synonym-00013-pre,NLQ_keyword_synonym,13,pre,26,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,Which year has most number of concerts?,SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT ""Year""
+FROM ""concert""
+GROUP BY ""Year""
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+--",True,match,,1,1
+NLQ_keyword_synonym-00013-post,NLQ_keyword_synonym,13,post,26,concert_singer,data\Spider-dev\databases\concert_singer\concert_singer.sqlite,What year has the most concerts?,SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1,分组与统计粒度,"SELECT ""Year""
+FROM ""concert""
+GROUP BY ""Year""
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+--",True,match,,1,1
+NLQ_column_synonym-00207-pre,NLQ_column_synonym,207,pre,394,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,"For each hometown, how many teachers are there?","SELECT Hometown , COUNT(*) FROM teacher GROUP BY Hometown",分组与统计粒度,"SELECT Hometown, COUNT(*) AS teacher_count
+FROM teacher
+GROUP BY Hometown;",True,match,,7,7
+NLQ_column_synonym-00207-post,NLQ_column_synonym,207,post,394,course_teach,data\Spider-dev\databases\course_teach\course_teach.sqlite,"For every town, how many teachers are from there?","SELECT Hometown , COUNT(*) FROM teacher GROUP BY Hometown",分组与统计粒度,"SELECT Hometown, COUNT(*) AS teacher_count
+FROM teacher
+GROUP BY Hometown;",True,match,,7,7
+NLQ_others-00278-pre,NLQ_others,278,pre,106,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What is the name of each continent and how many car makers are there in each one?,"SELECT T1.Continent , count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId = T2.continent JOIN car_makers AS T3 ON T2.CountryId = T3.Country GROUP BY T1.Continent",分组与统计粒度,"SELECT c.Continent, COUNT(cm.Id) AS maker_count
+FROM continents AS c
+LEFT JOIN countries AS co ON co.Continent = c.ContId
+LEFT JOIN car_makers AS cm ON cm.Country = co.CountryId
+GROUP BY c.ContId, c.Continent;",False,mismatch,,3,5
+NLQ_others-00278-post,NLQ_others,278,post,106,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,What are the names of each continents and in which continents are there how many car manufacturers?,"SELECT T1.Continent , count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId = T2.continent JOIN car_makers AS T3 ON T2.CountryId = T3.Country GROUP BY T1.Continent",分组与统计粒度,"SELECT c.Continent, COUNT(cm.Id) AS manufacturer_count
+FROM continents AS c
+LEFT JOIN countries AS co ON co.Continent = c.ContId
+LEFT JOIN car_makers AS cm ON cm.Country = co.CountryId
+GROUP BY c.ContId, c.Continent;",False,mismatch,,3,5
+NLQ_others-00231-pre,NLQ_others,231,pre,90,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,"For each continent, list its id, name, and how many countries it has?","SELECT T1.ContId , T1.Continent , count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId = T2.Continent GROUP BY T1.ContId",分组与统计粒度,"SELECT c.ContId, c.Continent, COUNT(co.CountryId) AS country_count
+FROM continents AS c
+LEFT JOIN countries AS co ON co.Continent = c.ContId
+GROUP BY c.ContId, c.Continent;",True,match,,5,5
+NLQ_others-00231-post,NLQ_others,231,post,90,car_1,data\Spider-dev\databases\car_1\car_1.sqlite,"For each continent list its continent id, name, and how many countries it has.","SELECT T1.ContId , T1.Continent , count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId = T2.Continent GROUP BY T1.ContId",分组与统计粒度,"SELECT c.""ContId"", c.""Continent"", COUNT(co.""CountryId"") AS country_count
+FROM ""continents"" AS c
+LEFT JOIN ""countries"" AS co ON co.""Continent"" = c.""ContId""
+GROUP BY c.""ContId"", c.""Continent"";",True,match,,5,5
+NLQ_others-01341-pre,NLQ_others,1341,pre,490,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,How many players are there for each hand type?,"SELECT count(*) , hand FROM players GROUP BY hand",分组与统计粒度,"SELECT hand, COUNT(*) AS player_count FROM players GROUP BY hand;",True,match,,4,4
+NLQ_others-01341-post,NLQ_others,1341,post,490,wta_1,data\Spider-dev\databases\wta_1\wta_1.sqlite,How many players will be playing each hand type?,"SELECT count(*) , hand FROM players GROUP BY hand",分组与统计粒度,"SELECT hand, COUNT(*) AS player_count
+FROM players
+GROUP BY hand;",True,match,,4,4
+NLQ_others-02519-pre,NLQ_others,2519,pre,936,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Which owner has paid for the most treatments on his or her dogs? List the owner id and last name.,"SELECT T1.owner_id , T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",分组与统计粒度,"SELECT o.owner_id, o.last_name
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Treatments AS t ON t.dog_id = d.dog_id
+GROUP BY o.owner_id, o.last_name
+ORDER BY COUNT(t.treatment_id) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_others-02519-post,NLQ_others,2519,post,936,dog_kennels,data\Spider-dev\databases\dog_kennels\dog_kennels.sqlite,Who paid for the most treatments on his/her dogs? Show me the owner id and last name.,"SELECT T1.owner_id , T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",分组与统计粒度,"SELECT o.owner_id, o.last_name
+FROM Owners AS o
+JOIN Dogs AS d ON d.owner_id = o.owner_id
+JOIN Treatments AS t ON t.dog_id = d.dog_id
+GROUP BY o.owner_id, o.last_name
+ORDER BY COUNT(*) DESC
+LIMIT 1;",True,match,,1,1
+NLQ_others-02428-pre,NLQ_others,2428,pre,877,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,How many high schoolers are in each grade?,"SELECT grade , count(*) FROM Highschooler GROUP BY grade",分组与统计粒度,"SELECT grade, COUNT(*) AS student_count
+FROM Highschooler
+GROUP BY grade
+ORDER BY grade;",True,match,,4,4
+NLQ_others-02428-post,NLQ_others,2428,post,877,network_1,data\Spider-dev\databases\network_1\network_1.sqlite,"In each grade of highschool, how many people are there?","SELECT grade , count(*) FROM Highschooler GROUP BY grade",分组与统计粒度,"SELECT grade, COUNT(*) AS student_count
+FROM Highschooler
+GROUP BY grade
+ORDER BY grade;",True,match,,4,4

@@ -1,0 +1,116 @@
+[
+  {
+    "id": "DB_DBcontent_equivalence-00162-post",
+    "effort": "none",
+    "change": "sole requested output",
+    "before_sql": "SELECT s.semester_id, s.semester_term, s.semester_year\nFROM Semesters AS s\nJOIN Student_Enrolment AS se ON se.semester_id = s.semester_id\nJOIN Degree_Programs AS dp ON dp.degree_program_id = se.degree_program_id\nGROUP BY s.semester_id, s.semester_term, s.semester_year\nHAVING MAX(CASE WHEN dp.is_master = 'T' THEN 1 ELSE 0 END) = 1\n   AND MAX(CASE WHEN dp.is_bachelor = 'T' THEN 1 ELSE 0 END) = 1;",
+    "after_sql": "SELECT s.semester_id\nFROM Semesters AS s\nJOIN Student_Enrolment AS se ON se.semester_id = s.semester_id\nJOIN Degree_Programs AS dp ON dp.degree_program_id = se.degree_program_id\nGROUP BY s.semester_id, s.semester_term, s.semester_year\nHAVING MAX(CASE WHEN dp.is_master = 'T' THEN 1 ELSE 0 END) = 1\n   AND MAX(CASE WHEN dp.is_bachelor = 'T' THEN 1 ELSE 0 END) = 1;",
+    "before": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "after": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00162-post",
+    "effort": "high",
+    "change": "sole requested output",
+    "before_sql": "SELECT DISTINCT s.semester_id, s.semester_term, s.semester_year\nFROM \"Semesters\" AS s\nJOIN \"Student_Enrolment\" AS se ON se.semester_id = s.semester_id\nJOIN \"Degree_Programs\" AS dp ON dp.degree_program_id = se.degree_program_id\nWHERE EXISTS (\n    SELECT 1\n    FROM \"Student_Enrolment\" AS se_master\n    JOIN \"Degree_Programs\" AS dp_master\n        ON dp_master.degree_program_id = se_master.degree_program_id\n    WHERE se_master.semester_id = s.semester_id\n      AND dp_master.is_master = 'T'\n)\nAND EXISTS (\n    SELECT 1\n    FROM \"Student_Enrolment\" AS se_bachelor\n    JOIN \"Degree_Programs\" AS dp_bachelor\n        ON dp_bachelor.degree_program_id = se_bachelor.degree_program_id\n    WHERE se_bachelor.semester_id = s.semester_id\n      AND dp_bachelor.is_bachelor = 'T'\n);",
+    "after_sql": "SELECT DISTINCT s.semester_id\nFROM \"Semesters\" AS s\nJOIN \"Student_Enrolment\" AS se ON se.semester_id = s.semester_id\nJOIN \"Degree_Programs\" AS dp ON dp.degree_program_id = se.degree_program_id\nWHERE EXISTS (\n    SELECT 1\n    FROM \"Student_Enrolment\" AS se_master\n    JOIN \"Degree_Programs\" AS dp_master\n        ON dp_master.degree_program_id = se_master.degree_program_id\n    WHERE se_master.semester_id = s.semester_id\n      AND dp_master.is_master = 'T'\n)\nAND EXISTS (\n    SELECT 1\n    FROM \"Student_Enrolment\" AS se_bachelor\n    JOIN \"Degree_Programs\" AS dp_bachelor\n        ON dp_bachelor.degree_program_id = se_bachelor.degree_program_id\n    WHERE se_bachelor.semester_id = s.semester_id\n      AND dp_bachelor.is_bachelor = 'T'\n);",
+    "before": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "after": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00136-post",
+    "effort": "none",
+    "change": "count distinct winners",
+    "before_sql": "SELECT COUNT(*)\nFROM matches\nWHERE is_winner_right_handed = 'F'\n  AND tourney_name = 'WTA Championships';",
+    "after_sql": "SELECT COUNT(DISTINCT winner_name)\nFROM matches\nWHERE is_winner_right_handed = 'F'\n  AND tourney_name = 'WTA Championships';",
+    "before": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "after": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00136-post",
+    "effort": "high",
+    "change": "count distinct winners",
+    "before_sql": "SELECT COUNT(*) AS left_handed_winners\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND is_winner_right_handed = 'F';",
+    "after_sql": "SELECT COUNT(DISTINCT winner_name) AS left_handed_winners\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND is_winner_right_handed = 'F';",
+    "before": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "after": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00140-post",
+    "effort": "none",
+    "change": "split returned name",
+    "before_sql": "SELECT first_name || ' ' || last_name AS full_name\nFROM players\nWHERE is_right_handed = 'F'\nORDER BY birth_date;",
+    "after_sql": "SELECT first_name, last_name\nFROM players\nWHERE is_right_handed = 'F'\nORDER BY birth_date;",
+    "before": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 15634,
+      "prediction_rows": 15634
+    },
+    "after": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 15634,
+      "prediction_rows": 15634
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00140-post",
+    "effort": "high",
+    "change": "split returned name",
+    "before_sql": "SELECT first_name || ' ' || last_name AS full_name\nFROM players\nWHERE is_right_handed = 'F'\nORDER BY birth_date;",
+    "after_sql": "SELECT first_name, last_name\nFROM players\nWHERE is_right_handed = 'F'\nORDER BY birth_date;",
+    "before": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 15634,
+      "prediction_rows": 15634
+    },
+    "after": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 15634,
+      "prediction_rows": 15634
+    }
+  }
+]

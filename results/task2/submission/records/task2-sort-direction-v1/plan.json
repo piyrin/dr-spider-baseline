@@ -1,0 +1,180 @@
+{
+  "seed": "sort-direction-v1-20261126",
+  "selected": [
+    {
+      "pair": "DB_DBcontent_equivalence-00064",
+      "label": "target",
+      "original_id": 261,
+      "db_id": "employee_hire_evaluation_1",
+      "selection": "显式单列排序，替代字段反向，参考执行结果逐序一致",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00078",
+      "label": "target",
+      "original_id": 383,
+      "db_id": "course_teach_0",
+      "selection": "显式单列排序，替代字段反向，参考执行结果逐序一致",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00101",
+      "label": "target",
+      "original_id": 384,
+      "db_id": "course_teach_4",
+      "selection": "显式单列排序，替代字段反向，参考执行结果逐序一致",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00065",
+      "label": "target",
+      "original_id": 262,
+      "db_id": "employee_hire_evaluation_1",
+      "selection": "显式单列排序，替代字段反向，参考执行结果逐序一致",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_DBcontent_equivalence-00305",
+      "label": "target",
+      "original_id": 829,
+      "db_id": "orchestra_1",
+      "selection": "显式单列排序，替代字段反向，参考执行结果逐序一致",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_schema_synonym-01629",
+      "label": "control",
+      "original_id": 655,
+      "db_id": "poker_player_1",
+      "selection": "不同官方扰动下的排序对照",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "DB_schema_abbreviation-02106",
+      "label": "control",
+      "original_id": 790,
+      "db_id": "world_1_1",
+      "selection": "不同官方扰动下的排序对照",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_column_carrier-00210",
+      "label": "control",
+      "original_id": 458,
+      "db_id": "wta_1",
+      "selection": "不同官方扰动下的排序对照",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_column_synonym-00083",
+      "label": "control",
+      "original_id": 133,
+      "db_id": "car_1",
+      "selection": "不同官方扰动下的排序对照",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_sort_order-00123",
+      "label": "control",
+      "original_id": 665,
+      "db_id": "poker_player",
+      "selection": "不同官方扰动下的排序对照",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_NonDB_number-00069",
+      "label": "control",
+      "original_id": 615,
+      "db_id": "tvshow",
+      "selection": "不同官方扰动下的排序对照",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "NLQ_column_attribute-00104",
+      "label": "control",
+      "original_id": 938,
+      "db_id": "dog_kennels",
+      "selection": "无显式排序的回退对照",
+      "previously_seen_pair": false
+    },
+    {
+      "pair": "SQL_comparison-00134",
+      "label": "control",
+      "original_id": 793,
+      "db_id": "world_1",
+      "selection": "无显式排序的回退对照",
+      "previously_seen_pair": false
+    }
+  ],
+  "anchor": [
+    "DB_DBcontent_equivalence-00304-pre",
+    "DB_DBcontent_equivalence-00304-post"
+  ],
+  "conditions": [
+    [
+      "baseline",
+      "none"
+    ],
+    [
+      "baseline",
+      "high"
+    ],
+    [
+      "canvas_v1",
+      "none"
+    ],
+    [
+      "canvas_v1",
+      "high"
+    ]
+  ],
+  "observed_originals": 1034,
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "sort_intent"
+      },
+      {
+        "id": "probe",
+        "kind": "sort_probe"
+      },
+      {
+        "id": "direction",
+        "kind": "sort_direction"
+      },
+      {
+        "id": "generate",
+        "kind": "sort_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "sort_execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "probe"
+      },
+      {
+        "source": "probe",
+        "target": "direction"
+      },
+      {
+        "source": "direction",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "code_sha256": {
+    ".local\\task2-experiment\\sort_direction_compare.py": "de517f985c1b4455b760ce59c9f346ab2d139b90aade57f5ab5ec0e1f308ccc1",
+    ".local\\task2-experiment\\sort_direction_canvas.py": "2ec2e17d0b1035984759f2174a46ca7dc195055b36de7b38ccf3fe426f87cfad",
+    ".local\\task2-experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    ".local\\task2-experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  }
+}

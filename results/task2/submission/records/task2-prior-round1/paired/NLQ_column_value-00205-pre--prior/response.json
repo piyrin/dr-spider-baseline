@@ -1,0 +1,24 @@
+{
+  "id": "resp_0dd9d405fb19cf74016b067493e03087d2bf7e71b5cdff6201",
+  "object": "chat.completion",
+  "created": 1795585173,
+  "model": "gpt-6-sol",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "SELECT \"Package_Option\" FROM \"TV_Channel\" WHERE \"series_name\" = 'Sky Radio';"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7278,
+    "completion_tokens": 119,
+    "total_tokens": 7397,
+    "completion_tokens_details": {
+      "reasoning_tokens": 98
+    }
+  }
+}

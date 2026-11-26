@@ -62,8 +62,12 @@ export default function TaskTwo() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ flowId: course ? flows[flow].courseId : flow, params: { question: question.trim() } }),
       });
-      const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error || '请求失败');
+      const payload = await response.json().catch(() => null);
+      if (!response.ok) {
+        const message = typeof payload?.error === 'string' ? payload.error : '';
+        throw new Error(message || `${runtimes[runtime]} 请求失败（HTTP ${response.status}），请查看后端日志或重试。`);
+      }
+      if (!payload) throw new Error('后端返回的内容无法读取，请查看后端日志。');
       const data = course ? payload.data?.value?.result : payload.data;
       if (!data) throw new Error('流程未返回结果，请检查后端日志');
       setResults(previous => ({ ...previous, [`${runtime}:${flow}`]: course ? JSON.parse(data) : data }));

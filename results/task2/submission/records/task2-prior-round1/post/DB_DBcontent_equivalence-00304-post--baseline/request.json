@@ -1,0 +1,14 @@
+{
+  "model": "gpt-6-sol",
+  "stream": false,
+  "messages": [
+    {
+      "role": "system",
+      "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+    },
+    {
+      "role": "user",
+      "content": "Schema\nCREATE TABLE \"conductor\" (\"Conductor_ID\" int,\"Name\" text,\"Age\" int,\"Nationality\" text,\"year_start_to_work\" int,PRIMARY KEY (\"Conductor_ID\"))\nCREATE TABLE \"orchestra\" (\"Orchestra_ID\" int,\"Orchestra\" text,\"Conductor_ID\" int,\"Record_Company\" text,\"year_of_existence\" int,\"Major_Record_Format\" text,PRIMARY KEY (\"Orchestra_ID\"),FOREIGN KEY (\"Conductor_ID\") REFERENCES \"conductor\" (\"Conductor_ID\"))\nCREATE TABLE \"performance\" (\"Performance_ID\" int,\"Orchestra_ID\" int,\"Type\" text,\"Date\" text,\"Official_ratings_in_millions\" real,\"Weekly_rank\" text,\"Share\" text,PRIMARY KEY (\"Performance_ID\"),FOREIGN KEY (\"Orchestra_ID\") REFERENCES \"orchestra\" (\"Orchestra_ID\"))\nCREATE TABLE \"show\" (\"Show_ID\" int,\"Performance_ID\" int,\"If_first_show\" bool,\"Result\" text,\"Attendance\" real,FOREIGN KEY (\"Performance_ID\") REFERENCES \"performance\" (\"Performance_ID\"))\nQuestion\nWhat are the record companies of orchestras in descending order of years in which they were founded?"
+    }
+  ]
+}

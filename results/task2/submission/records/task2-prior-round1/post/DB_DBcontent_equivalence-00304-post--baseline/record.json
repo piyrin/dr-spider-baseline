@@ -1,0 +1,98 @@
+{
+  "id": "DB_DBcontent_equivalence-00304-post",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7293,
+    "completion_tokens": 131,
+    "total_tokens": 7424,
+    "completion_tokens_details": {
+      "reasoning_tokens": 115
+    }
+  },
+  "prediction_sql": "SELECT Record_Company\nFROM orchestra\nORDER BY year_of_existence DESC;",
+  "correct": false,
+  "error": null,
+  "gold_row_count": 12,
+  "prediction_row_count": 12,
+  "status": "mismatch",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:39:01+08:00",
+  "gold_rows": [
+    [
+      "Columbia Masterworks"
+    ],
+    [
+      "Philips"
+    ],
+    [
+      "Philips Classics Records"
+    ],
+    [
+      "RCA"
+    ],
+    [
+      "EMI"
+    ],
+    [
+      "Koch Records / Naxos Records"
+    ],
+    [
+      "Decca Records"
+    ],
+    [
+      "Mercury Records"
+    ],
+    [
+      "Deutsche Grammophon"
+    ],
+    [
+      "Kultur"
+    ],
+    [
+      "Decca Records"
+    ],
+    [
+      "Delos Records"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Kultur"
+    ],
+    [
+      "Decca Records"
+    ],
+    [
+      "Delos Records"
+    ],
+    [
+      "Mercury Records"
+    ],
+    [
+      "Deutsche Grammophon"
+    ],
+    [
+      "Decca Records"
+    ],
+    [
+      "Koch Records / Naxos Records"
+    ],
+    [
+      "EMI"
+    ],
+    [
+      "Philips"
+    ],
+    [
+      "Philips Classics Records"
+    ],
+    [
+      "RCA"
+    ],
+    [
+      "Columbia Masterworks"
+    ]
+  ]
+}

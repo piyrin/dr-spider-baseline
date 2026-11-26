@@ -1,0 +1,125 @@
+{
+  "id": "NLQ_column_carrier-00111-post",
+  "side": "post",
+  "original_id": 277,
+  "method": "baseline",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "generate",
+      "kind": "generate",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT e.\"Name\", COUNT(*) AS award_count\nFROM \"employee\" AS e\nJOIN \"evaluation\" AS v ON e.\"Employee_ID\" = v.\"Employee_ID\"\nGROUP BY e.\"Employee_ID\", e.\"Name\"\nORDER BY award_count DESC\nLIMIT 1;"
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT e.\"Name\", COUNT(*) AS award_count\nFROM \"employee\" AS e\nJOIN \"evaluation\" AS v ON e.\"Employee_ID\" = v.\"Employee_ID\"\nGROUP BY e.\"Employee_ID\", e.\"Name\"\nORDER BY award_count DESC\nLIMIT 1;",
+        "rows": [
+          [
+            "George Chuter",
+            2
+          ]
+        ],
+        "columns": [
+          "Name",
+          "award_count"
+        ]
+      }
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  },
+  "usage": {
+    "attribution": {
+      "items": {
+        "msg_051e0c571a0514c8016b06e260f03487d0a97bb14fbb0254ae": {
+          "input_tokens": 25,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 25,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_051e0c571a0514c8016b06e260f03487d0af9dacc1a82a312e": {
+          "input_tokens": 199,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 0,
+          "content": [
+            {
+              "input_tokens": 199,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 0
+            }
+          ]
+        },
+        "msg_051e0c571a0514c8016b06e263061887d0b5385a8785b4db5a": {
+          "input_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 63,
+          "content": [
+            {
+              "input_tokens": 0,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "output_tokens": 63
+            }
+          ]
+        },
+        "rs_051e0c571a0514c8016b06e2615ecc87d0a68a2ab073836850": {
+          "input_tokens": 2,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 80
+        }
+      },
+      "request_fields": {
+        "instructions": {
+          "input_tokens": 4380,
+          "cached_tokens": 3840,
+          "cache_write_tokens": 0,
+          "output_tokens": 0
+        }
+      }
+    },
+    "prompt_tokens": 8830,
+    "completion_tokens": 143,
+    "total_tokens": 8973,
+    "prompt_tokens_details": {
+      "cache_write_tokens_details": {
+        "ttl_30m_tokens": 0,
+        "ttl_12h_tokens": 0
+      },
+      "cached_tokens": 7552
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 80
+    }
+  },
+  "system_fingerprint": null,
+  "elapsed_seconds": 5.776
+}

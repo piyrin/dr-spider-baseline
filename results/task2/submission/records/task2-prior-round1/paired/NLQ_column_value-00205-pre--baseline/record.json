@@ -1,0 +1,32 @@
+{
+  "id": "NLQ_column_value-00205-pre",
+  "model": "gpt-6-sol",
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 7243,
+    "completion_tokens": 91,
+    "total_tokens": 7334,
+    "completion_tokens_details": {
+      "reasoning_tokens": 70
+    }
+  },
+  "prediction_sql": "SELECT \"Package_Option\" FROM \"TV_Channel\" WHERE \"series_name\" = 'Sky Radio';",
+  "correct": true,
+  "error": null,
+  "gold_row_count": 1,
+  "prediction_row_count": 1,
+  "status": "match",
+  "condition": "baseline",
+  "prior": "",
+  "recorded_at": "2026-11-25T13:39:24+08:00",
+  "gold_rows": [
+    [
+      "Sky Famiglia"
+    ]
+  ],
+  "prediction_rows": [
+    [
+      "Sky Famiglia"
+    ]
+  ]
+}

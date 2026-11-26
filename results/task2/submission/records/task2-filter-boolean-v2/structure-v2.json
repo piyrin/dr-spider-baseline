@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    {
+      "id": "extract",
+      "kind": "boolean_extract"
+    },
+    {
+      "id": "lookup",
+      "kind": "boolean_lookup"
+    },
+    {
+      "id": "generate",
+      "kind": "boolean_generate"
+    },
+    {
+      "id": "execute",
+      "kind": "execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "extract",
+      "target": "lookup"
+    },
+    {
+      "source": "lookup",
+      "target": "generate"
+    },
+    {
+      "source": "generate",
+      "target": "execute"
+    }
+  ]
+}

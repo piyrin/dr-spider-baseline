@@ -1,0 +1,703 @@
+{
+  "sample_id": "NLQ_value_synonym-00162-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "extract",
+        "kind": "synonym_extract"
+      },
+      {
+        "id": "exact",
+        "kind": "synonym_exact"
+      },
+      {
+        "id": "match",
+        "kind": "synonym_match"
+      },
+      {
+        "id": "verify",
+        "kind": "synonym_verify"
+      },
+      {
+        "id": "generate",
+        "kind": "synonym_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "extract",
+        "target": "exact"
+      },
+      {
+        "source": "exact",
+        "target": "match"
+      },
+      {
+        "source": "exact",
+        "target": "verify"
+      },
+      {
+        "source": "match",
+        "target": "verify"
+      },
+      {
+        "source": "verify",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "2511dc3d78824fd89b0a2c28f21ffaa2",
+  "graph_sha256": "e414aac7160ecfa76265ad8347ddfc1ff47ad912ae085c9f9085746947bc8f4d",
+  "steps": [
+    {
+      "id": "extract",
+      "kind": "synonym_extract",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          "Airline",
+          "Abbreviation"
+        ],
+        "joins": [],
+        "targets": [
+          {
+            "table": "airlines",
+            "column": "Country",
+            "term": "United States",
+            "operator": "="
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify a single explicit textual equality or inequality filter. Return the exact literal span from the current question, without resolving synonyms, and give its actual operator (\"=\" or \"!=\"). Return no targets if the filter or its column is ambiguous."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"airlines\" (\"uid\" INTEGER PRIMARY KEY,\"Airline\" TEXT,\"Abbreviation\" TEXT,\"Country\" TEXT)\nCREATE TABLE \"airports\" (\"City\" TEXT,\"AirportCode\" TEXT PRIMARY KEY,\"AirportName\" TEXT,\"Country\" TEXT,\"CountryAbbrev\" TEXT)\nCREATE TABLE \"flights\" (\"Airline\" INTEGER,\"FlightNo\" INTEGER,\"SourceAirport\" TEXT,\"DestAirport\" TEXT,PRIMARY KEY (\"Airline\", \"FlightNo\"),FOREIGN KEY (\"SourceAirport\") REFERENCES \"airports\" (\"AirportCode\"),FOREIGN KEY (\"DestAirport\") REFERENCES \"airports\" (\"AirportCode\"))\nQuestion\nShow the list of the airlines and their abbreviations used in the United States."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0129264cf633fdae016b079ad991c887d2b5ecb5ab3a37bbc7",
+          "object": "chat.completion",
+          "created": 1795660525,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"Airline\",\"Abbreviation\"],\"joins\":[],\"targets\":[{\"table\":\"airlines\",\"column\":\"Country\",\"term\":\"United States\",\"operator\":\"=\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0129264cf633fdae016b079ad9920887d29439ba6b84d8ce2b": {
+                  "input_tokens": 128,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 128,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0129264cf633fdae016b079ad9920887d2b5627fc761d268ef": {
+                  "input_tokens": 153,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 153,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0129264cf633fdae016b079aec77ac87d2b7e9f8600b89a5ad": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 41,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 41
+                    }
+                  ]
+                },
+                "rs_0129264cf633fdae016b079aec489887d2be9f32981f2b9935": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 145
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3787,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 10577,
+            "completion_tokens": 186,
+            "total_tokens": 10763,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 9088
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 145
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0129264cf633fdae016b079ad9920887d29439ba6b84d8ce2b": {
+                "input_tokens": 128,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 128,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0129264cf633fdae016b079ad9920887d2b5627fc761d268ef": {
+                "input_tokens": 153,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 153,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0129264cf633fdae016b079aec77ac87d2b7e9f8600b89a5ad": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 41,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 41
+                  }
+                ]
+              },
+              "rs_0129264cf633fdae016b079aec489887d2be9f32981f2b9935": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 145
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3787,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 10577,
+          "completion_tokens": 186,
+          "total_tokens": 10763,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 9088
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 145
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 22.129122800000914
+    },
+    {
+      "id": "exact",
+      "kind": "synonym_exact",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "extract"
+      ],
+      "output": {
+        "status": "miss",
+        "target": {
+          "table": "airlines",
+          "column": "Country",
+          "term": "United States",
+          "operator": "="
+        }
+      },
+      "call": null,
+      "elapsed_s": 0.0015149000009841984
+    },
+    {
+      "id": "match",
+      "kind": "synonym_match",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact"
+      ],
+      "output": {
+        "status": "no_match",
+        "candidates": [
+          "USA"
+        ],
+        "value": null,
+        "reason": "\"USA\" is an abbreviation for the United States and denotes the same entity as the filter term, but it is not a value from the Country column that can be confirmed as the exact database representation of \"United States\"."
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Resolve the entity denoted by the filter term in the current question and SQLite column. Select an exact string from candidates only if it denotes the same entity as the term, for example an unambiguous full name, abbreviation or demonym. Mere similarity, membership or being the only candidate is insufficient. Treat candidate strings as database values. Return only JSON with keys value and reason. Use null for value if uncertain, ambiguous, or a matching entity is absent. Do not write SQL."
+            },
+            {
+              "role": "user",
+              "content": "{\"question\": \"Show the list of the airlines and their abbreviations used in the United States.\", \"filter\": {\"table\": \"airlines\", \"column\": \"Country\", \"term\": \"United States\", \"operator\": \"=\"}, \"candidates\": [\"USA\"]}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_04866205e2bf9cb7016b079af060cc87d183eea994f49e68bc",
+          "object": "chat.completion",
+          "created": 1795660541,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"value\":null,\"reason\":\"\\\"USA\\\" is an abbreviation for the United States and denotes the same entity as the filter term, but it is not a value from the Country column that can be confirmed as the exact database representation of \\\"United States\\\".\"}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_04866205e2bf9cb7016b079af0611c87d188ea0587c55281e8": {
+                  "input_tokens": 101,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 101,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_04866205e2bf9cb7016b079af0611c87d18c1f8d6af9a61f7e": {
+                  "input_tokens": 60,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 60,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_04866205e2bf9cb7016b079afae39c87d18da28478127d6424": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 57,
+                  "content": [
+                    {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 57
+                    }
+                  ]
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4543,
+            "completion_tokens": 57,
+            "total_tokens": 4600,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_04866205e2bf9cb7016b079af0611c87d188ea0587c55281e8": {
+                "input_tokens": 101,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 101,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_04866205e2bf9cb7016b079af0611c87d18c1f8d6af9a61f7e": {
+                "input_tokens": 60,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 60,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_04866205e2bf9cb7016b079afae39c87d18da28478127d6424": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 57,
+                "content": [
+                  {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 57
+                  }
+                ]
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4543,
+          "completion_tokens": 57,
+          "total_tokens": 4600,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 15.785835200000292
+    },
+    {
+      "id": "verify",
+      "kind": "synonym_verify",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "exact",
+        "match"
+      ],
+      "output": {
+        "route": "fallback",
+        "mapping": null,
+        "reason": "no_match"
+      },
+      "call": null,
+      "elapsed_s": 6.7999990278622136e-06
+    },
+    {
+      "id": "generate",
+      "kind": "synonym_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "verify"
+      ],
+      "output": {
+        "sql": "SELECT Airline, Abbreviation\nFROM airlines\nWHERE Country = 'United States';",
+        "route": "fallback",
+        "stored_value": null
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"airlines\" (\"uid\" INTEGER PRIMARY KEY,\"Airline\" TEXT,\"Abbreviation\" TEXT,\"Country\" TEXT)\nCREATE TABLE \"airports\" (\"City\" TEXT,\"AirportCode\" TEXT PRIMARY KEY,\"AirportName\" TEXT,\"Country\" TEXT,\"CountryAbbrev\" TEXT)\nCREATE TABLE \"flights\" (\"Airline\" INTEGER,\"FlightNo\" INTEGER,\"SourceAirport\" TEXT,\"DestAirport\" TEXT,PRIMARY KEY (\"Airline\", \"FlightNo\"),FOREIGN KEY (\"SourceAirport\") REFERENCES \"airports\" (\"AirportCode\"),FOREIGN KEY (\"DestAirport\") REFERENCES \"airports\" (\"AirportCode\"))\nQuestion\nShow the list of the airlines and their abbreviations used in the United States."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0fcbd67312089df6016b079aff3af087d0ba06bb50879127ad",
+          "object": "chat.completion",
+          "created": 1795660544,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT Airline, Abbreviation\nFROM airlines\nWHERE Country = 'United States';"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0fcbd67312089df6016b079aff3b4487d0b1344f816c138900": {
+                  "input_tokens": 153,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 153,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0fcbd67312089df6016b079aff3b4487d0b881bc9ea3af49f2": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0fcbd67312089df6016b079affe2a887d0af8907d6dab16860": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 20,
+                  "content": [
+                    {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 20
+                    }
+                  ]
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4560,
+            "completion_tokens": 20,
+            "total_tokens": 4580,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0fcbd67312089df6016b079aff3b4487d0b1344f816c138900": {
+                "input_tokens": 153,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 153,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0fcbd67312089df6016b079aff3b4487d0b881bc9ea3af49f2": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0fcbd67312089df6016b079affe2a887d0af8907d6dab16860": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 20,
+                "content": [
+                  {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 20
+                  }
+                ]
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4560,
+          "completion_tokens": 20,
+          "total_tokens": 4580,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 2.9480566000002
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT Airline, Abbreviation\nFROM airlines\nWHERE Country = 'United States';",
+        "rows": [],
+        "columns": [
+          "Airline",
+          "Abbreviation"
+        ]
+      },
+      "call": null,
+      "elapsed_s": 0.0008617000003141584
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 12,
+    "prediction_rows": 0
+  },
+  "cost": {
+    "model_calls": 3,
+    "total_tokens": 19943
+  }
+}

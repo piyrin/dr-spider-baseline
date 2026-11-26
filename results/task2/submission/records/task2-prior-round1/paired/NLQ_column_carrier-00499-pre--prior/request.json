@@ -1,0 +1,14 @@
+{
+  "model": "gpt-6-sol",
+  "stream": false,
+  "messages": [
+    {
+      "role": "system",
+      "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+    },
+    {
+      "role": "user",
+      "content": "Schema\nCREATE TABLE \"Friend\" (\"student_id\" int,\"friend_id\" int,primary key (\"student_id\",\"friend_id\"),foreign key (\"student_id\") references \"Highschooler\" (\"ID\"),foreign key (\"friend_id\") references \"Highschooler\" (\"ID\"))\nCREATE TABLE \"Highschooler\" (\"ID\" int primary key,\"name\" text,\"grade\" int)\nCREATE TABLE \"Likes\" (\"student_id\" int,\"liked_id\" int,primary key (\"student_id\", \"liked_id\"),foreign key (\"liked_id\") references \"Highschooler\" (\"ID\"),foreign key (\"student_id\") references \"Highschooler\" (\"ID\"))\nQuestion\nWhat are the names of all high schoolers in grade 10?\n\nVerified knowledge\nHighschooler.name stores the student name requested by the question. Grade is a filter."
+    }
+  ]
+}

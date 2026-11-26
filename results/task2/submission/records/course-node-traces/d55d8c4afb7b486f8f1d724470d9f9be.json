@@ -1,0 +1,346 @@
+{
+  "sample_id": "NLQ_column_carrier-00499-pre",
+  "graph": {
+    "nodes": [
+      {
+        "id": "match",
+        "kind": "projection_match"
+      },
+      {
+        "id": "normalize",
+        "kind": "projection_normalize"
+      },
+      {
+        "id": "recheck",
+        "kind": "projection_recheck"
+      },
+      {
+        "id": "constraint",
+        "kind": "projection_constraint"
+      },
+      {
+        "id": "generate",
+        "kind": "projection_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "match",
+        "target": "normalize"
+      },
+      {
+        "source": "normalize",
+        "target": "recheck"
+      },
+      {
+        "source": "match",
+        "target": "constraint"
+      },
+      {
+        "source": "constraint",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      },
+      {
+        "source": "recheck",
+        "target": "constraint"
+      }
+    ]
+  },
+  "run_id": "d55d8c4afb7b486f8f1d724470d9f9be",
+  "graph_sha256": "0093fefbfe165c0c37a3a3069055c4d7f0207014b73064eec9f0bbb43c6bf224",
+  "steps": [
+    {
+      "id": "match",
+      "kind": "projection_match",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "status": "verified",
+        "field": "Highschooler.name",
+        "reason": "明确请求姓名，并确认库中字段"
+      },
+      "call": null,
+      "elapsed_s": 1.920000067912042e-05
+    },
+    {
+      "id": "normalize",
+      "kind": "projection_normalize",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match"
+      ],
+      "output": {
+        "status": "skipped",
+        "candidate": null,
+        "reason": "直接匹配已核验"
+      },
+      "call": null,
+      "elapsed_s": 5.600006261374801e-06
+    },
+    {
+      "id": "recheck",
+      "kind": "projection_recheck",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "normalize"
+      ],
+      "output": {
+        "status": "skipped",
+        "field": null,
+        "reason": "没有需要确认的唯一姓名列"
+      },
+      "call": null,
+      "elapsed_s": 6.000002031214535e-06
+    },
+    {
+      "id": "constraint",
+      "kind": "projection_constraint",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "match",
+        "recheck"
+      ],
+      "output": {
+        "route": "direct",
+        "field": "Highschooler.name",
+        "hint": "Return only the requested student name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+      },
+      "call": null,
+      "elapsed_s": 1.0399999155197293e-05
+    },
+    {
+      "id": "generate",
+      "kind": "projection_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "constraint"
+      ],
+      "output": {
+        "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Friend\" (\"student_id\" int,\"friend_id\" int,primary key (\"student_id\",\"friend_id\"),foreign key (\"student_id\") references \"Highschooler\" (\"ID\"),foreign key (\"friend_id\") references \"Highschooler\" (\"ID\"))\nCREATE TABLE \"Highschooler\" (\"ID\" int primary key,\"name\" text,\"grade\" int)\nCREATE TABLE \"Likes\" (\"student_id\" int,\"liked_id\" int,primary key (\"student_id\", \"liked_id\"),foreign key (\"liked_id\") references \"Highschooler\" (\"ID\"),foreign key (\"student_id\") references \"Highschooler\" (\"ID\"))\nQuestion\nWhat are the names of all high schoolers in grade 10?\nQuery plan\nReturn only the requested student name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_01b2877f9618c456016b06cf59bd2887d2bd3de2cc2bb9d958",
+          "object": "chat.completion",
+          "created": 1795608417,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT name\nFROM Highschooler\nWHERE grade = 10;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_01b2877f9618c456016b06cf59bd5c87d28814284f66b71578": {
+                  "input_tokens": 190,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 190,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_01b2877f9618c456016b06cf59bd5c87d2a7f411e690c8286c": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_01b2877f9618c456016b06cf6085dc87d28637f170a200f0a4": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 18,
+                  "content": [
+                    {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 18
+                    }
+                  ]
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4597,
+            "completion_tokens": 18,
+            "total_tokens": 4615,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_01b2877f9618c456016b06cf59bd5c87d28814284f66b71578": {
+                "input_tokens": 190,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 190,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_01b2877f9618c456016b06cf59bd5c87d2a7f411e690c8286c": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_01b2877f9618c456016b06cf6085dc87d28637f170a200f0a4": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 18,
+                "content": [
+                  {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 18
+                  }
+                ]
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4597,
+          "completion_tokens": 18,
+          "total_tokens": 4615,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 10.097492900000361
+    },
+    {
+      "id": "execute",
+      "kind": "execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;",
+        "rows": [
+          [
+            "Haley"
+          ],
+          [
+            "Andrew"
+          ],
+          [
+            "Kris"
+          ],
+          [
+            "Brittany"
+          ]
+        ],
+        "columns": [
+          "name"
+        ]
+      },
+      "call": null,
+      "elapsed_s": 0.0013935000024503097
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 4,
+    "prediction_rows": 4
+  },
+  "cost": {
+    "model_calls": 1,
+    "total_tokens": 4615
+  }
+}

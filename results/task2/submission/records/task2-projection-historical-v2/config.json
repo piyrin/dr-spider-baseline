@@ -1,0 +1,115 @@
+{
+  "data_source": {
+    "repository": "https://github.com/awslabs/diagnostic-robustness-text-to-sql",
+    "commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+    "url": "https://media.githubusercontent.com/media/awslabs/diagnostic-robustness-text-to-sql/c64694a4a278ab0faff08ce7a3501d46f458b431/data.tar.gz",
+    "sha256": "d0f47e4d2c9202f4fd2d956a34e9dd1ff8180c1c9e58cf5b530c13fefaaa3ba9",
+    "bytes": 168450638,
+    "retrieved_date": "2026-11-16"
+  },
+  "source_sha256": {
+    ".cache\\evaluator\\exec_eval.py": "29d034db28904490c28037537a14fbb0150b6e86cef0049076c0511d6b6b77f7",
+    "data\\NLQ_column_carrier\\questions_post_perturbation.json": "9cf6c300c736a4b9076b163ea860f916ddf16dde0e4a5df63f40acfec46129b7",
+    "data\\NLQ_column_carrier\\questions_pre_perturbation.json": "3b32f5ad97cc79332e8ac71bdfd6fa7b3bdde18317952c7dc70f6f3ceba4a557",
+    "data\\NLQ_column_synonym\\questions_post_perturbation.json": "f9096e16ec34021b2b7b757b886d9abf353ea1f22e2c7ee49529e5afb820d05c",
+    "data\\NLQ_column_synonym\\questions_pre_perturbation.json": "4b937048e4c1c6c4b537bb7617739442e1e02ba6e5e416439c22cd6884aa6947",
+    "data\\NLQ_keyword_synonym\\questions_post_perturbation.json": "1011466c1e5768efc3885b05d9b0e1813ffe0af7850c1f53e80e97fce86002f4",
+    "data\\NLQ_keyword_synonym\\questions_pre_perturbation.json": "dd49f2a8b30663382b32126b52d17eb3b26d3ddcd871aaf6ea87bbdafe9b387e",
+    "data\\NLQ_multitype\\questions_post_perturbation.json": "b046707305252200bbf0c013a0ae155338f07aee45053a4780918d03c32b9795",
+    "data\\NLQ_multitype\\questions_pre_perturbation.json": "1ae7baa3492031cafa2ee0a2a8a8f765109bbbb45913d460415a5f2f66223ea1",
+    "data\\NLQ_others\\questions_post_perturbation.json": "384e9958fe11ac81918a101e9a31317c79a2a3f11d018004d81f76763224de62",
+    "data\\NLQ_others\\questions_pre_perturbation.json": "5250ee58dac4df47e75f78c7924bfb1221f9af4c9728c8d14055cfa8c45f9dfc",
+    "data\\NLQ_value_synonym\\questions_post_perturbation.json": "e1b52bacab2b0ac3e08947e0e0df5e0e315780eb0c7bd0d117ee652d0ce804dd",
+    "data\\NLQ_value_synonym\\questions_pre_perturbation.json": "1a7bef5d10f096382a5ec43b43443d7db4078ae6beeb3535dfdefba28d7671ac",
+    "manifests\\data_inventory.json": "9bb4be43a16a8a7c8aaefa9054a5f8a2ece659e0013d644768c03ba3a4dcbb59",
+    "scripts\\run_api_sample.py": "34bfc17b2e4fd2d539fd7ecd27c5fc67103187ce79e3abad5551a92982e258e5",
+    "scripts\\run_full_evaluation.py": "058dc374bbd6f4c2742b3d53fd2f2248134eb5b8b5d3d2f1235e096a777baa04",
+    "src\\baseline.py": "a781af0ffc27e86b322e4eadd409b883db6e6487262d3f3917053957b13cd63f"
+  },
+  "database_sha256": {
+    "data\\Spider-dev\\databases\\course_teach\\course_teach.sqlite": "45d28aa55d8ad188d69bfd6f77f4167257e00e2a810775a10b2c01d427e6879e",
+    "data\\Spider-dev\\databases\\cre_Doc_Template_Mgt\\cre_Doc_Template_Mgt.sqlite": "f21211fbe0dc1d492282a513b8c7c6afd83e3d07c41b0924044c2c5a1ec15bf8",
+    "data\\Spider-dev\\databases\\dog_kennels\\dog_kennels.sqlite": "19743427ae7e391f8f848f6e45baeb672eaa6de85ef83c8cefb6149c8175da6d",
+    "data\\Spider-dev\\databases\\employee_hire_evaluation\\employee_hire_evaluation.sqlite": "c326555c322227a8868b53abf800f1a47298895c26346c7c7843aebfe62fa6e8",
+    "data\\Spider-dev\\databases\\network_1\\network_1.sqlite": "262dc8da550346eb2c289ad8d22fd0d3b8b327576963e80deccb5059726c25e0",
+    "data\\Spider-dev\\databases\\pets_1\\pets_1.sqlite": "bcbd47036f7306809ff38b9dd7bf131e6bb3ecfbe8b8dc26e57e5dabb088b485",
+    "data\\Spider-dev\\databases\\poker_player\\poker_player.sqlite": "13821f1591a63397ae836340f6012f46f05102924e1ace984bdd372fc748be96",
+    "data\\Spider-dev\\databases\\singer\\singer.sqlite": "0f5de1a299e6bd6539e68bcfec16180dd33fac94b49f4dc0d8543fd68cbcfd5a",
+    "data\\Spider-dev\\databases\\voter_1\\voter_1.sqlite": "1b377da1df806cf97c76d598a89fa9002f8b947092f3c300702d37ffdce106e5",
+    "data\\Spider-dev\\databases\\world_1\\world_1.sqlite": "f21ac0e799f04194de10460bed3309c123239090b3ab25c39ebb13629d7ace79"
+  },
+  "endpoint": "https://intlapi.thingo.com.cn/v1/chat/completions",
+  "model": "gpt-6-sol",
+  "model_digest": null,
+  "parameters": {
+    "stream": false,
+    "other_generation_parameters": "provider defaults"
+  },
+  "system": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query.",
+  "metric": "single-database EX",
+  "code_commit": "2916e4d560330c9aa467f635f001d896fb1d6f0d",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "python_version": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+  "sqlite_version": "3.50.4",
+  "dependencies": {
+    "sqlparse": "0.6.1",
+    "tqdm": "4.70.1"
+  },
+  "question_sides": 36,
+  "reasoning_effort": "none",
+  "selection_sha256": "dd618fb0b3995fe13a0ef8d1f9bc94187f7c5bd19fcfb8cec4a8708e7c14fd51",
+  "graph": {
+    "nodes": [
+      {
+        "id": "match",
+        "kind": "projection_match_v2"
+      },
+      {
+        "id": "normalize",
+        "kind": "projection_normalize"
+      },
+      {
+        "id": "recheck",
+        "kind": "projection_recheck"
+      },
+      {
+        "id": "constraint",
+        "kind": "projection_constraint"
+      },
+      {
+        "id": "generate",
+        "kind": "projection_generate"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "match",
+        "target": "normalize"
+      },
+      {
+        "source": "normalize",
+        "target": "recheck"
+      },
+      {
+        "source": "match",
+        "target": "constraint"
+      },
+      {
+        "source": "recheck",
+        "target": "constraint"
+      },
+      {
+        "source": "constraint",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  }
+}
