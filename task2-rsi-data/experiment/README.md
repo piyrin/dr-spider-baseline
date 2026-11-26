@@ -19,45 +19,6 @@
 
 ## 课程画布
 
-按[根目录的环境与复现](../../README.md#环境与复现)准备 Dr.Spider 数据和评测器，按[课程工程说明](../README.md#课程-spring-boot)准备课程源码、Maven 设置、Java 及 H2。先使用课程构建脚本初始化本地后端源码副本。前端的课程源码和依赖按[平台演示页说明](../README.md#平台演示页)准备。
+课程 Visual 提交节点、连线和样本 ID。Spring Boot 使用 `rsi-flow` 调度 Python 节点，查询结果由同侧 SQLite 返回。评测的参考 SQL 与模型输入分别保存在证据中。
 
-在仓库根目录安装画布路由并构建课程节点。其后分别启动 Python worker、课程后端与 Next.js。
-
-```powershell
-& .\task2-rsi-data\experiment\build-course.ps1
-& .\task2-rsi-data\experiment\install-preview.ps1
-```
-
-```powershell
-.\.venv\Scripts\python.exe -B -X utf8 .\task2-rsi-data\experiment\serve_canvas.py
-```
-
-```powershell
-& .\task2-rsi-data\spring-boot\start-course.ps1
-```
-
-```powershell
-Set-Location .local/platform-preview/rsi-data-platform
-npm.cmd run dev -- --hostname 127.0.0.1 --port 3210
-```
-
-打开 `http://127.0.0.1:3210/task2-experiment`，选择画布及题面，点击运行。Visual 将图和样本 ID 送到 Spring Boot，由 `rsi-flow` 依序调度 Python 节点。浏览器可以看到执行结果和节点状态。这个版本将新生成的本地追踪写到 `task2-rsi-data/experiment/runs/canvas/`。
-
-## 本地核对与模型实验
-
-从仓库根目录验证节点分支与 SQLite 核对。
-
-```powershell
-.\.venv\Scripts\python.exe -B -X utf8 -m unittest discover -s task2-rsi-data/experiment -p 'test_*.py' -v
-```
-
-历史运行可直接检查[证据目录](../../results/task2/submission/README.md)。重跑先验批测时，使用当前环境配置的 Thingo 账号，在独立工作副本中按下列顺序验证题单和运行两批模型对照。重跑脚本将响应写入 `runs/task2-prior-round1/`，并把结果追加到该副本中的报告。
-
-```powershell
-$py = '.\.venv\Scripts\python.exe'
-& $py -B -X utf8 .\task2-rsi-data\experiment\prior_round1.py prepare
-& $py -B -X utf8 .\task2-rsi-data\experiment\prior_round1.py post
-& $py -B -X utf8 .\task2-rsi-data\experiment\prior_round1.py paired
-```
-
-两档 Thinking 以请求的 `reasoning_effort=none/high` 表示。报告各节记载了题单、响应复用和接口异常。部分历史统计入口引用当时本地的证据路径，查看这些结果可使用提交目录里的原始评分和汇总。
+各题的画布图、结构、浏览器响应、课程流程 ID、逐节点调用及执行评分见[验收证据目录](../../results/task2/submission/README.md)。Thinking 以请求中的 `reasoning_effort=none/high` 表示，各批结果以其冻结题单和原始运行配置为准。

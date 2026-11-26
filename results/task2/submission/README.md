@@ -1,6 +1,6 @@
 # 任务 2 首次提交证据
 
-[实验报告](../../../reports/任务2先验知识与人工编排实验.md) · [编排源码与复现](../../../task2-rsi-data/experiment/README.md)
+[实验报告](../../../reports/任务2先验知识与人工编排实验.md) · [编排源码](../../../task2-rsi-data/experiment/README.md)
 
 直接打开[十题原题验收索引](十题原题验收索引.json)可看到原题编号、同一 post 输入的历史基线 SQL、参考 SQL、课程 Visual 实际 SQL、评分、运行 ID 和 token。历史基线十题均未通过。各题最近的 Visual post 通过 9/10，第 3 题默认档仍失败，同源 high 档批测通过。第 9 题画布记录另有 pre 回退。
 

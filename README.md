@@ -1,12 +1,12 @@
-# 数据自进化课程汇报 · Dr.Spider 与 RSI Data
+# Dr.Spider 与 RSI Data
 
-老师好，我将本阶段完成的 Dr.Spider 基线、134 对问题人工复核，以及 RSI Data 先验与人工编排实验整理如下。各项结果对应的报告、工作簿和执行记录均附在下表及正文中。
+老师好。本阶段我在 Dr.Spider 上完成了 SQL 生成基线，逐对复核了 134 对扰动前通过、扰动后失败的样本。我从中选择 10 个问题，先比较加入先验知识前后的结果，再在 RSI Data 课程 Visual 中测试人工编排。
 
 | 任务 | 提交内容 | 验收入口 |
 | --- | --- | --- |
-| 1 · Dr.Spider 基线 | 使用 `gpt-6-sol` 完成 **850 对、1,700 条预测**。EX 从 **78.24%（665/850）降至 64.00%（544/850）**。重点复核 **134 对前对后错**，按解决思路归为 12 类。 | [实验报告与分类统计](reports/任务1实验报告.md) · [数据与复现](results/drspider-17x50/README.md) |
-| 1 · 扩样与辅助对照 | 独立留出与定向补测累计扩样 344 对，最近两轮优先补第 3–10 类。另有三行样例对照和表数分层。 | [扩样结果](results/drspider-17x50/expansion/README.md) · [三行样例对照](results/drspider-17x50/select3/README.md) · [表数分层](results/drspider-17x50/diagnostics/table-count-summary.json) |
-| 2 · Dr.Spider 人工编排 | 完成十题的先验对照和课程 Visual 编排。按最近的画布原题 post 记录，9/10 通过。第 3 题默认画布未通过，同源 high 档批测通过。 | [首次提交报告](reports/任务2先验知识与人工编排实验.md) · [画布和证据](results/task2/submission/README.md) · [代码与复现](task2-rsi-data/experiment/README.md) |
+| 1 · Dr.Spider 基线 | 使用 `gpt-6-sol` 完成 **850 对、1,700 条预测**。执行准确率从 **78.24%（665/850）降至 64.00%（544/850）**。 | [基线实验报告](reports/任务1实验报告.md) · [134 对人工复核 Excel](results/drspider-17x50/Dr.Spider-850对基线与鲁棒性问题复核（汇报版）.xlsx) |
+| 1 · 扩样与辅助对照 | 扩样和定向补测共 **344 对**。另完成三行样例对照与表数分层分析。 | [扩样结果](results/drspider-17x50/expansion/README.md) · [三行样例对照](results/drspider-17x50/select3/README.md) · [表数分层](results/drspider-17x50/diagnostics/table-count-summary.json) |
+| 2 · Dr.Spider 人工编排 | 十题均有先验对照和课程画布记录。按各题最近的画布运行，扰动后原题通过 **9/10**。 | [人工编排报告](reports/任务2先验知识与人工编排实验.md) · [画布与验收证据](results/task2/submission/README.md) · [编排源码](task2-rsi-data/experiment/README.md) |
 | 2 · RSI Data 启动验收 | 课程 Spring Boot 经流程引擎运行单表 Agent 和多 Agent 协作，在 Dr.Spider SQLite 上核对结果。 | [课程执行验收记录](results/task2/course-acceptance-20261120.json) |
 
 ## 目录与产物
@@ -54,3 +54,9 @@
 - 主批中，问题列名同义表达的 EX 下降幅度最大，由 6/10 降至 3/10。首批和主批的排序类变化方向不同。
 - 主批 31 条执行结果不一致，以关联或候选集合差异最多（11/31）。七条代表预测经 SQL 单点修改后，结果均与标准一致。[SQL 复核](results/diagnostics/sql-diagnostics.json)
 - JetBlue 对照保持模型、表结构和参数一致。原问句复测得到 0，把问句中的航司名改为库内大小写后得到 100，与标准结果一致。每种条件新增一次请求。[模型对照](results/diagnostics/jetblue-model-control.json)
+
+## RSI Data 先验知识与人工编排
+
+我先比较同一题面和模型在有无人工先验时的结果。配对复测中，扰动后通过从 **1/10 提升到 10/10**，扰动前有 1 题回退，双侧同时通过从 **1/10 提升到 9/10**。
+
+随后我在课程 Visual 按问题类型设计节点和分支。验收材料记录每题的画布、节点输入输出、SQL 执行结果、回退原因和 token。第 3 题默认画布的扰动后输入仍未通过，同源 high 档批测通过。第 9 题的画布修复了扰动后输入，扰动前仍有回退。同类与混合题单的结果用于开发回归，独立泛化仍待验证。[逐题报告](reports/任务2先验知识与人工编排实验.md) · [十题原题验收索引](results/task2/submission/十题原题验收索引.json)
