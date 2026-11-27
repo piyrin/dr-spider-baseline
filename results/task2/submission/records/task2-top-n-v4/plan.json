@@ -1,0 +1,117 @@
+{
+  "base_plan_sha256": "2f68af3397c9896e3cec15d19585004b1a7bed19275ce5c903a0d3927d6fc54c",
+  "groups": {
+    "anchor": [
+      "SQL_NonDB_number-00054-pre",
+      "SQL_NonDB_number-00054-post"
+    ],
+    "related": [
+      "SQL_NonDB_number-00061-pre",
+      "SQL_NonDB_number-00061-post"
+    ],
+    "explicit_tuple": [
+      "top-n-pair-pre",
+      "top-n-pair-post"
+    ],
+    "explicit_person": [
+      "top-n-person-pre",
+      "top-n-person-post"
+    ],
+    "mixed": [
+      "DB_schema_synonym-01629-pre",
+      "DB_schema_synonym-01629-post",
+      "DB_schema_abbreviation-02106-pre",
+      "DB_schema_abbreviation-02106-post",
+      "NLQ_column_carrier-00210-pre",
+      "NLQ_column_carrier-00210-post",
+      "NLQ_column_synonym-00083-pre",
+      "NLQ_column_synonym-00083-post",
+      "SQL_sort_order-00123-pre",
+      "SQL_sort_order-00123-post",
+      "SQL_NonDB_number-00069-pre",
+      "SQL_NonDB_number-00069-post",
+      "NLQ_column_attribute-00104-pre",
+      "NLQ_column_attribute-00104-post",
+      "SQL_comparison-00134-pre",
+      "SQL_comparison-00134-post"
+    ],
+    "lap-entity": [
+      "lap-entity-pre",
+      "lap-entity-post"
+    ],
+    "lap-tuple": [
+      "lap-tuple-pre",
+      "lap-tuple-post"
+    ],
+    "lap-rows": [
+      "lap-rows-pre",
+      "lap-rows-post"
+    ],
+    "sale-entity": [
+      "sale-entity-pre",
+      "sale-entity-post"
+    ],
+    "sale-tuple": [
+      "sale-tuple-pre",
+      "sale-tuple-post"
+    ],
+    "lap-ambiguity": [
+      "lap-ambiguity-pre",
+      "lap-ambiguity-post"
+    ]
+  },
+  "efforts": [
+    "none",
+    "high"
+  ],
+  "structure": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v4"
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v4"
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v4"
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v4"
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v4"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "inspect"
+      },
+      {
+        "source": "inspect",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "source_sha256": {
+    "task2-rsi-data\\experiment\\top_n_v4_compare.py": "776ec531c77855e8c45b9b1bb759a2afd45de4ede780cf9099e15ab16ef78a61",
+    "task2-rsi-data\\experiment\\top_n_v4.py": "b04c70c296c7029d305b2c831717e63b3923a81e8e6630c518f6d037e8685be0",
+    "task2-rsi-data\\experiment\\top_n_v3.py": "186c6e6681b6470218933ad39399cff4263dc12bea23593be5aa69636a64e391",
+    "task2-rsi-data\\experiment\\top_n_v3_cases.py": "796cb42b736f2a324cc0cc524a1d9ba460e1adc95a7759432c58fde545d42c78",
+    "task2-rsi-data\\experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    "task2-rsi-data\\experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  }
+}

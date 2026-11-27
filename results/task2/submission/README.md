@@ -2,7 +2,7 @@
 
 [实验报告](../../../reports/任务2先验知识与人工编排实验.md) · [编排源码](../../../task2-rsi-data/experiment/README.md)
 
-十题原题验收索引列出同一 post 输入的历史基线 SQL、参考 SQL、验收预设的 Visual 实际 SQL、评分、运行 ID 和 token。历史基线十题均未通过，验收预设通过 9/10。第 3 题默认画布未通过，同源 high 档批测通过。第 7 题保留 v2 原题预设，通用 v3 原题 post 仍未通过。第 9 题 v2 的新画布记录显示 pre 初稿和最终 SQL 均未通过。[十题原题验收索引](十题原题验收索引.json)
+十题原题验收索引保留第一次验收使用的预设，列出同一 post 输入的历史基线 SQL、参考 SQL、Visual 实际 SQL、评分、运行 ID 和 token，其中第 7 题使用 v2。最新汇总采用第 7 题通用 v4，页面实测的原题 post 通过 9/10，双侧通过 8/10。[首次验收索引](十题原题验收索引.json) · [最新结果](../../../reports/任务2先验知识与人工编排实验.md#十题最新编排结果)
 
 | 内容 | 阅读入口 |
 |---|---|
@@ -12,8 +12,10 @@
 | 第 5 题 v2/v3 同题单回放与画布实测 | [版本对照](records/task2-count-scope-revisions/comparison.json) |
 | 第 6 题 v3 审查与修订 | [复测记录](records/task2-split-output-v3/) |
 | 第 7 题通用 v3 | [批测和画布记录](records/task2-top-n-v3/) |
+| 第 7 题通用 v4 | [页面记录](records/task2-top-n-v4/browser-results.json) · [两档批测汇总](records/task2-top-n-v4/summary.json) · [逐题证据包](records/task2-top-n-v4/records.zip) |
 | 第 8 题 v3 排序方向 | [复测记录](records/task2-sort-direction-v3/) |
 | 第 9 题 v2 局部修订 | [同初稿回放和画布记录](records/task2-filter-column-v2/) |
+| 第 1 题 v2、第 7 题 v3 页面记录 | [两条 `pre` 运行证据](records/task2-visual-pre-supplement/browser-results.json) |
 
 报告中的压缩包链接标出了包内原始相对路径。解压后可按 `runs/<运行名>/` 核查冻结题单、SQL 和评分。部分浏览器记录的完整请求按课程运行 ID 位于 [course-node-traces/](records/course-node-traces/)。读取这些记录无需连接模型服务。
 

@@ -1,0 +1,850 @@
+{
+  "code_commit": "9082fdab8b2223c3fe5959a140d9c38069effe85",
+  "source_file_sha256": {
+    "task2-rsi-data/experiment/serve_canvas.py": "7c0a85a64bc1b5b4d98192f0b818edd76bd91b2ee73d0e2aa0d0637efa2df548",
+    "task2-rsi-data/experiment/experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    "task2-rsi-data/experiment/projection_generalization.py": "b040b817640f38777cd205cf7b8a87ce157823cea1190f1d09d336ca371c5848",
+    "task2-rsi-data/experiment/top_n_v3.py": "186c6e6681b6470218933ad39399cff4263dc12bea23593be5aa69636a64e391",
+    "task2-rsi-data/experiment/web/page.tsx": "244ff155dca7df0bdf8f6489b2fbb733f0c8ba3ea7599724045f65c1c96e599c"
+  },
+  "dataset_commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "sqlite_version": "3.50.4",
+  "metric": "single-database EX, evaluated without a clarification reply",
+  "entry_point": "RSI Data Visual browser page, then Spring Boot rsi-flow and Python canvas worker",
+  "generation_parameters": {
+    "stream": false,
+    "reasoning_effort": "provider default, omitted from the requests"
+  },
+  "entries": [
+    {
+      "preset": "projection_v2",
+      "started_at": "2026-11-27T08:39:18.460Z",
+      "completed_at": "2026-11-27T08:39:23.144Z",
+      "request": {
+        "sample_id": "NLQ_column_carrier-00499-pre",
+        "graph": {
+          "nodes": [
+            {
+              "id": "match",
+              "kind": "projection_match_v2"
+            },
+            {
+              "id": "normalize",
+              "kind": "projection_normalize"
+            },
+            {
+              "id": "recheck",
+              "kind": "projection_recheck"
+            },
+            {
+              "id": "constraint",
+              "kind": "projection_constraint"
+            },
+            {
+              "id": "generate",
+              "kind": "projection_generate"
+            },
+            {
+              "id": "execute",
+              "kind": "execute"
+            }
+          ],
+          "links": [
+            {
+              "source": "match",
+              "target": "normalize"
+            },
+            {
+              "source": "normalize",
+              "target": "recheck"
+            },
+            {
+              "source": "match",
+              "target": "constraint"
+            },
+            {
+              "source": "recheck",
+              "target": "constraint"
+            },
+            {
+              "source": "constraint",
+              "target": "generate"
+            },
+            {
+              "source": "generate",
+              "target": "execute"
+            }
+          ]
+        }
+      },
+      "sample_id": "NLQ_column_carrier-00499-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "match",
+            "kind": "projection_match_v2"
+          },
+          {
+            "id": "normalize",
+            "kind": "projection_normalize"
+          },
+          {
+            "id": "recheck",
+            "kind": "projection_recheck"
+          },
+          {
+            "id": "constraint",
+            "kind": "projection_constraint"
+          },
+          {
+            "id": "generate",
+            "kind": "projection_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "match",
+            "target": "normalize"
+          },
+          {
+            "source": "normalize",
+            "target": "recheck"
+          },
+          {
+            "source": "match",
+            "target": "constraint"
+          },
+          {
+            "source": "recheck",
+            "target": "constraint"
+          },
+          {
+            "source": "constraint",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      },
+      "run_id": "deffca647dd443078796b5ca771b55b0",
+      "graph_sha256": "3d1ac1b1a878edfa619c51feeed7829bfe64a347d190c6e898221eb028814567",
+      "steps": [
+        {
+          "id": "match",
+          "kind": "projection_match_v2",
+          "hint": "",
+          "probe": false,
+          "from": [],
+          "output": {
+            "status": "verified",
+            "field": "Highschooler.name",
+            "entity": "high schoolers"
+          },
+          "elapsed_s": 0.006958099998882972
+        },
+        {
+          "id": "normalize",
+          "kind": "projection_normalize",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "match"
+          ],
+          "output": {
+            "status": "skipped",
+            "candidate": null
+          },
+          "elapsed_s": 7.599999662488699e-06
+        },
+        {
+          "id": "recheck",
+          "kind": "projection_recheck",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "normalize"
+          ],
+          "output": {
+            "status": "skipped",
+            "field": null,
+            "entity": null
+          },
+          "elapsed_s": 6.70000008540228e-06
+        },
+        {
+          "id": "constraint",
+          "kind": "projection_constraint",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "match",
+            "recheck"
+          ],
+          "output": {
+            "route": "direct",
+            "field": "Highschooler.name",
+            "hint": "Return only the requested entity name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+          },
+          "elapsed_s": 1.0799994925037026e-05
+        },
+        {
+          "id": "generate",
+          "kind": "projection_generate",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "constraint"
+          ],
+          "output": {
+            "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;"
+          },
+          "elapsed_s": 4.236236999997345
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "generate"
+          ],
+          "output": {
+            "status": "executed",
+            "sql": "SELECT name\nFROM Highschooler\nWHERE grade = 10;",
+            "rows": [
+              [
+                "Haley"
+              ],
+              [
+                "Andrew"
+              ],
+              [
+                "Kris"
+              ],
+              [
+                "Brittany"
+              ]
+            ],
+            "columns": [
+              "name"
+            ],
+            "row_count": 4
+          },
+          "elapsed_s": 0.0010270999991917051
+        }
+      ],
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 4,
+        "prediction_rows": 4
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 5999
+      },
+      "course_flow_id": "TASK2_CANVAS_3d1ac1b1a878edfa619c51feeed7829bfe64a347d190c6e898221eb028814567",
+      "course_flow": {
+        "id": "TASK2_CANVAS_3d1ac1b1a878edfa619c51feeed7829bfe64a347d190c6e898221eb028814567",
+        "type": "flow",
+        "name": "Task 2 canvas experiment",
+        "params": [
+          {
+            "name": "canvasRunId",
+            "type": "String",
+            "scope": "defaultScope"
+          }
+        ],
+        "results": [],
+        "nodes": [
+          {
+            "id": "canvas_match",
+            "type": "event",
+            "title": "match",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_normalize",
+            "type": "event",
+            "title": "normalize",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_recheck",
+            "type": "event",
+            "title": "recheck",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_constraint",
+            "type": "event",
+            "title": "constraint",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_generate",
+            "type": "event",
+            "title": "generate",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_execute",
+            "type": "event",
+            "title": "execute",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          }
+        ],
+        "routes": [
+          {
+            "source": "start",
+            "target": "canvas_match"
+          },
+          {
+            "source": "canvas_match",
+            "target": "canvas_normalize"
+          },
+          {
+            "source": "canvas_normalize",
+            "target": "canvas_recheck"
+          },
+          {
+            "source": "canvas_recheck",
+            "target": "canvas_constraint"
+          },
+          {
+            "source": "canvas_constraint",
+            "target": "canvas_generate"
+          },
+          {
+            "source": "canvas_generate",
+            "target": "canvas_execute"
+          },
+          {
+            "source": "canvas_execute",
+            "target": "end"
+          }
+        ]
+      },
+      "node_trace": "../course-node-traces/deffca647dd443078796b5ca771b55b0.json",
+      "screenshot": "NLQ_column_carrier-00499-pre.png",
+      "question": "What are the names of all high schoolers in grade 10?",
+      "database": "data/Spider-dev/databases/network_1/network_1.sqlite",
+      "database_sha256": "262dc8da550346eb2c289ad8d22fd0d3b8b327576963e80deccb5059726c25e0",
+      "reference_sql": "SELECT name FROM Highschooler WHERE grade = 10",
+      "reference_rows": [
+        [
+          "Haley"
+        ],
+        [
+          "Andrew"
+        ],
+        [
+          "Kris"
+        ],
+        [
+          "Brittany"
+        ]
+      ],
+      "model_calls": [
+        {
+          "model": "gpt-6-sol",
+          "fingerprint": null,
+          "usage": {
+            "prompt_tokens": 5976,
+            "completion_tokens": 23,
+            "total_tokens": 5999,
+            "prompt_tokens_details": {
+              "cached_tokens": 3968
+            }
+          }
+        }
+      ]
+    },
+    {
+      "preset": "top_n_v3_interactive",
+      "started_at": "2026-11-27T08:39:18.463Z",
+      "completed_at": "2026-11-27T08:40:41.797Z",
+      "request": {
+        "sample_id": "SQL_NonDB_number-00054-pre",
+        "graph": {
+          "nodes": [
+            {
+              "id": "intent",
+              "kind": "top_n_intent_v3"
+            },
+            {
+              "id": "inspect",
+              "kind": "top_n_inspect_v3"
+            },
+            {
+              "id": "policy",
+              "kind": "top_n_policy_v3",
+              "hint": "interactive"
+            },
+            {
+              "id": "generate",
+              "kind": "top_n_generate_v3"
+            },
+            {
+              "id": "execute",
+              "kind": "top_n_execute_v3"
+            }
+          ],
+          "links": [
+            {
+              "source": "intent",
+              "target": "inspect"
+            },
+            {
+              "source": "inspect",
+              "target": "policy"
+            },
+            {
+              "source": "policy",
+              "target": "generate"
+            },
+            {
+              "source": "generate",
+              "target": "execute"
+            }
+          ]
+        }
+      },
+      "sample_id": "SQL_NonDB_number-00054-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v3"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v3"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v3",
+            "hint": "interactive"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v3"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v3"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      },
+      "run_id": "5a6e7761a19c46bea26a05dea4a2bbc1",
+      "graph_sha256": "9ec74a755768523980c3d372ff9493fea198d705bb015002efe9824634369f05",
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v3",
+          "hint": "",
+          "probe": false,
+          "from": [],
+          "output": {
+            "output": [
+              {
+                "term": "name",
+                "column": "winner_name",
+                "alternatives": []
+              },
+              {
+                "term": "rank",
+                "column": "winner_rank",
+                "alternatives": [
+                  "rankings.ranking"
+                ]
+              }
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "scope": "all_rows",
+                "unit": "ambiguous",
+                "table": "matches",
+                "display": [
+                  "winner_name",
+                  "winner_rank"
+                ],
+                "key": [
+                  "winner_id"
+                ],
+                "order": "winner_age",
+                "direction": "ASC",
+                "n": 3,
+                "grain_evidence": "3 youngest winners",
+                "projection_evidence": "name and rank",
+                "ties": []
+              }
+            ]
+          },
+          "elapsed_s": 82.91702149999765
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v3",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "intent"
+          ],
+          "output": {
+            "route": "ambiguity",
+            "reason": "ambiguous_unit",
+            "cue": "3 youngest winners"
+          },
+          "elapsed_s": 2.59000007645227e-05
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v3",
+          "hint": "interactive",
+          "probe": false,
+          "from": [
+            "inspect"
+          ],
+          "output": {
+            "route": "clarification",
+            "reason": "ambiguous_unit",
+            "cue": "3 youngest winners",
+            "question": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？"
+          },
+          "elapsed_s": 6.000002031214535e-06
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v3",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "policy"
+          ],
+          "output": {
+            "route": "clarification",
+            "reason": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？",
+            "cue": "3 youngest winners",
+            "question": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？",
+            "status": "clarification"
+          },
+          "elapsed_s": 1.7800004570744932e-05
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v3",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "generate"
+          ],
+          "output": {
+            "status": "clarification",
+            "reason": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？",
+            "route": "clarification",
+            "decision_reason": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？"
+          },
+          "elapsed_s": 2.0699997548945248e-05
+        }
+      ],
+      "score": {
+        "correct": false,
+        "status": "clarification",
+        "reference_rows": 3,
+        "prediction_rows": null
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 5692
+      },
+      "course_flow_id": "TASK2_CANVAS_9ec74a755768523980c3d372ff9493fea198d705bb015002efe9824634369f05",
+      "course_flow": {
+        "id": "TASK2_CANVAS_9ec74a755768523980c3d372ff9493fea198d705bb015002efe9824634369f05",
+        "type": "flow",
+        "name": "Task 2 canvas experiment",
+        "params": [
+          {
+            "name": "canvasRunId",
+            "type": "String",
+            "scope": "defaultScope"
+          }
+        ],
+        "results": [],
+        "nodes": [
+          {
+            "id": "canvas_intent",
+            "type": "event",
+            "title": "intent",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_inspect",
+            "type": "event",
+            "title": "inspect",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_policy",
+            "type": "event",
+            "title": "policy",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_generate",
+            "type": "event",
+            "title": "generate",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_execute",
+            "type": "event",
+            "title": "execute",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          }
+        ],
+        "routes": [
+          {
+            "source": "start",
+            "target": "canvas_intent"
+          },
+          {
+            "source": "canvas_intent",
+            "target": "canvas_inspect"
+          },
+          {
+            "source": "canvas_inspect",
+            "target": "canvas_policy"
+          },
+          {
+            "source": "canvas_policy",
+            "target": "canvas_generate"
+          },
+          {
+            "source": "canvas_generate",
+            "target": "canvas_execute"
+          },
+          {
+            "source": "canvas_execute",
+            "target": "end"
+          }
+        ]
+      },
+      "node_trace": "../course-node-traces/5a6e7761a19c46bea26a05dea4a2bbc1.json",
+      "screenshot": "SQL_NonDB_number-00054-pre.png",
+      "question": "Find the name and rank of the 3 youngest winners across all matches.",
+      "database": "data/Spider-dev/databases/wta_1/wta_1.sqlite",
+      "database_sha256": "c29b1026c9be63fddbb4754f78e584f0d36779fa71d7e8dafc301772ab0cf4a4",
+      "reference_sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 3",
+      "reference_rows": [
+        [
+          "Madison Keys",
+          17
+        ],
+        [
+          "Madison Keys",
+          24
+        ],
+        [
+          "Madison Keys",
+          16
+        ]
+      ],
+      "model_calls": [
+        {
+          "model": "gpt-6-sol",
+          "fingerprint": null,
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_068e3a2320fbdcfa016b0941eb43cc87d2a928538d8bd05e7a": {
+                  "input_tokens": 316,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 316,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_068e3a2320fbdcfa016b0941eb43cc87d2b67dafea1d7e1d85": {
+                  "input_tokens": 368,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 368,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_068e3a2320fbdcfa016b094216864087d2ba2a9136a72f87d4": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 110,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 110
+                    }
+                  ]
+                },
+                "rs_068e3a2320fbdcfa016b094216599487d2a9d72b645c055dcd": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 516
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5066,
+            "completion_tokens": 626,
+            "total_tokens": 5692,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 516
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

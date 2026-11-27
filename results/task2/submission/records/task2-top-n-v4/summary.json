@@ -1,0 +1,1308 @@
+{
+  "metrics": {
+    "原题": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4784.5,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 10015,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "v4": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 8187.5,
+          "tokens_n": 2,
+          "rules": {
+            "event_tuple": 2
+          },
+          "actual_routes": {
+            "tuple": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 1,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 1,
+          "post_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4880.5,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 10529,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "v4": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1.5,
+          "tokens": 10915.5,
+          "tokens_n": 2,
+          "rules": {
+            "event_tuple": 2
+          },
+          "actual_routes": {
+            "fallback": 1,
+            "tuple": 1
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 1,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 1,
+          "post_harm": 0
+        }
+      }
+    },
+    "历史同类": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4801,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 9937,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "v4": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1.5,
+          "tokens": 11991.5,
+          "tokens_n": 2,
+          "rules": {
+            "event_tuple": 2
+          },
+          "actual_routes": {
+            "tuple": 1,
+            "fallback": 1
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4842.5,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 10089.5,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "v4": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 6858.5,
+          "tokens_n": 2,
+          "rules": {
+            "event_tuple": 2
+          },
+          "actual_routes": {
+            "tuple": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 1,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 1,
+          "post_harm": 0
+        }
+      }
+    },
+    "历史明确组合": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 4831,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 8199,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "tuple": 2
+          }
+        },
+        "v4": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 5456,
+          "tokens_n": 2,
+          "rules": {
+            "tuple": 2
+          },
+          "actual_routes": {
+            "tuple": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 4873,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 9025,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "tuple": 2
+          }
+        },
+        "v4": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 5842,
+          "tokens_n": 2,
+          "rules": {
+            "tuple": 2
+          },
+          "actual_routes": {
+            "tuple": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      }
+    },
+    "历史明确选手": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4895.5,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1.5,
+          "tokens": 7675,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "entity": 1,
+            "fallback": 1
+          }
+        },
+        "v4": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 10159.5,
+          "tokens_n": 2,
+          "rules": {
+            "entity": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 1,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 6057,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 5422.5,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "entity": 2
+          }
+        },
+        "v4": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1.5,
+          "tokens": 12187,
+          "tokens_n": 2,
+          "rules": {
+            "": 1,
+            "entity": 1
+          },
+          "actual_routes": {
+            "fallback": 1,
+            "entity": 1
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 1,
+          "post_repair": 0,
+          "post_harm": 1
+        }
+      }
+    },
+    "历史混合": {
+      "none": {
+        "pairs": 8,
+        "baseline": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1,
+          "tokens": 5851.9,
+          "tokens_n": 16,
+          "rules": {
+            "": 16
+          },
+          "actual_routes": {
+            "baseline": 16
+          }
+        },
+        "v3": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1.1875,
+          "tokens": 6830.1,
+          "tokens_n": 16,
+          "rules": {
+            "": 16
+          },
+          "actual_routes": {
+            "fallback": 16
+          }
+        },
+        "v4": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1.1875,
+          "tokens": 7648.3,
+          "tokens_n": 16,
+          "rules": {
+            "": 13,
+            "rows": 2,
+            "unknown": 1
+          },
+          "actual_routes": {
+            "fallback": 16
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 8,
+        "baseline": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1,
+          "tokens": 6263.1,
+          "tokens_n": 16,
+          "rules": {
+            "": 16
+          },
+          "actual_routes": {
+            "baseline": 16
+          }
+        },
+        "v3": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1.1875,
+          "tokens": 7282.1,
+          "tokens_n": 16,
+          "rules": {
+            "": 16
+          },
+          "actual_routes": {
+            "fallback": 16
+          }
+        },
+        "v4": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1.1875,
+          "tokens": 8560,
+          "tokens_n": 16,
+          "rules": {
+            "": 14,
+            "entity": 1,
+            "rows": 1
+          },
+          "actual_routes": {
+            "fallback": 16
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      }
+    },
+    "历史全体": {
+      "none": {
+        "pairs": 12,
+        "baseline": {
+          "pre": 9,
+          "post": 7,
+          "both": 7,
+          "calls": 1,
+          "tokens": 5510.6,
+          "tokens_n": 24,
+          "rules": {
+            "": 24
+          },
+          "actual_routes": {
+            "baseline": 24
+          }
+        },
+        "v3": {
+          "pre": 10,
+          "post": 7,
+          "both": 7,
+          "calls": 1.3333333333333333,
+          "tokens": 7538.9,
+          "tokens_n": 24,
+          "rules": {
+            "": 24
+          },
+          "actual_routes": {
+            "fallback": 21,
+            "tuple": 2,
+            "entity": 1
+          }
+        },
+        "v4": {
+          "pre": 9,
+          "post": 8,
+          "both": 8,
+          "calls": 1.25,
+          "tokens": 8081.8,
+          "tokens_n": 24,
+          "rules": {
+            "event_tuple": 4,
+            "tuple": 2,
+            "entity": 2,
+            "": 13,
+            "rows": 2,
+            "unknown": 1
+          },
+          "actual_routes": {
+            "tuple": 5,
+            "fallback": 19
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 1,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 1,
+          "post_repair": 1,
+          "post_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 12,
+        "baseline": {
+          "pre": 9,
+          "post": 7,
+          "both": 7,
+          "calls": 1,
+          "tokens": 5896.5,
+          "tokens_n": 24,
+          "rules": {
+            "": 24
+          },
+          "actual_routes": {
+            "baseline": 24
+          }
+        },
+        "v3": {
+          "pre": 10,
+          "post": 8,
+          "both": 8,
+          "calls": 1.2916666666666667,
+          "tokens": 7776.9,
+          "tokens_n": 24,
+          "rules": {
+            "": 24
+          },
+          "actual_routes": {
+            "fallback": 20,
+            "tuple": 2,
+            "entity": 2
+          }
+        },
+        "v4": {
+          "pre": 9,
+          "post": 9,
+          "both": 9,
+          "calls": 1.2083333333333333,
+          "tokens": 8690.2,
+          "tokens_n": 24,
+          "rules": {
+            "event_tuple": 4,
+            "tuple": 2,
+            "": 15,
+            "entity": 2,
+            "rows": 1
+          },
+          "actual_routes": {
+            "fallback": 18,
+            "tuple": 5,
+            "entity": 1
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 2,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 1,
+          "post_repair": 2,
+          "post_harm": 1
+        }
+      }
+    },
+    "合成明确口径": {
+      "none": {
+        "pairs": 5,
+        "baseline": {
+          "pre": 2,
+          "post": 3,
+          "both": 2,
+          "calls": 1,
+          "tokens": 5669.8,
+          "tokens_n": 10,
+          "rules": {
+            "": 10
+          },
+          "actual_routes": {
+            "baseline": 10
+          }
+        },
+        "v3": {
+          "pre": 5,
+          "post": 5,
+          "both": 5,
+          "calls": 1.4,
+          "tokens": 8209,
+          "tokens_n": 10,
+          "rules": {
+            "": 10
+          },
+          "actual_routes": {
+            "entity": 2,
+            "tuple": 2,
+            "rows": 2,
+            "fallback": 4
+          }
+        },
+        "v4": {
+          "pre": 5,
+          "post": 4,
+          "both": 4,
+          "calls": 1.3,
+          "tokens": 8283,
+          "tokens_n": 10,
+          "rules": {
+            "entity": 4,
+            "tuple": 3,
+            "rows": 2,
+            "unknown": 1
+          },
+          "actual_routes": {
+            "entity": 3,
+            "tuple": 2,
+            "fallback": 3,
+            "rows": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 3,
+          "pre_harm": 0,
+          "post_repair": 1,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 1
+        }
+      },
+      "high": {
+        "pairs": 5,
+        "baseline": {
+          "pre": 2,
+          "post": 3,
+          "both": 2,
+          "calls": 1,
+          "tokens": 5171.9,
+          "tokens_n": 10,
+          "rules": {
+            "": 10
+          },
+          "actual_routes": {
+            "baseline": 10
+          }
+        },
+        "v3": {
+          "pre": 5,
+          "post": 5,
+          "both": 5,
+          "calls": 1.2,
+          "tokens": 7179.1,
+          "tokens_n": 10,
+          "rules": {
+            "": 10
+          },
+          "actual_routes": {
+            "entity": 3,
+            "tuple": 3,
+            "rows": 2,
+            "fallback": 2
+          }
+        },
+        "v4": {
+          "pre": 5,
+          "post": 5,
+          "both": 5,
+          "calls": 1,
+          "tokens": 7338.5,
+          "tokens_n": 10,
+          "rules": {
+            "entity": 4,
+            "tuple": 4,
+            "rows": 2
+          },
+          "actual_routes": {
+            "entity": 4,
+            "tuple": 4,
+            "rows": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 3,
+          "pre_harm": 0,
+          "post_repair": 2,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      }
+    },
+    "合成歧义": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4511,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 12130,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "v4": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 12858.5,
+          "tokens_n": 2,
+          "rules": {
+            "entity": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4593.5,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "baseline": 2
+          }
+        },
+        "v3": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 12542.5,
+          "tokens_n": 2,
+          "rules": {
+            "": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "v4": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 12968,
+          "tokens_n": 2,
+          "rules": {
+            "entity": 2
+          },
+          "actual_routes": {
+            "fallback": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 0,
+          "post_repair": 0,
+          "post_harm": 0
+        }
+      }
+    },
+    "全部题单": {
+      "none": {
+        "pairs": 18,
+        "baseline": {
+          "pre": 11,
+          "post": 10,
+          "both": 9,
+          "calls": 1,
+          "tokens": 5499.3,
+          "tokens_n": 36,
+          "rules": {
+            "": 36
+          },
+          "actual_routes": {
+            "baseline": 36
+          }
+        },
+        "v3": {
+          "pre": 15,
+          "post": 12,
+          "both": 12,
+          "calls": 1.3888888888888888,
+          "tokens": 7980.1,
+          "tokens_n": 36,
+          "rules": {
+            "": 36
+          },
+          "actual_routes": {
+            "fallback": 27,
+            "tuple": 4,
+            "entity": 3,
+            "rows": 2
+          }
+        },
+        "v4": {
+          "pre": 14,
+          "post": 12,
+          "both": 12,
+          "calls": 1.3055555555555556,
+          "tokens": 8403.0,
+          "tokens_n": 36,
+          "rules": {
+            "event_tuple": 4,
+            "tuple": 5,
+            "entity": 8,
+            "": 13,
+            "rows": 4,
+            "unknown": 2
+          },
+          "actual_routes": {
+            "tuple": 7,
+            "fallback": 24,
+            "entity": 3,
+            "rows": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 3,
+          "pre_harm": 0,
+          "post_repair": 2,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 1,
+          "post_repair": 1,
+          "post_harm": 1
+        }
+      },
+      "high": {
+        "pairs": 18,
+        "baseline": {
+          "pre": 11,
+          "post": 10,
+          "both": 9,
+          "calls": 1,
+          "tokens": 5622.8,
+          "tokens_n": 36,
+          "rules": {
+            "": 36
+          },
+          "actual_routes": {
+            "baseline": 36
+          }
+        },
+        "v3": {
+          "pre": 15,
+          "post": 13,
+          "both": 13,
+          "calls": 1.3055555555555556,
+          "tokens": 7875.6,
+          "tokens_n": 36,
+          "rules": {
+            "": 36
+          },
+          "actual_routes": {
+            "fallback": 24,
+            "tuple": 5,
+            "entity": 5,
+            "rows": 2
+          }
+        },
+        "v4": {
+          "pre": 14,
+          "post": 14,
+          "both": 14,
+          "calls": 1.1944444444444444,
+          "tokens": 8552.4,
+          "tokens_n": 36,
+          "rules": {
+            "event_tuple": 4,
+            "tuple": 6,
+            "": 15,
+            "entity": 8,
+            "rows": 3
+          },
+          "actual_routes": {
+            "fallback": 20,
+            "tuple": 9,
+            "entity": 5,
+            "rows": 2
+          }
+        },
+        "vs_baseline": {
+          "pre_repair": 3,
+          "pre_harm": 0,
+          "post_repair": 4,
+          "post_harm": 0
+        },
+        "vs_v3": {
+          "pre_repair": 0,
+          "pre_harm": 1,
+          "post_repair": 2,
+          "post_harm": 1
+        }
+      }
+    }
+  },
+  "response_sources": {
+    "paired_baseline": 44,
+    "live": 46
+  },
+  "fallback_reasons": {
+    "no_top_n_cue": 26,
+    "unit_projection_or_scope_unverified": 11,
+    "unverified_tie_order": 1,
+    "no_rule_selected": 2,
+    "event_scope_or_projection_unverified": 2,
+    "no_single_supported_plan": 2
+  },
+  "anchor_and_related": [
+    {
+      "id": "SQL_NonDB_number-00054-pre",
+      "effort": "none",
+      "status": "match",
+      "rule": "event_tuple",
+      "route": "tuple",
+      "ranks": [
+        17,
+        24,
+        16
+      ],
+      "reason": null
+    },
+    {
+      "id": "SQL_NonDB_number-00054-post",
+      "effort": "none",
+      "status": "match",
+      "rule": "event_tuple",
+      "route": "tuple",
+      "ranks": [
+        17,
+        24,
+        16,
+        12,
+        9
+      ],
+      "reason": null
+    },
+    {
+      "id": "SQL_NonDB_number-00061-pre",
+      "effort": "none",
+      "status": "match",
+      "rule": "event_tuple",
+      "route": "tuple",
+      "ranks": [
+        17,
+        24,
+        16
+      ],
+      "reason": null
+    },
+    {
+      "id": "SQL_NonDB_number-00061-post",
+      "effort": "none",
+      "status": "mismatch",
+      "rule": "event_tuple",
+      "route": "fallback",
+      "ranks": [
+        17,
+        24,
+        16,
+        12,
+        12,
+        9
+      ],
+      "reason": "event_scope_or_projection_unverified"
+    },
+    {
+      "id": "SQL_NonDB_number-00054-pre",
+      "effort": "high",
+      "status": "match",
+      "rule": "event_tuple",
+      "route": "fallback",
+      "ranks": [
+        17,
+        24,
+        16
+      ],
+      "reason": "event_scope_or_projection_unverified"
+    },
+    {
+      "id": "SQL_NonDB_number-00054-post",
+      "effort": "high",
+      "status": "match",
+      "rule": "event_tuple",
+      "route": "tuple",
+      "ranks": [
+        17,
+        24,
+        16,
+        12,
+        9
+      ],
+      "reason": null
+    },
+    {
+      "id": "SQL_NonDB_number-00061-pre",
+      "effort": "high",
+      "status": "match",
+      "rule": "event_tuple",
+      "route": "tuple",
+      "ranks": [
+        17,
+        24,
+        16
+      ],
+      "reason": null
+    },
+    {
+      "id": "SQL_NonDB_number-00061-post",
+      "effort": "high",
+      "status": "match",
+      "rule": "event_tuple",
+      "route": "tuple",
+      "ranks": [
+        17,
+        24,
+        16,
+        12,
+        9,
+        16
+      ],
+      "reason": null
+    }
+  ],
+  "browser": [
+    {
+      "sample_id": "SQL_NonDB_number-00054-pre",
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 3,
+        "prediction_rows": 3
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 12444
+      },
+      "run_id": "0be06527323e4914a28369b94cdfba4f",
+      "rule": "event_tuple",
+      "route": "tuple",
+      "reason": null
+    },
+    {
+      "sample_id": "SQL_NonDB_number-00054-post",
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 5,
+        "prediction_rows": 5
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 5245
+      },
+      "run_id": "177d760930534431b8aa2de3158801a6",
+      "rule": "event_tuple",
+      "route": "tuple",
+      "reason": null
+    },
+    {
+      "sample_id": "lap-entity-post",
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 3,
+        "prediction_rows": 3
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 4974
+      },
+      "run_id": "ab54fce95fe246a2b711a91667109ad5",
+      "rule": "entity",
+      "route": "entity",
+      "reason": null
+    },
+    {
+      "sample_id": "lap-ambiguity-post",
+      "score": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 4,
+        "prediction_rows": 4
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 15610
+      },
+      "run_id": "244133b754ee4a9db4fbd5c8b476e404",
+      "rule": "entity",
+      "route": "fallback",
+      "reason": "unit_projection_or_scope_unverified"
+    }
+  ]
+}

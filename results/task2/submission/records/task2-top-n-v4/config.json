@@ -1,0 +1,10 @@
+{
+  "model": "gpt-6-sol",
+  "endpoint": "https://intlapi.thingo.com.cn/v1/chat/completions",
+  "requested_efforts": [
+    "none",
+    "high"
+  ],
+  "baseline_config_sha256": "239297a2b7796c3f0c72f90568a2e6ca3e4fbf9c93be26b759ae75e306c90c75",
+  "plan_sha256": "6cbd8d64c63ab376b05ba0144d9433d5ad551f3e35817e3fe7ef22005afd08bb"
+}

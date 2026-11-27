@@ -51,6 +51,11 @@ const labels = {
   top_n_policy_v3: '确认结果单位和并列规则',
   top_n_generate_v3: '按计划生成 SQL 或回退',
   top_n_execute_v3: '执行 Top N 查询 v3',
+  top_n_intent_v4: 'Top N 候选规则 Agent',
+  top_n_inspect_v4: '核验规则与事件证据',
+  top_n_policy_v4: '确定规则或回退',
+  top_n_generate_v4: '生成 SQL 或调用基线',
+  top_n_execute_v4: '执行 Top N 查询 v4',
 };
 type Kind = keyof typeof labels;
 type Link = { source: string; target: string };
@@ -97,7 +102,9 @@ const nodeColors: Record<Kind, string> = { extract: '#345ba0', lookup: '#128266'
   top_n_intent: '#345ba0', top_n_inspect: '#128266', top_n_policy: '#965b17',
   top_n_generate: '#345ba0', top_n_execute: '#128266',
   top_n_intent_v3: '#345ba0', top_n_inspect_v3: '#128266', top_n_policy_v3: '#965b17',
-  top_n_generate_v3: '#128266', top_n_execute_v3: '#128266' };
+  top_n_generate_v3: '#128266', top_n_execute_v3: '#128266',
+  top_n_intent_v4: '#345ba0', top_n_inspect_v4: '#128266', top_n_policy_v4: '#965b17',
+  top_n_generate_v4: '#128266', top_n_execute_v4: '#128266' };
 const graphLabels: Record<string, string> = { baseline: '单 Agent 基线', value: '真实库值',
   plan: '输出与关联规划', review: '语义复核', without_values: '查值消融', same_evidence: '同证据单 Agent',
   literal_check: '文本值修正', year_check: '年份修正', guarded_local: '文本与年份修正',
@@ -119,6 +126,7 @@ const graphLabels: Record<string, string> = { baseline: '单 Agent 基线', valu
   top_n_original: '第 7 题 · 原题按姓名和排名',
   top_n_v3: '第 7 题 · 通用 Top N 结果单位 v3',
   top_n_v3_interactive: '第 7 题 · 通用 Top N 澄清 v3',
+  top_n_v4: '第 7 题 · Top N 有限规则 v4',
   sort_direction: '第 8 题 · 替代字段排序方向',
   sort_meaning_v2: '第 8 题 · 字段含义与排序方向 v2',
   sort_direction_v3: '第 8 题 · 原文提取与最终方向 v3',
@@ -213,6 +221,11 @@ const projectionNotes: Partial<Record<Kind, string>> = {
   top_n_policy_v3: '判定能否按确认的单位执行，并检查截取边界和代表记录并列。',
   top_n_generate_v3: '已核验的简单计划使用程序生成的 SQL，缺证据时调用基线生成。',
   top_n_execute_v3: '只读执行并记录路径，交互模式可回传澄清。',
+  top_n_intent_v4: '优先采用明确的按实体、按组合或按记录口径，也可以选择跨事件组合或未知。',
+  top_n_inspect_v4: '查证题面、字段和条数。跨事件规则还核对 ID、名称及事件属性是否变化。',
+  top_n_policy_v4: '通过核验后检查排序边界。证据不足时自动回退。',
+  top_n_generate_v4: '按核验规则生成只读模板 SQL，回退时使用原生成提示。',
+  top_n_execute_v4: '执行查询并保留所选规则和执行结果。',
 };
 const PortContext = createContext<Ports | null>(null);
 
@@ -301,7 +314,8 @@ export default function Task2Canvas() {
       if (!response.ok) throw new Error('无法获取实验节点与开发题');
       const data: Catalog = await response.json();
       const requested = new URLSearchParams(window.location.search).get('case');
-      const key = requested === 'top_n_v3' && data.graphs.top_n_v3 ? 'top_n_v3'
+      const key = requested === 'top_n_v4' && data.graphs.top_n_v4 ? 'top_n_v4'
+        : requested === 'top_n_v3' && data.graphs.top_n_v3 ? 'top_n_v3'
         : requested === 'top_n_v3_interactive' && data.graphs.top_n_v3_interactive ? 'top_n_v3_interactive'
         : requested === 'top_n_original' && data.graphs.top_n_original ? 'top_n_original'
         : requested === 'top_n_interactive' && data.graphs.top_n_interactive ? 'top_n_interactive'

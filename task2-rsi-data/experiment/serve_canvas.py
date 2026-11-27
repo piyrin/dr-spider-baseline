@@ -45,6 +45,7 @@ from top_n_original import (GRAPH as TOP_N_ORIGINAL, is_original_graph,
                             run_step as run_top_n_original, validate as validate_top_n_original)
 from top_n_v3 import GRAPH_V3 as TOP_N_V3, INTERACTIVE_V3 as TOP_N_V3_INTERACTIVE, is_v3 as is_top_n_v3, run_step as run_top_n_v3, validate_v3 as validate_top_n_v3
 from top_n_v3_cases import FIXTURE_IDS as TOP_N_FIXTURES, fixture_case as top_n_fixture_case
+from top_n_v4 import GRAPH_V4 as TOP_N_V4, is_v4 as is_top_n_v4, run_step as run_top_n_v4, validate_v4 as validate_top_n_v4
 
 sys.path.insert(0, str(HERE / 'iterations' / 'v4'))
 from canvas_v4 import SCOPED_GRAPHS, scoped_step, validate_scoped
@@ -95,7 +96,8 @@ class Handler(BaseHTTPRequestHandler):
                                'filter_column': COLUMN_GRAPH, 'filter_column_v2': COLUMN_GRAPH_V2,
                                'filter_count': FILTER_COUNT_GRAPH, 'top_n': TOP_N_GRAPH,
                                'top_n_interactive': TOP_N_INTERACTIVE, 'top_n_original': TOP_N_ORIGINAL,
-                               'top_n_v3': TOP_N_V3, 'top_n_v3_interactive': TOP_N_V3_INTERACTIVE},
+                               'top_n_v3': TOP_N_V3, 'top_n_v3_interactive': TOP_N_V3_INTERACTIVE,
+                               'top_n_v4': TOP_N_V4},
                     'examples': items})
 
     def do_POST(self):
@@ -119,7 +121,9 @@ class Handler(BaseHTTPRequestHandler):
         graph = body['graph']
         sample_id = body['sample_id']
         case = top_n_fixture_case(sample_id) if sample_id in TOP_N_FIXTURES else original_or_control(sample_id)
-        if is_top_n_v3(graph):
+        if is_top_n_v4(graph):
+            ordered, runner = validate_top_n_v4(graph), run_top_n_v4
+        elif is_top_n_v3(graph):
             ordered, runner = validate_top_n_v3(graph), run_top_n_v3
         elif is_original_graph(graph):
             ordered, runner = validate_top_n_original(graph, case), run_top_n_original

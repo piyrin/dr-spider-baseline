@@ -1,0 +1,358 @@
+{
+  "sample_id": "SQL_NonDB_number-00054-pre",
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v3"
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v3"
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v3",
+        "hint": "interactive"
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v3"
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v3"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "inspect"
+      },
+      {
+        "source": "inspect",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "5a6e7761a19c46bea26a05dea4a2bbc1",
+  "graph_sha256": "9ec74a755768523980c3d372ff9493fea198d705bb015002efe9824634369f05",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "top_n_intent_v3",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "output": [
+          {
+            "term": "name",
+            "column": "winner_name",
+            "alternatives": []
+          },
+          {
+            "term": "rank",
+            "column": "winner_rank",
+            "alternatives": [
+              "rankings.ranking"
+            ]
+          }
+        ],
+        "joins": [],
+        "targets": [
+          {
+            "scope": "all_rows",
+            "unit": "ambiguous",
+            "table": "matches",
+            "display": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "key": [
+              "winner_id"
+            ],
+            "order": "winner_age",
+            "direction": "ASC",
+            "n": 3,
+            "grain_evidence": "3 youngest winners",
+            "projection_evidence": "name and rank",
+            "ties": []
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Analyze one top-N query over a single table. Return {\"targets\":[{\"scope\":\"all_rows|unsupported\",\"unit\":\"rows|entity|tuple|ambiguous\",\"table\":\"schema table\",\"display\":[\"display column\"],\"key\":[\"key column\"],\"order\":\"raw ranking column\",\"direction\":\"ASC|DESC\",\"n\":5,\"grain_evidence\":\"verbatim result-unit wording\",\"projection_evidence\":\"verbatim display wording\",\"ties\":[{\"column\":\"tie field\",\"direction\":\"ASC|DESC\",\"cue\":\"verbatim tie wording\"}]}]}. Display contains only requested final output fields. Keep a grouping ID internal when the question says one row per ID but asks to display only names or attributes. Entity means explicitly different people or one row per entity identified by a stable key. Tuple means explicitly distinct combinations or pairs, using the tuple fields as keys. Rows means explicit raw records, such as individual runs or matches. Unqualified winners with displayed names and ranks can mean entities or tuples: mark ambiguous. An extremum within each result unit (e.g. lowest observed age in each pair) is supported. Entity returns the complete record with the extreme value; tuple orders groups by that extreme. Additional filters, joins, arbitrary aggregates, multi-table scopes, and incompatible rules are unsupported; do not drop those constraints. Use ties only for explicitly requested secondary ordering. Return {\"targets\":[]} for unrelated questions. Provide a plan without writing SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"matches\" (\"best_of\" INT,\"draw_size\" INT,\"loser_age\" FLOAT,\"loser_entry\" TEXT,\"loser_hand\" TEXT,\"loser_ht\" INT,\"loser_id\" INT,\"loser_ioc\" TEXT,\"loser_name\" TEXT,\"loser_rank\" INT,\"loser_rank_points\" INT,\"loser_seed\" INT,\"match_num\" INT,\"minutes\" INT,\"round\" TEXT,\"score\" TEXT,\"surface\" TEXT,\"tourney_date\" DATE,\"tourney_id\" TEXT,\"tourney_level\" TEXT,\"tourney_name\" TEXT,\"winner_age\" FLOAT,\"winner_entry\" TEXT,\"winner_hand\" TEXT,\"winner_ht\" INT,\"winner_id\" INT,\"winner_ioc\" TEXT,\"winner_name\" TEXT,\"winner_rank\" INT,\"winner_rank_points\" INT,\"winner_seed\" INT,\"year\" INT,FOREIGN KEY (\"loser_id\") REFERENCES \"players\"(\"player_id\"),FOREIGN KEY (\"winner_id\") REFERENCES \"players\"(\"player_id\"))\nCREATE TABLE \"players\" (\"player_id\" INT PRIMARY KEY,\"first_name\" TEXT,\"last_name\" TEXT,\"hand\" TEXT,\"birth_date\" DATE,\"country_code\" TEXT)\nCREATE TABLE \"rankings\" (\"ranking_date\" DATE,\"ranking\" INT,\"player_id\" INT,\"ranking_points\" INT,\"tours\" INT,FOREIGN KEY (\"player_id\") REFERENCES \"players\"(\"player_id\"))\nQuestion\nFind the name and rank of the 3 youngest winners across all matches."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_068e3a2320fbdcfa016b0941eb438887d28848cdb3088f2fe8",
+          "object": "chat.completion",
+          "created": 1795768856,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[{\"term\":\"name\",\"column\":\"winner_name\",\"alternatives\":[]},{\"term\":\"rank\",\"column\":\"winner_rank\",\"alternatives\":[\"rankings.ranking\"]}],\"joins\":[],\"targets\":[{\"scope\":\"all_rows\",\"unit\":\"ambiguous\",\"table\":\"matches\",\"display\":[\"winner_name\",\"winner_rank\"],\"key\":[\"winner_id\"],\"order\":\"winner_age\",\"direction\":\"ASC\",\"n\":3,\"grain_evidence\":\"3 youngest winners\",\"projection_evidence\":\"name and rank\",\"ties\":[]}]}\n"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_068e3a2320fbdcfa016b0941eb43cc87d2a928538d8bd05e7a": {
+                  "input_tokens": 316,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 316,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_068e3a2320fbdcfa016b0941eb43cc87d2b67dafea1d7e1d85": {
+                  "input_tokens": 368,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 368,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_068e3a2320fbdcfa016b094216864087d2ba2a9136a72f87d4": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 110,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 110
+                    }
+                  ]
+                },
+                "rs_068e3a2320fbdcfa016b094216599487d2a9d72b645c055dcd": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 516
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 5066,
+            "completion_tokens": 626,
+            "total_tokens": 5692,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 516
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_068e3a2320fbdcfa016b0941eb43cc87d2a928538d8bd05e7a": {
+                "input_tokens": 316,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 316,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_068e3a2320fbdcfa016b0941eb43cc87d2b67dafea1d7e1d85": {
+                "input_tokens": 368,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 368,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_068e3a2320fbdcfa016b094216864087d2ba2a9136a72f87d4": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 110,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 110
+                  }
+                ]
+              },
+              "rs_068e3a2320fbdcfa016b094216599487d2a9d72b645c055dcd": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 516
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 5066,
+          "completion_tokens": 626,
+          "total_tokens": 5692,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 516
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 82.91702149999765
+    },
+    {
+      "id": "inspect",
+      "kind": "top_n_inspect_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "ambiguity",
+        "reason": "ambiguous_unit",
+        "cue": "3 youngest winners"
+      },
+      "call": null,
+      "elapsed_s": 2.59000007645227e-05
+    },
+    {
+      "id": "policy",
+      "kind": "top_n_policy_v3",
+      "hint": "interactive",
+      "probe": false,
+      "from": [
+        "inspect"
+      ],
+      "output": {
+        "route": "clarification",
+        "reason": "ambiguous_unit",
+        "cue": "3 youngest winners",
+        "question": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？"
+      },
+      "call": null,
+      "elapsed_s": 6.000002031214535e-06
+    },
+    {
+      "id": "generate",
+      "kind": "top_n_generate_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "policy"
+      ],
+      "output": {
+        "route": "clarification",
+        "reason": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？",
+        "cue": "3 youngest winners",
+        "question": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？",
+        "status": "clarification"
+      },
+      "call": null,
+      "elapsed_s": 1.7800004570744932e-05
+    },
+    {
+      "id": "execute",
+      "kind": "top_n_execute_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "clarification",
+        "reason": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？",
+        "route": "clarification",
+        "decision_reason": "前 N 项以不同实体、不同字段组合，还是原始记录为单位？"
+      },
+      "call": null,
+      "elapsed_s": 2.0699997548945248e-05
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "clarification",
+    "reference_rows": 3,
+    "prediction_rows": null
+  },
+  "cost": {
+    "model_calls": 1,
+    "total_tokens": 5692
+  }
+}

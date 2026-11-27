@@ -1,0 +1,1552 @@
+[
+  {
+    "request": {
+      "sample_id": "SQL_NonDB_number-00054-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v4"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v4"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v4"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v4"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v4"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_NonDB_number-00054-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v4"
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v4"
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v4"
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v4"
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v4"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "0be06527323e4914a28369b94cdfba4f",
+    "graph_sha256": "a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v4",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "joins": [],
+          "targets": [
+            {
+              "rule": "event_tuple",
+              "scope": "all_rows",
+              "table": "matches",
+              "display": [
+                "winner_name",
+                "winner_rank"
+              ],
+              "key": [
+                "winner_name",
+                "winner_rank"
+              ],
+              "order": "winner_age",
+              "direction": "ASC",
+              "n": 3,
+              "grain_evidence": "across all matches",
+              "projection_evidence": "name and rank",
+              "ties": [],
+              "entity_key": "winner_id",
+              "entity_display": "winner_name"
+            }
+          ]
+        },
+        "elapsed_s": 67.64110179999989
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "matches",
+          "display": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "keys": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "order": [
+            [
+              "winner_age",
+              "ASC"
+            ]
+          ],
+          "n": 3,
+          "grain_evidence": "across all matches",
+          "projection_evidence": "name and rank",
+          "identity_key": "winner_id",
+          "variable_attribute": "winner_rank",
+          "selected_rule": "event_tuple",
+          "agent_limit": 3,
+          "verified_limit": 3
+        },
+        "elapsed_s": 0.0029691000017919578
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "matches",
+          "display": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "keys": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "order": [
+            [
+              "winner_age",
+              "ASC"
+            ]
+          ],
+          "n": 3,
+          "grain_evidence": "across all matches",
+          "projection_evidence": "name and rank",
+          "identity_key": "winner_id",
+          "variable_attribute": "winner_rank",
+          "selected_rule": "event_tuple",
+          "agent_limit": 3,
+          "verified_limit": 3,
+          "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 3",
+          "cutoff_checked": true,
+          "rule": "event_tuple"
+        },
+        "elapsed_s": 0.0010407999943709
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "matches",
+          "display": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "keys": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "order": [
+            [
+              "winner_age",
+              "ASC"
+            ]
+          ],
+          "n": 3,
+          "grain_evidence": "across all matches",
+          "projection_evidence": "name and rank",
+          "identity_key": "winner_id",
+          "variable_attribute": "winner_rank",
+          "selected_rule": "event_tuple",
+          "agent_limit": 3,
+          "verified_limit": 3,
+          "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 3",
+          "cutoff_checked": true,
+          "rule": "event_tuple"
+        },
+        "elapsed_s": 0.00001460000203223899
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 3",
+          "rows": [
+            [
+              "Madison Keys",
+              17
+            ],
+            [
+              "Madison Keys",
+              24
+            ],
+            [
+              "Madison Keys",
+              16
+            ]
+          ],
+          "columns": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "route": "tuple",
+          "decision_reason": null,
+          "rule": "event_tuple",
+          "row_count": 3
+        },
+        "elapsed_s": 0.0012500000011641532
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 12444
+    },
+    "course_flow_id": "TASK2_CANVAS_a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+    "course_flow": {
+      "id": "TASK2_CANVAS_a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "sample_id": "SQL_NonDB_number-00054-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v4"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v4"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v4"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v4"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v4"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_NonDB_number-00054-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v4"
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v4"
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v4"
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v4"
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v4"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "177d760930534431b8aa2de3158801a6",
+    "graph_sha256": "a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v4",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "rule": "event_tuple",
+              "scope": "all_rows",
+              "table": "matches",
+              "display": [
+                "winner_name",
+                "winner_rank"
+              ],
+              "key": [
+                "winner_name",
+                "winner_rank"
+              ],
+              "order": "winner_age",
+              "direction": "ASC",
+              "n": 5,
+              "grain_evidence": "across all matches",
+              "projection_evidence": "name and rank",
+              "ties": [],
+              "entity_key": "winner_id",
+              "entity_display": "winner_name"
+            }
+          ]
+        },
+        "elapsed_s": 5.66068919999816
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "matches",
+          "display": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "keys": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "order": [
+            [
+              "winner_age",
+              "ASC"
+            ]
+          ],
+          "n": 5,
+          "grain_evidence": "across all matches",
+          "projection_evidence": "name and rank",
+          "identity_key": "winner_id",
+          "variable_attribute": "winner_rank",
+          "selected_rule": "event_tuple",
+          "agent_limit": 5,
+          "verified_limit": 5
+        },
+        "elapsed_s": 0.0019921000057365745
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "matches",
+          "display": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "keys": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "order": [
+            [
+              "winner_age",
+              "ASC"
+            ]
+          ],
+          "n": 5,
+          "grain_evidence": "across all matches",
+          "projection_evidence": "name and rank",
+          "identity_key": "winner_id",
+          "variable_attribute": "winner_rank",
+          "selected_rule": "event_tuple",
+          "agent_limit": 5,
+          "verified_limit": 5,
+          "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 5",
+          "cutoff_checked": true,
+          "rule": "event_tuple"
+        },
+        "elapsed_s": 0.0012611000056494959
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "matches",
+          "display": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "keys": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "order": [
+            [
+              "winner_age",
+              "ASC"
+            ]
+          ],
+          "n": 5,
+          "grain_evidence": "across all matches",
+          "projection_evidence": "name and rank",
+          "identity_key": "winner_id",
+          "variable_attribute": "winner_rank",
+          "selected_rule": "event_tuple",
+          "agent_limit": 5,
+          "verified_limit": 5,
+          "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 5",
+          "cutoff_checked": true,
+          "rule": "event_tuple"
+        },
+        "elapsed_s": 0.000007800001185387373
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 5",
+          "rows": [
+            [
+              "Madison Keys",
+              17
+            ],
+            [
+              "Madison Keys",
+              24
+            ],
+            [
+              "Madison Keys",
+              16
+            ],
+            [
+              "Madison Keys",
+              12
+            ],
+            [
+              "Madison Keys",
+              9
+            ]
+          ],
+          "columns": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "route": "tuple",
+          "decision_reason": null,
+          "rule": "event_tuple",
+          "row_count": 5
+        },
+        "elapsed_s": 0.001149800002167467
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 5,
+      "prediction_rows": 5
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 5245
+    },
+    "course_flow_id": "TASK2_CANVAS_a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+    "course_flow": {
+      "id": "TASK2_CANVAS_a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "sample_id": "lap-entity-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v4"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v4"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v4"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v4"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v4"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "lap-entity-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v4"
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v4"
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v4"
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v4"
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v4"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "ab54fce95fe246a2b711a91667109ad5",
+    "graph_sha256": "a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v4",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "rule": "entity",
+              "scope": "all_rows",
+              "table": "laps",
+              "display": [
+                "driver_name",
+                "track"
+              ],
+              "key": [
+                "driver_number"
+              ],
+              "order": "elapsed_ms",
+              "direction": "ASC",
+              "n": 3,
+              "grain_evidence": "3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap",
+              "projection_evidence": "Show only the driver name and track of that lap.",
+              "ties": []
+            }
+          ]
+        },
+        "elapsed_s": 5.922041100006027
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "entity",
+          "table": "laps",
+          "display": [
+            "driver_name",
+            "track"
+          ],
+          "keys": [
+            "driver_number"
+          ],
+          "order": [
+            [
+              "elapsed_ms",
+              "ASC"
+            ]
+          ],
+          "n": 3,
+          "grain_evidence": "3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap",
+          "projection_evidence": "Show only the driver name and track of that lap.",
+          "selected_rule": "entity",
+          "agent_limit": 3,
+          "verified_limit": 3
+        },
+        "elapsed_s": 0.001408200005243998
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "route": "entity",
+          "table": "laps",
+          "display": [
+            "driver_name",
+            "track"
+          ],
+          "keys": [
+            "driver_number"
+          ],
+          "order": [
+            [
+              "elapsed_ms",
+              "ASC"
+            ]
+          ],
+          "n": 3,
+          "grain_evidence": "3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap",
+          "projection_evidence": "Show only the driver name and track of that lap.",
+          "selected_rule": "entity",
+          "agent_limit": 3,
+          "verified_limit": 3,
+          "sql": "WITH candidates AS (SELECT DISTINCT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL), ranked AS (SELECT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\", RANK() OVER (PARTITION BY \"driver_number\" ORDER BY \"elapsed_ms\" ASC) AS \"__top_n_position\" FROM candidates) SELECT \"driver_name\", \"track\" FROM ranked WHERE \"__top_n_position\"=1 ORDER BY \"elapsed_ms\" ASC LIMIT 3",
+          "cutoff_checked": true,
+          "rule": "entity"
+        },
+        "elapsed_s": 0.0019402999969315715
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "route": "entity",
+          "table": "laps",
+          "display": [
+            "driver_name",
+            "track"
+          ],
+          "keys": [
+            "driver_number"
+          ],
+          "order": [
+            [
+              "elapsed_ms",
+              "ASC"
+            ]
+          ],
+          "n": 3,
+          "grain_evidence": "3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap",
+          "projection_evidence": "Show only the driver name and track of that lap.",
+          "selected_rule": "entity",
+          "agent_limit": 3,
+          "verified_limit": 3,
+          "sql": "WITH candidates AS (SELECT DISTINCT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL), ranked AS (SELECT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\", RANK() OVER (PARTITION BY \"driver_number\" ORDER BY \"elapsed_ms\" ASC) AS \"__top_n_position\" FROM candidates) SELECT \"driver_name\", \"track\" FROM ranked WHERE \"__top_n_position\"=1 ORDER BY \"elapsed_ms\" ASC LIMIT 3",
+          "cutoff_checked": true,
+          "rule": "entity"
+        },
+        "elapsed_s": 0.000007500006176996976
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "WITH candidates AS (SELECT DISTINCT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL), ranked AS (SELECT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\", RANK() OVER (PARTITION BY \"driver_number\" ORDER BY \"elapsed_ms\" ASC) AS \"__top_n_position\" FROM candidates) SELECT \"driver_name\", \"track\" FROM ranked WHERE \"__top_n_position\"=1 ORDER BY \"elapsed_ms\" ASC LIMIT 3",
+          "rows": [
+            [
+              "Aya",
+              "North"
+            ],
+            [
+              "Bo",
+              "West"
+            ],
+            [
+              "Aya",
+              "East"
+            ]
+          ],
+          "columns": [
+            "driver_name",
+            "track"
+          ],
+          "route": "entity",
+          "decision_reason": null,
+          "rule": "entity",
+          "row_count": 3
+        },
+        "elapsed_s": 0.0012175000010756776
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 4974
+    },
+    "course_flow_id": "TASK2_CANVAS_a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+    "course_flow": {
+      "id": "TASK2_CANVAS_a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "sample_id": "lap-ambiguity-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v4"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v4"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v4"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v4"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v4"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "lap-ambiguity-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v4"
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v4"
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v4"
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v4"
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v4"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "244133b754ee4a9db4fbd5c8b476e404",
+    "graph_sha256": "a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v4",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": [
+            "driver_name",
+            "track"
+          ],
+          "joins": [],
+          "targets": [
+            {
+              "rule": "entity",
+              "scope": "all_rows",
+              "table": "laps",
+              "display": [
+                "driver_name",
+                "track"
+              ],
+              "key": [
+                "driver_number"
+              ],
+              "order": "elapsed_ms",
+              "direction": "ASC",
+              "n": 4,
+              "grain_evidence": "4 fastest drivers",
+              "projection_evidence": "Show the driver name and track",
+              "ties": [
+                {
+                  "column": "lap_id",
+                  "direction": "ASC",
+                  "cue": "recorded laps"
+                }
+              ]
+            }
+          ]
+        },
+        "elapsed_s": 44.1033535999959
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unit_projection_or_scope_unverified",
+          "selected_rule": "entity",
+          "agent_limit": 4,
+          "verified_limit": 4,
+          "rule": "entity"
+        },
+        "elapsed_s": 0.00005110000347485766
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unit_projection_or_scope_unverified",
+          "selected_rule": "entity",
+          "agent_limit": 4,
+          "verified_limit": 4,
+          "rule": "entity"
+        },
+        "elapsed_s": 0.000008400005754083395
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unit_projection_or_scope_unverified",
+          "selected_rule": "entity",
+          "agent_limit": 4,
+          "verified_limit": 4,
+          "rule": "entity",
+          "sql": "SELECT driver_name, track\nFROM laps\nORDER BY elapsed_ms ASC\nLIMIT 4;"
+        },
+        "elapsed_s": 3.900678500001959
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v4",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT driver_name, track\nFROM laps\nORDER BY elapsed_ms ASC\nLIMIT 4;",
+          "rows": [
+            [
+              "Unknown",
+              "West"
+            ],
+            [
+              "Aya",
+              "North"
+            ],
+            [
+              "Aya",
+              "North"
+            ],
+            [
+              "Aya",
+              "South"
+            ]
+          ],
+          "columns": [
+            "driver_name",
+            "track"
+          ],
+          "route": "fallback",
+          "decision_reason": "unit_projection_or_scope_unverified",
+          "rule": "entity",
+          "row_count": 4
+        },
+        "elapsed_s": 0.0008021000030566938
+      }
+    ],
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 15610
+    },
+    "course_flow_id": "TASK2_CANVAS_a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+    "course_flow": {
+      "id": "TASK2_CANVAS_a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

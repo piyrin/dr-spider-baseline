@@ -26,6 +26,7 @@ __pycache__/
 /reports/drspider-paper/
 
 # Local implementation notes, demo script, and exploratory details.
+/reports/*.md.bak
 /reports/任务2手工Agent编排研究.md
 /reports/任务1与任务2演示与复现.md
 /results/drspider-17x50/diagnostics/README.md

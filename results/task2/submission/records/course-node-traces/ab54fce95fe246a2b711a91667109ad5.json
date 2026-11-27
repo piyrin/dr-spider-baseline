@@ -1,0 +1,418 @@
+{
+  "sample_id": "lap-entity-post",
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v4"
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v4"
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v4"
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v4"
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v4"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "inspect"
+      },
+      {
+        "source": "inspect",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "ab54fce95fe246a2b711a91667109ad5",
+  "graph_sha256": "a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "top_n_intent_v4",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "rule": "entity",
+            "scope": "all_rows",
+            "table": "laps",
+            "display": [
+              "driver_name",
+              "track"
+            ],
+            "key": [
+              "driver_number"
+            ],
+            "order": "elapsed_ms",
+            "direction": "ASC",
+            "n": 3,
+            "grain_evidence": "3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap",
+            "projection_evidence": "Show only the driver name and track of that lap.",
+            "ties": []
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Select one of five bounded Top N rules. Return {\"targets\":[{\"rule\":\"entity|tuple|rows|event_tuple|unknown\",\"scope\":\"all_rows|unsupported\",\"table\":\"exact table\",\"display\":[\"final output column\"],\"key\":[\"grouping column\"],\"order\":\"exact ranking column\",\"direction\":\"ASC|DESC\",\"n\":5,\"grain_evidence\":\"verbatim wording\",\"projection_evidence\":\"verbatim wording\",\"ties\":[{\"column\":\"exact column\",\"direction\":\"ASC|DESC\",\"cue\":\"verbatim wording\"}],\"entity_key\":\"exact ID for event_tuple\",\"entity_display\":\"exact label for event_tuple\"}]}. First honor an explicitly requested grain: entity for one per different person or item, tuple for distinct combinations, rows for requested individual records. Keep keys internal unless the question asks to display them. Use event_tuple for a ranking explicitly across all events, matches, runs or transactions when the two requested outputs are an entity label and an attribute that may change at each event, there is a stable entity ID, and the question does not explicitly demand different entities or raw event rows. For event_tuple quote the full scope phrase, identify the ID and label, and use the display pair as key. This is a default for event-scoped questions and must yield to explicit grain. Use unknown when no rule fits. A smallest or largest observed value within a unit is supported. Filtered, joined or complex aggregated questions are unsupported and must keep all constraints on fallback. Copy the actual requested limit. Do not output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE laps(lap_id INTEGER PRIMARY KEY, driver_number INTEGER, driver_name TEXT, track TEXT, elapsed_ms INTEGER)\nQuestion\nFind the 3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap. Show only the driver name and track of that lap."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0355ca9cc6c635b2016b0946e5297c87d0b3337a944fcfdbf0",
+          "object": "chat.completion",
+          "created": 1795770088,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"rule\":\"entity\",\"scope\":\"all_rows\",\"table\":\"laps\",\"display\":[\"driver_name\",\"track\"],\"key\":[\"driver_number\"],\"order\":\"elapsed_ms\",\"direction\":\"ASC\",\"n\":3,\"grain_evidence\":\"3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap\",\"projection_evidence\":\"Show only the driver name and track of that lap.\",\"ties\":[]}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0355ca9cc6c635b2016b0946e529bc87d08baef88910b806d7": {
+                  "input_tokens": 388,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 388,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0355ca9cc6c635b2016b0946e529bc87d0b4b1076925a45439": {
+                  "input_tokens": 66,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 66,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0355ca9cc6c635b2016b0946e7686087d08e84906f44905ea3": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 92,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 92
+                    }
+                  ]
+                },
+                "rs_0355ca9cc6c635b2016b0946e7686c87d097b115d31aa943ef": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 46
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4836,
+            "completion_tokens": 138,
+            "total_tokens": 4974,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 46
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0355ca9cc6c635b2016b0946e529bc87d08baef88910b806d7": {
+                "input_tokens": 388,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 388,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0355ca9cc6c635b2016b0946e529bc87d0b4b1076925a45439": {
+                "input_tokens": 66,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 66,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0355ca9cc6c635b2016b0946e7686087d08e84906f44905ea3": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 92,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 92
+                  }
+                ]
+              },
+              "rs_0355ca9cc6c635b2016b0946e7686c87d097b115d31aa943ef": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 46
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4836,
+          "completion_tokens": 138,
+          "total_tokens": 4974,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 46
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 5.922041100006027
+    },
+    {
+      "id": "inspect",
+      "kind": "top_n_inspect_v4",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "entity",
+        "table": "laps",
+        "display": [
+          "driver_name",
+          "track"
+        ],
+        "keys": [
+          "driver_number"
+        ],
+        "order": [
+          [
+            "elapsed_ms",
+            "ASC"
+          ]
+        ],
+        "n": 3,
+        "grain_evidence": "3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap",
+        "projection_evidence": "Show only the driver name and track of that lap.",
+        "selected_rule": "entity",
+        "agent_limit": 3,
+        "verified_limit": 3
+      },
+      "call": null,
+      "elapsed_s": 0.001408200005243998
+    },
+    {
+      "id": "policy",
+      "kind": "top_n_policy_v4",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "inspect"
+      ],
+      "output": {
+        "route": "entity",
+        "table": "laps",
+        "display": [
+          "driver_name",
+          "track"
+        ],
+        "keys": [
+          "driver_number"
+        ],
+        "order": [
+          [
+            "elapsed_ms",
+            "ASC"
+          ]
+        ],
+        "n": 3,
+        "grain_evidence": "3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap",
+        "projection_evidence": "Show only the driver name and track of that lap.",
+        "selected_rule": "entity",
+        "agent_limit": 3,
+        "verified_limit": 3,
+        "sql": "WITH candidates AS (SELECT DISTINCT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL), ranked AS (SELECT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\", RANK() OVER (PARTITION BY \"driver_number\" ORDER BY \"elapsed_ms\" ASC) AS \"__top_n_position\" FROM candidates) SELECT \"driver_name\", \"track\" FROM ranked WHERE \"__top_n_position\"=1 ORDER BY \"elapsed_ms\" ASC LIMIT 3",
+        "cutoff_checked": true,
+        "rule": "entity"
+      },
+      "call": null,
+      "elapsed_s": 0.0019402999969315715
+    },
+    {
+      "id": "generate",
+      "kind": "top_n_generate_v4",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "policy"
+      ],
+      "output": {
+        "route": "entity",
+        "table": "laps",
+        "display": [
+          "driver_name",
+          "track"
+        ],
+        "keys": [
+          "driver_number"
+        ],
+        "order": [
+          [
+            "elapsed_ms",
+            "ASC"
+          ]
+        ],
+        "n": 3,
+        "grain_evidence": "3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap",
+        "projection_evidence": "Show only the driver name and track of that lap.",
+        "selected_rule": "entity",
+        "agent_limit": 3,
+        "verified_limit": 3,
+        "sql": "WITH candidates AS (SELECT DISTINCT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL), ranked AS (SELECT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\", RANK() OVER (PARTITION BY \"driver_number\" ORDER BY \"elapsed_ms\" ASC) AS \"__top_n_position\" FROM candidates) SELECT \"driver_name\", \"track\" FROM ranked WHERE \"__top_n_position\"=1 ORDER BY \"elapsed_ms\" ASC LIMIT 3",
+        "cutoff_checked": true,
+        "rule": "entity"
+      },
+      "call": null,
+      "elapsed_s": 7.500006176996976e-06
+    },
+    {
+      "id": "execute",
+      "kind": "top_n_execute_v4",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "WITH candidates AS (SELECT DISTINCT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL), ranked AS (SELECT \"driver_name\", \"track\", \"driver_number\", \"elapsed_ms\", RANK() OVER (PARTITION BY \"driver_number\" ORDER BY \"elapsed_ms\" ASC) AS \"__top_n_position\" FROM candidates) SELECT \"driver_name\", \"track\" FROM ranked WHERE \"__top_n_position\"=1 ORDER BY \"elapsed_ms\" ASC LIMIT 3",
+        "rows": [
+          [
+            "Aya",
+            "North"
+          ],
+          [
+            "Bo",
+            "West"
+          ],
+          [
+            "Aya",
+            "East"
+          ]
+        ],
+        "columns": [
+          "driver_name",
+          "track"
+        ],
+        "route": "entity",
+        "decision_reason": null,
+        "rule": "entity"
+      },
+      "call": null,
+      "elapsed_s": 0.0012175000010756776
+    }
+  ],
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 3,
+    "prediction_rows": 3
+  },
+  "cost": {
+    "model_calls": 1,
+    "total_tokens": 4974
+  }
+}
