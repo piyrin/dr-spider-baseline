@@ -1,0 +1,212 @@
+{
+  "sample_id": "SQL_DB_text-00048-pre",
+  "graph": {
+    "nodes": [
+      {
+        "id": "draft",
+        "kind": "column_draft_v2"
+      },
+      {
+        "id": "inspect",
+        "kind": "column_inspect_v2"
+      },
+      {
+        "id": "revise",
+        "kind": "column_revise_v2"
+      },
+      {
+        "id": "execute",
+        "kind": "column_execute_v2"
+      }
+    ],
+    "links": [
+      {
+        "source": "draft",
+        "target": "inspect"
+      },
+      {
+        "source": "inspect",
+        "target": "revise"
+      },
+      {
+        "source": "revise",
+        "target": "execute"
+      }
+    ]
+  },
+  "run_id": "2abe636161a94dc5bf8130cad4671ffd",
+  "graph_sha256": "064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+  "steps": [
+    {
+      "id": "draft",
+      "kind": "column_draft_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"car_makers\" (\"Id\" INTEGER PRIMARY KEY,\"Maker\" TEXT,\"FullName\" TEXT,\"Country\" TEXT,FOREIGN KEY (\"Country\") REFERENCES \"countries\" (\"CountryId\"))\nCREATE TABLE \"car_names\" (\"MakeId\" INTEGER PRIMARY KEY,\"Model\" TEXT,\"Make\" TEXT,FOREIGN KEY (\"Model\") REFERENCES \"model_list\" (\"Model\"))\nCREATE TABLE \"cars_data\" (\"Id\" INTEGER PRIMARY KEY,\"MPG\" TEXT,\"Cylinders\" INTEGER,\"Edispl\" REAL,\"Horsepower\" TEXT,\"Weight\" INTEGER,\"Accelerate\" REAL,\"Year\" INTEGER,FOREIGN KEY (\"Id\") REFERENCES \"car_names\" (\"MakeId\"))\nCREATE TABLE \"continents\" (\"ContId\" INTEGER PRIMARY KEY,\"Continent\" TEXT)\nCREATE TABLE \"countries\" (\"CountryId\" INTEGER PRIMARY KEY,\"CountryName\" TEXT,\"Continent\" INTEGER,FOREIGN KEY (\"Continent\") REFERENCES \"continents\" (\"ContId\"))\nCREATE TABLE \"model_list\" (\"ModelId\" INTEGER PRIMARY KEY,\"Maker\" INTEGER,\"Model\" TEXT UNIQUE,FOREIGN KEY (\"Maker\") REFERENCES \"car_makers\" (\"Id\"))\nQuestion\nWhat are the different models created by either the car maker General Motors or weighed more than 3500?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_09777aaf58ded05a016b090c77a4b487d2a0caabc460548506",
+          "object": "chat.completion",
+          "created": 1795755129,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 7272,
+            "completion_tokens": 109,
+            "total_tokens": 7381,
+            "completion_tokens_details": {
+              "reasoning_tokens": 38
+            }
+          }
+        },
+        "usage": {
+          "prompt_tokens": 7272,
+          "completion_tokens": 109,
+          "total_tokens": 7381,
+          "completion_tokens_details": {
+            "reasoning_tokens": 38
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      },
+      "elapsed_s": 3.5901653000000806
+    },
+    {
+      "id": "inspect",
+      "kind": "column_inspect_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "draft"
+      ],
+      "output": {
+        "draft": {
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--"
+        },
+        "route": "keep",
+        "reason": "unsupported_or_invalid_draft",
+        "options": []
+      },
+      "call": null,
+      "elapsed_s": 0.0017624000029172748
+    },
+    {
+      "id": "revise",
+      "kind": "column_revise_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "inspect"
+      ],
+      "output": {
+        "final": {
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--"
+        },
+        "revision": "kept",
+        "route": "keep"
+      },
+      "call": null,
+      "elapsed_s": 8.299997716676444e-06
+    },
+    {
+      "id": "execute",
+      "kind": "column_execute_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "revise"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--",
+        "rows": [
+          [
+            "chevrolet"
+          ],
+          [
+            "buick"
+          ],
+          [
+            "ford"
+          ],
+          [
+            "plymouth"
+          ],
+          [
+            "pontiac"
+          ],
+          [
+            "amc"
+          ],
+          [
+            "dodge"
+          ],
+          [
+            "hi"
+          ],
+          [
+            "mercury"
+          ],
+          [
+            "oldsmobile"
+          ],
+          [
+            "chrysler"
+          ],
+          [
+            "mercedes-benz"
+          ],
+          [
+            "cadillac"
+          ],
+          [
+            "mercedes"
+          ]
+        ],
+        "columns": [
+          "Model"
+        ],
+        "revision": "kept"
+      },
+      "call": null,
+      "elapsed_s": 0.0014938000022084452
+    }
+  ],
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 13,
+    "prediction_rows": 14
+  },
+  "cost": {
+    "model_calls": 1,
+    "total_tokens": 7381
+  }
+}

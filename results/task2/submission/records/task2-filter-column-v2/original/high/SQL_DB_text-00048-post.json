@@ -1,0 +1,347 @@
+{
+  "id": "SQL_DB_text-00048-post",
+  "effort": "high",
+  "steps": [
+    {
+      "id": "draft",
+      "kind": "column_draft_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT DISTINCT ml.\"Model\"\nFROM \"model_list\" AS ml\nJOIN \"car_makers\" AS cm ON ml.\"Maker\" = cm.\"Id\"\nJOIN \"car_names\" AS cn ON ml.\"Model\" = cn.\"Model\"\nJOIN \"cars_data\" AS cd ON cn.\"MakeId\" = cd.\"Id\"\nWHERE cm.\"Maker\" = 'Honda'\n   OR cd.\"Weight\" > 3500;"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"car_makers\" (\"Id\" INTEGER PRIMARY KEY,\"Maker\" TEXT,\"FullName\" TEXT,\"Country\" TEXT,FOREIGN KEY (\"Country\") REFERENCES \"countries\" (\"CountryId\"))\nCREATE TABLE \"car_names\" (\"MakeId\" INTEGER PRIMARY KEY,\"Model\" TEXT,\"Make\" TEXT,FOREIGN KEY (\"Model\") REFERENCES \"model_list\" (\"Model\"))\nCREATE TABLE \"cars_data\" (\"Id\" INTEGER PRIMARY KEY,\"MPG\" TEXT,\"Cylinders\" INTEGER,\"Edispl\" REAL,\"Horsepower\" TEXT,\"Weight\" INTEGER,\"Accelerate\" REAL,\"Year\" INTEGER,FOREIGN KEY (\"Id\") REFERENCES \"car_names\" (\"MakeId\"))\nCREATE TABLE \"continents\" (\"ContId\" INTEGER PRIMARY KEY,\"Continent\" TEXT)\nCREATE TABLE \"countries\" (\"CountryId\" INTEGER PRIMARY KEY,\"CountryName\" TEXT,\"Continent\" INTEGER,FOREIGN KEY (\"Continent\") REFERENCES \"continents\" (\"ContId\"))\nCREATE TABLE \"model_list\" (\"ModelId\" INTEGER PRIMARY KEY,\"Maker\" INTEGER,\"Model\" TEXT UNIQUE,FOREIGN KEY (\"Maker\") REFERENCES \"car_makers\" (\"Id\"))\nQuestion\nWhat are the different models created by either the car maker Honda or weighed more than 3500?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_01e6f6e70e191088016b082744f8f487d0900ed7114faacaf0",
+          "object": "chat.completion",
+          "created": 1795696470,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT DISTINCT ml.\"Model\"\nFROM \"model_list\" AS ml\nJOIN \"car_makers\" AS cm ON ml.\"Maker\" = cm.\"Id\"\nJOIN \"car_names\" AS cn ON ml.\"Model\" = cn.\"Model\"\nJOIN \"cars_data\" AS cd ON cn.\"MakeId\" = cd.\"Id\"\nWHERE cm.\"Maker\" = 'Honda'\n   OR cd.\"Weight\" > 3500;",
+                "reasoning_content": "**Designing SQL query for distinct models**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_01e6f6e70e191088016b082744f94887d09b59d98ef39f6277": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_01e6f6e70e191088016b082744f94c87d0aadc3e75e960a11d": {
+                  "input_tokens": 264,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 264,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_01e6f6e70e191088016b082754447887d0a2602323f147b16e": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 93,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 93
+                    }
+                  ]
+                },
+                "rs_01e6f6e70e191088016b08274debfc87d08e607b5bf502b862": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 182
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3787,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 10585,
+            "completion_tokens": 275,
+            "total_tokens": 10860,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 9088
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 182
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_01e6f6e70e191088016b082744f94887d09b59d98ef39f6277": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_01e6f6e70e191088016b082744f94c87d0aadc3e75e960a11d": {
+                "input_tokens": 264,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 264,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_01e6f6e70e191088016b082754447887d0a2602323f147b16e": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 93,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 93
+                  }
+                ]
+              },
+              "rs_01e6f6e70e191088016b08274debfc87d08e607b5bf502b862": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 182
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3787,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 10585,
+          "completion_tokens": 275,
+          "total_tokens": 10860,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 9088
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 182
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "inspect",
+      "kind": "column_inspect_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "draft"
+      ],
+      "output": {
+        "draft": {
+          "sql": "SELECT DISTINCT ml.\"Model\"\nFROM \"model_list\" AS ml\nJOIN \"car_makers\" AS cm ON ml.\"Maker\" = cm.\"Id\"\nJOIN \"car_names\" AS cn ON ml.\"Model\" = cn.\"Model\"\nJOIN \"cars_data\" AS cd ON cn.\"MakeId\" = cd.\"Id\"\nWHERE cm.\"Maker\" = 'Honda'\n   OR cd.\"Weight\" > 3500;"
+        },
+        "route": "auto",
+        "reason": "same_row_verified_full_name",
+        "options": [
+          {
+            "table": "car_makers",
+            "source": "Maker",
+            "target": "FullName",
+            "term": "Honda",
+            "source_normalized": [
+              "honda"
+            ],
+            "same_row_full_name": true,
+            "sql": "SELECT DISTINCT ml.\"Model\"\nFROM \"model_list\" AS ml\nJOIN \"car_makers\" AS cm ON ml.\"Maker\" = cm.\"Id\"\nJOIN \"car_names\" AS cn ON ml.\"Model\" = cn.\"Model\"\nJOIN \"cars_data\" AS cd ON cn.\"MakeId\" = cd.\"Id\"\nWHERE cm.\"FullName\" = 'Honda'\n   OR cd.\"Weight\" > 3500;"
+          }
+        ]
+      },
+      "call": null
+    },
+    {
+      "id": "revise",
+      "kind": "column_revise_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "inspect"
+      ],
+      "output": {
+        "final": {
+          "sql": "SELECT DISTINCT ml.\"Model\"\nFROM \"model_list\" AS ml\nJOIN \"car_makers\" AS cm ON ml.\"Maker\" = cm.\"Id\"\nJOIN \"car_names\" AS cn ON ml.\"Model\" = cn.\"Model\"\nJOIN \"cars_data\" AS cd ON cn.\"MakeId\" = cd.\"Id\"\nWHERE cm.\"FullName\" = 'Honda'\n   OR cd.\"Weight\" > 3500;"
+        },
+        "revision": "patched",
+        "route": "auto",
+        "chosen": 0
+      },
+      "call": null
+    },
+    {
+      "id": "execute",
+      "kind": "column_execute_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "revise"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT DISTINCT ml.\"Model\"\nFROM \"model_list\" AS ml\nJOIN \"car_makers\" AS cm ON ml.\"Maker\" = cm.\"Id\"\nJOIN \"car_names\" AS cn ON ml.\"Model\" = cn.\"Model\"\nJOIN \"cars_data\" AS cd ON cn.\"MakeId\" = cd.\"Id\"\nWHERE cm.\"FullName\" = 'Honda'\n   OR cd.\"Weight\" > 3500;",
+        "rows": [
+          [
+            "chevrolet"
+          ],
+          [
+            "buick"
+          ],
+          [
+            "ford"
+          ],
+          [
+            "plymouth"
+          ],
+          [
+            "pontiac"
+          ],
+          [
+            "amc"
+          ],
+          [
+            "dodge"
+          ],
+          [
+            "mercury"
+          ],
+          [
+            "oldsmobile"
+          ],
+          [
+            "chrysler"
+          ],
+          [
+            "honda"
+          ],
+          [
+            "mercedes-benz"
+          ],
+          [
+            "cadillac"
+          ],
+          [
+            "mercedes"
+          ]
+        ],
+        "columns": [
+          "Model"
+        ],
+        "revision": "patched"
+      },
+      "call": null
+    }
+  ],
+  "baseline": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 14,
+    "prediction_rows": 13
+  },
+  "v1": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 14,
+    "prediction_rows": 14
+  },
+  "baseline_usage": {
+    "prompt_tokens": 10585,
+    "completion_tokens": 275,
+    "total_tokens": 10860
+  },
+  "v1_usage": {
+    "prompt_tokens": 9691,
+    "completion_tokens": 778,
+    "total_tokens": 10469
+  },
+  "usage": {
+    "prompt_tokens": 10585,
+    "completion_tokens": 275,
+    "total_tokens": 10860
+  },
+  "model_calls": 1,
+  "draft_source": "runs/task2-filter-column-v1/requests/baseline/high/SQL_DB_text-00048-post/generate/response.json",
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 14,
+    "prediction_rows": 14
+  }
+}

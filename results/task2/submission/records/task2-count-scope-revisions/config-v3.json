@@ -1,0 +1,132 @@
+{
+  "data_source": {
+    "repository": "https://github.com/awslabs/diagnostic-robustness-text-to-sql",
+    "commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+    "url": "https://media.githubusercontent.com/media/awslabs/diagnostic-robustness-text-to-sql/c64694a4a278ab0faff08ce7a3501d46f458b431/data.tar.gz",
+    "sha256": "d0f47e4d2c9202f4fd2d956a34e9dd1ff8180c1c9e58cf5b530c13fefaaa3ba9",
+    "bytes": 168450638,
+    "retrieved_date": "2026-11-16"
+  },
+  "source_sha256": {
+    ".cache\\evaluator\\exec_eval.py": "29d034db28904490c28037537a14fbb0150b6e86cef0049076c0511d6b6b77f7",
+    "data\\DB_DBcontent_equivalence\\questions_post_perturbation.json": "1e81b57f3c4a0c6e02282402a7c570a6fdbd2e1fd8c80dca30b7b3bfd4423fc1",
+    "data\\DB_DBcontent_equivalence\\questions_pre_perturbation.json": "a72b61f9cdef5b2fba7da83d3a2183f6cc28879b7332181d2ba7cecfe629c309",
+    "data\\DB_schema_abbreviation\\questions_post_perturbation.json": "35adde1ad5e1b2b312667ce35a429e6b4e4c72667e4f3f64734d465ff73a48e0",
+    "data\\DB_schema_abbreviation\\questions_pre_perturbation.json": "ef6730269ed7fc482b355d1a9abca16b1261a84e4b9cc510f8dd3cf6c4fa9e6b",
+    "data\\DB_schema_synonym\\questions_post_perturbation.json": "7b5cdef840c439dba65cfb18fb7289428985b1e6b9a7371891f5ae3c21e1db01",
+    "data\\DB_schema_synonym\\questions_pre_perturbation.json": "a409ca3039ad3c5e7b3f7acaa41b4ccc3e1073e6a6ef218d9a300d03a7af2d79",
+    "data\\NLQ_column_attribute\\questions_post_perturbation.json": "eaa6580bc134c40f0cc2d8eaf6b12152bd16bdcaee0833fa05368d3f200af76d",
+    "data\\NLQ_column_attribute\\questions_pre_perturbation.json": "a648ee3d1bca3244ad9d229bf6f659a90d4121ebe270313037f155d2c7cb78ef",
+    "data\\NLQ_column_value\\questions_post_perturbation.json": "39496fe0f1a8fa73490bef4eecb7ced01202dae6ac2a7fbdc5afe85015f778fc",
+    "data\\NLQ_column_value\\questions_pre_perturbation.json": "e103456d2d4bcbb156ec693cf8c7e6bda461124f1ff964599bc81a0a24bbc9f1",
+    "data\\NLQ_keyword_carrier\\questions_post_perturbation.json": "cbbbaf347975b78999d744f67abbee090e45e8291fd69eb2baf635b327d5843e",
+    "data\\NLQ_keyword_carrier\\questions_pre_perturbation.json": "1b57a2d7f3d173c3794c39e9ff0967bf45c25c3bb15d1a6ab5660c019fea95bc",
+    "data\\NLQ_keyword_synonym\\questions_post_perturbation.json": "1011466c1e5768efc3885b05d9b0e1813ffe0af7850c1f53e80e97fce86002f4",
+    "data\\NLQ_keyword_synonym\\questions_pre_perturbation.json": "dd49f2a8b30663382b32126b52d17eb3b26d3ddcd871aaf6ea87bbdafe9b387e",
+    "data\\SQL_comparison\\questions_post_perturbation.json": "97b68f9b9399030f05ad5b290e50f17550b0b284b6a3ea5cb453c8e8f3669bd9",
+    "data\\SQL_comparison\\questions_pre_perturbation.json": "628eddf3a1adfd5da1b1b54141ce851568f0ccc332c8a747dfc2e3d2718e0465",
+    "data\\SQL_sort_order\\questions_post_perturbation.json": "64527d760c369c2bb16449378baad5d6fc456338a32dfb8ca0504e4a5556f626",
+    "data\\SQL_sort_order\\questions_pre_perturbation.json": "6205efb339bdcb1d70cb7f22ecfbf776ccf5439d3616a7b3742e5fecebcda11e",
+    "manifests\\data_inventory.json": "9bb4be43a16a8a7c8aaefa9054a5f8a2ece659e0013d644768c03ba3a4dcbb59",
+    "scripts\\run_api_sample.py": "34bfc17b2e4fd2d539fd7ecd27c5fc67103187ce79e3abad5551a92982e258e5",
+    "scripts\\run_full_evaluation.py": "058dc374bbd6f4c2742b3d53fd2f2248134eb5b8b5d3d2f1235e096a777baa04",
+    "src\\baseline.py": "a781af0ffc27e86b322e4eadd409b883db6e6487262d3f3917053957b13cd63f"
+  },
+  "database_sha256": {
+    "data\\DB_DBcontent_equivalence\\database_post_perturbation\\employee_hire_evaluation_5\\employee_hire_evaluation_5.sqlite": "2de7d778bcabdc9c6c236e08fff399bc34f3ae8daab35fb15ff67b6a11ccab2d",
+    "data\\DB_schema_abbreviation\\database_post_perturbation\\network_1_0\\network_1_0.sqlite": "5453de226158513fdce22506740715ed2425e54e24924e551d7ba3b034b6487b",
+    "data\\DB_schema_synonym\\database_post_perturbation\\wta_1_0\\wta_1_0.sqlite": "2f232821007c5358a026cda66fa8171d32f46292c2d6d4798812a6875257a358",
+    "data\\Spider-dev\\databases\\car_1\\car_1.sqlite": "378377f82d2c6f64439fdc2c728c8b3a78feb3592cb4689076e77940b7b59007",
+    "data\\Spider-dev\\databases\\concert_singer\\concert_singer.sqlite": "76b992397b81b56b8f381813e964cac32c862f808c374868947931bb5871cdce",
+    "data\\Spider-dev\\databases\\dog_kennels\\dog_kennels.sqlite": "19743427ae7e391f8f848f6e45baeb672eaa6de85ef83c8cefb6149c8175da6d",
+    "data\\Spider-dev\\databases\\employee_hire_evaluation\\employee_hire_evaluation.sqlite": "c326555c322227a8868b53abf800f1a47298895c26346c7c7843aebfe62fa6e8",
+    "data\\Spider-dev\\databases\\museum_visit\\museum_visit.sqlite": "d13bed0d4f3757fe899f06c86b29caab706b481ce55cd846bc0c8f8a066b4b86",
+    "data\\Spider-dev\\databases\\network_1\\network_1.sqlite": "262dc8da550346eb2c289ad8d22fd0d3b8b327576963e80deccb5059726c25e0",
+    "data\\Spider-dev\\databases\\orchestra\\orchestra.sqlite": "f034ce21e43f582aa45005ae5fa16979d79692f3b6cb7c9f94ef5627cffae63f",
+    "data\\Spider-dev\\databases\\pets_1\\pets_1.sqlite": "bcbd47036f7306809ff38b9dd7bf131e6bb3ecfbe8b8dc26e57e5dabb088b485",
+    "data\\Spider-dev\\databases\\poker_player\\poker_player.sqlite": "13821f1591a63397ae836340f6012f46f05102924e1ace984bdd372fc748be96",
+    "data\\Spider-dev\\databases\\singer\\singer.sqlite": "0f5de1a299e6bd6539e68bcfec16180dd33fac94b49f4dc0d8543fd68cbcfd5a",
+    "data\\Spider-dev\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite": "4ed06695382e8f1fe56b07615a6d178102f2970e7d9f7554cf0506733219983e",
+    "data\\Spider-dev\\databases\\voter_1\\voter_1.sqlite": "1b377da1df806cf97c76d598a89fa9002f8b947092f3c300702d37ffdce106e5",
+    "data\\Spider-dev\\databases\\world_1\\world_1.sqlite": "f21ac0e799f04194de10460bed3309c123239090b3ab25c39ebb13629d7ace79",
+    "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite": "c29b1026c9be63fddbb4754f78e584f0d36779fa71d7e8dafc301772ab0cf4a4"
+  },
+  "endpoint": "https://intlapi.thingo.com.cn/v1/chat/completions",
+  "model": "gpt-6-sol",
+  "model_digest": null,
+  "parameters": {
+    "stream": false,
+    "other_generation_parameters": "provider defaults"
+  },
+  "system": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query.",
+  "metric": "single-database EX",
+  "code_commit": "1d9f3fab375d4b6ba8adb8562e6da7b505058f9b",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "python_version": "3.13.6 (tags/v3.13.6:4e66535, Aug  6 2025, 14:36:00) [MSC v.1944 64 bit (AMD64)]",
+  "sqlite_version": "3.50.4",
+  "dependencies": {
+    "sqlparse": "0.6.1",
+    "tqdm": "4.70.1"
+  },
+  "question_sides": 36,
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "count_intent"
+      },
+      {
+        "id": "policy",
+        "kind": "count_policy_v2"
+      },
+      {
+        "id": "generate",
+        "kind": "count_generate"
+      },
+      {
+        "id": "check",
+        "kind": "count_sql_check"
+      },
+      {
+        "id": "execute",
+        "kind": "execute"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "policy",
+        "target": "check"
+      },
+      {
+        "source": "generate",
+        "target": "check"
+      },
+      {
+        "source": "check",
+        "target": "execute"
+      }
+    ]
+  },
+  "source_plan_sha256": "e868aaed623b7e681316128389be7650a4f4517bd81402adcb9be1db83b7354a",
+  "reasoning_efforts": [
+    "none",
+    "high"
+  ],
+  "code_sha256": {
+    "task2-rsi-data\\experiment\\count_scope_revision_compare.py": "f0d7f0c8299b5b8692a942352a3a33465369e4237ac6f7b7da3439a8be9eae80",
+    "task2-rsi-data\\experiment\\count_scope_canvas.py": "f5c0a9f0cb88e4822e088418ee0f39473b0b2b12e057fddbd184a06540ad5be0",
+    "task2-rsi-data\\experiment\\count_scope_v2.py": "23daef80c976e60f165d7b83e6312e59a29783ce3d1f47df4dd02977d0868308",
+    "task2-rsi-data\\experiment\\experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    "task2-rsi-data\\experiment\\run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f",
+    "task2-rsi-data\\experiment\\count_scope_v3.py": "98bc17d2bee0ae268db2d301ff857632df79d4eabceb9890da38ead20e3d0320"
+  },
+  "cache_policy": "Reuse the immediately preceding version only when the full node request matches"
+}

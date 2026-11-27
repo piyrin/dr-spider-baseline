@@ -1,12 +1,12 @@
 # Dr.Spider 与 RSI Data
 
-老师好。本阶段我在 Dr.Spider 上完成了 SQL 生成基线，逐对复核了 134 对扰动前通过、扰动后失败的样本。我从中选择 10 个问题，先比较加入先验知识前后的结果，再在 RSI Data 课程 Visual 中测试人工编排。
+本阶段我在 Dr.Spider 上完成了 SQL 生成基线，逐对复核了 134 对扰动前通过、扰动后失败的样本。我从中选择 10 个问题，先比较加入先验知识前后的结果，再在 RSI Data 课程 Visual 中测试人工编排。
 
 | 任务 | 提交内容 | 验收入口 |
 | --- | --- | --- |
 | 1 · Dr.Spider 基线 | 使用 `gpt-6-sol` 完成 **850 对、1,700 条预测**。执行准确率从 **78.24%（665/850）降至 64.00%（544/850）**。 | [基线实验报告](reports/任务1实验报告.md) · [134 对人工复核 Excel](results/drspider-17x50/Dr.Spider-850对基线与鲁棒性问题复核（汇报版）.xlsx) |
 | 1 · 扩样与辅助对照 | 扩样和定向补测共 **344 对**。另完成三行样例对照与表数分层分析。 | [扩样结果](results/drspider-17x50/expansion/README.md) · [三行样例对照](results/drspider-17x50/select3/README.md) · [表数分层](results/drspider-17x50/diagnostics/table-count-summary.json) |
-| 2 · Dr.Spider 人工编排 | 十题均有先验对照和课程画布记录。按各题最近的画布运行，扰动后原题通过 **9/10**。 | [人工编排报告](reports/任务2先验知识与人工编排实验.md) · [画布与验收证据](results/task2/submission/README.md) · [编排源码](task2-rsi-data/experiment/README.md) |
+| 2 · Dr.Spider 人工编排 | 十题均有先验对照和课程画布记录。按验收索引中的预设，扰动后原题通过 **9/10**，其中第 7 题采用 v2 原题预设。 | [人工编排报告](reports/任务2先验知识与人工编排实验.md) · [画布与验收证据](results/task2/submission/README.md) · [编排源码](task2-rsi-data/experiment/README.md) |
 | 2 · RSI Data 启动验收 | 课程 Spring Boot 经流程引擎运行单表 Agent 和多 Agent 协作，在 Dr.Spider SQLite 上核对结果。 | [课程执行验收记录](results/task2/course-acceptance-20261120.json) |
 
 ## 目录与产物
@@ -59,4 +59,4 @@
 
 我先比较同一题面和模型在有无人工先验时的结果。配对复测中，扰动后通过从 **1/10 提升到 10/10**，扰动前有 1 题回退，双侧同时通过从 **1/10 提升到 9/10**。
 
-随后我在课程 Visual 按问题类型设计节点和分支。验收材料记录每题的画布、节点输入输出、SQL 执行结果、回退原因和 token。第 3 题默认画布的扰动后输入仍未通过，同源 high 档批测通过。第 9 题的画布修复了扰动后输入，扰动前仍有回退。同类与混合题单的结果用于开发回归，独立泛化仍待验证。[逐题报告](reports/任务2先验知识与人工编排实验.md) · [十题原题验收索引](results/task2/submission/十题原题验收索引.json)
+随后我在课程 Visual 按问题类型设计节点和分支。第 1、4–9 题的版本改动、复测结果和适用范围列在报告末尾。第 3 题默认画布的扰动后输入仍未通过，同源 high 档批测通过。第 7 题通用 v3 的原题 post 仍未通过。第 9 题 v2 的画布通过 post，pre 仍多返回车型 `hi`。同类与混合题单用于开发回归，独立泛化仍待验证。[版本迭代汇总](reports/任务2先验知识与人工编排实验.md#版本迭代汇总) · [十题原题验收索引](results/task2/submission/十题原题验收索引.json)

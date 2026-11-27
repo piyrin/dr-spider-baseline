@@ -22,22 +22,35 @@ const labels = {
   evidence_extract: '不确定筛选列提取 Agent', evidence_lookup: 'SQLite 列值取样',
   evidence_generate: '按库值样例生成 SQL',
   count_intent: '统计题意解析 Agent', count_policy: '缺失与零值分支',
+  count_policy_v2: '缺失与零值分支 v2', count_sql_check: 'SQL 统计口径核验',
   count_generate: '按统计口径生成 SQL',
   split_intent: '姓名题意解析 Agent', split_fields: 'SQLite 姓名字段核对',
   split_fields_v2: '明确姓名请求与字段核对',
+  sql_review_draft: 'SQL 初稿 Agent', sql_review_audit: 'SQL 审查 Agent',
+  sql_review_gate: '题面依据与 SQLite 核验', sql_review_confirm: '修订确认 Agent',
+  sql_review_execute: '执行最终 SQL',
   split_decide: '多列处理判断 Agent', split_contract: '输出列约束或回退',
   split_generate: '按列约束生成 SQL', split_execute: '执行与返回列检查',
   sort_intent: '排序题意解析 Agent', sort_probe: 'SQLite 排序列核验与取样',
   sort_direction: '替代字段排序判断 Agent', sort_generate: '按排序约束生成 SQL',
   sort_meaning_v2: '字段含义与方向判断 Agent',
+  sort_select_v3: '排序要求提取 Agent', sort_verify_v3: 'SQLite 候选列核对',
+  sort_finalize_v3: '最终排序方向 Agent',
   sort_execute: '执行 SQLite 查询',
   column_intent: '筛选列解析 Agent', column_probe: 'SQLite 跨列查值',
   column_generate: '按列证据生成 SQL', column_execute: '只读执行 SQLite',
+  column_draft_v2: 'SQL 初稿 Agent', column_inspect_v2: 'SQLite 筛选列核验',
+  column_revise_v2: '局部修正或条件复核', column_execute_v2: '执行最终 SQL',
   filter_count_intent: '筛选与计数解析 Agent', filter_count_verify: 'SQLite 筛选与统计核验',
   filter_count_generate: '按筛选和计数约束生成 SQL', filter_count_execute: '检查并执行 SQLite',
   top_n_intent: 'Top N 题意解析 Agent', top_n_inspect: 'SQLite 字段与重复核验',
   top_n_policy: '结果单位分支', top_n_generate: '按已确认单位生成 SQL',
   top_n_execute: '执行并核对结果',
+  top_n_intent_v3: 'Top N 结果单位与显示解析',
+  top_n_inspect_v3: 'SQLite 表列与口径核验 v3',
+  top_n_policy_v3: '确认结果单位和并列规则',
+  top_n_generate_v3: '按计划生成 SQL 或回退',
+  top_n_execute_v3: '执行 Top N 查询 v3',
 };
 type Kind = keyof typeof labels;
 type Link = { source: string; target: string };
@@ -65,18 +78,26 @@ const nodeColors: Record<Kind, string> = { extract: '#345ba0', lookup: '#128266'
   boolean_extract: '#345ba0', boolean_lookup: '#128266', boolean_generate: '#345ba0',
   evidence_extract: '#345ba0', evidence_lookup: '#128266', evidence_generate: '#345ba0',
   count_intent: '#345ba0', count_policy: '#128266', count_generate: '#345ba0',
+  count_policy_v2: '#128266', count_sql_check: '#128266',
   split_intent: '#345ba0', split_fields: '#128266', split_decide: '#345ba0',
   split_fields_v2: '#128266',
+  sql_review_draft: '#345ba0', sql_review_audit: '#345ba0', sql_review_gate: '#128266',
+  sql_review_confirm: '#345ba0', sql_review_execute: '#128266',
   split_contract: '#965b17', split_generate: '#345ba0', split_execute: '#128266',
   sort_intent: '#345ba0', sort_probe: '#128266', sort_direction: '#345ba0',
   sort_meaning_v2: '#345ba0',
+  sort_select_v3: '#345ba0', sort_verify_v3: '#128266', sort_finalize_v3: '#345ba0',
   sort_generate: '#345ba0', sort_execute: '#128266',
   column_intent: '#345ba0', column_probe: '#128266',
   column_generate: '#345ba0', column_execute: '#128266',
+  column_draft_v2: '#345ba0', column_inspect_v2: '#128266',
+  column_revise_v2: '#965b17', column_execute_v2: '#128266',
   filter_count_intent: '#345ba0', filter_count_verify: '#128266',
   filter_count_generate: '#345ba0', filter_count_execute: '#128266',
   top_n_intent: '#345ba0', top_n_inspect: '#128266', top_n_policy: '#965b17',
-  top_n_generate: '#345ba0', top_n_execute: '#128266' };
+  top_n_generate: '#345ba0', top_n_execute: '#128266',
+  top_n_intent_v3: '#345ba0', top_n_inspect_v3: '#128266', top_n_policy_v3: '#965b17',
+  top_n_generate_v3: '#128266', top_n_execute_v3: '#128266' };
 const graphLabels: Record<string, string> = { baseline: '单 Agent 基线', value: '真实库值',
   plan: '输出与关联规划', review: '语义复核', without_values: '查值消融', same_evidence: '同证据单 Agent',
   literal_check: '文本值修正', year_check: '年份修正', guarded_local: '文本与年份修正',
@@ -88,14 +109,21 @@ const graphLabels: Record<string, string> = { baseline: '单 Agent 基线', valu
   filter_boolean: '第 4 题 · 布尔字段编码核验',
   filter_boolean_evidence: '第 4 题 · 不确定筛选列取样第二版',
   count_scope: '第 5 题 · 缺失明细与零值',
+  count_scope_v2: '第 5 题 · 缺失明细与零值 v2',
+  count_scope_v3: '第 5 题 · 缺失明细与零值 v3',
   split_output: '第 6 题 · 姓名分列与拼接',
   split_output_v2: '第 6 题 · 姓名分列与拼接 v2',
+  split_output_v3: '第 6 题 · SQL 生成后审查 v3',
   top_n: '第 7 题 · Top N 批测与回退',
   top_n_interactive: '第 7 题 · Top N 交互澄清',
   top_n_original: '第 7 题 · 原题按姓名和排名',
+  top_n_v3: '第 7 题 · 通用 Top N 结果单位 v3',
+  top_n_v3_interactive: '第 7 题 · 通用 Top N 澄清 v3',
   sort_direction: '第 8 题 · 替代字段排序方向',
   sort_meaning_v2: '第 8 题 · 字段含义与排序方向 v2',
+  sort_direction_v3: '第 8 题 · 原文提取与最终方向 v3',
   filter_column: '第 9 题 · 筛选列核验',
+  filter_column_v2: '第 9 题 · 初稿筛选列核验与局部修正',
   filter_count: '第 10 题 · 筛选条件与计数对象' };
 const splitPositions: Partial<Record<Kind, readonly [number, number]>> = {
   split_intent: [86, 90], split_fields: [275, 90], split_decide: [464, 90],
@@ -139,10 +167,17 @@ const projectionNotes: Partial<Record<Kind, string>> = {
   evidence_generate: '根据题面、表结构和观察值生成 SQL。证据为空时使用基线提示。',
   count_intent: '判断计数是返回项、筛选条件或两者，并输出表列、比较和题面证据。',
   count_policy: '用当前 SQLite 表结构核验关联。按题意分流到有明细、保留零值或回退。',
+  count_policy_v2: '核对单一明细关系和数量上限。口径未明时应用 Dr.Spider 的有明细默认口径。',
+  count_sql_check: '读取统计口径和生成 SQL。仅核验已确认的简单连接或全局最值形状。',
   count_generate: '有明确口径时带入已核验关联和统计约束，不确定时使用原生成提示。',
   split_intent: '从当侧题面提取姓名的输出或筛选用途、候选字段和题面原文。',
   split_fields: '核对实际表列，区分单列、同一姓名的多个组成列和回退。',
   split_fields_v2: '题面明确请求某实体的姓名时直接核对唯一表列。其他题面沿用 Agent 候选核验。',
+  sql_review_draft: '用题面与当前 schema 生成独立 SQL 初稿。',
+  sql_review_audit: '根据题面与 schema 核对初稿，保留或提出一处修订并引用题面依据。',
+  sql_review_gate: '核验题面引文、SQL 语句形态与 SQLite 查询计划。',
+  sql_review_confirm: '仅对通过核验的提案确认是否解决明确冲突、保留其他语义。',
+  sql_review_execute: '执行已确定的最终 SQL，流程结束后才进行离线评分。',
   split_decide: '只在核验出多个组成列时调用。判断分列返回、组合查找、明确合并显示或回退。',
   split_contract: '将经过核验的决策转换为 SQL 生成约束。单列或不确定时沿原生成路径。',
   split_generate: '用当前题面、表结构及可用约束生成一条 SQL。',
@@ -151,12 +186,19 @@ const projectionNotes: Partial<Record<Kind, string>> = {
   sort_probe: '核对当前表列。仅在相似字段分支读取实际值和存储类型。',
   sort_direction: '仅在取得相似字段证据时调用。判断方向同向、反向或回退。',
   sort_meaning_v2: '先根据字段名、表结构与真实值解释列义，再判断排序关系。证据不足时回退。',
+  sort_select_v3: '保留题面的排序原文，只提取排序量和候选列。',
+  sort_verify_v3: '核对当前 SQLite 字段。相似字段补充实际值。',
+  sort_finalize_v3: '直接字段沿用明确的题面方向；相似字段由模型判断一次最终方向。',
   sort_generate: '按核实的列和方向生成 SQL，证据不足时使用基线提示。',
   sort_execute: '只读执行 SQL 并返回查询结果。',
   column_intent: '读取当侧题面和表结构，识别返回项、筛选逻辑与文本条件的候选列。',
   column_probe: '只读比较各候选列的精确命中和归一化命中。',
   column_generate: '结合已核验的列值、字段含义和题面的完整条件生成 SQL。',
   column_execute: '在当前 SQLite 中只读执行 SQL 并返回结果。',
+  column_draft_v2: '按当侧题面和 schema 生成基线 SQL 初稿。',
+  column_inspect_v2: '定位初稿 WHERE 中的文本等值条件，核验当前列和同表候选的真实库值。',
+  column_revise_v2: '证据明确时只换一处列名。有语义歧义时由复核 Agent 选择候选。SQLite 检查通过后采用修订。',
+  column_execute_v2: '执行最终 SQL，记录采用修订还是保留初稿。',
   filter_count_intent: '读取当前题面和表结构，输出所有筛选条件和要统计的实体。',
   filter_count_verify: '核对统计对象和筛选列，查库定位唯一赛事及左右手编码。',
   filter_count_generate: '根据当前题面、表结构和已核验的条件与统计对象生成 SQL。',
@@ -166,6 +208,11 @@ const projectionNotes: Partial<Record<Kind, string>> = {
   top_n_policy: '口径明确时采用组合或选手粒度。口径不明时按预设回退或追问。',
   top_n_generate: '把已确认的结果单位交给 SQL 生成。澄清分支跳过模型调用。',
   top_n_execute: '只读执行，记录结果形状及重复检查。澄清时返回问题。',
+  top_n_intent_v3: '分别提取去重键、显示列、排序列、条数、原文证据。',
+  top_n_inspect_v3: '确认表列和题面证据，核对结果单位与显示列。',
+  top_n_policy_v3: '判定能否按确认的单位执行，并检查截取边界和代表记录并列。',
+  top_n_generate_v3: '已核验的简单计划使用程序生成的 SQL，缺证据时调用基线生成。',
+  top_n_execute_v3: '只读执行并记录路径，交互模式可回传澄清。',
 };
 const PortContext = createContext<Ports | null>(null);
 
@@ -254,15 +301,22 @@ export default function Task2Canvas() {
       if (!response.ok) throw new Error('无法获取实验节点与开发题');
       const data: Catalog = await response.json();
       const requested = new URLSearchParams(window.location.search).get('case');
-      const key = requested === 'top_n_original' && data.graphs.top_n_original ? 'top_n_original'
+      const key = requested === 'top_n_v3' && data.graphs.top_n_v3 ? 'top_n_v3'
+        : requested === 'top_n_v3_interactive' && data.graphs.top_n_v3_interactive ? 'top_n_v3_interactive'
+        : requested === 'top_n_original' && data.graphs.top_n_original ? 'top_n_original'
         : requested === 'top_n_interactive' && data.graphs.top_n_interactive ? 'top_n_interactive'
         : requested === 'top_n' && data.graphs.top_n ? 'top_n'
         : requested === 'filter_count' && data.graphs.filter_count ? 'filter_count'
+        : requested === 'sort_direction_v3' && data.graphs.sort_direction_v3 ? 'sort_direction_v3'
         : requested === 'sort_meaning_v2' && data.graphs.sort_meaning_v2 ? 'sort_meaning_v2'
+        : requested === 'filter_column_v2' && data.graphs.filter_column_v2 ? 'filter_column_v2'
         : requested === 'filter_column' && data.graphs.filter_column ? 'filter_column'
         : requested === 'sort_direction' && data.graphs.sort_direction ? 'sort_direction'
+        : requested === 'split_output_v3' && data.graphs.split_output_v3 ? 'split_output_v3'
         : requested === 'split_output_v2' && data.graphs.split_output_v2 ? 'split_output_v2'
         : requested === 'split_output' && data.graphs.split_output ? 'split_output'
+        : requested === 'count_scope_v3' && data.graphs.count_scope_v3 ? 'count_scope_v3'
+        : requested === 'count_scope_v2' && data.graphs.count_scope_v2 ? 'count_scope_v2'
         : requested === 'count_scope' && data.graphs.count_scope ? 'count_scope'
         : requested === 'filter_boolean_evidence' && data.graphs.filter_boolean_evidence ? 'filter_boolean_evidence'
         : requested === 'filter_boolean' && data.graphs.filter_boolean ? 'filter_boolean'
@@ -271,12 +325,12 @@ export default function Task2Canvas() {
         : requested === 'projection_v2' && data.graphs.projection_v2 ? 'projection_v2'
         : requested === 'projection' && data.graphs.projection ? 'projection' : 'value';
       setCatalog(data);
-      setSample((key === 'top_n' || key === 'top_n_interactive' || key === 'top_n_original') ? 'SQL_NonDB_number-00054-post'
+      setSample(key.startsWith('top_n') ? 'SQL_NonDB_number-00054-post'
         : key === 'filter_count' ? 'NLQ_keyword_carrier-00248-post'
-        : key === 'filter_column' ? 'SQL_DB_text-00048-post'
-        : (key === 'sort_direction' || key === 'sort_meaning_v2') ? 'DB_DBcontent_equivalence-00304-post'
-        : key === 'split_output' || key === 'split_output_v2' ? 'DB_DBcontent_equivalence-00125-post'
-        : key === 'count_scope' ? 'SQL_comparison-00133-post'
+        : (key === 'filter_column' || key === 'filter_column_v2') ? 'SQL_DB_text-00048-post'
+        : (key === 'sort_direction' || key === 'sort_meaning_v2' || key === 'sort_direction_v3') ? 'DB_DBcontent_equivalence-00304-post'
+        : key === 'split_output' || key === 'split_output_v2' || key === 'split_output_v3' ? 'DB_DBcontent_equivalence-00125-post'
+        : key === 'count_scope' || key === 'count_scope_v2' || key === 'count_scope_v3' ? 'SQL_comparison-00133-post'
         : (key === 'filter_boolean' || key === 'filter_boolean_evidence') ? 'DB_DBcontent_equivalence-00143-post'
         : key === 'filter_synonym' ? 'NLQ_value_synonym-00162-post'
         : key === 'filter_format' ? 'NLQ_column_value-00205-post'

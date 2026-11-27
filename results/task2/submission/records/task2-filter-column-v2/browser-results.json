@@ -1,0 +1,601 @@
+[
+  {
+    "condition": "canvas",
+    "side": "post",
+    "request": {
+      "sample_id": "SQL_DB_text-00048-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "draft",
+            "kind": "column_draft_v2"
+          },
+          {
+            "id": "inspect",
+            "kind": "column_inspect_v2"
+          },
+          {
+            "id": "revise",
+            "kind": "column_revise_v2"
+          },
+          {
+            "id": "execute",
+            "kind": "column_execute_v2"
+          }
+        ],
+        "links": [
+          {
+            "source": "draft",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "revise"
+          },
+          {
+            "source": "revise",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_DB_text-00048-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "draft",
+          "kind": "column_draft_v2"
+        },
+        {
+          "id": "inspect",
+          "kind": "column_inspect_v2"
+        },
+        {
+          "id": "revise",
+          "kind": "column_revise_v2"
+        },
+        {
+          "id": "execute",
+          "kind": "column_execute_v2"
+        }
+      ],
+      "links": [
+        {
+          "source": "draft",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "revise"
+        },
+        {
+          "source": "revise",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "9538de83a5c2403a977506987293232f",
+    "graph_sha256": "064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+    "steps": [
+      {
+        "id": "draft",
+        "kind": "column_draft_v2",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.Maker = 'Honda'\n   OR cd.Weight > 3500;"
+        },
+        "elapsed_s": 17.61187770000106
+      },
+      {
+        "id": "inspect",
+        "kind": "column_inspect_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "draft"
+        ],
+        "output": {
+          "draft": {
+            "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.Maker = 'Honda'\n   OR cd.Weight > 3500;"
+          },
+          "route": "auto",
+          "reason": "same_row_verified_full_name",
+          "options": [
+            {
+              "table": "car_makers",
+              "source": "Maker",
+              "target": "FullName",
+              "term": "Honda",
+              "source_normalized": [
+                "honda"
+              ],
+              "same_row_full_name": true,
+              "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda'\n   OR cd.Weight > 3500;"
+            }
+          ]
+        },
+        "elapsed_s": 0.011630900000454858
+      },
+      {
+        "id": "revise",
+        "kind": "column_revise_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "final": {
+            "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda'\n   OR cd.Weight > 3500;"
+          },
+          "revision": "patched",
+          "route": "auto",
+          "chosen": 0
+        },
+        "elapsed_s": 0.0007220000006782357
+      },
+      {
+        "id": "execute",
+        "kind": "column_execute_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "revise"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda'\n   OR cd.Weight > 3500;",
+          "rows": [
+            [
+              "chevrolet"
+            ],
+            [
+              "buick"
+            ],
+            [
+              "ford"
+            ],
+            [
+              "plymouth"
+            ],
+            [
+              "pontiac"
+            ],
+            [
+              "amc"
+            ],
+            [
+              "dodge"
+            ],
+            [
+              "mercury"
+            ],
+            [
+              "oldsmobile"
+            ],
+            [
+              "chrysler"
+            ],
+            [
+              "honda"
+            ],
+            [
+              "mercedes-benz"
+            ],
+            [
+              "cadillac"
+            ],
+            [
+              "mercedes"
+            ]
+          ],
+          "columns": [
+            "Model"
+          ],
+          "revision": "patched",
+          "row_count": 14
+        },
+        "elapsed_s": 0.0009537999976600986
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 14,
+      "prediction_rows": 14
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 4955
+    },
+    "course_flow_id": "TASK2_CANVAS_064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+    "course_flow": {
+      "id": "TASK2_CANVAS_064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_draft",
+          "type": "event",
+          "title": "draft",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_revise",
+          "type": "event",
+          "title": "revise",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_draft"
+        },
+        {
+          "source": "canvas_draft",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_revise"
+        },
+        {
+          "source": "canvas_revise",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "condition": "canvas",
+    "side": "pre",
+    "request": {
+      "sample_id": "SQL_DB_text-00048-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "draft",
+            "kind": "column_draft_v2"
+          },
+          {
+            "id": "inspect",
+            "kind": "column_inspect_v2"
+          },
+          {
+            "id": "revise",
+            "kind": "column_revise_v2"
+          },
+          {
+            "id": "execute",
+            "kind": "column_execute_v2"
+          }
+        ],
+        "links": [
+          {
+            "source": "draft",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "revise"
+          },
+          {
+            "source": "revise",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_DB_text-00048-pre",
+    "graph": {
+      "nodes": [
+        {
+          "id": "draft",
+          "kind": "column_draft_v2"
+        },
+        {
+          "id": "inspect",
+          "kind": "column_inspect_v2"
+        },
+        {
+          "id": "revise",
+          "kind": "column_revise_v2"
+        },
+        {
+          "id": "execute",
+          "kind": "column_execute_v2"
+        }
+      ],
+      "links": [
+        {
+          "source": "draft",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "revise"
+        },
+        {
+          "source": "revise",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "2abe636161a94dc5bf8130cad4671ffd",
+    "graph_sha256": "064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+    "steps": [
+      {
+        "id": "draft",
+        "kind": "column_draft_v2",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--"
+        },
+        "elapsed_s": 3.5901653000000806
+      },
+      {
+        "id": "inspect",
+        "kind": "column_inspect_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "draft"
+        ],
+        "output": {
+          "draft": {
+            "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--"
+          },
+          "route": "keep",
+          "reason": "unsupported_or_invalid_draft",
+          "options": []
+        },
+        "elapsed_s": 0.0017624000029172748
+      },
+      {
+        "id": "revise",
+        "kind": "column_revise_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "final": {
+            "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--"
+          },
+          "revision": "kept",
+          "route": "keep"
+        },
+        "elapsed_s": 0.000008299997716676444
+      },
+      {
+        "id": "execute",
+        "kind": "column_execute_v2",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "revise"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nLEFT JOIN model_list AS ml ON cn.Model = ml.Model\nLEFT JOIN car_makers AS cm ON ml.Maker = cm.Id\nLEFT JOIN cars_data AS cd ON cn.MakeId = cd.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;\n--",
+          "rows": [
+            [
+              "chevrolet"
+            ],
+            [
+              "buick"
+            ],
+            [
+              "ford"
+            ],
+            [
+              "plymouth"
+            ],
+            [
+              "pontiac"
+            ],
+            [
+              "amc"
+            ],
+            [
+              "dodge"
+            ],
+            [
+              "hi"
+            ],
+            [
+              "mercury"
+            ],
+            [
+              "oldsmobile"
+            ],
+            [
+              "chrysler"
+            ],
+            [
+              "mercedes-benz"
+            ],
+            [
+              "cadillac"
+            ],
+            [
+              "mercedes"
+            ]
+          ],
+          "columns": [
+            "Model"
+          ],
+          "revision": "kept",
+          "row_count": 14
+        },
+        "elapsed_s": 0.0014938000022084452
+      }
+    ],
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 13,
+      "prediction_rows": 14
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 7381
+    },
+    "course_flow_id": "TASK2_CANVAS_064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+    "course_flow": {
+      "id": "TASK2_CANVAS_064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_draft",
+          "type": "event",
+          "title": "draft",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_revise",
+          "type": "event",
+          "title": "revise",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_draft"
+        },
+        {
+          "source": "canvas_draft",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_revise"
+        },
+        {
+          "source": "canvas_revise",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

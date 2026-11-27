@@ -1,0 +1,576 @@
+{
+  "kind": "archived draft and scripted review; SQLite actually executed",
+  "new_model_calls": 0,
+  "cases": {
+    "DB_DBcontent_equivalence-00125-pre": {
+      "initial": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "final": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "steps": [
+        {
+          "id": "draft",
+          "kind": "sql_review_draft",
+          "hint": "",
+          "probe": false,
+          "from": [],
+          "output": {
+            "sql": "SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+          },
+          "call": {
+            "request": {
+              "model": "gpt-6-sol",
+              "stream": false,
+              "messages": [
+                {
+                  "role": "system",
+                  "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+                },
+                {
+                  "role": "user",
+                  "content": "Schema\nCREATE TABLE \"museum\" (\"Museum_ID\" int,\"Name\" text,\"Num_of_Staff\" int,\"Open_Year\" text,PRIMARY KEY (\"Museum_ID\"))\nCREATE TABLE \"visit\" (\"Museum_ID\" int,\"visitor_ID\" text,\"Num_of_Ticket\" int,\"Total_spent\" real,PRIMARY KEY (\"Museum_ID\",\"visitor_ID\"),FOREIGN KEY (\"Museum_ID\") REFERENCES \"museum\" (\"Museum_ID\"),FOREIGN KEY (\"visitor_ID\") REFERENCES \"visitor\" (\"ID\"))\nCREATE TABLE \"visitor\" (\"ID\" int,\"Name\" text,\"Level_of_membership\" int,\"Age\" int,PRIMARY KEY (\"ID\"))\nQuestion\nWhat is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?"
+                }
+              ]
+            },
+            "response": {
+              "id": "resp_ft_cbb62e16864342699e544c5b93de26fe",
+              "object": "chat.completion",
+              "created": 1795662672,
+              "model": "gpt-6-sol",
+              "choices": [
+                {
+                  "index": 0,
+                  "message": {
+                    "role": "assistant",
+                    "content": " SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+                  },
+                  "finish_reason": "stop"
+                }
+              ],
+              "usage": {
+                "prompt_tokens": 4572,
+                "completion_tokens": 125,
+                "total_tokens": 4697,
+                "prompt_tokens_details": {
+                  "cache_write_tokens_details": {
+                    "ttl_30m_tokens": 0,
+                    "ttl_12h_tokens": 0
+                  },
+                  "cached_tokens": 2560
+                }
+              },
+              "service_tier": "default"
+            },
+            "usage": {
+              "prompt_tokens": 4572,
+              "completion_tokens": 125,
+              "total_tokens": 4697,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 2560
+              }
+            },
+            "model": "gpt-6-sol",
+            "fingerprint": null
+          }
+        },
+        {
+          "id": "audit",
+          "kind": "sql_review_audit",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "draft"
+          ],
+          "output": {
+            "draft": {
+              "sql": "SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "proposal": {
+              "action": "keep",
+              "reason": "The stored complete name is already selected."
+            }
+          },
+          "call": {
+            "request": {
+              "model": "gpt-6-sol",
+              "stream": false,
+              "messages": [
+                {
+                  "role": "system",
+                  "content": "Audit the draft SQLite query against an independent reading of the question and current schema. Consider selected columns, population, filters, joins, result grain, aggregation, duplicate handling and order. Preserve the draft if sound, uncertain, or the proposed change depends on unavailable data or an unspecified sort direction. A clear issue merits at most one minimal revision. Preserve unrelated clauses. Return a single JSON object. Keep uses {\"action\":\"keep\",\"reason\":\"...\"}. Revise uses {\"action\":\"revise\",\"dimension\":\"projection|filter|join|grouping|distinct|order|limit|syntax\",\"quote\":\"exact contiguous words copied from the question\",\"reason\":\"specific conflict and schema evidence\",\"sql\":\"one complete read-only SQLite SELECT\"}. Do not answer the query. Experiment output convention: if a requested person name is represented only by separate first/middle/last name fields for one entity, return the stored components in order, unless the question explicitly requests one combined display value. Keep lookup expressions independent of final projection. If a single stored complete name exists, keep it as one requested field."
+                },
+                {
+                  "role": "user",
+                  "content": "Schema\nCREATE TABLE \"museum\" (\"Museum_ID\" int,\"Name\" text,\"Num_of_Staff\" int,\"Open_Year\" text,PRIMARY KEY (\"Museum_ID\"))\nCREATE TABLE \"visit\" (\"Museum_ID\" int,\"visitor_ID\" text,\"Num_of_Ticket\" int,\"Total_spent\" real,PRIMARY KEY (\"Museum_ID\",\"visitor_ID\"),FOREIGN KEY (\"Museum_ID\") REFERENCES \"museum\" (\"Museum_ID\"),FOREIGN KEY (\"visitor_ID\") REFERENCES \"visitor\" (\"ID\"))\nCREATE TABLE \"visitor\" (\"ID\" int,\"Name\" text,\"Level_of_membership\" int,\"Age\" int,PRIMARY KEY (\"ID\"))\nQuestion\nWhat is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?\nSQL review input\n{\"draft_sql\": \"SELECT v.Name\\nFROM visitor AS v\\nWHERE EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) < 2009\\n)\\nAND EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) > 2011\\n);\"}"
+                }
+              ]
+            },
+            "response": {
+              "choices": [
+                {
+                  "finish_reason": "stop",
+                  "message": {
+                    "content": "{\"action\": \"keep\", \"reason\": \"The stored complete name is already selected.\"}"
+                  }
+                }
+              ]
+            },
+            "usage": null,
+            "model": null,
+            "fingerprint": null
+          }
+        },
+        {
+          "id": "gate",
+          "kind": "sql_review_gate",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "audit"
+          ],
+          "output": {
+            "draft": {
+              "sql": "SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "proposal": {
+              "action": "keep",
+              "reason": "The stored complete name is already selected."
+            },
+            "gate": "keep"
+          },
+          "call": null
+        },
+        {
+          "id": "confirm",
+          "kind": "sql_review_confirm",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "gate"
+          ],
+          "output": {
+            "draft": {
+              "sql": "SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "proposal": {
+              "action": "keep",
+              "reason": "The stored complete name is already selected."
+            },
+            "gate": "keep",
+            "final": {
+              "sql": "SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "revision": "skipped"
+          },
+          "call": null
+        },
+        {
+          "id": "execute",
+          "kind": "sql_review_execute",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "confirm"
+          ],
+          "output": {
+            "status": "executed",
+            "sql": "SELECT v.Name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);",
+            "rows": [
+              [
+                "Fernando Gago"
+              ]
+            ],
+            "columns": [
+              "Name"
+            ],
+            "revision": "skipped",
+            "gate": "keep"
+          },
+          "call": null
+        }
+      ]
+    },
+    "DB_DBcontent_equivalence-00125-post": {
+      "initial": {
+        "correct": false,
+        "status": "mismatch",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "final": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "steps": [
+        {
+          "id": "draft",
+          "kind": "sql_review_draft",
+          "hint": "",
+          "probe": false,
+          "from": [],
+          "output": {
+            "sql": "SELECT DISTINCT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+          },
+          "call": {
+            "request": {
+              "model": "gpt-6-sol",
+              "stream": false,
+              "messages": [
+                {
+                  "role": "system",
+                  "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+                },
+                {
+                  "role": "user",
+                  "content": "Schema\nCREATE TABLE \"museum\" (\"Museum_ID\" int,\"Name\" text,\"Num_of_Staff\" int,\"Open_Year\" text,PRIMARY KEY (\"Museum_ID\"))\nCREATE TABLE \"visit\" (\"Museum_ID\" int,\"visitor_ID\" text,\"Num_of_Ticket\" int,\"Total_spent\" real,PRIMARY KEY (\"Museum_ID\",\"visitor_ID\"),FOREIGN KEY (\"Museum_ID\") REFERENCES \"museum\" (\"Museum_ID\"),FOREIGN KEY (\"visitor_ID\") REFERENCES \"visitor\" (\"ID\"))\nCREATE TABLE \"visitor\" (\"ID\" int,\"first_name\" text,\"last_name\" text,\"Level_of_membership\" int,\"birthyear\" int,PRIMARY KEY (\"ID\"))\nQuestion\nWhat is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?"
+                }
+              ]
+            },
+            "response": {
+              "id": "resp_040cc8220b3d8f6a016b07a3499aa087d1932fa99061a9da11",
+              "object": "chat.completion",
+              "created": 1795662682,
+              "model": "gpt-6-sol",
+              "choices": [
+                {
+                  "index": 0,
+                  "message": {
+                    "role": "assistant",
+                    "content": "SELECT DISTINCT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);",
+                    "reasoning_content": "**Drafting SQL query for visitor museums**"
+                  },
+                  "finish_reason": "stop"
+                }
+              ],
+              "usage": {
+                "attribution": {
+                  "items": {
+                    "msg_040cc8220b3d8f6a016b07a3499adc87d18141c1f97e2c3ae7": {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0,
+                      "content": [
+                        {
+                          "input_tokens": 25,
+                          "cached_tokens": 0,
+                          "cache_write_tokens": 0,
+                          "output_tokens": 0
+                        }
+                      ]
+                    },
+                    "msg_040cc8220b3d8f6a016b07a3499adc87d1afdbcd3b063cdfca": {
+                      "input_tokens": 172,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0,
+                      "content": [
+                        {
+                          "input_tokens": 172,
+                          "cached_tokens": 0,
+                          "cache_write_tokens": 0,
+                          "output_tokens": 0
+                        }
+                      ]
+                    },
+                    "msg_040cc8220b3d8f6a016b07a357270087d1ab3b41fcc28094d4": {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 139,
+                      "content": [
+                        {
+                          "input_tokens": 0,
+                          "cached_tokens": 0,
+                          "cache_write_tokens": 0,
+                          "output_tokens": 139
+                        }
+                      ]
+                    },
+                    "rs_040cc8220b3d8f6a016b07a352b92087d1a3513a4a0f381cfa": {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 101
+                    }
+                  },
+                  "request_fields": {
+                    "instructions": {
+                      "input_tokens": 4380,
+                      "cached_tokens": 3712,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  }
+                },
+                "prompt_tokens": 4579,
+                "completion_tokens": 240,
+                "total_tokens": 4819,
+                "prompt_tokens_details": {
+                  "cache_write_tokens_details": {
+                    "ttl_30m_tokens": 0,
+                    "ttl_12h_tokens": 0
+                  },
+                  "cached_tokens": 3712
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 101
+                }
+              },
+              "service_tier": "default"
+            },
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_040cc8220b3d8f6a016b07a3499adc87d18141c1f97e2c3ae7": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_040cc8220b3d8f6a016b07a3499adc87d1afdbcd3b063cdfca": {
+                    "input_tokens": 172,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 172,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_040cc8220b3d8f6a016b07a357270087d1ab3b41fcc28094d4": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 139,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 139
+                      }
+                    ]
+                  },
+                  "rs_040cc8220b3d8f6a016b07a352b92087d1a3513a4a0f381cfa": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 101
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4579,
+              "completion_tokens": 240,
+              "total_tokens": 4819,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 101
+              }
+            },
+            "model": "gpt-6-sol",
+            "fingerprint": null
+          }
+        },
+        {
+          "id": "audit",
+          "kind": "sql_review_audit",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "draft"
+          ],
+          "output": {
+            "draft": {
+              "sql": "SELECT DISTINCT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "proposal": {
+              "action": "revise",
+              "dimension": "projection",
+              "quote": "name of the visitor",
+              "reason": "Keep the two stored name components as separate output columns.",
+              "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            }
+          },
+          "call": {
+            "request": {
+              "model": "gpt-6-sol",
+              "stream": false,
+              "messages": [
+                {
+                  "role": "system",
+                  "content": "Audit the draft SQLite query against an independent reading of the question and current schema. Consider selected columns, population, filters, joins, result grain, aggregation, duplicate handling and order. Preserve the draft if sound, uncertain, or the proposed change depends on unavailable data or an unspecified sort direction. A clear issue merits at most one minimal revision. Preserve unrelated clauses. Return a single JSON object. Keep uses {\"action\":\"keep\",\"reason\":\"...\"}. Revise uses {\"action\":\"revise\",\"dimension\":\"projection|filter|join|grouping|distinct|order|limit|syntax\",\"quote\":\"exact contiguous words copied from the question\",\"reason\":\"specific conflict and schema evidence\",\"sql\":\"one complete read-only SQLite SELECT\"}. Do not answer the query. Experiment output convention: if a requested person name is represented only by separate first/middle/last name fields for one entity, return the stored components in order, unless the question explicitly requests one combined display value. Keep lookup expressions independent of final projection. If a single stored complete name exists, keep it as one requested field."
+                },
+                {
+                  "role": "user",
+                  "content": "Schema\nCREATE TABLE \"museum\" (\"Museum_ID\" int,\"Name\" text,\"Num_of_Staff\" int,\"Open_Year\" text,PRIMARY KEY (\"Museum_ID\"))\nCREATE TABLE \"visit\" (\"Museum_ID\" int,\"visitor_ID\" text,\"Num_of_Ticket\" int,\"Total_spent\" real,PRIMARY KEY (\"Museum_ID\",\"visitor_ID\"),FOREIGN KEY (\"Museum_ID\") REFERENCES \"museum\" (\"Museum_ID\"),FOREIGN KEY (\"visitor_ID\") REFERENCES \"visitor\" (\"ID\"))\nCREATE TABLE \"visitor\" (\"ID\" int,\"first_name\" text,\"last_name\" text,\"Level_of_membership\" int,\"birthyear\" int,PRIMARY KEY (\"ID\"))\nQuestion\nWhat is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?\nSQL review input\n{\"draft_sql\": \"SELECT DISTINCT v.first_name || ' ' || v.last_name AS visitor_name\\nFROM visitor AS v\\nWHERE EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) < 2009\\n)\\nAND EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) > 2011\\n);\"}"
+                }
+              ]
+            },
+            "response": {
+              "choices": [
+                {
+                  "finish_reason": "stop",
+                  "message": {
+                    "content": "{\"action\": \"revise\", \"dimension\": \"projection\", \"quote\": \"name of the visitor\", \"reason\": \"Keep the two stored name components as separate output columns.\", \"sql\": \"SELECT v.first_name, v.last_name\\nFROM visitor AS v\\nWHERE EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) < 2009\\n)\\nAND EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) > 2011\\n);\"}"
+                  }
+                }
+              ]
+            },
+            "usage": null,
+            "model": null,
+            "fingerprint": null
+          }
+        },
+        {
+          "id": "gate",
+          "kind": "sql_review_gate",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "audit"
+          ],
+          "output": {
+            "draft": {
+              "sql": "SELECT DISTINCT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "proposal": {
+              "action": "revise",
+              "dimension": "projection",
+              "quote": "name of the visitor",
+              "reason": "Keep the two stored name components as separate output columns.",
+              "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "gate": "eligible"
+          },
+          "call": null
+        },
+        {
+          "id": "confirm",
+          "kind": "sql_review_confirm",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "gate"
+          ],
+          "output": {
+            "draft": {
+              "sql": "SELECT DISTINCT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "proposal": {
+              "action": "revise",
+              "dimension": "projection",
+              "quote": "name of the visitor",
+              "reason": "Keep the two stored name components as separate output columns.",
+              "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "gate": "eligible",
+            "final": {
+              "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+            },
+            "revision": "accepted",
+            "verdict": {
+              "accept": true,
+              "reason": "Only the output projection changes."
+            }
+          },
+          "call": {
+            "request": {
+              "model": "gpt-6-sol",
+              "stream": false,
+              "messages": [
+                {
+                  "role": "system",
+                  "content": "Check the one proposed revision against the question and current schema. Accept only if the identified conflict has clear support, the proposed SQL resolves it, and unrelated intent is preserved. Reject when interpretations are ambiguous or the proposal changes unrelated semantics. Return a single JSON object {\"accept\":true or false,\"reason\":\"specific review\"}. Do not write any SQL. Experiment output convention: if a requested person name is represented only by separate first/middle/last name fields for one entity, return the stored components in order, unless the question explicitly requests one combined display value. Keep lookup expressions independent of final projection. If a single stored complete name exists, keep it as one requested field."
+                },
+                {
+                  "role": "user",
+                  "content": "Schema\nCREATE TABLE \"museum\" (\"Museum_ID\" int,\"Name\" text,\"Num_of_Staff\" int,\"Open_Year\" text,PRIMARY KEY (\"Museum_ID\"))\nCREATE TABLE \"visit\" (\"Museum_ID\" int,\"visitor_ID\" text,\"Num_of_Ticket\" int,\"Total_spent\" real,PRIMARY KEY (\"Museum_ID\",\"visitor_ID\"),FOREIGN KEY (\"Museum_ID\") REFERENCES \"museum\" (\"Museum_ID\"),FOREIGN KEY (\"visitor_ID\") REFERENCES \"visitor\" (\"ID\"))\nCREATE TABLE \"visitor\" (\"ID\" int,\"first_name\" text,\"last_name\" text,\"Level_of_membership\" int,\"birthyear\" int,PRIMARY KEY (\"ID\"))\nQuestion\nWhat is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?\nSQL review input\n{\"draft_sql\": \"SELECT DISTINCT v.first_name || ' ' || v.last_name AS visitor_name\\nFROM visitor AS v\\nWHERE EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) < 2009\\n)\\nAND EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) > 2011\\n);\", \"proposal\": {\"action\": \"revise\", \"dimension\": \"projection\", \"quote\": \"name of the visitor\", \"reason\": \"Keep the two stored name components as separate output columns.\", \"sql\": \"SELECT v.first_name, v.last_name\\nFROM visitor AS v\\nWHERE EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) < 2009\\n)\\nAND EXISTS (\\n    SELECT 1\\n    FROM visit AS vi\\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\\n    WHERE vi.visitor_ID = v.ID\\n      AND CAST(m.Open_Year AS INTEGER) > 2011\\n);\"}}"
+                }
+              ]
+            },
+            "response": {
+              "choices": [
+                {
+                  "finish_reason": "stop",
+                  "message": {
+                    "content": "{\"accept\": true, \"reason\": \"Only the output projection changes.\"}"
+                  }
+                }
+              ]
+            },
+            "usage": null,
+            "model": null,
+            "fingerprint": null
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "sql_review_execute",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "confirm"
+          ],
+          "output": {
+            "status": "executed",
+            "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);",
+            "rows": [
+              [
+                "Fernando",
+                "Gago"
+              ]
+            ],
+            "columns": [
+              "first_name",
+              "last_name"
+            ],
+            "revision": "accepted",
+            "gate": "eligible"
+          },
+          "call": null
+        }
+      ]
+    }
+  }
+}

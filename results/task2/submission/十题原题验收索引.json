@@ -108,21 +108,21 @@
     "reference_sql": "SELECT COUNT(T2.Language) , T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name HAVING COUNT(*) < 2",
     "historical_baseline_sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
     "historical_baseline_status": "mismatch",
-    "canvas_preset": "count_scope",
+    "canvas_preset": "count_scope_v3",
     "canvas_score": {
       "correct": true,
       "status": "match",
       "reference_rows": 21,
       "prediction_rows": 21
     },
-    "canvas_sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl\n  ON c.Code = cl.CountryCode\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+    "canvas_sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
     "canvas_cost": {
       "model_calls": 2,
-      "total_tokens": 10214
+      "total_tokens": 16988
     },
-    "canvas_run_id": "ec5434f8dea74edc8a3cb680a5d5747e",
-    "source": "task2-count-scope-v1/visual-results.json",
-    "node_trace": "course-node-traces/ec5434f8dea74edc8a3cb680a5d5747e.json"
+    "canvas_run_id": "81011dbca6804c919bbd0fe9fb039a1e",
+    "source": "task2-count-scope-revisions/comparison.json",
+    "node_trace": "task2-count-scope-revisions/comparison.json"
   },
   {
     "index": 6,
@@ -133,21 +133,21 @@
     "reference_sql": "SELECT visitor.first_name , visitor.last_name FROM visitor JOIN visit ON visitor.ID = visit.visitor_ID JOIN museum ON museum.Museum_ID = visit.Museum_ID WHERE museum.Open_Year < 2009 INTERSECT SELECT visitor.first_name , visitor.last_name FROM visitor JOIN visit ON visitor.ID = visit.visitor_ID JOIN museum ON museum.Museum_ID = visit.Museum_ID WHERE museum.Open_Year > 2011",
     "historical_baseline_sql": "SELECT v.first_name || ' ' || v.last_name AS name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.first_name, v.last_name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;",
     "historical_baseline_status": "mismatch",
-    "canvas_preset": "split_output_v2",
+    "canvas_preset": "split_output_v3",
     "canvas_score": {
       "correct": true,
       "status": "match",
       "reference_rows": 1,
       "prediction_rows": 1
     },
-    "canvas_sql": "SELECT v.first_name, v.last_name\nFROM visitor v\nJOIN visit vi1 ON v.ID = vi1.visitor_ID\nJOIN museum m1 ON vi1.Museum_ID = m1.Museum_ID\nJOIN visit vi2 ON v.ID = vi2.visitor_ID\nJOIN museum m2 ON vi2.Museum_ID = m2.Museum_ID\nWHERE CAST(m1.Open_Year AS int) < 2009 AND CAST(m2.Open_Year AS int) > 2011\nGROUP BY v.ID, v.first_name, v.last_name;",
+    "canvas_sql": "SELECT DISTINCT v.first_name, v.last_name\nFROM visitor AS v\nJOIN visit AS v_before ON v_before.visitor_ID = v.ID\nJOIN museum AS m_before ON m_before.Museum_ID = v_before.Museum_ID\nJOIN visit AS v_after ON v_after.visitor_ID = v.ID\nJOIN museum AS m_after ON m_after.Museum_ID = v_after.Museum_ID\nWHERE CAST(m_before.Open_Year AS INTEGER) < 2009\n  AND CAST(m_after.Open_Year AS INTEGER) > 2011;",
     "canvas_cost": {
       "model_calls": 3,
-      "total_tokens": 11271
+      "total_tokens": 20915
     },
-    "canvas_run_id": "f152a1f0cc7d4703b2a8ed50b5095689",
-    "source": "task2-split-output-v2/browser-results.json",
-    "node_trace": "course-node-traces/f152a1f0cc7d4703b2a8ed50b5095689.json"
+    "canvas_run_id": "6173b3f651b644b7bcb191e5f42be848",
+    "source": "task2-split-output-v3/browser-results.json",
+    "node_trace": "task2-split-output-v3/browser-results.json"
   },
   {
     "index": 7,
@@ -183,7 +183,7 @@
     "reference_sql": "SELECT orchestra.Record_Company FROM orchestra ORDER BY orchestra.year_of_existence asc",
     "historical_baseline_sql": "SELECT Record_Company\nFROM orchestra\nORDER BY year_of_existence DESC;",
     "historical_baseline_status": "mismatch",
-    "canvas_preset": "sort_meaning_v2",
+    "canvas_preset": "sort_direction_v3",
     "canvas_score": {
       "correct": true,
       "status": "match",
@@ -193,11 +193,11 @@
     "canvas_sql": "SELECT \"Record_Company\"\nFROM \"orchestra\"\nORDER BY \"year_of_existence\" ASC;",
     "canvas_cost": {
       "model_calls": 3,
-      "total_tokens": 21183
+      "total_tokens": 15262
     },
-    "canvas_run_id": "76dabe94bfe444569815c5f036243c52",
-    "source": "task2-sort-direction-v2/browser-results.json",
-    "node_trace": "course-node-traces/76dabe94bfe444569815c5f036243c52.json"
+    "canvas_run_id": "ed16e2739ab34aa78d72082407015f0f",
+    "source": "task2-sort-direction-v3/browser-results.json",
+    "node_trace": "task2-sort-direction-v3/browser-results.json"
   },
   {
     "index": 9,
@@ -208,7 +208,7 @@
     "reference_sql": "SELECT DISTINCT T2.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model = T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker = T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId = T4.Id WHERE T3.FullName = 'Honda' OR T4.weight > 3500",
     "historical_baseline_sql": "SELECT DISTINCT ml.\"Model\"\nFROM \"model_list\" AS ml\nJOIN \"car_makers\" AS cm ON cm.\"Id\" = ml.\"Maker\"\nWHERE cm.\"Maker\" = 'Honda'\n   OR EXISTS (\n       SELECT 1\n       FROM \"car_names\" AS cn\n       JOIN \"cars_data\" AS cd ON cd.\"Id\" = cn.\"MakeId\"\n       WHERE cn.\"Model\" = ml.\"Model\"\n         AND cd.\"Weight\" > 3500\n   );",
     "historical_baseline_status": "mismatch",
-    "canvas_preset": "filter_column",
+    "canvas_preset": "filter_column_v2",
     "canvas_score": {
       "correct": true,
       "status": "match",
@@ -217,12 +217,12 @@
     },
     "canvas_sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda'\n   OR cd.Weight > 3500;",
     "canvas_cost": {
-      "model_calls": 2,
-      "total_tokens": 9976
+      "model_calls": 1,
+      "total_tokens": 4955
     },
-    "canvas_run_id": "d5fe8061e24d496da6c4bedd23d9798c",
-    "source": "task2-filter-column-v1/browser-results.json",
-    "node_trace": "task2-filter-column-v1/browser-results.json"
+    "canvas_run_id": "9538de83a5c2403a977506987293232f",
+    "source": "task2-filter-column-v2/browser-results.json",
+    "node_trace": "task2-filter-column-v2/browser-results.json"
   },
   {
     "index": 10,

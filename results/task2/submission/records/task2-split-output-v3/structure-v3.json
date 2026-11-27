@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {
+      "id": "draft",
+      "kind": "sql_review_draft"
+    },
+    {
+      "id": "audit",
+      "kind": "sql_review_audit"
+    },
+    {
+      "id": "gate",
+      "kind": "sql_review_gate"
+    },
+    {
+      "id": "confirm",
+      "kind": "sql_review_confirm"
+    },
+    {
+      "id": "execute",
+      "kind": "sql_review_execute"
+    }
+  ],
+  "links": [
+    {
+      "source": "draft",
+      "target": "audit"
+    },
+    {
+      "source": "gate",
+      "target": "confirm"
+    },
+    {
+      "source": "confirm",
+      "target": "execute"
+    },
+    {
+      "source": "audit",
+      "target": "gate"
+    }
+  ]
+}

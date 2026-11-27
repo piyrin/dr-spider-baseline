@@ -1,0 +1,1815 @@
+{
+  "calls": {
+    "new": 102,
+    "reused": 42
+  },
+  "groups": {
+    "原题": {
+      "none": {
+        "arms": {
+          "baseline": {
+            "n": 1,
+            "states": {
+              "CW": 1
+            },
+            "clean": 1,
+            "post": 0,
+            "both": 0,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 4653.5,
+              "completion_tokens": 44.5,
+              "total_tokens": 4698
+            },
+            "token_coverage": 2,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v1": {
+            "n": 1,
+            "states": {
+              "CW": 1
+            },
+            "clean": 1,
+            "post": 0,
+            "both": 0,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 12708.5,
+              "completion_tokens": 308.5,
+              "total_tokens": 13017
+            },
+            "token_coverage": 2,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v2": {
+            "n": 1,
+            "states": {
+              "CC": 1
+            },
+            "clean": 1,
+            "post": 1,
+            "both": 1,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 15749.5,
+              "completion_tokens": 339.5,
+              "total_tokens": 16089
+            },
+            "token_coverage": 2,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v3": {
+            "n": 1,
+            "states": {
+              "CW": 1
+            },
+            "clean": 1,
+            "post": 0,
+            "both": 0,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 12483,
+              "completion_tokens": 194.5,
+              "total_tokens": 12677.5
+            },
+            "token_coverage": 2,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          }
+        },
+        "v2_to_v3": {
+          "n": 1,
+          "repair": 0,
+          "harm_post": 1,
+          "harm_pre": 0,
+          "all_pre_regressions": 0,
+          "post_repair": 0,
+          "post_regression": 1,
+          "net_cc": -1,
+          "cc_delta_ci": [
+            -1,
+            -1
+          ],
+          "transitions": {
+            "CC": {
+              "CC": 0,
+              "CW": 1,
+              "WC": 0,
+              "WW": 0
+            },
+            "CW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WC": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            }
+          },
+          "median_total_token_delta": -3411.5,
+          "token_delta_coverage": 2
+        }
+      },
+      "high": {
+        "arms": {
+          "baseline": {
+            "n": 1,
+            "states": {
+              "CW": 1
+            },
+            "clean": 1,
+            "post": 0,
+            "both": 0,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 4653.5,
+              "completion_tokens": 79.5,
+              "total_tokens": 4733
+            },
+            "token_coverage": 2,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v1": {
+            "n": 1,
+            "states": {
+              "CW": 1
+            },
+            "clean": 1,
+            "post": 0,
+            "both": 0,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 17906,
+              "completion_tokens": 467.5,
+              "total_tokens": 18373.5
+            },
+            "token_coverage": 2,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v2": {
+            "n": 1,
+            "states": {
+              "CC": 1
+            },
+            "clean": 1,
+            "post": 1,
+            "both": 1,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 20947,
+              "completion_tokens": 544,
+              "total_tokens": 21491
+            },
+            "token_coverage": 2,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v3": {
+            "n": 1,
+            "states": {
+              "CC": 1
+            },
+            "clean": 1,
+            "post": 1,
+            "both": 1,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 15002.5,
+              "completion_tokens": 280.5,
+              "total_tokens": 15283
+            },
+            "token_coverage": 2,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          }
+        },
+        "v2_to_v3": {
+          "n": 1,
+          "repair": 0,
+          "harm_post": 0,
+          "harm_pre": 0,
+          "all_pre_regressions": 0,
+          "post_repair": 0,
+          "post_regression": 0,
+          "net_cc": 0,
+          "cc_delta_ci": [
+            0,
+            0
+          ],
+          "transitions": {
+            "CC": {
+              "CC": 1,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "CW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WC": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            }
+          },
+          "median_total_token_delta": -6208.0,
+          "token_delta_coverage": 2
+        }
+      }
+    },
+    "同类": {
+      "none": {
+        "arms": {
+          "baseline": {
+            "n": 5,
+            "states": {
+              "CC": 4,
+              "CW": 1
+            },
+            "clean": 5,
+            "post": 4,
+            "both": 4,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 5342.5,
+              "completion_tokens": 40.6,
+              "total_tokens": 5383.1
+            },
+            "token_coverage": 10,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v1": {
+            "n": 5,
+            "states": {
+              "CC": 5
+            },
+            "clean": 5,
+            "post": 5,
+            "both": 5,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 17417.4,
+              "completion_tokens": 278.8,
+              "total_tokens": 17696.2
+            },
+            "token_coverage": 10,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v2": {
+            "n": 5,
+            "states": {
+              "CC": 3,
+              "CW": 2
+            },
+            "clean": 5,
+            "post": 3,
+            "both": 3,
+            "cw": 2,
+            "token_means": {
+              "prompt_tokens": 16304.1,
+              "completion_tokens": 302.7,
+              "total_tokens": 16606.8
+            },
+            "token_coverage": 10,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v3": {
+            "n": 5,
+            "states": {
+              "CC": 3,
+              "CW": 2
+            },
+            "clean": 5,
+            "post": 3,
+            "both": 3,
+            "cw": 2,
+            "token_means": {
+              "prompt_tokens": 14308.1,
+              "completion_tokens": 237.5,
+              "total_tokens": 14545.6
+            },
+            "token_coverage": 10,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          }
+        },
+        "v2_to_v3": {
+          "n": 5,
+          "repair": 1,
+          "harm_post": 1,
+          "harm_pre": 0,
+          "all_pre_regressions": 0,
+          "post_repair": 1,
+          "post_regression": 1,
+          "net_cc": 0,
+          "cc_delta_ci": [
+            -0.6,
+            0.6
+          ],
+          "transitions": {
+            "CC": {
+              "CC": 2,
+              "CW": 1,
+              "WC": 0,
+              "WW": 0
+            },
+            "CW": {
+              "CC": 1,
+              "CW": 1,
+              "WC": 0,
+              "WW": 0
+            },
+            "WC": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            }
+          },
+          "median_total_token_delta": -15.0,
+          "token_delta_coverage": 10
+        }
+      },
+      "high": {
+        "arms": {
+          "baseline": {
+            "n": 5,
+            "states": {
+              "CC": 4,
+              "CW": 1
+            },
+            "clean": 5,
+            "post": 4,
+            "both": 4,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 5947.2,
+              "completion_tokens": 60.7,
+              "total_tokens": 6007.9
+            },
+            "token_coverage": 10,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v1": {
+            "n": 5,
+            "states": {
+              "CC": 5
+            },
+            "clean": 5,
+            "post": 5,
+            "both": 5,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 16299.8,
+              "completion_tokens": 302.7,
+              "total_tokens": 16602.5
+            },
+            "token_coverage": 10,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v2": {
+            "n": 5,
+            "states": {
+              "CC": 5
+            },
+            "clean": 5,
+            "post": 5,
+            "both": 5,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 16506.7,
+              "completion_tokens": 336.2,
+              "total_tokens": 16842.9
+            },
+            "token_coverage": 10,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v3": {
+            "n": 5,
+            "states": {
+              "CC": 5
+            },
+            "clean": 5,
+            "post": 5,
+            "both": 5,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 16168.4,
+              "completion_tokens": 337.9,
+              "total_tokens": 16506.3
+            },
+            "token_coverage": 10,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          }
+        },
+        "v2_to_v3": {
+          "n": 5,
+          "repair": 0,
+          "harm_post": 0,
+          "harm_pre": 0,
+          "all_pre_regressions": 0,
+          "post_repair": 0,
+          "post_regression": 0,
+          "net_cc": 0,
+          "cc_delta_ci": [
+            0,
+            0
+          ],
+          "transitions": {
+            "CC": {
+              "CC": 5,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "CW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WC": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            }
+          },
+          "median_total_token_delta": -455.5,
+          "token_delta_coverage": 10
+        }
+      }
+    },
+    "混合": {
+      "none": {
+        "arms": {
+          "baseline": {
+            "n": 8,
+            "states": {
+              "CC": 5,
+              "WC": 1,
+              "WW": 2
+            },
+            "clean": 5,
+            "post": 6,
+            "both": 5,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 5672.4375,
+              "completion_tokens": 80.6875,
+              "total_tokens": 5753.125
+            },
+            "token_coverage": 16,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v1": {
+            "n": 8,
+            "states": {
+              "CC": 6,
+              "WW": 2
+            },
+            "clean": 6,
+            "post": 6,
+            "both": 6,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 11708.5625,
+              "completion_tokens": 182.5625,
+              "total_tokens": 11891.125
+            },
+            "token_coverage": 16,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v2": {
+            "n": 8,
+            "states": {
+              "CC": 6,
+              "WW": 2
+            },
+            "clean": 6,
+            "post": 6,
+            "both": 6,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 11708.5625,
+              "completion_tokens": 182.5625,
+              "total_tokens": 11891.125
+            },
+            "token_coverage": 16,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v3": {
+            "n": 8,
+            "states": {
+              "CC": 6,
+              "WW": 2
+            },
+            "clean": 6,
+            "post": 6,
+            "both": 6,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 16490.75,
+              "completion_tokens": 289.875,
+              "total_tokens": 16780.625
+            },
+            "token_coverage": 16,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          }
+        },
+        "v2_to_v3": {
+          "n": 8,
+          "repair": 0,
+          "harm_post": 0,
+          "harm_pre": 0,
+          "all_pre_regressions": 0,
+          "post_repair": 0,
+          "post_regression": 0,
+          "net_cc": 0,
+          "cc_delta_ci": [
+            0,
+            0
+          ],
+          "transitions": {
+            "CC": {
+              "CC": 6,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "CW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WC": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 2
+            }
+          },
+          "median_total_token_delta": 5011.5,
+          "token_delta_coverage": 16
+        }
+      },
+      "high": {
+        "arms": {
+          "baseline": {
+            "n": 8,
+            "states": {
+              "CC": 6,
+              "WC": 1,
+              "WW": 1
+            },
+            "clean": 6,
+            "post": 7,
+            "both": 6,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 6637.1875,
+              "completion_tokens": 99.5625,
+              "total_tokens": 6736.75
+            },
+            "token_coverage": 16,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v1": {
+            "n": 8,
+            "states": {
+              "CC": 7,
+              "WW": 1
+            },
+            "clean": 7,
+            "post": 7,
+            "both": 7,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 12382.1875,
+              "completion_tokens": 401.5625,
+              "total_tokens": 12783.75
+            },
+            "token_coverage": 16,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v2": {
+            "n": 8,
+            "states": {
+              "CC": 7,
+              "WW": 1
+            },
+            "clean": 7,
+            "post": 7,
+            "both": 7,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 12382.1875,
+              "completion_tokens": 401.5625,
+              "total_tokens": 12783.75
+            },
+            "token_coverage": 16,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v3": {
+            "n": 8,
+            "states": {
+              "CC": 6,
+              "WW": 1,
+              "CW": 1
+            },
+            "clean": 7,
+            "post": 6,
+            "both": 6,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 18246.25,
+              "completion_tokens": 658.1875,
+              "total_tokens": 18904.4375
+            },
+            "token_coverage": 16,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          }
+        },
+        "v2_to_v3": {
+          "n": 8,
+          "repair": 0,
+          "harm_post": 1,
+          "harm_pre": 0,
+          "all_pre_regressions": 0,
+          "post_repair": 0,
+          "post_regression": 1,
+          "net_cc": -1,
+          "cc_delta_ci": [
+            -0.375,
+            0
+          ],
+          "transitions": {
+            "CC": {
+              "CC": 6,
+              "CW": 1,
+              "WC": 0,
+              "WW": 0
+            },
+            "CW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WC": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 1
+            }
+          },
+          "median_total_token_delta": 5686.0,
+          "token_delta_coverage": 16
+        }
+      }
+    },
+    "扩展全体": {
+      "none": {
+        "arms": {
+          "baseline": {
+            "n": 13,
+            "states": {
+              "CC": 9,
+              "CW": 1,
+              "WC": 1,
+              "WW": 2
+            },
+            "clean": 10,
+            "post": 10,
+            "both": 9,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 5545.538461538462,
+              "completion_tokens": 65.26923076923077,
+              "total_tokens": 5610.807692307692
+            },
+            "token_coverage": 26,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v1": {
+            "n": 13,
+            "states": {
+              "CC": 11,
+              "WW": 2
+            },
+            "clean": 11,
+            "post": 11,
+            "both": 11,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 13904.26923076923,
+              "completion_tokens": 219.57692307692307,
+              "total_tokens": 14123.846153846154
+            },
+            "token_coverage": 26,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v2": {
+            "n": 13,
+            "states": {
+              "CC": 9,
+              "CW": 2,
+              "WW": 2
+            },
+            "clean": 11,
+            "post": 9,
+            "both": 9,
+            "cw": 2,
+            "token_means": {
+              "prompt_tokens": 13476.076923076924,
+              "completion_tokens": 228.76923076923077,
+              "total_tokens": 13704.846153846154
+            },
+            "token_coverage": 26,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v3": {
+            "n": 13,
+            "states": {
+              "CC": 9,
+              "CW": 2,
+              "WW": 2
+            },
+            "clean": 11,
+            "post": 9,
+            "both": 9,
+            "cw": 2,
+            "token_means": {
+              "prompt_tokens": 15651.26923076923,
+              "completion_tokens": 269.7307692307692,
+              "total_tokens": 15921
+            },
+            "token_coverage": 26,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          }
+        },
+        "v2_to_v3": {
+          "n": 13,
+          "repair": 1,
+          "harm_post": 1,
+          "harm_pre": 0,
+          "all_pre_regressions": 0,
+          "post_repair": 1,
+          "post_regression": 1,
+          "net_cc": 0,
+          "cc_delta_ci": [
+            -0.23076923076923078,
+            0.23076923076923078
+          ],
+          "transitions": {
+            "CC": {
+              "CC": 8,
+              "CW": 1,
+              "WC": 0,
+              "WW": 0
+            },
+            "CW": {
+              "CC": 1,
+              "CW": 1,
+              "WC": 0,
+              "WW": 0
+            },
+            "WC": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 2
+            }
+          },
+          "median_total_token_delta": 812.0,
+          "token_delta_coverage": 26
+        }
+      },
+      "high": {
+        "arms": {
+          "baseline": {
+            "n": 13,
+            "states": {
+              "CC": 10,
+              "CW": 1,
+              "WC": 1,
+              "WW": 1
+            },
+            "clean": 11,
+            "post": 11,
+            "both": 10,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 6371.807692307692,
+              "completion_tokens": 84.61538461538461,
+              "total_tokens": 6456.423076923077
+            },
+            "token_coverage": 26,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v1": {
+            "n": 13,
+            "states": {
+              "CC": 12,
+              "WW": 1
+            },
+            "clean": 12,
+            "post": 12,
+            "both": 12,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 13888.961538461539,
+              "completion_tokens": 363.53846153846155,
+              "total_tokens": 14252.5
+            },
+            "token_coverage": 26,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v2": {
+            "n": 13,
+            "states": {
+              "CC": 12,
+              "WW": 1
+            },
+            "clean": 12,
+            "post": 12,
+            "both": 12,
+            "cw": 0,
+            "token_means": {
+              "prompt_tokens": 13968.538461538461,
+              "completion_tokens": 376.4230769230769,
+              "total_tokens": 14344.961538461539
+            },
+            "token_coverage": 26,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          },
+          "canvas_v3": {
+            "n": 13,
+            "states": {
+              "CC": 11,
+              "WW": 1,
+              "CW": 1
+            },
+            "clean": 12,
+            "post": 11,
+            "both": 11,
+            "cw": 1,
+            "token_means": {
+              "prompt_tokens": 17447.076923076922,
+              "completion_tokens": 535,
+              "total_tokens": 17982.076923076922
+            },
+            "token_coverage": 26,
+            "positive_reasoning_token_reports": 0,
+            "reasoning_token_coverage": 0
+          }
+        },
+        "v2_to_v3": {
+          "n": 13,
+          "repair": 0,
+          "harm_post": 1,
+          "harm_pre": 0,
+          "all_pre_regressions": 0,
+          "post_repair": 0,
+          "post_regression": 1,
+          "net_cc": -1,
+          "cc_delta_ci": [
+            -0.23076923076923078,
+            0
+          ],
+          "transitions": {
+            "CC": {
+              "CC": 11,
+              "CW": 1,
+              "WC": 0,
+              "WW": 0
+            },
+            "CW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WC": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 0
+            },
+            "WW": {
+              "CC": 0,
+              "CW": 0,
+              "WC": 0,
+              "WW": 1
+            }
+          },
+          "median_total_token_delta": 4710.5,
+          "token_delta_coverage": 26
+        }
+      }
+    }
+  },
+  "browser": [
+    {
+      "condition": "canvas",
+      "side": "post",
+      "request": {
+        "sample_id": "DB_DBcontent_equivalence-00304-post",
+        "graph": {
+          "nodes": [
+            {
+              "id": "intent",
+              "kind": "sort_select_v3"
+            },
+            {
+              "id": "probe",
+              "kind": "sort_verify_v3"
+            },
+            {
+              "id": "direction",
+              "kind": "sort_finalize_v3"
+            },
+            {
+              "id": "generate",
+              "kind": "sort_generate"
+            },
+            {
+              "id": "execute",
+              "kind": "sort_execute"
+            }
+          ],
+          "links": [
+            {
+              "source": "intent",
+              "target": "probe"
+            },
+            {
+              "source": "direction",
+              "target": "generate"
+            },
+            {
+              "source": "generate",
+              "target": "execute"
+            },
+            {
+              "source": "probe",
+              "target": "direction"
+            }
+          ]
+        }
+      },
+      "sample_id": "DB_DBcontent_equivalence-00304-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "sort_select_v3"
+          },
+          {
+            "id": "probe",
+            "kind": "sort_verify_v3"
+          },
+          {
+            "id": "direction",
+            "kind": "sort_finalize_v3"
+          },
+          {
+            "id": "generate",
+            "kind": "sort_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "sort_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "probe"
+          },
+          {
+            "source": "direction",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          },
+          {
+            "source": "probe",
+            "target": "direction"
+          }
+        ]
+      },
+      "run_id": "ed16e2739ab34aa78d72082407015f0f",
+      "graph_sha256": "0a7de99aed849853fb1d31dc4552177cc4a74bf9b66ec74ee07371340cc425ad",
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "sort_select_v3",
+          "hint": "",
+          "probe": false,
+          "from": [],
+          "output": {
+            "targets": [
+              {
+                "match": "similar",
+                "cue": "descending order of years in which they were founded",
+                "requested_quantity": "years in which they were founded",
+                "table": "orchestra",
+                "column": "year_of_existence"
+              }
+            ]
+          },
+          "elapsed_s": 33.50711539999975
+        },
+        {
+          "id": "probe",
+          "kind": "sort_verify_v3",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "intent"
+          ],
+          "output": {
+            "route": "similar",
+            "cue": "descending order of years in which they were founded",
+            "requested_quantity": "years in which they were founded",
+            "table": "orchestra",
+            "column": "year_of_existence",
+            "declared_type": "INT",
+            "values": [
+              [
+                14,
+                "integer",
+                3
+              ],
+              [
+                20,
+                "integer",
+                3
+              ],
+              [
+                19,
+                "integer",
+                2
+              ],
+              [
+                13,
+                "integer",
+                1
+              ],
+              [
+                15,
+                "integer",
+                1
+              ],
+              [
+                16,
+                "integer",
+                1
+              ],
+              [
+                18,
+                "integer",
+                1
+              ]
+            ]
+          },
+          "elapsed_s": 0.0033447999994677957
+        },
+        {
+          "id": "direction",
+          "kind": "sort_finalize_v3",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "probe"
+          ],
+          "output": {
+            "route": "similar",
+            "cue": "descending order of years in which they were founded",
+            "requested_quantity": "years in which they were founded",
+            "table": "orchestra",
+            "column": "year_of_existence",
+            "declared_type": "INT",
+            "values": [
+              [
+                14,
+                "integer",
+                3
+              ],
+              [
+                20,
+                "integer",
+                3
+              ],
+              [
+                19,
+                "integer",
+                2
+              ],
+              [
+                13,
+                "integer",
+                1
+              ],
+              [
+                15,
+                "integer",
+                1
+              ],
+              [
+                16,
+                "integer",
+                1
+              ],
+              [
+                18,
+                "integer",
+                1
+              ]
+            ],
+            "direction": "ASC",
+            "relation": "reverse",
+            "column_meaning": "elapsed years of orchestra existence, rather than calendar founding year",
+            "reason": "The wording requests descending founding years, but year_of_existence represents elapsed duration. For orchestras observed at a common snapshot, later-founded orchestras have fewer years of existence, so the candidate column sorts in ascending order."
+          },
+          "elapsed_s": 4.337226499999815
+        },
+        {
+          "id": "generate",
+          "kind": "sort_generate",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "direction"
+          ],
+          "output": {
+            "sql": "SELECT \"Record_Company\"\nFROM \"orchestra\"\nORDER BY \"year_of_existence\" ASC;",
+            "sort_plan": {
+              "route": "similar",
+              "cue": "descending order of years in which they were founded",
+              "requested_quantity": "years in which they were founded",
+              "table": "orchestra",
+              "column": "year_of_existence",
+              "declared_type": "INT",
+              "values": [
+                [
+                  14,
+                  "integer",
+                  3
+                ],
+                [
+                  20,
+                  "integer",
+                  3
+                ],
+                [
+                  19,
+                  "integer",
+                  2
+                ],
+                [
+                  13,
+                  "integer",
+                  1
+                ],
+                [
+                  15,
+                  "integer",
+                  1
+                ],
+                [
+                  16,
+                  "integer",
+                  1
+                ],
+                [
+                  18,
+                  "integer",
+                  1
+                ]
+              ],
+              "direction": "ASC",
+              "relation": "reverse",
+              "column_meaning": "elapsed years of orchestra existence, rather than calendar founding year",
+              "reason": "The wording requests descending founding years, but year_of_existence represents elapsed duration. For orchestras observed at a common snapshot, later-founded orchestras have fewer years of existence, so the candidate column sorts in ascending order."
+            }
+          },
+          "elapsed_s": 4.67150969999966
+        },
+        {
+          "id": "execute",
+          "kind": "sort_execute",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "generate"
+          ],
+          "output": {
+            "status": "executed",
+            "sql": "SELECT \"Record_Company\"\nFROM \"orchestra\"\nORDER BY \"year_of_existence\" ASC;",
+            "rows": [
+              [
+                "Columbia Masterworks"
+              ],
+              [
+                "Philips"
+              ],
+              [
+                "Philips Classics Records"
+              ],
+              [
+                "RCA"
+              ],
+              [
+                "EMI"
+              ],
+              [
+                "Koch Records / Naxos Records"
+              ],
+              [
+                "Decca Records"
+              ],
+              [
+                "Mercury Records"
+              ],
+              [
+                "Deutsche Grammophon"
+              ],
+              [
+                "Kultur"
+              ],
+              [
+                "Decca Records"
+              ],
+              [
+                "Delos Records"
+              ]
+            ],
+            "columns": [
+              "Record_Company"
+            ],
+            "row_count": 12
+          },
+          "elapsed_s": 0.0013067999989289092
+        }
+      ],
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 12,
+        "prediction_rows": 12
+      },
+      "cost": {
+        "model_calls": 3,
+        "total_tokens": 15262
+      },
+      "course_flow_id": "TASK2_CANVAS_0a7de99aed849853fb1d31dc4552177cc4a74bf9b66ec74ee07371340cc425ad",
+      "course_flow": {
+        "id": "TASK2_CANVAS_0a7de99aed849853fb1d31dc4552177cc4a74bf9b66ec74ee07371340cc425ad",
+        "type": "flow",
+        "name": "Task 2 canvas experiment",
+        "params": [
+          {
+            "name": "canvasRunId",
+            "type": "String",
+            "scope": "defaultScope"
+          }
+        ],
+        "results": [],
+        "nodes": [
+          {
+            "id": "canvas_intent",
+            "type": "event",
+            "title": "intent",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_probe",
+            "type": "event",
+            "title": "probe",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_direction",
+            "type": "event",
+            "title": "direction",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_generate",
+            "type": "event",
+            "title": "generate",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_execute",
+            "type": "event",
+            "title": "execute",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          }
+        ],
+        "routes": [
+          {
+            "source": "start",
+            "target": "canvas_intent"
+          },
+          {
+            "source": "canvas_intent",
+            "target": "canvas_probe"
+          },
+          {
+            "source": "canvas_probe",
+            "target": "canvas_direction"
+          },
+          {
+            "source": "canvas_direction",
+            "target": "canvas_generate"
+          },
+          {
+            "source": "canvas_generate",
+            "target": "canvas_execute"
+          },
+          {
+            "source": "canvas_execute",
+            "target": "end"
+          }
+        ]
+      }
+    },
+    {
+      "condition": "canvas",
+      "side": "pre",
+      "request": {
+        "sample_id": "DB_DBcontent_equivalence-00304-pre",
+        "graph": {
+          "nodes": [
+            {
+              "id": "intent",
+              "kind": "sort_select_v3"
+            },
+            {
+              "id": "probe",
+              "kind": "sort_verify_v3"
+            },
+            {
+              "id": "direction",
+              "kind": "sort_finalize_v3"
+            },
+            {
+              "id": "generate",
+              "kind": "sort_generate"
+            },
+            {
+              "id": "execute",
+              "kind": "sort_execute"
+            }
+          ],
+          "links": [
+            {
+              "source": "intent",
+              "target": "probe"
+            },
+            {
+              "source": "direction",
+              "target": "generate"
+            },
+            {
+              "source": "generate",
+              "target": "execute"
+            },
+            {
+              "source": "probe",
+              "target": "direction"
+            }
+          ]
+        }
+      },
+      "sample_id": "DB_DBcontent_equivalence-00304-pre",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "sort_select_v3"
+          },
+          {
+            "id": "probe",
+            "kind": "sort_verify_v3"
+          },
+          {
+            "id": "direction",
+            "kind": "sort_finalize_v3"
+          },
+          {
+            "id": "generate",
+            "kind": "sort_generate"
+          },
+          {
+            "id": "execute",
+            "kind": "sort_execute"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "probe"
+          },
+          {
+            "source": "direction",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          },
+          {
+            "source": "probe",
+            "target": "direction"
+          }
+        ]
+      },
+      "run_id": "655caed205cc4180ae71777ba799b487",
+      "graph_sha256": "0a7de99aed849853fb1d31dc4552177cc4a74bf9b66ec74ee07371340cc425ad",
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "sort_select_v3",
+          "hint": "",
+          "probe": false,
+          "from": [],
+          "output": {
+            "targets": [
+              {
+                "match": "direct",
+                "cue": "descending order of years in which they were founded",
+                "requested_quantity": "years in which they were founded",
+                "table": "orchestra",
+                "column": "Year_of_Founded"
+              }
+            ]
+          },
+          "elapsed_s": 3.4654518000006647
+        },
+        {
+          "id": "probe",
+          "kind": "sort_verify_v3",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "intent"
+          ],
+          "output": {
+            "route": "direct",
+            "cue": "descending order of years in which they were founded",
+            "requested_quantity": "years in which they were founded",
+            "table": "orchestra",
+            "column": "Year_of_Founded",
+            "declared_type": "REAL"
+          },
+          "elapsed_s": 0.001841499999500229
+        },
+        {
+          "id": "direction",
+          "kind": "sort_finalize_v3",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "probe"
+          ],
+          "output": {
+            "route": "direct",
+            "cue": "descending order of years in which they were founded",
+            "requested_quantity": "years in which they were founded",
+            "table": "orchestra",
+            "column": "Year_of_Founded",
+            "declared_type": "REAL",
+            "direction": "DESC",
+            "agent_skipped": true
+          },
+          "elapsed_s": 1.650000012887176e-05
+        },
+        {
+          "id": "generate",
+          "kind": "sort_generate",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "direction"
+          ],
+          "output": {
+            "sql": "SELECT Record_Company\nFROM orchestra\nORDER BY Year_of_Founded DESC;",
+            "sort_plan": {
+              "route": "direct",
+              "cue": "descending order of years in which they were founded",
+              "requested_quantity": "years in which they were founded",
+              "table": "orchestra",
+              "column": "Year_of_Founded",
+              "declared_type": "REAL",
+              "direction": "DESC",
+              "agent_skipped": true
+            }
+          },
+          "elapsed_s": 2.8925170000002254
+        },
+        {
+          "id": "execute",
+          "kind": "sort_execute",
+          "hint": "",
+          "probe": false,
+          "from": [
+            "generate"
+          ],
+          "output": {
+            "status": "executed",
+            "sql": "SELECT Record_Company\nFROM orchestra\nORDER BY Year_of_Founded DESC;",
+            "rows": [
+              [
+                "Columbia Masterworks"
+              ],
+              [
+                "Philips"
+              ],
+              [
+                "Philips Classics Records"
+              ],
+              [
+                "RCA"
+              ],
+              [
+                "EMI"
+              ],
+              [
+                "Koch Records / Naxos Records"
+              ],
+              [
+                "Decca Records"
+              ],
+              [
+                "Mercury Records"
+              ],
+              [
+                "Deutsche Grammophon"
+              ],
+              [
+                "Kultur"
+              ],
+              [
+                "Decca Records"
+              ],
+              [
+                "Delos Records"
+              ]
+            ],
+            "columns": [
+              "Record_Company"
+            ],
+            "row_count": 12
+          },
+          "elapsed_s": 0.0011243999997532228
+        }
+      ],
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 12,
+        "prediction_rows": 12
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 9604
+      },
+      "course_flow_id": "TASK2_CANVAS_0a7de99aed849853fb1d31dc4552177cc4a74bf9b66ec74ee07371340cc425ad",
+      "course_flow": {
+        "id": "TASK2_CANVAS_0a7de99aed849853fb1d31dc4552177cc4a74bf9b66ec74ee07371340cc425ad",
+        "type": "flow",
+        "name": "Task 2 canvas experiment",
+        "params": [
+          {
+            "name": "canvasRunId",
+            "type": "String",
+            "scope": "defaultScope"
+          }
+        ],
+        "results": [],
+        "nodes": [
+          {
+            "id": "canvas_intent",
+            "type": "event",
+            "title": "intent",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_probe",
+            "type": "event",
+            "title": "probe",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_direction",
+            "type": "event",
+            "title": "direction",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_generate",
+            "type": "event",
+            "title": "generate",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          },
+          {
+            "id": "canvas_execute",
+            "type": "event",
+            "title": "execute",
+            "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+            "params": [
+              {
+                "name": "canvasRunId",
+                "type": "String",
+                "scope": "defaultScope"
+              }
+            ],
+            "results": []
+          }
+        ],
+        "routes": [
+          {
+            "source": "start",
+            "target": "canvas_intent"
+          },
+          {
+            "source": "canvas_intent",
+            "target": "canvas_probe"
+          },
+          {
+            "source": "canvas_probe",
+            "target": "canvas_direction"
+          },
+          {
+            "source": "canvas_direction",
+            "target": "canvas_generate"
+          },
+          {
+            "source": "canvas_generate",
+            "target": "canvas_execute"
+          },
+          {
+            "source": "canvas_execute",
+            "target": "end"
+          }
+        ]
+      }
+    }
+  ]
+}

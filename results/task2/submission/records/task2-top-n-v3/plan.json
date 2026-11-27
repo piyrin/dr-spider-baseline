@@ -1,0 +1,388 @@
+{
+  "groups": {
+    "anchor": [
+      "SQL_NonDB_number-00054-pre",
+      "SQL_NonDB_number-00054-post"
+    ],
+    "related": [
+      "SQL_NonDB_number-00061-pre",
+      "SQL_NonDB_number-00061-post"
+    ],
+    "explicit_tuple": [
+      "top-n-pair-pre",
+      "top-n-pair-post"
+    ],
+    "explicit_person": [
+      "top-n-person-pre",
+      "top-n-person-post"
+    ],
+    "mixed": [
+      "DB_schema_synonym-01629-pre",
+      "DB_schema_synonym-01629-post",
+      "DB_schema_abbreviation-02106-pre",
+      "DB_schema_abbreviation-02106-post",
+      "NLQ_column_carrier-00210-pre",
+      "NLQ_column_carrier-00210-post",
+      "NLQ_column_synonym-00083-pre",
+      "NLQ_column_synonym-00083-post",
+      "SQL_sort_order-00123-pre",
+      "SQL_sort_order-00123-post",
+      "SQL_NonDB_number-00069-pre",
+      "SQL_NonDB_number-00069-post",
+      "NLQ_column_attribute-00104-pre",
+      "NLQ_column_attribute-00104-post",
+      "SQL_comparison-00134-pre",
+      "SQL_comparison-00134-post"
+    ],
+    "lap-entity": [
+      "lap-entity-pre",
+      "lap-entity-post"
+    ],
+    "lap-tuple": [
+      "lap-tuple-pre",
+      "lap-tuple-post"
+    ],
+    "lap-rows": [
+      "lap-rows-pre",
+      "lap-rows-post"
+    ],
+    "sale-entity": [
+      "sale-entity-pre",
+      "sale-entity-post"
+    ],
+    "sale-tuple": [
+      "sale-tuple-pre",
+      "sale-tuple-post"
+    ],
+    "lap-ambiguity": [
+      "lap-ambiguity-pre",
+      "lap-ambiguity-post"
+    ]
+  },
+  "inputs": {
+    "SQL_NonDB_number-00054-pre": {
+      "id": "SQL_NonDB_number-00054-pre",
+      "question": "Find the name and rank of the 3 youngest winners across all matches.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 3"
+    },
+    "SQL_NonDB_number-00054-post": {
+      "id": "SQL_NonDB_number-00054-post",
+      "question": "Find the name and rank of the 5 youngest winners across all matches.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 5"
+    },
+    "SQL_NonDB_number-00061-pre": {
+      "id": "SQL_NonDB_number-00061-pre",
+      "question": "What are the names and ranks of the three youngest winners across all matches?",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 3"
+    },
+    "SQL_NonDB_number-00061-post": {
+      "id": "SQL_NonDB_number-00061-post",
+      "question": "What are the names and ranks of the six youngest winners across all matches?",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 6"
+    },
+    "top-n-pair-pre": {
+      "id": "top-n-pair-pre",
+      "question": "Across all matches, return the 3 distinct name-and-rank combinations of winners with the lowest age recorded for each combination. Output winner name and rank.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT winner_name, winner_rank FROM (SELECT winner_name, winner_rank, winner_age, row_number() OVER (PARTITION BY winner_name, winner_rank ORDER BY winner_age) AS rn FROM matches WHERE winner_age IS NOT NULL) WHERE rn = 1 ORDER BY winner_age, winner_name, winner_rank LIMIT 3"
+    },
+    "top-n-pair-post": {
+      "id": "top-n-pair-post",
+      "question": "Across all matches, return the 5 distinct name-and-rank combinations of winners with the lowest age recorded for each combination. Output winner name and rank.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT winner_name, winner_rank FROM (SELECT winner_name, winner_rank, winner_age, row_number() OVER (PARTITION BY winner_name, winner_rank ORDER BY winner_age) AS rn FROM matches WHERE winner_age IS NOT NULL) WHERE rn = 1 ORDER BY winner_age, winner_name, winner_rank LIMIT 5"
+    },
+    "top-n-person-pre": {
+      "id": "top-n-person-pre",
+      "question": "Find the 3 youngest distinct individual players to win a match. Return one row per player ID, with the name and rank from their youngest recorded win. If a player has multiple wins at that age, use the earliest tournament date and lowest match number.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT m.winner_name, m.winner_rank FROM matches AS m WHERE m.winner_age IS NOT NULL AND m.rowid = (SELECT a.rowid FROM matches AS a WHERE a.winner_id=m.winner_id AND a.winner_age IS NOT NULL ORDER BY a.winner_age, a.tourney_date, a.match_num, a.rowid LIMIT 1) ORDER BY m.winner_age, m.winner_id LIMIT 3"
+    },
+    "top-n-person-post": {
+      "id": "top-n-person-post",
+      "question": "Find the 5 youngest distinct individual players to win a match. Return one row per player ID, with the name and rank from their youngest recorded win. If a player has multiple wins at that age, use the earliest tournament date and lowest match number.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT m.winner_name, m.winner_rank FROM matches AS m WHERE m.winner_age IS NOT NULL AND m.rowid = (SELECT a.rowid FROM matches AS a WHERE a.winner_id=m.winner_id AND a.winner_age IS NOT NULL ORDER BY a.winner_age, a.tourney_date, a.match_num, a.rowid LIMIT 1) ORDER BY m.winner_age, m.winner_id LIMIT 5"
+    },
+    "DB_schema_synonym-01629-pre": {
+      "id": "DB_schema_synonym-01629-pre",
+      "question": "What is the money rank of the poker player with the highest earnings?",
+      "database": "data\\Spider-dev\\databases\\poker_player\\poker_player.sqlite",
+      "gold_sql": "SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1"
+    },
+    "DB_schema_synonym-01629-post": {
+      "id": "DB_schema_synonym-01629-post",
+      "question": "What is the money rank of the poker player with the highest earnings?",
+      "database": "data\\DB_schema_synonym\\database_post_perturbation\\poker_player_1\\poker_player_1.sqlite",
+      "gold_sql": "SELECT poker_player.currency_standing FROM poker_player ORDER BY poker_player.income desc LIMIT 1"
+    },
+    "DB_schema_abbreviation-02106-pre": {
+      "id": "DB_schema_abbreviation-02106-pre",
+      "question": "What are the population, name and leader of the country with the largest area?",
+      "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+      "gold_sql": "SELECT Name , population , HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1"
+    },
+    "DB_schema_abbreviation-02106-post": {
+      "id": "DB_schema_abbreviation-02106-post",
+      "question": "What are the population, name and leader of the country with the largest area?",
+      "database": "data\\DB_schema_abbreviation\\database_post_perturbation\\world_1_1\\world_1_1.sqlite",
+      "gold_sql": "SELECT country.Name , country.popn , country.hos FROM country ORDER BY country.SurfaceArea desc LIMIT 1"
+    },
+    "NLQ_column_carrier-00210-pre": {
+      "id": "NLQ_column_carrier-00210-pre",
+      "question": "What are the full names of all left handed players, in order of birth date?",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT first_name , last_name FROM players WHERE hand = 'L' ORDER BY birth_date"
+    },
+    "NLQ_column_carrier-00210-post": {
+      "id": "NLQ_column_carrier-00210-post",
+      "question": "Name each left-handed player in order of birth.",
+      "database": "data\\Spider-dev\\databases\\wta_1\\wta_1.sqlite",
+      "gold_sql": "SELECT first_name , last_name FROM players WHERE hand = 'L' ORDER BY birth_date"
+    },
+    "NLQ_column_synonym-00083-pre": {
+      "id": "NLQ_column_synonym-00083-pre",
+      "question": "Which model saves the most gasoline? That is to say, have the maximum miles per gallon.",
+      "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+      "gold_sql": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id ORDER BY T2.mpg DESC LIMIT 1"
+    },
+    "NLQ_column_synonym-00083-post": {
+      "id": "NLQ_column_synonym-00083-post",
+      "question": "What model offers the highest mileage?",
+      "database": "data\\Spider-dev\\databases\\car_1\\car_1.sqlite",
+      "gold_sql": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId = T2.Id ORDER BY T2.mpg DESC LIMIT 1"
+    },
+    "SQL_sort_order-00123-pre": {
+      "id": "SQL_sort_order-00123-pre",
+      "question": "What is the birth date of the poker player with the lowest earnings?",
+      "database": "data\\Spider-dev\\databases\\poker_player\\poker_player.sqlite",
+      "gold_sql": "SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Earnings ASC LIMIT 1"
+    },
+    "SQL_sort_order-00123-post": {
+      "id": "SQL_sort_order-00123-post",
+      "question": "What is the birth date of the poker player with the highest earnings?",
+      "database": "data\\Spider-dev\\databases\\poker_player\\poker_player.sqlite",
+      "gold_sql": "SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID ORDER BY T2.Earnings DESC LIMIT 1"
+    },
+    "SQL_NonDB_number-00069-pre": {
+      "id": "SQL_NonDB_number-00069-pre",
+      "question": "List top 3 highest Rating  TV series. List the TV series's Episode and Rating.",
+      "database": "data\\Spider-dev\\databases\\tvshow\\tvshow.sqlite",
+      "gold_sql": "SELECT Episode , Rating FROM TV_series ORDER BY Rating DESC LIMIT 3"
+    },
+    "SQL_NonDB_number-00069-post": {
+      "id": "SQL_NonDB_number-00069-post",
+      "question": "List top 6 highest Rating TV series. List the TV series's Episode and Rating.",
+      "database": "data\\Spider-dev\\databases\\tvshow\\tvshow.sqlite",
+      "gold_sql": "SELECT Episode , Rating FROM TV_series ORDER BY Rating DESC LIMIT 6"
+    },
+    "NLQ_column_attribute-00104-pre": {
+      "id": "NLQ_column_attribute-00104-pre",
+      "question": "What is the description of the treatment type that costs the least money in total?",
+      "database": "data\\Spider-dev\\databases\\dog_kennels\\dog_kennels.sqlite",
+      "gold_sql": "SELECT T1.treatment_type_description FROM Treatment_types AS T1 JOIN Treatments AS T2 ON T1.treatment_type_code = T2.treatment_type_code GROUP BY T1.treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1"
+    },
+    "NLQ_column_attribute-00104-post": {
+      "id": "NLQ_column_attribute-00104-post",
+      "question": "What is the description of the treatment type that is the cheapest in total?",
+      "database": "data\\Spider-dev\\databases\\dog_kennels\\dog_kennels.sqlite",
+      "gold_sql": "SELECT T1.treatment_type_description FROM Treatment_types AS T1 JOIN Treatments AS T2 ON T1.treatment_type_code = T2.treatment_type_code GROUP BY T1.treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1"
+    },
+    "SQL_comparison-00134-pre": {
+      "id": "SQL_comparison-00134-pre",
+      "question": "What are the names of countries that speak more than 2 languages, as well as how many languages they speak?",
+      "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+      "gold_sql": "SELECT COUNT(T2.Language) , T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name HAVING COUNT(*) > 2"
+    },
+    "SQL_comparison-00134-post": {
+      "id": "SQL_comparison-00134-post",
+      "question": "What are the names of countries that speak at least 2 languages, as well as how many languages they speak?",
+      "database": "data\\Spider-dev\\databases\\world_1\\world_1.sqlite",
+      "gold_sql": "SELECT COUNT(T2.Language) , T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name HAVING COUNT(*) >= 2"
+    },
+    "lap-entity-pre": {
+      "id": "lap-entity-pre",
+      "question": "Find the 2 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap. Show only the driver name and track of that lap.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\laps.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Aya','North'),(1,'Bo','West')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "lap-entity-post": {
+      "id": "lap-entity-post",
+      "question": "Find the 3 fastest different drivers, one entry per driver number, using each driver’s fastest recorded lap. Show only the driver name and track of that lap.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\laps.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Aya','North'),(1,'Bo','West'),(2,'Aya','East')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "lap-tuple-pre": {
+      "id": "lap-tuple-pre",
+      "question": "Which 2 distinct driver-name and track combinations have the lowest recorded lap time within each combination? Display driver name and track.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\laps.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Aya','North'),(1,'Aya','South')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "lap-tuple-post": {
+      "id": "lap-tuple-post",
+      "question": "Which 4 distinct driver-name and track combinations have the lowest recorded lap time within each combination? Display driver name and track.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\laps.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Aya','North'),(1,'Aya','South'),(2,'Bo','West'),(3,'Aya','East')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "lap-rows-pre": {
+      "id": "lap-rows-pre",
+      "question": "Find the 2 fastest lap records across all runs. Return the driver name and track for each record.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\laps.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Aya','North'),(1,'Aya','North')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "lap-rows-post": {
+      "id": "lap-rows-post",
+      "question": "Find the 4 fastest lap records across all runs. Return the driver name and track for each record.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\laps.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Aya','North'),(1,'Aya','North'),(2,'Aya','South'),(3,'Bo','West')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "sale-entity-pre": {
+      "id": "sale-entity-pre",
+      "question": "Find the top 2 distinct customers ranked by their largest order amount. Use one row per customer code. Return only customer name and the category of the largest order.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\sales.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Ira','garden'),(1,'Lee','garden')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "sale-entity-post": {
+      "id": "sale-entity-post",
+      "question": "Find the top 3 distinct customers ranked by their largest order amount. Use one row per customer code. Return only customer name and the category of the largest order.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\sales.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Ira','garden'),(1,'Lee','garden'),(2,'Nia','book')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "sale-tuple-pre": {
+      "id": "sale-tuple-pre",
+      "question": "Rank distinct pairs of customer name and category by the maximum order amount for each pair. Show the top 2 pairs, with customer name and category.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\sales.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Ira','garden'),(1,'Ira','book')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "sale-tuple-post": {
+      "id": "sale-tuple-post",
+      "question": "Rank distinct pairs of customer name and category by the maximum order amount for each pair. Show the top 4 pairs, with customer name and category.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\sales.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Ira','garden'),(1,'Ira','book'),(2,'Lee','garden'),(3,'Nia','book')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "lap-ambiguity-pre": {
+      "id": "lap-ambiguity-pre",
+      "question": "Show the driver name and track for the 2 fastest drivers across the recorded laps.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\laps.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Aya','North'),(1,'Bo','West')) SELECT first, second FROM expected ORDER BY pos"
+    },
+    "lap-ambiguity-post": {
+      "id": "lap-ambiguity-post",
+      "question": "Show the driver name and track for the 4 fastest drivers across the recorded laps.",
+      "database": "runs\\task2-top-n-v3\\fixtures\\laps.sqlite",
+      "gold_sql": "WITH expected(pos, first, second) AS (VALUES (0,'Aya','North'),(1,'Bo','West'),(2,'Aya','East'),(3,'Chen','East')) SELECT first, second FROM expected ORDER BY pos"
+    }
+  },
+  "efforts": [
+    "none",
+    "high"
+  ],
+  "fixtures": {
+    "lap-entity": "entity",
+    "lap-tuple": "tuple",
+    "lap-rows": "rows",
+    "sale-entity": "entity",
+    "sale-tuple": "tuple",
+    "lap-ambiguity": "ambiguous"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v3"
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v3"
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v3"
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v3"
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v3"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "inspect"
+      },
+      {
+        "source": "inspect",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "interactive_graph": {
+    "nodes": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v3"
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v3"
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v3",
+        "hint": "interactive"
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v3"
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v3"
+      }
+    ],
+    "links": [
+      {
+        "source": "intent",
+        "target": "inspect"
+      },
+      {
+        "source": "inspect",
+        "target": "policy"
+      },
+      {
+        "source": "policy",
+        "target": "generate"
+      },
+      {
+        "source": "generate",
+        "target": "execute"
+      }
+    ]
+  },
+  "fixture_db_sha256": {
+    "runs\\task2-top-n-v3\\fixtures\\laps.sqlite": "e0884fc455fedac3f7ca806d15912fc3063136ee07a452bed20b4e69ab066638",
+    "runs\\task2-top-n-v3\\fixtures\\sales.sqlite": "fde0c1c2cba112bf19a6487179af7401307e64fb5a38bbdd09987573073a55cc"
+  },
+  "source_sha256": {
+    "top_n_v3_compare.py": "b523ca46faa130862d226674b9d615cc312c02e9a1b71cf9a225952bd3ef7b1b",
+    "top_n_v3.py": "186c6e6681b6470218933ad39399cff4263dc12bea23593be5aa69636a64e391",
+    "top_n_v3_cases.py": "796cb42b736f2a324cc0cc524a1d9ba460e1adc95a7759432c58fde545d42c78",
+    "experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    "run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f"
+  }
+}

@@ -1,0 +1,442 @@
+{
+  "id": "SQL_NonDB_number-00069-pre",
+  "effort": "high",
+  "method": "canvas_v3",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "sort_select_v3",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "match": "direct",
+            "cue": "top 3 highest Rating",
+            "requested_quantity": "Rating",
+            "table": "TV_series",
+            "column": "Rating"
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one clearly requested sort and select one candidate field from the supplied schema. Quote the exact contiguous sort wording including its direction cue, and name the quantity being ordered in the question. Keep the quote verbatim. Direct means the field stores the same quantity; similar means a plausible substitute represents it differently. Prefer a unique direct candidate. Return {\"targets\":[{\"cue\":\"verbatim quote\",\"requested_quantity\":\"quantity in the question\",\"table\":\"exact identifier\",\"column\":\"exact identifier\",\"match\":\"direct|similar\"}]}. Return {\"targets\":[]} for an ambiguous field or sort, a sort over an aggregate, or multiple sorting keys. Do not convert the direction, add a direction field, or generate SQL. This step only selects information for the next node."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Cartoon\" (\"id\" real,\"Title\" text,\"Directed_by\" text,\"Written_by\" text,\"Original_air_date\" text,\"Production_code\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nCREATE TABLE \"TV_Channel\" (\"id\" text,\"series_name\" text,\"Country\" text,\"Language\" text,\"Content\" text,\"Pixel_aspect_ratio_PAR\" text,\"Hight_definition_TV\" text,\"Pay_per_view_PPV\" text,\"Package_Option\" text,PRIMARY KEY (\"id\"))\nCREATE TABLE \"TV_series\" (\"id\" real,\"Episode\" text,\"Air_Date\" text,\"Rating\" text,\"Share\" real,\"18_49_Rating_Share\" text,\"Viewers_m\" text,\"Weekly_Rank\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nQuestion\nList top 3 highest Rating  TV series. List the TV series's Episode and Rating."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0f95f66fb59dca17016b08e841666887d09f85102973c2c3be",
+          "object": "chat.completion",
+          "created": 1795745860,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"cue\":\"top 3 highest Rating\",\"requested_quantity\":\"Rating\",\"table\":\"TV_series\",\"column\":\"Rating\",\"match\":\"direct\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 7528,
+            "completion_tokens": 190,
+            "total_tokens": 7718,
+            "completion_tokens_details": {
+              "reasoning_tokens": 159
+            }
+          }
+        },
+        "usage": {
+          "prompt_tokens": 7528,
+          "completion_tokens": 190,
+          "total_tokens": 7718,
+          "completion_tokens_details": {
+            "reasoning_tokens": 159
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "probe",
+      "kind": "sort_verify_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "direct",
+        "cue": "top 3 highest Rating",
+        "requested_quantity": "Rating",
+        "table": "TV_series",
+        "column": "Rating",
+        "declared_type": "TEXT"
+      },
+      "call": null
+    },
+    {
+      "id": "direction",
+      "kind": "sort_finalize_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "probe"
+      ],
+      "output": {
+        "route": "fallback",
+        "reason": "final_direction_uncertain_or_inconsistent",
+        "candidate": {
+          "route": "direct",
+          "cue": "top 3 highest Rating",
+          "requested_quantity": "Rating",
+          "table": "TV_series",
+          "column": "Rating",
+          "declared_type": "TEXT"
+        },
+        "judgment": {
+          "column_meaning": "TV series rating",
+          "relation": "same",
+          "direction": "unknown",
+          "reason": "The question directly requests Rating, but the schema declares it as TEXT and no stored values are provided to verify that descending text order corresponds to highest rating."
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Choose the final direction of the verified stored column. Start with the verbatim sort wording, then explain the candidate column meaning based on its identifier, schema, and observed values. Distinguish the requested concept from how the database represents it. For example, a store opened in a later calendar year has fewer elapsed years since opening at a shared snapshot. Thus descending opening year requires ascending elapsed years. When a field clearly stores elapsed duration for the same entity and event, and values support that meaning, a common snapshot is a reasonable default for a single table unless there are signs of different observation dates. A concrete reference year is unnecessary to decide relative ordering. Return {\"targets\":[{\"column_meaning\":\"what the field measures\",\"relation\":\"same|reverse|unknown\",\"direction\":\"ASC|DESC|unknown\",\"reason\":\"evidence\"}]}. direction is the final SQL direction for the candidate column, after applying the relationship once. Use unknown if field meaning, compatibility, or question direction remains ambiguous. Do not select another field or output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Cartoon\" (\"id\" real,\"Title\" text,\"Directed_by\" text,\"Written_by\" text,\"Original_air_date\" text,\"Production_code\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nCREATE TABLE \"TV_Channel\" (\"id\" text,\"series_name\" text,\"Country\" text,\"Language\" text,\"Content\" text,\"Pixel_aspect_ratio_PAR\" text,\"Hight_definition_TV\" text,\"Pay_per_view_PPV\" text,\"Package_Option\" text,PRIMARY KEY (\"id\"))\nCREATE TABLE \"TV_series\" (\"id\" real,\"Episode\" text,\"Air_Date\" text,\"Rating\" text,\"Share\" real,\"18_49_Rating_Share\" text,\"Viewers_m\" text,\"Weekly_Rank\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nQuestion\nList top 3 highest Rating  TV series. List the TV series's Episode and Rating.\nObserved database values (candidate evidence)\n{\"route\":\"direct\",\"cue\":\"top 3 highest Rating\",\"requested_quantity\":\"Rating\",\"table\":\"TV_series\",\"column\":\"Rating\",\"declared_type\":\"TEXT\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0865593f86d1da11016b08e8469c5c87d087cf5f5ff257fce7",
+          "object": "chat.completion",
+          "created": 1795745872,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"column_meaning\":\"TV series rating\",\"relation\":\"same\",\"direction\":\"unknown\",\"reason\":\"The question directly requests Rating, but the schema declares it as TEXT and no stored values are provided to verify that descending text order corresponds to highest rating.\"}]}",
+                "reasoning_content": "**Assessing column compatibility****Assessing Rating sortability**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0865593f86d1da11016b08e8469c9887d093be68ccf637cf19": {
+                  "input_tokens": 288,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 288,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0865593f86d1da11016b08e8469c9887d0a8f62cec4d49dac3": {
+                  "input_tokens": 262,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 262,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0865593f86d1da11016b08e8503f5c87d097abd9faf4ad5f3f": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 60,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 60
+                    }
+                  ]
+                },
+                "rs_0865593f86d1da11016b08e84739ec87d0b5b4cdb95284fee7": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 377
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4932,
+            "completion_tokens": 437,
+            "total_tokens": 5369,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 377
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0865593f86d1da11016b08e8469c9887d093be68ccf637cf19": {
+                "input_tokens": 288,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 288,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0865593f86d1da11016b08e8469c9887d0a8f62cec4d49dac3": {
+                "input_tokens": 262,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 262,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0865593f86d1da11016b08e8503f5c87d097abd9faf4ad5f3f": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 60,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 60
+                  }
+                ]
+              },
+              "rs_0865593f86d1da11016b08e84739ec87d0b5b4cdb95284fee7": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 377
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4932,
+          "completion_tokens": 437,
+          "total_tokens": 5369,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 377
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "sort_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "direction"
+      ],
+      "output": {
+        "sql": "SELECT \"Episode\", \"Rating\"\nFROM \"TV_series\"\nORDER BY CAST(\"Rating\" AS REAL) DESC\nLIMIT 3;",
+        "sort_plan": {
+          "route": "fallback",
+          "reason": "final_direction_uncertain_or_inconsistent",
+          "candidate": {
+            "route": "direct",
+            "cue": "top 3 highest Rating",
+            "requested_quantity": "Rating",
+            "table": "TV_series",
+            "column": "Rating",
+            "declared_type": "TEXT"
+          },
+          "judgment": {
+            "column_meaning": "TV series rating",
+            "relation": "same",
+            "direction": "unknown",
+            "reason": "The question directly requests Rating, but the schema declares it as TEXT and no stored values are provided to verify that descending text order corresponds to highest rating."
+          }
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"Cartoon\" (\"id\" real,\"Title\" text,\"Directed_by\" text,\"Written_by\" text,\"Original_air_date\" text,\"Production_code\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nCREATE TABLE \"TV_Channel\" (\"id\" text,\"series_name\" text,\"Country\" text,\"Language\" text,\"Content\" text,\"Pixel_aspect_ratio_PAR\" text,\"Hight_definition_TV\" text,\"Pay_per_view_PPV\" text,\"Package_Option\" text,PRIMARY KEY (\"id\"))\nCREATE TABLE \"TV_series\" (\"id\" real,\"Episode\" text,\"Air_Date\" text,\"Rating\" text,\"Share\" real,\"18_49_Rating_Share\" text,\"Viewers_m\" text,\"Weekly_Rank\" real,\"Channel\" text,PRIMARY KEY (\"id\"),FOREIGN KEY (\"Channel\") REFERENCES \"TV_Channel\"(\"id\"))\nQuestion\nList top 3 highest Rating  TV series. List the TV series's Episode and Rating."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0ceb4f17416962db016b08e8533f8c87d2b2cce92a22755787",
+          "object": "chat.completion",
+          "created": 1795745876,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"Episode\", \"Rating\"\nFROM \"TV_series\"\nORDER BY CAST(\"Rating\" AS REAL) DESC\nLIMIT 3;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4629,
+            "completion_tokens": 31,
+            "total_tokens": 4660,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4629,
+          "completion_tokens": 31,
+          "total_tokens": 4660,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "sort_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"Episode\", \"Rating\"\nFROM \"TV_series\"\nORDER BY CAST(\"Rating\" AS REAL) DESC\nLIMIT 3;",
+        "rows": [
+          [
+            "A Love of a Lifetime",
+            "5.8"
+          ],
+          [
+            "Friendly Skies",
+            "5.3"
+          ],
+          [
+            "Game Three",
+            "4.4"
+          ]
+        ],
+        "columns": [
+          "Episode",
+          "Rating"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 17089,
+    "completion_tokens": 658,
+    "total_tokens": 17747
+  },
+  "model_calls": 3,
+  "response_sources": {
+    "intent": "v3",
+    "direction": "v3",
+    "generate": "v3"
+  },
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 3,
+    "prediction_rows": 3
+  }
+}

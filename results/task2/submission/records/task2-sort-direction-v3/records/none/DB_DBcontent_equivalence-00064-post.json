@@ -1,0 +1,710 @@
+{
+  "id": "DB_DBcontent_equivalence-00064-post",
+  "effort": "none",
+  "method": "canvas_v3",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "sort_select_v3",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "match": "similar",
+            "cue": "age in ascending order",
+            "requested_quantity": "age",
+            "table": "employee",
+            "column": "birthyear"
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one clearly requested sort and select one candidate field from the supplied schema. Quote the exact contiguous sort wording including its direction cue, and name the quantity being ordered in the question. Keep the quote verbatim. Direct means the field stores the same quantity; similar means a plausible substitute represents it differently. Prefer a unique direct candidate. Return {\"targets\":[{\"cue\":\"verbatim quote\",\"requested_quantity\":\"quantity in the question\",\"table\":\"exact identifier\",\"column\":\"exact identifier\",\"match\":\"direct|similar\"}]}. Return {\"targets\":[]} for an ambiguous field or sort, a sort over an aggregate, or multiple sorting keys. Do not convert the direction, add a direction field, or generate SQL. This step only selects information for the next node."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"employee\" (\"Employee_ID\" int,\"Name\" text,\"birthyear\" int,\"City\" text,PRIMARY KEY (\"Employee_ID\"))\nCREATE TABLE \"evaluation\" (\"Employee_ID\" text,\"Year_awarded\" text,\"Bonus\" real,PRIMARY KEY (\"Employee_ID\",\"Year_awarded\"),FOREIGN KEY (\"Employee_ID\") REFERENCES \"employee\"(\"Employee_ID\"))\nCREATE TABLE \"hiring\" (\"Shop_ID\" int,\"Employee_ID\" int,\"Start_from\" text,\"Is_full_time\" bool,PRIMARY KEY (\"Employee_ID\"),FOREIGN KEY (\"Shop_ID\") REFERENCES \"shop\" (\"Shop_ID\"),FOREIGN KEY (\"Employee_ID\") REFERENCES \"employee\" (\"Employee_ID\"))\nCREATE TABLE \"shop\" (\"Shop_ID\" int,\"Name\" text,\"Location\" text,\"District\" text,\"Number_products\" int,\"Manager_name\" text,PRIMARY KEY (\"Shop_ID\"))\nQuestion\nSort employee names by their age in ascending order."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_05a4f35148f81b58016b08e74393bc87d1a6e10e6f958a20ee",
+          "object": "chat.completion",
+          "created": 1795745618,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"cue\":\"age in ascending order\",\"requested_quantity\":\"age\",\"table\":\"employee\",\"column\":\"birthyear\",\"match\":\"similar\"}]}",
+                "reasoning_content": "**Clarifying node config output and sorting logic**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_05a4f35148f81b58016b08e743941487d196e83163b5bcb68f": {
+                  "input_tokens": 232,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 232,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_05a4f35148f81b58016b08e743941487d19aa79ea6ceaee7dd": {
+                  "input_tokens": 197,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 197,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_05a4f35148f81b58016b08e751b69087d1a53ff02def29774c": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 36,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 36
+                    }
+                  ]
+                },
+                "rs_05a4f35148f81b58016b08e74ccee487d18d431558ce6638b4": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 131
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4811,
+            "completion_tokens": 167,
+            "total_tokens": 4978,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 131
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_05a4f35148f81b58016b08e743941487d196e83163b5bcb68f": {
+                "input_tokens": 232,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 232,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_05a4f35148f81b58016b08e743941487d19aa79ea6ceaee7dd": {
+                "input_tokens": 197,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 197,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_05a4f35148f81b58016b08e751b69087d1a53ff02def29774c": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 36,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 36
+                  }
+                ]
+              },
+              "rs_05a4f35148f81b58016b08e74ccee487d18d431558ce6638b4": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 131
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4811,
+          "completion_tokens": 167,
+          "total_tokens": 4978,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 131
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "probe",
+      "kind": "sort_verify_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "similar",
+        "cue": "age in ascending order",
+        "requested_quantity": "age",
+        "table": "employee",
+        "column": "birthyear",
+        "declared_type": "INT",
+        "values": [
+          [
+            1993,
+            "integer",
+            3
+          ],
+          [
+            1979,
+            "integer",
+            1
+          ],
+          [
+            1982,
+            "integer",
+            1
+          ],
+          [
+            1986,
+            "integer",
+            1
+          ],
+          [
+            1990,
+            "integer",
+            1
+          ],
+          [
+            1992,
+            "integer",
+            1
+          ],
+          [
+            1994,
+            "integer",
+            1
+          ],
+          [
+            1999,
+            "integer",
+            1
+          ]
+        ]
+      },
+      "call": null
+    },
+    {
+      "id": "direction",
+      "kind": "sort_finalize_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "probe"
+      ],
+      "output": {
+        "route": "similar",
+        "cue": "age in ascending order",
+        "requested_quantity": "age",
+        "table": "employee",
+        "column": "birthyear",
+        "declared_type": "INT",
+        "values": [
+          [
+            1993,
+            "integer",
+            3
+          ],
+          [
+            1979,
+            "integer",
+            1
+          ],
+          [
+            1982,
+            "integer",
+            1
+          ],
+          [
+            1986,
+            "integer",
+            1
+          ],
+          [
+            1990,
+            "integer",
+            1
+          ],
+          [
+            1992,
+            "integer",
+            1
+          ],
+          [
+            1994,
+            "integer",
+            1
+          ],
+          [
+            1999,
+            "integer",
+            1
+          ]
+        ],
+        "direction": "DESC",
+        "relation": "reverse",
+        "column_meaning": "calendar year of birth, representing age inversely at a shared observation time",
+        "reason": "Sort employee names by their age in ascending order. The candidate identifier birthyear and integer values such as 1979-1999 indicate a birth year, not elapsed age. At a common snapshot, a later birth year means a younger employee, so ascending age requires descending birthyear."
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Choose the final direction of the verified stored column. Start with the verbatim sort wording, then explain the candidate column meaning based on its identifier, schema, and observed values. Distinguish the requested concept from how the database represents it. For example, a store opened in a later calendar year has fewer elapsed years since opening at a shared snapshot. Thus descending opening year requires ascending elapsed years. When a field clearly stores elapsed duration for the same entity and event, and values support that meaning, a common snapshot is a reasonable default for a single table unless there are signs of different observation dates. A concrete reference year is unnecessary to decide relative ordering. Return {\"targets\":[{\"column_meaning\":\"what the field measures\",\"relation\":\"same|reverse|unknown\",\"direction\":\"ASC|DESC|unknown\",\"reason\":\"evidence\"}]}. direction is the final SQL direction for the candidate column, after applying the relationship once. Use unknown if field meaning, compatibility, or question direction remains ambiguous. Do not select another field or output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"employee\" (\"Employee_ID\" int,\"Name\" text,\"birthyear\" int,\"City\" text,PRIMARY KEY (\"Employee_ID\"))\nCREATE TABLE \"evaluation\" (\"Employee_ID\" text,\"Year_awarded\" text,\"Bonus\" real,PRIMARY KEY (\"Employee_ID\",\"Year_awarded\"),FOREIGN KEY (\"Employee_ID\") REFERENCES \"employee\"(\"Employee_ID\"))\nCREATE TABLE \"hiring\" (\"Shop_ID\" int,\"Employee_ID\" int,\"Start_from\" text,\"Is_full_time\" bool,PRIMARY KEY (\"Employee_ID\"),FOREIGN KEY (\"Shop_ID\") REFERENCES \"shop\" (\"Shop_ID\"),FOREIGN KEY (\"Employee_ID\") REFERENCES \"employee\" (\"Employee_ID\"))\nCREATE TABLE \"shop\" (\"Shop_ID\" int,\"Name\" text,\"Location\" text,\"District\" text,\"Number_products\" int,\"Manager_name\" text,PRIMARY KEY (\"Shop_ID\"))\nQuestion\nSort employee names by their age in ascending order.\nObserved database values (candidate evidence)\n{\"route\":\"similar\",\"cue\":\"age in ascending order\",\"requested_quantity\":\"age\",\"table\":\"employee\",\"column\":\"birthyear\",\"declared_type\":\"INT\",\"values\":[[1993,\"integer\",3],[1979,\"integer\",1],[1982,\"integer\",1],[1986,\"integer\",1],[1990,\"integer\",1],[1992,\"integer\",1],[1994,\"integer\",1],[1999,\"integer\",1]]}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_04e8f1a3933a044d016b08e775905087d2ae94a4f7daa3ba36",
+          "object": "chat.completion",
+          "created": 1795745667,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"employee.Name\"],\"joins\":[],\"targets\":[{\"table\":\"employee\",\"column\":\"birthyear\",\"term\":\"age\",\"operator\":\"ASC\",\"column_meaning\":\"calendar year of birth, representing age inversely at a shared observation time\",\"relation\":\"reverse\",\"direction\":\"DESC\",\"reason\":\"Sort employee names by their age in ascending order. The candidate identifier birthyear and integer values such as 1979-1999 indicate a birth year, not elapsed age. At a common snapshot, a later birth year means a younger employee, so ascending age requires descending birthyear.\"}]}",
+                "reasoning_content": "**Planning combined JSON output structure****Constructing JSON for sorted employee age**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_04e8f1a3933a044d016b08e775909c87d2a60de88c57c78a0c": {
+                  "input_tokens": 288,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 288,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_04e8f1a3933a044d016b08e775909c87d2b380b2aad28f99fc": {
+                  "input_tokens": 296,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 296,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_04e8f1a3933a044d016b08e781614087d2b08d310f4defba05": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 124,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 124
+                    }
+                  ]
+                },
+                "rs_04e8f1a3933a044d016b08e77b893c87d28fdba56ba155daf2": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 233
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4966,
+            "completion_tokens": 357,
+            "total_tokens": 5323,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 233
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_04e8f1a3933a044d016b08e775909c87d2a60de88c57c78a0c": {
+                "input_tokens": 288,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 288,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_04e8f1a3933a044d016b08e775909c87d2b380b2aad28f99fc": {
+                "input_tokens": 296,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 296,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_04e8f1a3933a044d016b08e781614087d2b08d310f4defba05": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 124,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 124
+                  }
+                ]
+              },
+              "rs_04e8f1a3933a044d016b08e77b893c87d28fdba56ba155daf2": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 233
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4966,
+          "completion_tokens": 357,
+          "total_tokens": 5323,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 233
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "sort_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "direction"
+      ],
+      "output": {
+        "sql": "SELECT \"Name\"\nFROM \"employee\"\nORDER BY \"birthyear\" DESC;",
+        "sort_plan": {
+          "route": "similar",
+          "cue": "age in ascending order",
+          "requested_quantity": "age",
+          "table": "employee",
+          "column": "birthyear",
+          "declared_type": "INT",
+          "values": [
+            [
+              1993,
+              "integer",
+              3
+            ],
+            [
+              1979,
+              "integer",
+              1
+            ],
+            [
+              1982,
+              "integer",
+              1
+            ],
+            [
+              1986,
+              "integer",
+              1
+            ],
+            [
+              1990,
+              "integer",
+              1
+            ],
+            [
+              1992,
+              "integer",
+              1
+            ],
+            [
+              1994,
+              "integer",
+              1
+            ],
+            [
+              1999,
+              "integer",
+              1
+            ]
+          ],
+          "direction": "DESC",
+          "relation": "reverse",
+          "column_meaning": "calendar year of birth, representing age inversely at a shared observation time",
+          "reason": "Sort employee names by their age in ascending order. The candidate identifier birthyear and integer values such as 1979-1999 indicate a birth year, not elapsed age. At a common snapshot, a later birth year means a younger employee, so ascending age requires descending birthyear."
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"employee\" (\"Employee_ID\" int,\"Name\" text,\"birthyear\" int,\"City\" text,PRIMARY KEY (\"Employee_ID\"))\nCREATE TABLE \"evaluation\" (\"Employee_ID\" text,\"Year_awarded\" text,\"Bonus\" real,PRIMARY KEY (\"Employee_ID\",\"Year_awarded\"),FOREIGN KEY (\"Employee_ID\") REFERENCES \"employee\"(\"Employee_ID\"))\nCREATE TABLE \"hiring\" (\"Shop_ID\" int,\"Employee_ID\" int,\"Start_from\" text,\"Is_full_time\" bool,PRIMARY KEY (\"Employee_ID\"),FOREIGN KEY (\"Shop_ID\") REFERENCES \"shop\" (\"Shop_ID\"),FOREIGN KEY (\"Employee_ID\") REFERENCES \"employee\" (\"Employee_ID\"))\nCREATE TABLE \"shop\" (\"Shop_ID\" int,\"Name\" text,\"Location\" text,\"District\" text,\"Number_products\" int,\"Manager_name\" text,PRIMARY KEY (\"Shop_ID\"))\nQuestion\nSort employee names by their age in ascending order.\nQuery plan\nFor the requested sorting use employee.birthyear in DESC order. Preserve all requested outputs and filters."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0034103082473b99016b08e7ac0d3c87d19c79953a2e0fb3f4",
+          "object": "chat.completion",
+          "created": 1795745719,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"Name\"\nFROM \"employee\"\nORDER BY \"birthyear\" DESC;",
+                "reasoning_content": "**Refining SQL query for birthyear descending order**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 6014,
+            "completion_tokens": 83,
+            "total_tokens": 6097,
+            "prompt_tokens_details": {
+              "cached_tokens": 3968
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 55
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 6014,
+          "completion_tokens": 83,
+          "total_tokens": 6097,
+          "prompt_tokens_details": {
+            "cached_tokens": 3968
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 55
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "sort_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"Name\"\nFROM \"employee\"\nORDER BY \"birthyear\" DESC;",
+        "rows": [
+          [
+            "George Chuter"
+          ],
+          [
+            "Andrew Sheridan"
+          ],
+          [
+            "Lee Mears"
+          ],
+          [
+            "Tim Payne"
+          ],
+          [
+            "Matt Stevens"
+          ],
+          [
+            "Jason Hobson"
+          ],
+          [
+            "Steve Borthwick"
+          ],
+          [
+            "Louis Deacon"
+          ],
+          [
+            "Phil Vickery"
+          ],
+          [
+            "Mark Regan"
+          ]
+        ],
+        "columns": [
+          "Name"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 15791,
+    "completion_tokens": 607,
+    "total_tokens": 16398
+  },
+  "model_calls": 3,
+  "response_sources": {
+    "intent": "v3",
+    "direction": "v3",
+    "generate": "v3"
+  },
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 10,
+    "prediction_rows": 10
+  }
+}

@@ -1,0 +1,664 @@
+{
+  "metrics": {
+    "原题": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4784.5,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 10015,
+          "tokens_n": 2,
+          "routes": {
+            "fallback": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4880.5,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 10529,
+          "tokens_n": 2,
+          "routes": {
+            "fallback": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    },
+    "历史同类": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4801,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 9937,
+          "tokens_n": 2,
+          "routes": {
+            "fallback": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4842.5,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 10089.5,
+          "tokens_n": 2,
+          "routes": {
+            "fallback": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    },
+    "历史明确组合": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 4831,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 8199,
+          "tokens_n": 2,
+          "routes": {
+            "tuple": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 4873,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 9025,
+          "tokens_n": 2,
+          "routes": {
+            "tuple": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    },
+    "历史明确选手": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4895.5,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 0,
+          "both": 0,
+          "calls": 1.5,
+          "tokens": 7675,
+          "tokens_n": 2,
+          "routes": {
+            "entity": 1,
+            "fallback": 1
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 6057,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 1,
+          "post": 1,
+          "both": 1,
+          "calls": 1,
+          "tokens": 5422.5,
+          "tokens_n": 2,
+          "routes": {
+            "entity": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 1,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    },
+    "历史混合": {
+      "none": {
+        "pairs": 8,
+        "baseline": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1,
+          "tokens": 5851.9,
+          "tokens_n": 16,
+          "routes": {
+            "null": 16
+          }
+        },
+        "v3": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1.1875,
+          "tokens": 6830.1,
+          "tokens_n": 16,
+          "routes": {
+            "fallback": 16
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 8,
+        "baseline": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1,
+          "tokens": 6263.1,
+          "tokens_n": 16,
+          "routes": {
+            "null": 16
+          }
+        },
+        "v3": {
+          "pre": 6,
+          "post": 6,
+          "both": 6,
+          "calls": 1.1875,
+          "tokens": 7282.1,
+          "tokens_n": 16,
+          "routes": {
+            "fallback": 16
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    },
+    "历史全体": {
+      "none": {
+        "pairs": 12,
+        "baseline": {
+          "pre": 9,
+          "post": 7,
+          "both": 7,
+          "calls": 1,
+          "tokens": 5510.6,
+          "tokens_n": 24,
+          "routes": {
+            "null": 24
+          }
+        },
+        "v3": {
+          "pre": 10,
+          "post": 7,
+          "both": 7,
+          "calls": 1.3333333333333333,
+          "tokens": 7538.9,
+          "tokens_n": 24,
+          "routes": {
+            "fallback": 21,
+            "tuple": 2,
+            "entity": 1
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 12,
+        "baseline": {
+          "pre": 9,
+          "post": 7,
+          "both": 7,
+          "calls": 1,
+          "tokens": 5896.5,
+          "tokens_n": 24,
+          "routes": {
+            "null": 24
+          }
+        },
+        "v3": {
+          "pre": 10,
+          "post": 8,
+          "both": 8,
+          "calls": 1.2916666666666667,
+          "tokens": 7776.9,
+          "tokens_n": 24,
+          "routes": {
+            "fallback": 20,
+            "tuple": 2,
+            "entity": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 1,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    },
+    "合成明确定义": {
+      "none": {
+        "pairs": 5,
+        "baseline": {
+          "pre": 2,
+          "post": 3,
+          "both": 2,
+          "calls": 1,
+          "tokens": 5669.8,
+          "tokens_n": 10,
+          "routes": {
+            "null": 10
+          }
+        },
+        "v3": {
+          "pre": 5,
+          "post": 5,
+          "both": 5,
+          "calls": 1.4,
+          "tokens": 8209,
+          "tokens_n": 10,
+          "routes": {
+            "entity": 2,
+            "tuple": 2,
+            "rows": 2,
+            "fallback": 4
+          }
+        },
+        "delta": {
+          "post_repairs": 2,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 5,
+        "baseline": {
+          "pre": 2,
+          "post": 3,
+          "both": 2,
+          "calls": 1,
+          "tokens": 5171.9,
+          "tokens_n": 10,
+          "routes": {
+            "null": 10
+          }
+        },
+        "v3": {
+          "pre": 5,
+          "post": 5,
+          "both": 5,
+          "calls": 1.2,
+          "tokens": 7179.1,
+          "tokens_n": 10,
+          "routes": {
+            "entity": 3,
+            "tuple": 3,
+            "rows": 2,
+            "fallback": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 2,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    },
+    "合成歧义": {
+      "none": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4511,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 12130,
+          "tokens_n": 2,
+          "routes": {
+            "fallback": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 1,
+        "baseline": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 1,
+          "tokens": 4593.5,
+          "tokens_n": 2,
+          "routes": {
+            "null": 2
+          }
+        },
+        "v3": {
+          "pre": 0,
+          "post": 0,
+          "both": 0,
+          "calls": 2,
+          "tokens": 12542.5,
+          "tokens_n": 2,
+          "routes": {
+            "fallback": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 0,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    },
+    "全部题单": {
+      "none": {
+        "pairs": 18,
+        "baseline": {
+          "pre": 11,
+          "post": 10,
+          "both": 9,
+          "calls": 1,
+          "tokens": 5499.3,
+          "tokens_n": 36,
+          "routes": {
+            "null": 36
+          }
+        },
+        "v3": {
+          "pre": 15,
+          "post": 12,
+          "both": 12,
+          "calls": 1.3888888888888888,
+          "tokens": 7980.1,
+          "tokens_n": 36,
+          "routes": {
+            "fallback": 27,
+            "tuple": 4,
+            "entity": 3,
+            "rows": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 2,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      },
+      "high": {
+        "pairs": 18,
+        "baseline": {
+          "pre": 11,
+          "post": 10,
+          "both": 9,
+          "calls": 1,
+          "tokens": 5622.8,
+          "tokens_n": 36,
+          "routes": {
+            "null": 36
+          }
+        },
+        "v3": {
+          "pre": 15,
+          "post": 13,
+          "both": 13,
+          "calls": 1.3055555555555556,
+          "tokens": 7875.6,
+          "tokens_n": 36,
+          "routes": {
+            "fallback": 24,
+            "tuple": 5,
+            "entity": 5,
+            "rows": 2
+          }
+        },
+        "delta": {
+          "post_repairs": 3,
+          "post_harm": 0,
+          "pre_harm": 0
+        }
+      }
+    }
+  },
+  "conditions": 152,
+  "responses": {
+    "paired_baseline": 53,
+    "live": 126
+  },
+  "interactive": [
+    [
+      "lap-ambiguity-post",
+      "none",
+      "mismatch"
+    ],
+    [
+      "lap-ambiguity-pre",
+      "none",
+      "mismatch"
+    ],
+    [
+      "SQL_NonDB_number-00054-post",
+      "none",
+      "clarification"
+    ],
+    [
+      "SQL_NonDB_number-00054-pre",
+      "none",
+      "clarification"
+    ],
+    [
+      "lap-ambiguity-post",
+      "high",
+      "clarification"
+    ],
+    [
+      "lap-ambiguity-pre",
+      "high",
+      "clarification"
+    ],
+    [
+      "SQL_NonDB_number-00054-post",
+      "high",
+      "clarification"
+    ],
+    [
+      "SQL_NonDB_number-00054-pre",
+      "high",
+      "clarification"
+    ]
+  ],
+  "browser": [
+    [
+      "SQL_NonDB_number-00054-post",
+      "fallback",
+      "mismatch",
+      {
+        "model_calls": 2,
+        "total_tokens": 10046
+      }
+    ],
+    [
+      "lap-rows-post",
+      "rows",
+      "match",
+      {
+        "model_calls": 1,
+        "total_tokens": 5019
+      }
+    ],
+    [
+      "lap-entity-post",
+      "fallback",
+      "mismatch",
+      {
+        "model_calls": 2,
+        "total_tokens": 11215
+      }
+    ],
+    [
+      "sale-tuple-post",
+      "tuple",
+      "match",
+      {
+        "model_calls": 1,
+        "total_tokens": 4978
+      }
+    ]
+  ]
+}

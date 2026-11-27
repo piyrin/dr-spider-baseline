@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    {
+      "id": "draft",
+      "kind": "column_draft_v2"
+    },
+    {
+      "id": "inspect",
+      "kind": "column_inspect_v2"
+    },
+    {
+      "id": "revise",
+      "kind": "column_revise_v2"
+    },
+    {
+      "id": "execute",
+      "kind": "column_execute_v2"
+    }
+  ],
+  "links": [
+    {
+      "source": "draft",
+      "target": "inspect"
+    },
+    {
+      "source": "inspect",
+      "target": "revise"
+    },
+    {
+      "source": "revise",
+      "target": "execute"
+    }
+  ]
+}

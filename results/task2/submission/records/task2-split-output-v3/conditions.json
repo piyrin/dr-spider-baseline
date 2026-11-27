@@ -1,0 +1,4030 @@
+[
+  {
+    "id": "DB_DBcontent_equivalence-00125-pre",
+    "batch": "original-1",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT v.\"Name\"\nFROM \"visitor\" AS v\nJOIN \"visit\" AS vi ON vi.\"visitor_ID\" = v.\"ID\"\nJOIN \"museum\" AS m ON m.\"Museum_ID\" = vi.\"Museum_ID\"\nGROUP BY v.\"ID\", v.\"Name\"\nHAVING SUM(CASE WHEN CAST(m.\"Open_Year\" AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.\"Open_Year\" AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query correctly projects visitor names, joins each visitor to visited museums through the schema's foreign keys, groups at visitor grain, and requires at least one museum opened before 2009 and at least one opened after 2011. The visit primary key prevents duplicate visitor-museum rows, and no sort order or additional deduplication is specified."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT v.\"Name\"\nFROM \"visitor\" AS v\nJOIN \"visit\" AS vi ON vi.\"visitor_ID\" = v.\"ID\"\nJOIN \"museum\" AS m ON m.\"Museum_ID\" = vi.\"Museum_ID\"\nGROUP BY v.\"ID\", v.\"Name\"\nHAVING SUM(CASE WHEN CAST(m.\"Open_Year\" AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.\"Open_Year\" AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;",
+      "rows": [
+        [
+          "Fernando Gago"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00125-post",
+    "batch": "original-1",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name of the visitor",
+      "reason": "The visitor schema stores the name only as first_name and last_name. Since the question does not explicitly request a combined display value, return those stored components in order instead of concatenating them.",
+      "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The visitor name is stored in separate first_name and last_name fields, and the question does not explicitly request a combined display value. The revision returns those components in order and preserves both museum-year conditions and the remaining query semantics."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nWHERE EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) < 2009\n)\nAND EXISTS (\n    SELECT 1\n    FROM visit AS vi\n    JOIN museum AS m ON m.Museum_ID = vi.Museum_ID\n    WHERE vi.visitor_ID = v.ID\n      AND CAST(m.Open_Year AS INTEGER) > 2011\n);",
+      "rows": [
+        [
+          "Fernando",
+          "Gago"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00125-pre",
+    "batch": "original-1",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT v.Name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.Name\nHAVING MIN(CAST(m.Open_Year AS INTEGER)) < 2009\n   AND MAX(CAST(m.Open_Year AS INTEGER)) > 2011;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The joins associate each visitor with their visited museums. Grouping by visitor ID and name gives one row per qualifying visitor, and the minimum/maximum year conditions correctly require at least one museum opened before 2009 and at least one opened after 2011."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT v.Name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.Name\nHAVING MIN(CAST(m.Open_Year AS INTEGER)) < 2009\n   AND MAX(CAST(m.Open_Year AS INTEGER)) > 2011;",
+      "rows": [
+        [
+          "Fernando Gago"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00125-post",
+    "batch": "original-1",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.first_name, v.last_name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name of the visitor",
+      "reason": "The visitor name is stored in separate first_name and last_name columns, and the question does not explicitly request one combined display value. Return the stored components in order while preserving the valid joins, filters, grouping, and aggregation.",
+      "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.first_name, v.last_name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The visitor’s name is stored in separate first_name and last_name fields, and the question does not explicitly request a combined display value. The revision returns those components in order while preserving the joins, grouping, and conditions for visiting museums opened before 2009 and after 2011."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.first_name, v.last_name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;",
+      "rows": [
+        [
+          "Fernando",
+          "Gago"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00125-pre",
+    "batch": "original-2",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT v.Name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.Name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns visitor names and groups visits by visitor ID, requiring at least one museum opened before 2009 and at least one opened after 2011. The joins follow the schema relationships, and DISTINCT appropriately avoids duplicate names in the output. No ordering is requested."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT v.Name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.Name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;",
+      "rows": [
+        [
+          "Fernando Gago"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00125-post",
+    "batch": "original-2",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nJOIN visit AS vi ON v.ID = vi.visitor_ID\nJOIN museum AS m ON vi.Museum_ID = m.Museum_ID\nGROUP BY v.ID, v.first_name, v.last_name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name of the visitor",
+      "reason": "The visitor schema stores the requested name only as separate first_name and last_name fields. Return those stored components in order instead of concatenating them into a display value.",
+      "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nJOIN visit AS vi ON v.ID = vi.visitor_ID\nJOIN museum AS m ON vi.Museum_ID = m.Museum_ID\nGROUP BY v.ID, v.first_name, v.last_name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores visitor names as separate first_name and last_name fields, and the question does not explicitly request a combined display value. The proposed projection returns those components in order, while preserving the original joins and both museum-year conditions."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nJOIN visit AS vi ON v.ID = vi.visitor_ID\nJOIN museum AS m ON vi.Museum_ID = m.Museum_ID\nGROUP BY v.ID, v.first_name, v.last_name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;",
+      "rows": [
+        [
+          "Fernando",
+          "Gago"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00125-pre",
+    "batch": "original-2",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT v.Name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.Name\nHAVING MIN(CAST(m.Open_Year AS INTEGER)) < 2009\n   AND MAX(CAST(m.Open_Year AS INTEGER)) > 2011;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the stored visitor name for each visitor with visits on both sides of the date bounds: the minimum cast year is before 2009 and the maximum is after 2011. Grouping by visitor ID and name gives one row per visitor, and the joins follow the declared foreign keys."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT v.Name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.Name\nHAVING MIN(CAST(m.Open_Year AS INTEGER)) < 2009\n   AND MAX(CAST(m.Open_Year AS INTEGER)) > 2011;",
+      "rows": [
+        [
+          "Fernando Gago"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00125-post",
+    "batch": "original-2",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT v.first_name || ' ' || v.last_name AS visitor_name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nWHERE m.Open_Year < '2009'\n  AND EXISTS (\n    SELECT 1\n    FROM visit AS vi2\n    JOIN museum AS m2 ON m2.Museum_ID = vi2.Museum_ID\n    WHERE vi2.visitor_ID = v.ID\n      AND m2.Open_Year > '2011'\n  );"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name of the visitor",
+      "reason": "The visitor table stores the name in separate first_name and last_name columns; the question does not explicitly request a combined display value.",
+      "sql": "SELECT DISTINCT v.first_name, v.last_name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nWHERE m.Open_Year < '2009'\n  AND EXISTS (\n    SELECT 1\n    FROM visit AS vi2\n    JOIN museum AS m2 ON m2.Museum_ID = vi2.Museum_ID\n    WHERE vi2.visitor_ID = v.ID\n      AND m2.Open_Year > '2011'\n  );"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores the visitor's name only as first_name and last_name, and the question does not explicitly request a combined display value. Returning these stored components in order resolves the projection conflict while preserving DISTINCT, visitor matching, and both museum-opening-year conditions."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT v.first_name, v.last_name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nWHERE m.Open_Year < '2009'\n  AND EXISTS (\n    SELECT 1\n    FROM visit AS vi2\n    JOIN museum AS m2 ON m2.Museum_ID = vi2.Museum_ID\n    WHERE vi2.visitor_ID = v.ID\n      AND m2.Open_Year > '2011'\n  );",
+      "rows": [
+        [
+          "Fernando",
+          "Gago"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00270-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 11,
+      "prediction_rows": 11
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 11,
+      "prediction_rows": 11
+    },
+    "draft": {
+      "sql": "SELECT contestant_number, contestant_name\nFROM CONTESTANTS\nORDER BY contestant_name DESC;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft selects the requested contestant number and name from CONTESTANTS, uses the correct result grain without unnecessary joins or aggregation, and orders by contestant_name descending as specified."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT contestant_number, contestant_name\nFROM CONTESTANTS\nORDER BY contestant_name DESC;",
+      "rows": [
+        [
+          2,
+          "Tabatha Gehling"
+        ],
+        [
+          8,
+          "Nita Coster"
+        ],
+        [
+          11,
+          "Loraine NygrenTania Mattioli"
+        ],
+        [
+          9,
+          "Kurt Walser"
+        ],
+        [
+          3,
+          "Kelly Clauss"
+        ],
+        [
+          6,
+          "Jessie Eichman"
+        ],
+        [
+          4,
+          "Jessie Alloway"
+        ],
+        [
+          10,
+          "Ericka Dieter"
+        ],
+        [
+          1,
+          "Edwina Burnam"
+        ],
+        [
+          7,
+          "Allie Rogalski"
+        ],
+        [
+          5,
+          "Alana Bregman"
+        ]
+      ],
+      "columns": [
+        "contestant_number",
+        "contestant_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00270-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 11,
+      "prediction_rows": 11
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 11,
+      "prediction_rows": 11
+    },
+    "draft": {
+      "sql": "SELECT contestant_number, first_name, last_name\nFROM CONTESTANTS\nORDER BY first_name DESC, last_name DESC;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns each contestant's number and stored name components and orders by first name, then last name, descending. The question does not specify a different name ordering."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT contestant_number, first_name, last_name\nFROM CONTESTANTS\nORDER BY first_name DESC, last_name DESC;",
+      "rows": [
+        [
+          2,
+          "Tabatha",
+          "Gehling"
+        ],
+        [
+          8,
+          "Nita",
+          "Coster"
+        ],
+        [
+          11,
+          "Loraine",
+          "NygrenTaniaMattioli"
+        ],
+        [
+          9,
+          "Kurt",
+          "Walser"
+        ],
+        [
+          3,
+          "Kelly",
+          "Clauss"
+        ],
+        [
+          6,
+          "Jessie",
+          "Eichman"
+        ],
+        [
+          4,
+          "Jessie",
+          "Alloway"
+        ],
+        [
+          10,
+          "Ericka",
+          "Dieter"
+        ],
+        [
+          1,
+          "Edwina",
+          "Burnam"
+        ],
+        [
+          7,
+          "Allie",
+          "Rogalski"
+        ],
+        [
+          5,
+          "Alana",
+          "Bregman"
+        ]
+      ],
+      "columns": [
+        "contestant_number",
+        "first_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00270-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 11,
+      "prediction_rows": 11
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 11,
+      "prediction_rows": 11
+    },
+    "draft": {
+      "sql": "SELECT contestant_number, contestant_name\nFROM CONTESTANTS\nORDER BY contestant_name DESC;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects the requested contestant numbers and names from CONTESTANTS, with no unnecessary population filters or joins. Each contestant is one row at the table's result grain, and ORDER BY contestant_name DESC matches the requested descending name order."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT contestant_number, contestant_name\nFROM CONTESTANTS\nORDER BY contestant_name DESC;",
+      "rows": [
+        [
+          2,
+          "Tabatha Gehling"
+        ],
+        [
+          8,
+          "Nita Coster"
+        ],
+        [
+          11,
+          "Loraine NygrenTania Mattioli"
+        ],
+        [
+          9,
+          "Kurt Walser"
+        ],
+        [
+          3,
+          "Kelly Clauss"
+        ],
+        [
+          6,
+          "Jessie Eichman"
+        ],
+        [
+          4,
+          "Jessie Alloway"
+        ],
+        [
+          10,
+          "Ericka Dieter"
+        ],
+        [
+          1,
+          "Edwina Burnam"
+        ],
+        [
+          7,
+          "Allie Rogalski"
+        ],
+        [
+          5,
+          "Alana Bregman"
+        ]
+      ],
+      "columns": [
+        "contestant_number",
+        "contestant_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00270-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 11,
+      "prediction_rows": 11
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 11,
+      "prediction_rows": 11
+    },
+    "draft": {
+      "sql": "SELECT contestant_number, first_name, last_name\nFROM CONTESTANTS\nORDER BY first_name DESC, last_name DESC;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns each contestant's number and stored name components, ordering by first name and then last name in descending order. The question does not specify a different name ordering."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT contestant_number, first_name, last_name\nFROM CONTESTANTS\nORDER BY first_name DESC, last_name DESC;",
+      "rows": [
+        [
+          2,
+          "Tabatha",
+          "Gehling"
+        ],
+        [
+          8,
+          "Nita",
+          "Coster"
+        ],
+        [
+          11,
+          "Loraine",
+          "NygrenTaniaMattioli"
+        ],
+        [
+          9,
+          "Kurt",
+          "Walser"
+        ],
+        [
+          3,
+          "Kelly",
+          "Clauss"
+        ],
+        [
+          6,
+          "Jessie",
+          "Eichman"
+        ],
+        [
+          4,
+          "Jessie",
+          "Alloway"
+        ],
+        [
+          10,
+          "Ericka",
+          "Dieter"
+        ],
+        [
+          1,
+          "Edwina",
+          "Burnam"
+        ],
+        [
+          7,
+          "Allie",
+          "Rogalski"
+        ],
+        [
+          5,
+          "Alana",
+          "Bregman"
+        ]
+      ],
+      "columns": [
+        "contestant_number",
+        "first_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00004-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 6,
+      "prediction_rows": 5
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 6,
+      "prediction_rows": 5
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT s.Name\nFROM singer AS s\nJOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nJOIN concert AS c ON sc.concert_ID = c.concert_ID\nWHERE c.Year = '2014';\n--"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft correctly projects singer names, joins singers through singer_in_concert to concerts, filters concerts to year 2014, and uses DISTINCT to avoid duplicate singer names across qualifying concerts. No ordering is requested."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT s.Name\nFROM singer AS s\nJOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nJOIN concert AS c ON sc.concert_ID = c.concert_ID\nWHERE c.Year = '2014';\n--",
+      "rows": [
+        [
+          "Timbaland"
+        ],
+        [
+          "Justin Brown"
+        ],
+        [
+          "John Nizinik"
+        ],
+        [
+          "Tribal King"
+        ],
+        [
+          "Rose White"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00004-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 6,
+      "prediction_rows": 5
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 6,
+      "prediction_rows": 5
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT s.first_name, s.last_name\nFROM singer AS s\nJOIN singer_in_concert AS sic ON sic.Singer_ID = s.Singer_ID\nJOIN concert AS c ON c.concert_ID = sic.concert_ID\nWHERE c.Year = '2014';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the stored first and last name components, joins singers to concerts through the link table, and filters concerts to year 2014. DISTINCT handles singers appearing in multiple matching concerts; no sort order is specified."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT s.first_name, s.last_name\nFROM singer AS s\nJOIN singer_in_concert AS sic ON sic.Singer_ID = s.Singer_ID\nJOIN concert AS c ON c.concert_ID = sic.concert_ID\nWHERE c.Year = '2014';",
+      "rows": [
+        [
+          "A",
+          "Timbaland"
+        ],
+        [
+          "Justin",
+          "Brown"
+        ],
+        [
+          "John",
+          "Nizinik"
+        ],
+        [
+          "Tribal",
+          "King"
+        ],
+        [
+          "Rose",
+          "White"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00004-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 6,
+      "prediction_rows": 5
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 6,
+      "prediction_rows": 5
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT s.Name\nFROM singer AS s\nJOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nJOIN concert AS c ON sc.concert_ID = c.concert_ID\nWHERE c.Year = '2014';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft selects singer names, joins singers to concerts through singer_in_concert, filters concerts to year 2014, and uses DISTINCT to avoid duplicate names from multiple qualifying concerts. The result grain and schema relationships are correct."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT s.Name\nFROM singer AS s\nJOIN singer_in_concert AS sc ON s.Singer_ID = sc.Singer_ID\nJOIN concert AS c ON sc.concert_ID = c.concert_ID\nWHERE c.Year = '2014';",
+      "rows": [
+        [
+          "Timbaland"
+        ],
+        [
+          "Justin Brown"
+        ],
+        [
+          "John Nizinik"
+        ],
+        [
+          "Tribal King"
+        ],
+        [
+          "Rose White"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00004-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 6,
+      "prediction_rows": 5
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 6,
+      "prediction_rows": 5
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT s.first_name, s.last_name\nFROM singer AS s\nJOIN singer_in_concert AS sic ON sic.Singer_ID = s.Singer_ID\nJOIN concert AS c ON c.concert_ID = sic.concert_ID\nWHERE c.Year = '2014';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the stored singer name components in first-name/last-name order, joins singers through singer_in_concert to concerts, filters concerts to year 2014, and uses DISTINCT to avoid duplicate singer rows across multiple concerts."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT s.first_name, s.last_name\nFROM singer AS s\nJOIN singer_in_concert AS sic ON sic.Singer_ID = s.Singer_ID\nJOIN concert AS c ON c.concert_ID = sic.concert_ID\nWHERE c.Year = '2014';",
+      "rows": [
+        [
+          "A",
+          "Timbaland"
+        ],
+        [
+          "Justin",
+          "Brown"
+        ],
+        [
+          "John",
+          "Nizinik"
+        ],
+        [
+          "Tribal",
+          "King"
+        ],
+        [
+          "Rose",
+          "White"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00271-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 10,
+      "prediction_rows": 10
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 10,
+      "prediction_rows": 10
+    },
+    "draft": {
+      "sql": "SELECT contestant_name\nFROM CONTESTANTS\nWHERE contestant_name <> 'Jessie Alloway';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The question requests contestant names excluding the exact name 'Jessie Alloway'. The draft selects the stored contestant_name field from CONTESTANTS and applies that exclusion; no joins, aggregation, or ordering are required."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT contestant_name\nFROM CONTESTANTS\nWHERE contestant_name <> 'Jessie Alloway';",
+      "rows": [
+        [
+          "Edwina Burnam"
+        ],
+        [
+          "Tabatha Gehling"
+        ],
+        [
+          "Kelly Clauss"
+        ],
+        [
+          "Alana Bregman"
+        ],
+        [
+          "Jessie Eichman"
+        ],
+        [
+          "Allie Rogalski"
+        ],
+        [
+          "Nita Coster"
+        ],
+        [
+          "Kurt Walser"
+        ],
+        [
+          "Ericka Dieter"
+        ],
+        [
+          "Loraine NygrenTania Mattioli"
+        ]
+      ],
+      "columns": [
+        "contestant_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00271-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 9,
+      "prediction_rows": 10
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 9,
+      "prediction_rows": 10
+    },
+    "draft": {
+      "sql": "SELECT first_name, last_name\nFROM CONTESTANTS\nWHERE first_name || ' ' || last_name <> 'Jessie Alloway';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the stored first and last name components for contestants whose combined name is not Jessie Alloway. Both name columns are non-null, and no additional filtering, aggregation, or ordering is requested."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name\nFROM CONTESTANTS\nWHERE first_name || ' ' || last_name <> 'Jessie Alloway';",
+      "rows": [
+        [
+          "Edwina",
+          "Burnam"
+        ],
+        [
+          "Tabatha",
+          "Gehling"
+        ],
+        [
+          "Kelly",
+          "Clauss"
+        ],
+        [
+          "Alana",
+          "Bregman"
+        ],
+        [
+          "Jessie",
+          "Eichman"
+        ],
+        [
+          "Allie",
+          "Rogalski"
+        ],
+        [
+          "Nita",
+          "Coster"
+        ],
+        [
+          "Kurt",
+          "Walser"
+        ],
+        [
+          "Ericka",
+          "Dieter"
+        ],
+        [
+          "Loraine",
+          "NygrenTaniaMattioli"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00271-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 10,
+      "prediction_rows": 10
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 10,
+      "prediction_rows": 10
+    },
+    "draft": {
+      "sql": "SELECT contestant_name\nFROM CONTESTANTS\nWHERE contestant_name <> 'Jessie Alloway';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the stored contestant names and excludes the exact name requested. No joins, aggregation, duplicate handling, or ordering are specified."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT contestant_name\nFROM CONTESTANTS\nWHERE contestant_name <> 'Jessie Alloway';",
+      "rows": [
+        [
+          "Edwina Burnam"
+        ],
+        [
+          "Tabatha Gehling"
+        ],
+        [
+          "Kelly Clauss"
+        ],
+        [
+          "Alana Bregman"
+        ],
+        [
+          "Jessie Eichman"
+        ],
+        [
+          "Allie Rogalski"
+        ],
+        [
+          "Nita Coster"
+        ],
+        [
+          "Kurt Walser"
+        ],
+        [
+          "Ericka Dieter"
+        ],
+        [
+          "Loraine NygrenTania Mattioli"
+        ]
+      ],
+      "columns": [
+        "contestant_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00271-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 9,
+      "prediction_rows": 10
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 9,
+      "prediction_rows": 10
+    },
+    "draft": {
+      "sql": "SELECT first_name, last_name\nFROM CONTESTANTS\nWHERE first_name || ' ' || last_name <> 'Jessie Alloway';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the stored first and last name components for contestants whose full name is not Jessie Alloway. Both name fields are non-null, and no ordering or deduplication is requested."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name\nFROM CONTESTANTS\nWHERE first_name || ' ' || last_name <> 'Jessie Alloway';",
+      "rows": [
+        [
+          "Edwina",
+          "Burnam"
+        ],
+        [
+          "Tabatha",
+          "Gehling"
+        ],
+        [
+          "Kelly",
+          "Clauss"
+        ],
+        [
+          "Alana",
+          "Bregman"
+        ],
+        [
+          "Jessie",
+          "Eichman"
+        ],
+        [
+          "Allie",
+          "Rogalski"
+        ],
+        [
+          "Nita",
+          "Coster"
+        ],
+        [
+          "Kurt",
+          "Walser"
+        ],
+        [
+          "Ericka",
+          "Dieter"
+        ],
+        [
+          "Loraine",
+          "NygrenTaniaMattioli"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00106-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 7,
+      "prediction_rows": 6
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 7,
+      "prediction_rows": 6
+    },
+    "draft": {
+      "sql": "SELECT \"Name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> 'Little Lever Urban District';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects the stored teacher name and filters for hometowns other than Little Lever Urban District, as requested."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> 'Little Lever Urban District';",
+      "rows": [
+        [
+          "Joseph Huts"
+        ],
+        [
+          "Gustaaf Deloor"
+        ],
+        [
+          "Vicente Carretero"
+        ],
+        [
+          "John Deloor"
+        ],
+        [
+          "Kearsley Brown"
+        ],
+        [
+          "Lucy Wong"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00106-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 7,
+      "prediction_rows": 6
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 7,
+      "prediction_rows": 6
+    },
+    "draft": {
+      "sql": "SELECT first_name || ' ' || last_name AS name\nFROM teacher\nWHERE Hometown <> 'Little Lever Urban District';"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "the name of teachers",
+      "reason": "The schema stores teacher names in separate first_name and last_name fields, and the output convention requires returning those stored components separately unless a combined display value is explicitly requested.",
+      "sql": "SELECT first_name, last_name\nFROM teacher\nWHERE Hometown <> 'Little Lever Urban District';"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores teacher names in separate first_name and last_name fields, and the question does not explicitly request a combined display value. The revised projection returns both components separately while preserving the hometown filter."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name\nFROM teacher\nWHERE Hometown <> 'Little Lever Urban District';",
+      "rows": [
+        [
+          "Joseph",
+          "Huts"
+        ],
+        [
+          "Gustaaf",
+          "Deloor"
+        ],
+        [
+          "Vicente",
+          "Carretero"
+        ],
+        [
+          "John",
+          "Deloor"
+        ],
+        [
+          "Kearsley",
+          "Brown"
+        ],
+        [
+          "Lucy",
+          "Wong"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00106-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 7,
+      "prediction_rows": 6
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 7,
+      "prediction_rows": 6
+    },
+    "draft": {
+      "sql": "SELECT \"Name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> 'Little Lever Urban District';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects the stored teacher name and filters for hometowns unequal to Little Lever Urban District, as requested."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Name\"\nFROM \"teacher\"\nWHERE \"Hometown\" <> 'Little Lever Urban District';",
+      "rows": [
+        [
+          "Joseph Huts"
+        ],
+        [
+          "Gustaaf Deloor"
+        ],
+        [
+          "Vicente Carretero"
+        ],
+        [
+          "John Deloor"
+        ],
+        [
+          "Kearsley Brown"
+        ],
+        [
+          "Lucy Wong"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00106-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 7,
+      "prediction_rows": 6
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 7,
+      "prediction_rows": 6
+    },
+    "draft": {
+      "sql": "SELECT first_name || ' ' || last_name AS name\nFROM teacher\nWHERE Hometown <> 'Little Lever Urban District';"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name of teachers",
+      "reason": "The schema stores teacher names as separate first_name and last_name fields, and the question does not explicitly request one combined display value.",
+      "sql": "SELECT first_name, last_name\nFROM teacher\nWHERE Hometown <> 'Little Lever Urban District';"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores teacher names in separate first_name and last_name fields, and the question does not explicitly request a combined display value. The proposed projection returns those stored components in order while preserving the hometown filter and unrelated query intent."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name\nFROM teacher\nWHERE Hometown <> 'Little Lever Urban District';",
+      "rows": [
+        [
+          "Joseph",
+          "Huts"
+        ],
+        [
+          "Gustaaf",
+          "Deloor"
+        ],
+        [
+          "Vicente",
+          "Carretero"
+        ],
+        [
+          "John",
+          "Deloor"
+        ],
+        [
+          "Kearsley",
+          "Brown"
+        ],
+        [
+          "Lucy",
+          "Wong"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00123-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "draft": {
+      "sql": "SELECT \"Name\", \"Level_of_membership\"\nFROM \"visitor\"\nWHERE \"Level_of_membership\" > 4\nORDER BY \"Age\" DESC;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query correctly selects visitor name and membership level from the visitor table, filters membership levels above 4, and sorts by Age descending, which represents old to young."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Name\", \"Level_of_membership\"\nFROM \"visitor\"\nWHERE \"Level_of_membership\" > 4\nORDER BY \"Age\" DESC;",
+      "rows": [
+        [
+          "Fernando Gago",
+          6
+        ],
+        [
+          "Gonzalo Higuaín ",
+          8
+        ],
+        [
+          "Guti Midfielder",
+          5
+        ]
+      ],
+      "columns": [
+        "Name",
+        "Level_of_membership"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00123-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "draft": {
+      "sql": "SELECT first_name || ' ' || last_name AS name, Level_of_membership\nFROM visitor\nWHERE Level_of_membership > 4\nORDER BY birthyear ASC;"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name and membership level",
+      "reason": "The visitor table stores the name in separate first_name and last_name fields, so the requested name should be returned as its stored components rather than concatenated.",
+      "sql": "SELECT first_name, last_name, Level_of_membership\nFROM visitor\nWHERE Level_of_membership > 4\nORDER BY birthyear ASC;"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores visitor names only as first_name and last_name, and the question does not explicitly request a combined display value. Returning those stored components in order follows the projection convention. The revision preserves the membership-level filter and ascending birthyear ordering, which sorts visitors from oldest to youngest."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name, Level_of_membership\nFROM visitor\nWHERE Level_of_membership > 4\nORDER BY birthyear ASC;",
+      "rows": [
+        [
+          "Fernando",
+          "Gago",
+          6
+        ],
+        [
+          "Gonzalo",
+          "Higuaín",
+          8
+        ],
+        [
+          "Guti",
+          "Midfielder",
+          5
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name",
+        "Level_of_membership"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00123-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "draft": {
+      "sql": "SELECT \"Name\", \"Level_of_membership\"\nFROM \"visitor\"\nWHERE \"Level_of_membership\" > 4\nORDER BY \"Age\" DESC;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft selects the requested visitor name and membership level, filters visitors to membership levels greater than 4, and orders by the available Age column descending, matching old to young. The visitor table provides all required data, so no join, aggregation, or duplicate handling is needed."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Name\", \"Level_of_membership\"\nFROM \"visitor\"\nWHERE \"Level_of_membership\" > 4\nORDER BY \"Age\" DESC;",
+      "rows": [
+        [
+          "Fernando Gago",
+          6
+        ],
+        [
+          "Gonzalo Higuaín ",
+          8
+        ],
+        [
+          "Guti Midfielder",
+          5
+        ]
+      ],
+      "columns": [
+        "Name",
+        "Level_of_membership"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00123-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "draft": {
+      "sql": "SELECT first_name || ' ' || last_name AS name, Level_of_membership\nFROM visitor\nWHERE Level_of_membership > 4\nORDER BY birthyear ASC;"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name and membership level",
+      "reason": "The visitor table stores the name in separate first_name and last_name fields. The question does not explicitly request a combined display value, so the stored name components should be returned separately.",
+      "sql": "SELECT first_name, last_name, Level_of_membership\nFROM visitor\nWHERE Level_of_membership > 4\nORDER BY birthyear ASC;"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores each visitor name in separate first_name and last_name fields, and the question does not explicitly request a combined display value. The proposed projection returns those components in schema order, while preserving the membership filter and ascending birthyear order for sorting old to young."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name, Level_of_membership\nFROM visitor\nWHERE Level_of_membership > 4\nORDER BY birthyear ASC;",
+      "rows": [
+        [
+          "Fernando",
+          "Gago",
+          6
+        ],
+        [
+          "Gonzalo",
+          "Higuaín",
+          8
+        ],
+        [
+          "Guti",
+          "Midfielder",
+          5
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name",
+        "Level_of_membership"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00320-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT \"Name\"\nFROM \"conductor\"\nORDER BY \"Year_of_Work\" DESC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects the conductor’s stored name, orders conductors by years of work descending, and returns one row. The schema provides all required fields; no filter or join is needed."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Name\"\nFROM \"conductor\"\nORDER BY \"Year_of_Work\" DESC\nLIMIT 1;",
+      "rows": [
+        [
+          "Robert Craft"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00320-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT first_name || ' ' || last_name AS conductor_name\nFROM conductor\nORDER BY year_start_to_work ASC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name of the conductor",
+      "reason": "The schema stores the conductor's name as separate first_name and last_name fields, and the question does not explicitly request a combined display value. Return the stored components in order while preserving the correct earliest start-year ordering.",
+      "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY year_start_to_work ASC\nLIMIT 1;"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores the conductor’s name in separate first_name and last_name fields, and the question does not explicitly request a combined display value. The proposal returns those components in order and preserves the draft’s earliest-start-year selection for the most years of work."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY year_start_to_work ASC\nLIMIT 1;",
+      "rows": [
+        [
+          "Robert",
+          "Craft"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00320-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT Name\nFROM conductor\nWHERE Year_of_Work = (SELECT MAX(Year_of_Work) FROM conductor);"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft selects the stored conductor name and returns every conductor tied for the maximum Year_of_Work value; no join or additional filter is required."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT Name\nFROM conductor\nWHERE Year_of_Work = (SELECT MAX(Year_of_Work) FROM conductor);",
+      "rows": [
+        [
+          "Robert Craft"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00320-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT first_name || ' ' || last_name AS conductor_name\nFROM conductor\nORDER BY year_start_to_work ASC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "name of the conductor",
+      "reason": "The schema stores the conductor's name in separate first_name and last_name fields, and the requested name is not explicitly a combined display value. Return the stored components separately; the earliest year_start_to_work indicates the most years of work.",
+      "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY year_start_to_work ASC\nLIMIT 1;"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores the conductor name as separate first_name and last_name fields, and the question does not explicitly request a combined display value. The proposed projection preserves those components in order, and ordering by the earliest year_start_to_work correctly identifies the conductor with the most years of work."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY year_start_to_work ASC\nLIMIT 1;",
+      "rows": [
+        [
+          "Robert",
+          "Craft"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00117-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 7
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 7
+    },
+    "draft": {
+      "sql": "SELECT t.\"Name\", COUNT(DISTINCT ca.\"Course_ID\") AS \"Course_Count\"\nFROM \"teacher\" AS t\nLEFT JOIN \"course_arrange\" AS ca ON ca.\"Teacher_ID\" = t.\"Teacher_ID\"\nGROUP BY t.\"Teacher_ID\", t.\"Name\";"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The projection returns teacher names and the number of distinct courses taught. The LEFT JOIN includes teachers with no course assignments, while COUNT(DISTINCT ca.\"Course_ID\") prevents duplicate counting across grades. Grouping by the teacher's primary key and name preserves one result row per teacher, and no unspecified ordering is introduced."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT t.\"Name\", COUNT(DISTINCT ca.\"Course_ID\") AS \"Course_Count\"\nFROM \"teacher\" AS t\nLEFT JOIN \"course_arrange\" AS ca ON ca.\"Teacher_ID\" = t.\"Teacher_ID\"\nGROUP BY t.\"Teacher_ID\", t.\"Name\";",
+      "rows": [
+        [
+          "Joseph Huts",
+          0
+        ],
+        [
+          "Gustaaf Deloor",
+          1
+        ],
+        [
+          "Vicente Carretero",
+          1
+        ],
+        [
+          "John Deloor",
+          0
+        ],
+        [
+          "Kearsley Brown",
+          1
+        ],
+        [
+          "Anne Walker",
+          2
+        ],
+        [
+          "Lucy Wong",
+          1
+        ]
+      ],
+      "columns": [
+        "Name",
+        "Course_Count"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00117-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 7
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 7
+    },
+    "draft": {
+      "sql": "SELECT t.first_name, t.last_name, COUNT(DISTINCT ca.Course_ID) AS course_count\nFROM teacher AS t\nLEFT JOIN course_arrange AS ca ON t.Teacher_ID = ca.Teacher_ID\nGROUP BY t.Teacher_ID, t.first_name, t.last_name;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns each teacher's stored name components and counts distinct courses per teacher, avoiding duplicate counts across grades while retaining teachers with no course arrangements."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT t.first_name, t.last_name, COUNT(DISTINCT ca.Course_ID) AS course_count\nFROM teacher AS t\nLEFT JOIN course_arrange AS ca ON t.Teacher_ID = ca.Teacher_ID\nGROUP BY t.Teacher_ID, t.first_name, t.last_name;",
+      "rows": [
+        [
+          "Joseph",
+          "Huts",
+          0
+        ],
+        [
+          "Gustaaf",
+          "Deloor",
+          1
+        ],
+        [
+          "Vicente",
+          "Carretero",
+          1
+        ],
+        [
+          "John",
+          "Deloor",
+          0
+        ],
+        [
+          "Kearsley",
+          "Brown",
+          1
+        ],
+        [
+          "Anne",
+          "Walker",
+          2
+        ],
+        [
+          "Lucy",
+          "Wong",
+          1
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name",
+        "course_count"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00117-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 7
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 7
+    },
+    "draft": {
+      "sql": "SELECT t.\"Name\", COUNT(DISTINCT ca.\"Course_ID\") AS \"Course_Count\"\nFROM \"teacher\" AS t\nLEFT JOIN \"course_arrange\" AS ca ON ca.\"Teacher_ID\" = t.\"Teacher_ID\"\nGROUP BY t.\"Teacher_ID\", t.\"Name\";"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft returns each teacher's stored name and counts distinct courses through the teacher-course association. The LEFT JOIN includes teachers with zero courses, while COUNT(DISTINCT ca.\"Course_ID\") avoids duplicate course counts from multiple Grade rows. Grouping by the teacher's primary key and name preserves one result row per teacher, and the question specifies no sort order."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT t.\"Name\", COUNT(DISTINCT ca.\"Course_ID\") AS \"Course_Count\"\nFROM \"teacher\" AS t\nLEFT JOIN \"course_arrange\" AS ca ON ca.\"Teacher_ID\" = t.\"Teacher_ID\"\nGROUP BY t.\"Teacher_ID\", t.\"Name\";",
+      "rows": [
+        [
+          "Joseph Huts",
+          0
+        ],
+        [
+          "Gustaaf Deloor",
+          1
+        ],
+        [
+          "Vicente Carretero",
+          1
+        ],
+        [
+          "John Deloor",
+          0
+        ],
+        [
+          "Kearsley Brown",
+          1
+        ],
+        [
+          "Anne Walker",
+          2
+        ],
+        [
+          "Lucy Wong",
+          1
+        ]
+      ],
+      "columns": [
+        "Name",
+        "Course_Count"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00117-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 7
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 7
+    },
+    "draft": {
+      "sql": "SELECT\n    t.first_name,\n    t.last_name,\n    COUNT(DISTINCT ca.Course_ID) AS course_count\nFROM teacher AS t\nLEFT JOIN course_arrange AS ca\n    ON t.Teacher_ID = ca.Teacher_ID\nGROUP BY t.Teacher_ID, t.first_name, t.last_name;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns each teacher's stored first and last name, includes teachers with no course assignments via LEFT JOIN, and counts distinct Course_ID values so multiple grade rows for the same course are not double-counted."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT\n    t.first_name,\n    t.last_name,\n    COUNT(DISTINCT ca.Course_ID) AS course_count\nFROM teacher AS t\nLEFT JOIN course_arrange AS ca\n    ON t.Teacher_ID = ca.Teacher_ID\nGROUP BY t.Teacher_ID, t.first_name, t.last_name;",
+      "rows": [
+        [
+          "Joseph",
+          "Huts",
+          0
+        ],
+        [
+          "Gustaaf",
+          "Deloor",
+          1
+        ],
+        [
+          "Vicente",
+          "Carretero",
+          1
+        ],
+        [
+          "John",
+          "Deloor",
+          0
+        ],
+        [
+          "Kearsley",
+          "Brown",
+          1
+        ],
+        [
+          "Anne",
+          "Walker",
+          2
+        ],
+        [
+          "Lucy",
+          "Wong",
+          1
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name",
+        "course_count"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00289-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "draft": {
+      "sql": "SELECT \"Name\"\nFROM \"conductor\"\nORDER BY \"Age\";"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the stored conductor names from the conductor table and orders them by Age. The question does not specify ascending or descending order, so the draft's default ascending order is acceptable."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Name\"\nFROM \"conductor\"\nORDER BY \"Age\";",
+      "rows": [
+        [
+          "Antal Doráti"
+        ],
+        [
+          "Igor Stravinsky"
+        ],
+        [
+          "Colin Davis"
+        ],
+        [
+          "Michael Tilson Thomas"
+        ],
+        [
+          "Paul Jorgensen"
+        ],
+        [
+          "Antal Brown"
+        ],
+        [
+          "Charles Dutoit"
+        ],
+        [
+          "Seiji Ozawa"
+        ],
+        [
+          "Valeri Gergiev"
+        ],
+        [
+          "Pierre Boulez"
+        ],
+        [
+          "Gerard Schwarz"
+        ],
+        [
+          "Robert Craft"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00289-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "draft": {
+      "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY birthyear ASC;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft selects the conductor's stored first and last name components, and orders by birthyear ascending, which lists conductors from oldest to youngest by age. The schema provides no current date or age column, so birthyear is the appropriate available ordering field; no joins, filters, aggregation, or duplicate handling are needed."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY birthyear ASC;",
+      "rows": [
+        [
+          "Robert",
+          "Craft"
+        ],
+        [
+          "Gerard",
+          "Schwarz"
+        ],
+        [
+          "Pierre",
+          "Boulez"
+        ],
+        [
+          "Valeri",
+          "Gergiev"
+        ],
+        [
+          "Paul",
+          "Jorgensen"
+        ],
+        [
+          "Antal",
+          "Brown"
+        ],
+        [
+          "Charles",
+          "Dutoit"
+        ],
+        [
+          "Seiji",
+          "Ozawa"
+        ],
+        [
+          "Colin",
+          "Davis"
+        ],
+        [
+          "Michael",
+          "TilsonThomas"
+        ],
+        [
+          "Igor",
+          "Stravinsky"
+        ],
+        [
+          "Antal",
+          "Doráti"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00289-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "draft": {
+      "sql": "SELECT \"Name\"\nFROM \"conductor\"\nORDER BY \"Age\";"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft selects the stored conductor name from \"conductor\" and orders the conductor population by \"Age\". No filters, joins, aggregation, duplicate handling, or sort direction are required; ascending order is an acceptable default because the question does not specify a direction."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Name\"\nFROM \"conductor\"\nORDER BY \"Age\";",
+      "rows": [
+        [
+          "Antal Doráti"
+        ],
+        [
+          "Igor Stravinsky"
+        ],
+        [
+          "Colin Davis"
+        ],
+        [
+          "Michael Tilson Thomas"
+        ],
+        [
+          "Paul Jorgensen"
+        ],
+        [
+          "Antal Brown"
+        ],
+        [
+          "Charles Dutoit"
+        ],
+        [
+          "Seiji Ozawa"
+        ],
+        [
+          "Valeri Gergiev"
+        ],
+        [
+          "Pierre Boulez"
+        ],
+        [
+          "Gerard Schwarz"
+        ],
+        [
+          "Robert Craft"
+        ]
+      ],
+      "columns": [
+        "Name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00289-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 12,
+      "prediction_rows": 12
+    },
+    "draft": {
+      "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY birthyear DESC;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the stored first and last name components for all conductors. Ordering by birthyear DESC orders them from youngest to oldest, and the question does not specify an age sort direction."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, last_name\nFROM conductor\nORDER BY birthyear DESC;",
+      "rows": [
+        [
+          "Antal",
+          "Doráti"
+        ],
+        [
+          "Igor",
+          "Stravinsky"
+        ],
+        [
+          "Colin",
+          "Davis"
+        ],
+        [
+          "Michael",
+          "TilsonThomas"
+        ],
+        [
+          "Paul",
+          "Jorgensen"
+        ],
+        [
+          "Antal",
+          "Brown"
+        ],
+        [
+          "Charles",
+          "Dutoit"
+        ],
+        [
+          "Seiji",
+          "Ozawa"
+        ],
+        [
+          "Valeri",
+          "Gergiev"
+        ],
+        [
+          "Pierre",
+          "Boulez"
+        ],
+        [
+          "Gerard",
+          "Schwarz"
+        ],
+        [
+          "Robert",
+          "Craft"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00176-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "draft": {
+      "sql": "SELECT t.transcript_date, t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc\n  ON t.transcript_id = tc.transcript_id\nGROUP BY t.transcript_id, t.transcript_date\nHAVING COUNT(DISTINCT tc.student_course_id) >= 2;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns each transcript’s date and ID, grouping at transcript grain and requiring at least two distinct linked student-course results. Counting distinct results avoids treating duplicate link rows as additional course results."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT t.transcript_date, t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc\n  ON t.transcript_id = tc.transcript_id\nGROUP BY t.transcript_id, t.transcript_date\nHAVING COUNT(DISTINCT tc.student_course_id) >= 2;",
+      "rows": [
+        [
+          "2013-06-30 13:01:40",
+          5
+        ],
+        [
+          "2010-12-13 10:55:15",
+          6
+        ],
+        [
+          "1975-05-06 12:04:47",
+          8
+        ],
+        [
+          "1998-11-22 12:18:29",
+          15
+        ]
+      ],
+      "columns": [
+        "transcript_date",
+        "transcript_id"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00176-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "draft": {
+      "sql": "SELECT\n  t.transcript_year,\n  t.transcript_month,\n  t.transcript_day,\n  t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc ON tc.transcript_id = t.transcript_id\nGROUP BY t.transcript_id\nHAVING COUNT(DISTINCT tc.student_course_id) >= 2;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The date is stored as separate year, month, and day columns, and transcript_id supplies the requested id. Joining transcript contents and grouping by transcript identifies each transcript; counting distinct student_course_id values correctly requires at least two course results and avoids duplicate transcript-content rows. No sort direction is specified."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT\n  t.transcript_year,\n  t.transcript_month,\n  t.transcript_day,\n  t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc ON tc.transcript_id = t.transcript_id\nGROUP BY t.transcript_id\nHAVING COUNT(DISTINCT tc.student_course_id) >= 2;",
+      "rows": [
+        [
+          2013,
+          6,
+          30,
+          5
+        ],
+        [
+          2010,
+          12,
+          13,
+          6
+        ],
+        [
+          1975,
+          5,
+          6,
+          8
+        ],
+        [
+          1998,
+          11,
+          22,
+          15
+        ]
+      ],
+      "columns": [
+        "transcript_year",
+        "transcript_month",
+        "transcript_day",
+        "transcript_id"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00176-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "draft": {
+      "sql": "SELECT t.transcript_date, t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc\n  ON t.transcript_id = tc.transcript_id\nGROUP BY t.transcript_id, t.transcript_date\nHAVING COUNT(tc.student_course_id) >= 2;"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "distinct",
+      "quote": "at least 2 course results",
+      "reason": "Transcript_Contents has no uniqueness constraint, so duplicate links could inflate the count; each student_course_id identifies a course result.",
+      "sql": "SELECT t.transcript_date, t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc\n  ON t.transcript_id = tc.transcript_id\nGROUP BY t.transcript_id, t.transcript_date\nHAVING COUNT(DISTINCT tc.student_course_id) >= 2;"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema does not enforce uniqueness on Transcript_Contents, so counting rows could treat duplicate links as multiple results. COUNT(DISTINCT tc.student_course_id) correctly counts distinct course results per transcript, while preserving the requested transcript date and ID."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT t.transcript_date, t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc\n  ON t.transcript_id = tc.transcript_id\nGROUP BY t.transcript_id, t.transcript_date\nHAVING COUNT(DISTINCT tc.student_course_id) >= 2;",
+      "rows": [
+        [
+          "2013-06-30 13:01:40",
+          5
+        ],
+        [
+          "2010-12-13 10:55:15",
+          6
+        ],
+        [
+          "1975-05-06 12:04:47",
+          8
+        ],
+        [
+          "1998-11-22 12:18:29",
+          15
+        ]
+      ],
+      "columns": [
+        "transcript_date",
+        "transcript_id"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_DBcontent_equivalence-00176-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "draft": {
+      "sql": "SELECT\n  printf('%04d-%02d-%02d', t.transcript_year, t.transcript_month, t.transcript_day) AS transcript_date,\n  t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc\n  ON tc.transcript_id = t.transcript_id\nGROUP BY\n  t.transcript_id,\n  t.transcript_year,\n  t.transcript_month,\n  t.transcript_day\nHAVING COUNT(DISTINCT tc.student_course_id) >= 2;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The projection provides the transcript date from the schema's year, month, and day fields plus transcript_id. The join correctly links transcripts to Transcript_Contents, and grouping by transcript identity and date supports the HAVING condition. COUNT(DISTINCT tc.student_course_id) counts distinct course-result records, while no sort direction or duplicate-preserving behavior is specified, so the existing query should be preserved."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT\n  printf('%04d-%02d-%02d', t.transcript_year, t.transcript_month, t.transcript_day) AS transcript_date,\n  t.transcript_id\nFROM Transcripts AS t\nJOIN Transcript_Contents AS tc\n  ON tc.transcript_id = t.transcript_id\nGROUP BY\n  t.transcript_id,\n  t.transcript_year,\n  t.transcript_month,\n  t.transcript_day\nHAVING COUNT(DISTINCT tc.student_course_id) >= 2;",
+      "rows": [
+        [
+          "2013-06-30",
+          5
+        ],
+        [
+          "2010-12-13",
+          6
+        ],
+        [
+          "1975-05-06",
+          8
+        ],
+        [
+          "1998-11-22",
+          15
+        ]
+      ],
+      "columns": [
+        "transcript_date",
+        "transcript_id"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_attribute-00065-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT first_name, middle_name, last_name\nFROM Students\nWHERE date_first_registered IS NOT NULL\nORDER BY date_first_registered ASC, student_id ASC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query correctly projects the separately stored first_name, middle_name, and last_name fields, uses Students as the appropriate population, excludes null registration dates, orders by the earliest registration timestamp with student_id as a deterministic tie-breaker, and limits the result to one student. No joins, aggregation, or duplicate handling are needed."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, middle_name, last_name\nFROM Students\nWHERE date_first_registered IS NOT NULL\nORDER BY date_first_registered ASC, student_id ASC\nLIMIT 1;",
+      "rows": [
+        [
+          "Timmothy",
+          "Anna",
+          "Ward"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "middle_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_attribute-00065-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT TRIM(first_name || ' ' || COALESCE(middle_name || ' ', '') || last_name) AS full_name\nFROM Students\nWHERE date_first_registered = (SELECT MIN(date_first_registered) FROM Students);"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "Full name of students",
+      "reason": "Students are stored as separate first_name, middle_name, and last_name fields, and the question requests the full name, so the projection should return those stored components in order rather than a combined display value.",
+      "sql": "SELECT first_name, middle_name, last_name\nFROM Students\nWHERE date_first_registered = (SELECT MIN(date_first_registered) FROM Students);"
+    },
+    "confirmation": {
+      "accept": true,
+      "reason": "The schema stores student names only as first_name, middle_name, and last_name. Under the output convention, requesting a full name does not explicitly require a combined display value, so returning those components in order resolves the projection conflict. The proposal preserves the earliest-registration filter and returns all students tied for the earliest date."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, middle_name, last_name\nFROM Students\nWHERE date_first_registered = (SELECT MIN(date_first_registered) FROM Students);",
+      "rows": [
+        [
+          "Timmothy",
+          "Anna",
+          "Ward"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "middle_name",
+        "last_name"
+      ],
+      "revision": "accepted",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "NLQ_column_attribute-00065-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT first_name, middle_name, last_name\nFROM Students\nWHERE date_first_registered IS NOT NULL\nORDER BY date_first_registered ASC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the requested name fields for the student with the earliest recorded registration date, excludes unknown dates, and uses no unnecessary joins or aggregation."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT first_name, middle_name, last_name\nFROM Students\nWHERE date_first_registered IS NOT NULL\nORDER BY date_first_registered ASC\nLIMIT 1;",
+      "rows": [
+        [
+          "Timmothy",
+          "Anna",
+          "Ward"
+        ]
+      ],
+      "columns": [
+        "first_name",
+        "middle_name",
+        "last_name"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_attribute-00065-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT TRIM(s.first_name || ' ' || COALESCE(s.middle_name || ' ', '') || s.last_name) AS full_name\nFROM Students AS s\nWHERE s.date_first_registered = (\n    SELECT MIN(date_first_registered)\n    FROM Students\n);"
+    },
+    "audit": {
+      "action": "revise",
+      "dimension": "projection",
+      "quote": "Full name",
+      "reason": "Students stores names only in first_name, middle_name, and last_name. Return these stored components in order because the question does not explicitly request a combined display value. The earliest-registration filter correctly retains all tied students.",
+      "sql": "SELECT s.first_name, s.middle_name, s.last_name\nFROM Students AS s\nWHERE s.date_first_registered = (\n    SELECT MIN(date_first_registered)\n    FROM Students\n);"
+    },
+    "confirmation": {
+      "accept": false,
+      "reason": "The question explicitly requests a full name, so the separate first_name, middle_name, and last_name fields should be combined in the final projection. The proposed revision changes the requested output semantics to three separate columns, while the earliest-registration filter is already correct and preserves ties."
+    },
+    "final": {
+      "status": "executed",
+      "sql": "SELECT TRIM(s.first_name || ' ' || COALESCE(s.middle_name || ' ', '') || s.last_name) AS full_name\nFROM Students AS s\nWHERE s.date_first_registered = (\n    SELECT MIN(date_first_registered)\n    FROM Students\n);",
+      "rows": [
+        [
+          "Timmothy Anna Ward"
+        ]
+      ],
+      "columns": [
+        "full_name"
+      ],
+      "revision": "rejected",
+      "gate": "eligible"
+    }
+  },
+  {
+    "id": "DB_schema_synonym-00105-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT PetType, weight\nFROM Pets\nWHERE pet_age = (SELECT MIN(pet_age) FROM Pets);"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query correctly projects PetType and weight from Pets, filters to the minimum pet_age across the full pet population, preserves all ties for the youngest age, and returns one row per matching pet without unnecessary joins, aggregation, or ordering."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT PetType, weight\nFROM Pets\nWHERE pet_age = (SELECT MIN(pet_age) FROM Pets);",
+      "rows": [
+        [
+          "dog",
+          9.3
+        ]
+      ],
+      "columns": [
+        "PetType",
+        "weight"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_schema_synonym-00105-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT pet_class, mass\nFROM Pets\nWHERE pet_age = (SELECT MIN(pet_age) FROM Pets);"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects the pet type and weight using pet_class and mass, and filters to the minimum pet_age. It correctly returns all pets tied for youngest; no joins or ordering are required."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT pet_class, mass\nFROM Pets\nWHERE pet_age = (SELECT MIN(pet_age) FROM Pets);",
+      "rows": [
+        [
+          "dog",
+          9.3
+        ]
+      ],
+      "columns": [
+        "pet_class",
+        "mass"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_schema_synonym-00105-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT PetType, weight\nFROM Pets\nWHERE pet_age = (SELECT MIN(pet_age) FROM Pets);\n--"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns the requested pet type and weight for every pet whose age equals the minimum age in Pets, preserving ties. No join or additional ordering is needed."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT PetType, weight\nFROM Pets\nWHERE pet_age = (SELECT MIN(pet_age) FROM Pets);\n--",
+      "rows": [
+        [
+          "dog",
+          9.3
+        ]
+      ],
+      "columns": [
+        "PetType",
+        "weight"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "DB_schema_synonym-00105-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT pet_class, mass\nFROM Pets\nORDER BY pet_age ASC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects the pet type (`pet_class`) and weight (`mass`) from `Pets`, orders by `pet_age` ascending to identify the youngest pet, and limits the result to one row. No filter, join, aggregation, duplicate handling, or sort direction change is required by the question or schema."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT pet_class, mass\nFROM Pets\nORDER BY pet_age ASC\nLIMIT 1;",
+      "rows": [
+        [
+          "dog",
+          9.3
+        ]
+      ],
+      "columns": [
+        "pet_class",
+        "mass"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_attribute-00036-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    ORDER BY CAST(Horsepower AS REAL) DESC\n    LIMIT 1\n);"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query correctly counts cars whose Accelerate exceeds the Accelerate value of the car selected by descending numeric Horsepower. CAST is necessary because Horsepower is stored as TEXT, and the joins, population, result grain, aggregation, duplicate handling, and ordering are appropriate. LIMIT 1 matches the singular wording, with no specified tie-breaking requirement."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    ORDER BY CAST(Horsepower AS REAL) DESC\n    LIMIT 1\n);",
+      "rows": [
+        [
+          399
+        ]
+      ],
+      "columns": [
+        "COUNT(*)"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_attribute-00036-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    WHERE Horsepower != '?'\n    ORDER BY CAST(Horsepower AS REAL) DESC\n    LIMIT 1\n);"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query counts cars whose Accelerate exceeds the value for the highest-horsepower car. The scalar subquery filters out unknown horsepower values and orders numeric horsepower descending; the schema provides one cars_data row per car, so COUNT(*) matches the requested number. No sort direction is requested for the selected car if horsepower ties."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    WHERE Horsepower != '?'\n    ORDER BY CAST(Horsepower AS REAL) DESC\n    LIMIT 1\n);",
+      "rows": [
+        [
+          399
+        ]
+      ],
+      "columns": [
+        "COUNT(*)"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_attribute-00036-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n  SELECT Accelerate\n  FROM cars_data\n  ORDER BY CAST(Horsepower AS REAL) DESC\n  LIMIT 1\n);"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query counts cars whose Accelerate exceeds that of the car with the highest numeric Horsepower. Casting Horsepower is appropriate because the schema stores it as TEXT. The question does not specify how to handle ties for the highest horsepower, so no revision is warranted."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n  SELECT Accelerate\n  FROM cars_data\n  ORDER BY CAST(Horsepower AS REAL) DESC\n  LIMIT 1\n);",
+      "rows": [
+        [
+          399
+        ]
+      ],
+      "columns": [
+        "COUNT(*)"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_attribute-00036-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    ORDER BY CAST(Horsepower AS REAL) DESC\n    LIMIT 1\n);"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query counts cars whose Accelerate exceeds that of the car with the highest numeric Horsepower. Casting Horsepower is appropriate because the schema stores it as TEXT. The question does not specify how to handle ties for greatest horsepower, so there is no clear basis for revising the single-car lookup."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT COUNT(*)\nFROM cars_data\nWHERE Accelerate > (\n    SELECT Accelerate\n    FROM cars_data\n    ORDER BY CAST(Horsepower AS REAL) DESC\n    LIMIT 1\n);",
+      "rows": [
+        [
+          399
+        ]
+      ],
+      "columns": [
+        "COUNT(*)"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_value-00137-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "draft": {
+      "sql": "SELECT f.\"FlightNo\"\nFROM \"flights\" AS f\nJOIN \"airports\" AS a\n  ON f.\"SourceAirport\" = a.\"AirportCode\"\nWHERE a.\"City\" = 'Aberdeen ';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects flight numbers and joins each flight to its departure airport, filtering for the exact city value specified in the question. The schema does not establish that duplicate flight numbers should be removed."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT f.\"FlightNo\"\nFROM \"flights\" AS f\nJOIN \"airports\" AS a\n  ON f.\"SourceAirport\" = a.\"AirportCode\"\nWHERE a.\"City\" = 'Aberdeen ';",
+      "rows": [],
+      "columns": [
+        "FlightNo"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_value-00137-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "draft": {
+      "sql": "SELECT f.FlightNo\nFROM flights AS f\nJOIN airports AS a ON f.SourceAirport = a.AirportCode\nWHERE a.City = 'Aberdeen';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query projects flight numbers, filters departing flights by the source airport's city, and uses the schema's airport-code relationship. Its result grain and lack of aggregation or duplicate removal are consistent with the question."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT f.FlightNo\nFROM flights AS f\nJOIN airports AS a ON f.SourceAirport = a.AirportCode\nWHERE a.City = 'Aberdeen';",
+      "rows": [],
+      "columns": [
+        "FlightNo"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_value-00137-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "draft": {
+      "sql": "SELECT f.FlightNo\nFROM flights AS f\nJOIN airports AS a ON a.AirportCode = f.SourceAirport\nWHERE a.City = 'Aberdeen ';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects flight numbers and joins each flight's source airport to filter for the city exactly as specified, including its trailing space."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT f.FlightNo\nFROM flights AS f\nJOIN airports AS a ON a.AirportCode = f.SourceAirport\nWHERE a.City = 'Aberdeen ';",
+      "rows": [],
+      "columns": [
+        "FlightNo"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_column_value-00137-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "draft": {
+      "sql": "SELECT f.FlightNo\nFROM flights AS f\nJOIN airports AS a ON a.AirportCode = f.SourceAirport\nWHERE a.City = 'Aberdeen';"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query returns FlightNo for flights whose SourceAirport references an airport in Aberdeen. The join uses the airport primary key and preserves the requested result grain; no change is needed."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT f.FlightNo\nFROM flights AS f\nJOIN airports AS a ON a.AirportCode = f.SourceAirport\nWHERE a.City = 'Aberdeen';",
+      "rows": [],
+      "columns": [
+        "FlightNo"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_keyword_synonym-00426-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "draft": {
+      "sql": "SELECT \"Hometown\"\nFROM \"teacher\"\nGROUP BY \"Hometown\"\nHAVING COUNT(*) >= 2;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query groups teachers by Hometown and returns hometowns with at least two teacher rows, matching the requested population, projection, and aggregation. No joins or ordering are required."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Hometown\"\nFROM \"teacher\"\nGROUP BY \"Hometown\"\nHAVING COUNT(*) >= 2;",
+      "rows": [],
+      "columns": [
+        "Hometown"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_keyword_synonym-00426-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "draft": {
+      "sql": "SELECT \"Hometown\"\nFROM \"teacher\"\nGROUP BY \"Hometown\"\nHAVING COUNT(*) > 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query correctly selects teacher hometowns, groups rows by Hometown, and retains only hometowns associated with more than one teacher. No joins, distinct handling, or ordering are required by the question."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Hometown\"\nFROM \"teacher\"\nGROUP BY \"Hometown\"\nHAVING COUNT(*) > 1;",
+      "rows": [],
+      "columns": [
+        "Hometown"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_keyword_synonym-00426-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "draft": {
+      "sql": "SELECT \"Hometown\"\nFROM \"teacher\"\nGROUP BY \"Hometown\"\nHAVING COUNT(*) >= 2;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query groups teachers by Hometown and returns each hometown with at least two teacher rows, matching the requested population, result grain, and threshold. No joins or ordering are required."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Hometown\"\nFROM \"teacher\"\nGROUP BY \"Hometown\"\nHAVING COUNT(*) >= 2;",
+      "rows": [],
+      "columns": [
+        "Hometown"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "NLQ_keyword_synonym-00426-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 0,
+      "prediction_rows": 0
+    },
+    "draft": {
+      "sql": "SELECT \"Hometown\"\nFROM \"teacher\"\nGROUP BY \"Hometown\"\nHAVING COUNT(*) > 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query correctly reads from the teacher population, groups rows by Hometown, and retains only hometowns with more than one teacher using HAVING COUNT(*) > 1. No join, aggregation, duplicate-handling, or ordering change is required."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Hometown\"\nFROM \"teacher\"\nGROUP BY \"Hometown\"\nHAVING COUNT(*) > 1;",
+      "rows": [],
+      "columns": [
+        "Hometown"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "SQL_comparison-00010-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 21,
+      "prediction_rows": 21
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 21,
+      "prediction_rows": 21
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cd.Year > 1980;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft returns distinct model names from car_names, joins cars_data through the declared MakeId/Id relationship, and filters to years after 1980. Its result grain and projection match the question; no sort direction is specified."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cd.Year > 1980;",
+      "rows": [
+        [
+          "plymouth"
+        ],
+        [
+          "buick"
+        ],
+        [
+          "dodge"
+        ],
+        [
+          "chevrolet"
+        ],
+        [
+          "toyota"
+        ],
+        [
+          "honda"
+        ],
+        [
+          "subaru"
+        ],
+        [
+          "datsun"
+        ],
+        [
+          "mazda"
+        ],
+        [
+          "ford"
+        ],
+        [
+          "volkswagen"
+        ],
+        [
+          "renault"
+        ],
+        [
+          "peugeot"
+        ],
+        [
+          "saab"
+        ],
+        [
+          "volvo"
+        ],
+        [
+          "oldsmobile"
+        ],
+        [
+          "chrysler"
+        ],
+        [
+          "pontiac"
+        ],
+        [
+          "amc"
+        ],
+        [
+          "mercury"
+        ],
+        [
+          "nissan"
+        ]
+      ],
+      "columns": [
+        "Model"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "SQL_comparison-00010-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 30,
+      "prediction_rows": 30
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 30,
+      "prediction_rows": 30
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT car_names.Model\nFROM car_names\nJOIN cars_data ON cars_data.Id = car_names.MakeId\nWHERE cars_data.Year < 1980;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query selects distinct model names, joins car records through the declared ID relationship, and filters for years before 1980."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT car_names.Model\nFROM car_names\nJOIN cars_data ON cars_data.Id = car_names.MakeId\nWHERE cars_data.Year < 1980;",
+      "rows": [
+        [
+          "chevrolet"
+        ],
+        [
+          "buick"
+        ],
+        [
+          "plymouth"
+        ],
+        [
+          "amc"
+        ],
+        [
+          "ford"
+        ],
+        [
+          "pontiac"
+        ],
+        [
+          "citroen"
+        ],
+        [
+          "dodge"
+        ],
+        [
+          "toyota"
+        ],
+        [
+          "datsun"
+        ],
+        [
+          "volkswagen"
+        ],
+        [
+          "peugeot"
+        ],
+        [
+          "audi"
+        ],
+        [
+          "saab"
+        ],
+        [
+          "bmw"
+        ],
+        [
+          "hi"
+        ],
+        [
+          "mercury"
+        ],
+        [
+          "opel"
+        ],
+        [
+          "fiat"
+        ],
+        [
+          "oldsmobile"
+        ],
+        [
+          "chrysler"
+        ],
+        [
+          "mazda"
+        ],
+        [
+          "volvo"
+        ],
+        [
+          "renault"
+        ],
+        [
+          "honda"
+        ],
+        [
+          "subaru"
+        ],
+        [
+          "capri"
+        ],
+        [
+          "mercedes-benz"
+        ],
+        [
+          "cadillac"
+        ],
+        [
+          "mercedes"
+        ]
+      ],
+      "columns": [
+        "Model"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "SQL_comparison-00010-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 21,
+      "prediction_rows": 21
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 21,
+      "prediction_rows": 21
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT cn.\"Model\"\nFROM \"car_names\" AS cn\nJOIN \"cars_data\" AS cd ON cd.\"Id\" = cn.\"MakeId\"\nWHERE cd.\"Year\" > 1980;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft returns distinct model names from car_names, joins cars_data through the schema-defined car identity relationship, and filters Year > 1980, matching models produced after 1980. The result grain and duplicate handling are appropriate, and no ordering was requested."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT cn.\"Model\"\nFROM \"car_names\" AS cn\nJOIN \"cars_data\" AS cd ON cd.\"Id\" = cn.\"MakeId\"\nWHERE cd.\"Year\" > 1980;",
+      "rows": [
+        [
+          "plymouth"
+        ],
+        [
+          "buick"
+        ],
+        [
+          "dodge"
+        ],
+        [
+          "chevrolet"
+        ],
+        [
+          "toyota"
+        ],
+        [
+          "honda"
+        ],
+        [
+          "subaru"
+        ],
+        [
+          "datsun"
+        ],
+        [
+          "mazda"
+        ],
+        [
+          "ford"
+        ],
+        [
+          "volkswagen"
+        ],
+        [
+          "renault"
+        ],
+        [
+          "peugeot"
+        ],
+        [
+          "saab"
+        ],
+        [
+          "volvo"
+        ],
+        [
+          "oldsmobile"
+        ],
+        [
+          "chrysler"
+        ],
+        [
+          "pontiac"
+        ],
+        [
+          "amc"
+        ],
+        [
+          "mercury"
+        ],
+        [
+          "nissan"
+        ]
+      ],
+      "columns": [
+        "Model"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "SQL_comparison-00010-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 30,
+      "prediction_rows": 30
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 30,
+      "prediction_rows": 30
+    },
+    "draft": {
+      "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cd.Year < 1980;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft selects the requested model field from car_names, joins the corresponding cars_data row through the schema's one-to-one Id/MakeId relationship, filters production year to before 1980 with Year < 1980, and removes duplicate models with DISTINCT. No unspecified ordering is introduced."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cd.Year < 1980;",
+      "rows": [
+        [
+          "chevrolet"
+        ],
+        [
+          "buick"
+        ],
+        [
+          "plymouth"
+        ],
+        [
+          "amc"
+        ],
+        [
+          "ford"
+        ],
+        [
+          "pontiac"
+        ],
+        [
+          "citroen"
+        ],
+        [
+          "dodge"
+        ],
+        [
+          "toyota"
+        ],
+        [
+          "datsun"
+        ],
+        [
+          "volkswagen"
+        ],
+        [
+          "peugeot"
+        ],
+        [
+          "audi"
+        ],
+        [
+          "saab"
+        ],
+        [
+          "bmw"
+        ],
+        [
+          "hi"
+        ],
+        [
+          "mercury"
+        ],
+        [
+          "opel"
+        ],
+        [
+          "fiat"
+        ],
+        [
+          "oldsmobile"
+        ],
+        [
+          "chrysler"
+        ],
+        [
+          "mazda"
+        ],
+        [
+          "volvo"
+        ],
+        [
+          "renault"
+        ],
+        [
+          "honda"
+        ],
+        [
+          "subaru"
+        ],
+        [
+          "capri"
+        ],
+        [
+          "mercedes-benz"
+        ],
+        [
+          "cadillac"
+        ],
+        [
+          "mercedes"
+        ]
+      ],
+      "columns": [
+        "Model"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "SQL_sort_order-00128-pre",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT \"Nationality\"\nFROM \"people\"\nGROUP BY \"Nationality\"\nORDER BY COUNT(*) DESC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft counts people per Nationality, selects the most common value, and limits the result to one. No additional filters or joins are needed."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Nationality\"\nFROM \"people\"\nGROUP BY \"Nationality\"\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "rows": [
+        [
+          "Russia"
+        ]
+      ],
+      "columns": [
+        "Nationality"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "SQL_sort_order-00128-post",
+    "batch": "extended",
+    "effort": "none",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT \"Nationality\"\nFROM \"people\"\nGROUP BY \"Nationality\"\nORDER BY COUNT(*) ASC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query correctly uses the people population, groups by the stored Nationality field, counts rows per nationality, orders by ascending frequency, and returns the least common result. No tie-breaking direction is specified, so the existing LIMIT 1 is preserved."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Nationality\"\nFROM \"people\"\nGROUP BY \"Nationality\"\nORDER BY COUNT(*) ASC\nLIMIT 1;",
+      "rows": [
+        [
+          "Bulgaria"
+        ]
+      ],
+      "columns": [
+        "Nationality"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "SQL_sort_order-00128-pre",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT Nationality\nFROM people\nGROUP BY Nationality\nORDER BY COUNT(*) DESC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The draft correctly reads from all rows in people, groups by the stored Nationality field, orders groups by descending population, and returns the most common nationality with LIMIT 1. No join, duplicate elimination, or additional filter is required."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT Nationality\nFROM people\nGROUP BY Nationality\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "rows": [
+        [
+          "Russia"
+        ]
+      ],
+      "columns": [
+        "Nationality"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  },
+  {
+    "id": "SQL_sort_order-00128-post",
+    "batch": "extended",
+    "effort": "high",
+    "draft_score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 1,
+      "prediction_rows": 1
+    },
+    "draft": {
+      "sql": "SELECT \"Nationality\"\nFROM \"people\"\nGROUP BY \"Nationality\"\nORDER BY COUNT(*) ASC\nLIMIT 1;"
+    },
+    "audit": {
+      "action": "keep",
+      "reason": "The query groups people by stored nationality and orders each group by its population ascending, returning one least-common nationality. No additional filters or joins are implied."
+    },
+    "confirmation": null,
+    "final": {
+      "status": "executed",
+      "sql": "SELECT \"Nationality\"\nFROM \"people\"\nGROUP BY \"Nationality\"\nORDER BY COUNT(*) ASC\nLIMIT 1;",
+      "rows": [
+        [
+          "Bulgaria"
+        ]
+      ],
+      "columns": [
+        "Nationality"
+      ],
+      "revision": "skipped",
+      "gate": "keep"
+    }
+  }
+]

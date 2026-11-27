@@ -1,0 +1,682 @@
+{
+  "id": "DB_schema_synonym-01629-pre",
+  "effort": "high",
+  "method": "canvas_v3",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "sort_select_v3",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "match": "direct",
+            "cue": "highest earnings",
+            "requested_quantity": "earnings",
+            "table": "poker_player",
+            "column": "Earnings"
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one clearly requested sort and select one candidate field from the supplied schema. Quote the exact contiguous sort wording including its direction cue, and name the quantity being ordered in the question. Keep the quote verbatim. Direct means the field stores the same quantity; similar means a plausible substitute represents it differently. Prefer a unique direct candidate. Return {\"targets\":[{\"cue\":\"verbatim quote\",\"requested_quantity\":\"quantity in the question\",\"table\":\"exact identifier\",\"column\":\"exact identifier\",\"match\":\"direct|similar\"}]}. Return {\"targets\":[]} for an ambiguous field or sort, a sort over an aggregate, or multiple sorting keys. Do not convert the direction, add a direction field, or generate SQL. This step only selects information for the next node."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"people\" (\"People_ID\" int,\"Nationality\" text,\"Name\" text,\"Birth_Date\" text,\"Height\" real,PRIMARY KEY (\"People_ID\"))\nCREATE TABLE \"poker_player\" (\"Poker_Player_ID\" int,\"People_ID\" int,\"Final_Table_Made\" real,\"Best_Finish\" real,\"Money_Rank\" real,\"Earnings\" real,PRIMARY KEY (\"Poker_Player_ID\"),FOREIGN KEY (\"People_ID\") REFERENCES \"people\"(\"People_ID\"))\nQuestion\nWhat is the money rank of the poker player with the highest earnings?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0a476ef20d5956c7016b08e7b503a887d19ff47b9841a744e0",
+          "object": "chat.completion",
+          "created": 1795745722,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"cue\":\"highest earnings\",\"requested_quantity\":\"earnings\",\"table\":\"poker_player\",\"column\":\"Earnings\",\"match\":\"direct\"}]}",
+                "reasoning_content": "**Sorting poker_player earnings**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0a476ef20d5956c7016b08e7b503dc87d180cabbbbeeea969e": {
+                  "input_tokens": 232,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 232,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0a476ef20d5956c7016b08e7b503dc87d1bbb5bc55b6f7b94e": {
+                  "input_tokens": 121,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 121,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0a476ef20d5956c7016b08e7b9e89c87d1ad7c6407db74c93d": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 37,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 37
+                    }
+                  ]
+                },
+                "rs_0a476ef20d5956c7016b08e7b6097c87d185ee16df3002cd3e": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 28
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4735,
+            "completion_tokens": 65,
+            "total_tokens": 4800,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 28
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0a476ef20d5956c7016b08e7b503dc87d180cabbbbeeea969e": {
+                "input_tokens": 232,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 232,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0a476ef20d5956c7016b08e7b503dc87d1bbb5bc55b6f7b94e": {
+                "input_tokens": 121,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 121,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0a476ef20d5956c7016b08e7b9e89c87d1ad7c6407db74c93d": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 37,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 37
+                  }
+                ]
+              },
+              "rs_0a476ef20d5956c7016b08e7b6097c87d185ee16df3002cd3e": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 28
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4735,
+          "completion_tokens": 65,
+          "total_tokens": 4800,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 28
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "probe",
+      "kind": "sort_verify_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "direct",
+        "cue": "highest earnings",
+        "requested_quantity": "earnings",
+        "table": "poker_player",
+        "column": "Earnings",
+        "declared_type": "REAL"
+      },
+      "call": null
+    },
+    {
+      "id": "direction",
+      "kind": "sort_finalize_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "probe"
+      ],
+      "output": {
+        "route": "direct",
+        "cue": "highest earnings",
+        "requested_quantity": "earnings",
+        "table": "poker_player",
+        "column": "Earnings",
+        "declared_type": "REAL",
+        "direction": "DESC",
+        "relation": "same",
+        "column_meaning": "The poker player's earnings",
+        "reason": "“highest earnings” asks for the greatest value of poker_player.Earnings; the identifier and observed evidence identify it as the earnings field."
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Choose the final direction of the verified stored column. Start with the verbatim sort wording, then explain the candidate column meaning based on its identifier, schema, and observed values. Distinguish the requested concept from how the database represents it. For example, a store opened in a later calendar year has fewer elapsed years since opening at a shared snapshot. Thus descending opening year requires ascending elapsed years. When a field clearly stores elapsed duration for the same entity and event, and values support that meaning, a common snapshot is a reasonable default for a single table unless there are signs of different observation dates. A concrete reference year is unnecessary to decide relative ordering. Return {\"targets\":[{\"column_meaning\":\"what the field measures\",\"relation\":\"same|reverse|unknown\",\"direction\":\"ASC|DESC|unknown\",\"reason\":\"evidence\"}]}. direction is the final SQL direction for the candidate column, after applying the relationship once. Use unknown if field meaning, compatibility, or question direction remains ambiguous. Do not select another field or output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"people\" (\"People_ID\" int,\"Nationality\" text,\"Name\" text,\"Birth_Date\" text,\"Height\" real,PRIMARY KEY (\"People_ID\"))\nCREATE TABLE \"poker_player\" (\"Poker_Player_ID\" int,\"People_ID\" int,\"Final_Table_Made\" real,\"Best_Finish\" real,\"Money_Rank\" real,\"Earnings\" real,PRIMARY KEY (\"Poker_Player_ID\"),FOREIGN KEY (\"People_ID\") REFERENCES \"people\"(\"People_ID\"))\nQuestion\nWhat is the money rank of the poker player with the highest earnings?\nObserved database values (candidate evidence)\n{\"route\":\"direct\",\"cue\":\"highest earnings\",\"requested_quantity\":\"earnings\",\"table\":\"poker_player\",\"column\":\"Earnings\",\"declared_type\":\"REAL\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_03f4f7ddd7887115016b08e7bc582c87d19d05b8d3d467e898",
+          "object": "chat.completion",
+          "created": 1795745729,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"column_meaning\":\"The poker player's earnings\",\"relation\":\"same\",\"direction\":\"DESC\",\"reason\":\"“highest earnings” asks for the greatest value of poker_player.Earnings; the identifier and observed evidence identify it as the earnings field.\"}]}",
+                "reasoning_content": "**Selecting the earnings column**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_03f4f7ddd7887115016b08e7bc587c87d1889f3ba64252162b": {
+                  "input_tokens": 288,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 288,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_03f4f7ddd7887115016b08e7bc587c87d1b9496afb56bba7f9": {
+                  "input_tokens": 161,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 161,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_03f4f7ddd7887115016b08e7c12bdc87d199fd2b84d7d0061a": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 58,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 58
+                    }
+                  ]
+                },
+                "rs_03f4f7ddd7887115016b08e7bcb6fc87d1a4a133d7fe7c26f9": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 110
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4831,
+            "completion_tokens": 168,
+            "total_tokens": 4999,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 110
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_03f4f7ddd7887115016b08e7bc587c87d1889f3ba64252162b": {
+                "input_tokens": 288,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 288,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_03f4f7ddd7887115016b08e7bc587c87d1b9496afb56bba7f9": {
+                "input_tokens": 161,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 161,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_03f4f7ddd7887115016b08e7c12bdc87d199fd2b84d7d0061a": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 58,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 58
+                  }
+                ]
+              },
+              "rs_03f4f7ddd7887115016b08e7bcb6fc87d1a4a133d7fe7c26f9": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 110
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4831,
+          "completion_tokens": 168,
+          "total_tokens": 4999,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 110
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "sort_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "direction"
+      ],
+      "output": {
+        "sql": "SELECT \"Money_Rank\" FROM \"poker_player\" ORDER BY \"Earnings\" DESC LIMIT 1;",
+        "sort_plan": {
+          "route": "direct",
+          "cue": "highest earnings",
+          "requested_quantity": "earnings",
+          "table": "poker_player",
+          "column": "Earnings",
+          "declared_type": "REAL",
+          "direction": "DESC",
+          "relation": "same",
+          "column_meaning": "The poker player's earnings",
+          "reason": "“highest earnings” asks for the greatest value of poker_player.Earnings; the identifier and observed evidence identify it as the earnings field."
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"people\" (\"People_ID\" int,\"Nationality\" text,\"Name\" text,\"Birth_Date\" text,\"Height\" real,PRIMARY KEY (\"People_ID\"))\nCREATE TABLE \"poker_player\" (\"Poker_Player_ID\" int,\"People_ID\" int,\"Final_Table_Made\" real,\"Best_Finish\" real,\"Money_Rank\" real,\"Earnings\" real,PRIMARY KEY (\"Poker_Player_ID\"),FOREIGN KEY (\"People_ID\") REFERENCES \"people\"(\"People_ID\"))\nQuestion\nWhat is the money rank of the poker player with the highest earnings?\nQuery plan\nFor the requested sorting use poker_player.Earnings in DESC order. Preserve all requested outputs and filters."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_09b88a78a2c2b0a0016b07e686e6b487d2ad37fbd1183fe4a4",
+          "object": "chat.completion",
+          "created": 1795679883,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT \"Money_Rank\" FROM \"poker_player\" ORDER BY \"Earnings\" DESC LIMIT 1;"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_09b88a78a2c2b0a0016b07e686e6ec87d285b47992aec8a1b1": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_09b88a78a2c2b0a0016b07e686e6ec87d2973de7fa7e396e2a": {
+                  "input_tokens": 144,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 144,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_09b88a78a2c2b0a0016b07e68b3c0487d29ae47e114adacc21": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 29,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 29
+                    }
+                  ]
+                },
+                "rs_09b88a78a2c2b0a0016b07e68865c087d2b7b5a086fadb5473": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 54
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3712,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4551,
+            "completion_tokens": 83,
+            "total_tokens": 4634,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 54
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_09b88a78a2c2b0a0016b07e686e6ec87d285b47992aec8a1b1": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_09b88a78a2c2b0a0016b07e686e6ec87d2973de7fa7e396e2a": {
+                "input_tokens": 144,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 144,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_09b88a78a2c2b0a0016b07e68b3c0487d29ae47e114adacc21": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 29,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 29
+                  }
+                ]
+              },
+              "rs_09b88a78a2c2b0a0016b07e68865c087d2b7b5a086fadb5473": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 54
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3712,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4551,
+          "completion_tokens": 83,
+          "total_tokens": 4634,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 54
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "sort_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT \"Money_Rank\" FROM \"poker_player\" ORDER BY \"Earnings\" DESC LIMIT 1;",
+        "rows": [
+          [
+            58.0
+          ]
+        ],
+        "columns": [
+          "Money_Rank"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 14117,
+    "completion_tokens": 316,
+    "total_tokens": 14433
+  },
+  "model_calls": 3,
+  "response_sources": {
+    "intent": "v3",
+    "direction": "v3",
+    "generate": "runs\\task2-sort-direction-v2\\requests\\high\\DB_schema_synonym-01629-pre\\generate\\response.json"
+  },
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  }
+}

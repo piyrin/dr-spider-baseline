@@ -1,0 +1,406 @@
+{
+  "id": "SQL_sort_order-00123-pre",
+  "effort": "none",
+  "method": "canvas_v3",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "sort_select_v3",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "match": "direct",
+            "cue": "lowest earnings",
+            "requested_quantity": "earnings",
+            "table": "poker_player",
+            "column": "Earnings"
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one clearly requested sort and select one candidate field from the supplied schema. Quote the exact contiguous sort wording including its direction cue, and name the quantity being ordered in the question. Keep the quote verbatim. Direct means the field stores the same quantity; similar means a plausible substitute represents it differently. Prefer a unique direct candidate. Return {\"targets\":[{\"cue\":\"verbatim quote\",\"requested_quantity\":\"quantity in the question\",\"table\":\"exact identifier\",\"column\":\"exact identifier\",\"match\":\"direct|similar\"}]}. Return {\"targets\":[]} for an ambiguous field or sort, a sort over an aggregate, or multiple sorting keys. Do not convert the direction, add a direction field, or generate SQL. This step only selects information for the next node."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"people\" (\"People_ID\" int,\"Nationality\" text,\"Name\" text,\"Birth_Date\" text,\"Height\" real,PRIMARY KEY (\"People_ID\"))\nCREATE TABLE \"poker_player\" (\"Poker_Player_ID\" int,\"People_ID\" int,\"Final_Table_Made\" real,\"Best_Finish\" real,\"Money_Rank\" real,\"Earnings\" real,PRIMARY KEY (\"Poker_Player_ID\"),FOREIGN KEY (\"People_ID\") REFERENCES \"people\"(\"People_ID\"))\nQuestion\nWhat is the birth date of the poker player with the lowest earnings?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0c4f6a0b868a1d8f016b08e81c878487d2b5ec7b5d09247a36",
+          "object": "chat.completion",
+          "created": 1795745821,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"cue\":\"lowest earnings\",\"requested_quantity\":\"earnings\",\"table\":\"poker_player\",\"column\":\"Earnings\",\"match\":\"direct\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4735,
+            "completion_tokens": 35,
+            "total_tokens": 4770,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 3456
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4735,
+          "completion_tokens": 35,
+          "total_tokens": 4770,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 3456
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "probe",
+      "kind": "sort_verify_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "direct",
+        "cue": "lowest earnings",
+        "requested_quantity": "earnings",
+        "table": "poker_player",
+        "column": "Earnings",
+        "declared_type": "REAL"
+      },
+      "call": null
+    },
+    {
+      "id": "direction",
+      "kind": "sort_finalize_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "probe"
+      ],
+      "output": {
+        "route": "fallback",
+        "reason": "final_direction_uncertain_or_inconsistent",
+        "candidate": {
+          "route": "direct",
+          "cue": "lowest earnings",
+          "requested_quantity": "earnings",
+          "table": "poker_player",
+          "column": "Earnings",
+          "declared_type": "REAL"
+        },
+        "judgment": {}
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Choose the final direction of the verified stored column. Start with the verbatim sort wording, then explain the candidate column meaning based on its identifier, schema, and observed values. Distinguish the requested concept from how the database represents it. For example, a store opened in a later calendar year has fewer elapsed years since opening at a shared snapshot. Thus descending opening year requires ascending elapsed years. When a field clearly stores elapsed duration for the same entity and event, and values support that meaning, a common snapshot is a reasonable default for a single table unless there are signs of different observation dates. A concrete reference year is unnecessary to decide relative ordering. Return {\"targets\":[{\"column_meaning\":\"what the field measures\",\"relation\":\"same|reverse|unknown\",\"direction\":\"ASC|DESC|unknown\",\"reason\":\"evidence\"}]}. direction is the final SQL direction for the candidate column, after applying the relationship once. Use unknown if field meaning, compatibility, or question direction remains ambiguous. Do not select another field or output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"people\" (\"People_ID\" int,\"Nationality\" text,\"Name\" text,\"Birth_Date\" text,\"Height\" real,PRIMARY KEY (\"People_ID\"))\nCREATE TABLE \"poker_player\" (\"Poker_Player_ID\" int,\"People_ID\" int,\"Final_Table_Made\" real,\"Best_Finish\" real,\"Money_Rank\" real,\"Earnings\" real,PRIMARY KEY (\"Poker_Player_ID\"),FOREIGN KEY (\"People_ID\") REFERENCES \"people\"(\"People_ID\"))\nQuestion\nWhat is the birth date of the poker player with the lowest earnings?\nObserved database values (candidate evidence)\n{\"route\":\"direct\",\"cue\":\"lowest earnings\",\"requested_quantity\":\"earnings\",\"table\":\"poker_player\",\"column\":\"Earnings\",\"declared_type\":\"REAL\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_060f147203b2cf81016b08e82e50f087d08c7aca04a1baadea",
+          "object": "chat.completion",
+          "created": 1795745840,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"people.Birth_Date\"],\"joins\":[\"poker_player.People_ID = people.People_ID\"],\"targets\":[{\"table\":\"poker_player\",\"column\":\"Earnings\",\"term\":\"lowest earnings\",\"operator\":\"ORDER BY ASC\"},{\"table\":\"poker_player\",\"column\":\"Earnings\",\"term\":\"earnings\",\"operator\":\"ORDER BY ASC\"}]}"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_060f147203b2cf81016b08e82e512c87d08c7af8c34c1c8351": {
+                  "input_tokens": 288,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 288,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_060f147203b2cf81016b08e82e512c87d0abed59be83cdd4e1": {
+                  "input_tokens": 161,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 161,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_060f147203b2cf81016b08e82ec8e487d0be1c265731caa6df": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 76,
+                  "content": [
+                    {
+                      "input_tokens": 2,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 76
+                    }
+                  ]
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3787,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 10745,
+            "completion_tokens": 76,
+            "total_tokens": 10821,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 9088
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_060f147203b2cf81016b08e82e512c87d08c7af8c34c1c8351": {
+                "input_tokens": 288,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 288,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_060f147203b2cf81016b08e82e512c87d0abed59be83cdd4e1": {
+                "input_tokens": 161,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 161,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_060f147203b2cf81016b08e82ec8e487d0be1c265731caa6df": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 76,
+                "content": [
+                  {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 76
+                  }
+                ]
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3787,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 10745,
+          "completion_tokens": 76,
+          "total_tokens": 10821,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 9088
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "sort_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "direction"
+      ],
+      "output": {
+        "sql": "SELECT p.Birth_Date\nFROM people AS p\nJOIN poker_player AS pp ON p.People_ID = pp.People_ID\nWHERE pp.Earnings = (SELECT MIN(Earnings) FROM poker_player);",
+        "sort_plan": {
+          "route": "fallback",
+          "reason": "final_direction_uncertain_or_inconsistent",
+          "candidate": {
+            "route": "direct",
+            "cue": "lowest earnings",
+            "requested_quantity": "earnings",
+            "table": "poker_player",
+            "column": "Earnings",
+            "declared_type": "REAL"
+          },
+          "judgment": {}
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"people\" (\"People_ID\" int,\"Nationality\" text,\"Name\" text,\"Birth_Date\" text,\"Height\" real,PRIMARY KEY (\"People_ID\"))\nCREATE TABLE \"poker_player\" (\"Poker_Player_ID\" int,\"People_ID\" int,\"Final_Table_Made\" real,\"Best_Finish\" real,\"Money_Rank\" real,\"Earnings\" real,PRIMARY KEY (\"Poker_Player_ID\"),FOREIGN KEY (\"People_ID\") REFERENCES \"people\"(\"People_ID\"))\nQuestion\nWhat is the birth date of the poker player with the lowest earnings?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_057aeee11527fe0c016b08e833b7b487d0bd6aa0d24c88ddba",
+          "object": "chat.completion",
+          "created": 1795745855,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT p.Birth_Date\nFROM people AS p\nJOIN poker_player AS pp ON p.People_ID = pp.People_ID\nWHERE pp.Earnings = (SELECT MIN(Earnings) FROM poker_player);"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 5886,
+            "completion_tokens": 60,
+            "total_tokens": 5946,
+            "prompt_tokens_details": {
+              "cached_tokens": 3840
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 5886,
+          "completion_tokens": 60,
+          "total_tokens": 5946,
+          "prompt_tokens_details": {
+            "cached_tokens": 3840
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "sort_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT p.Birth_Date\nFROM people AS p\nJOIN poker_player AS pp ON p.People_ID = pp.People_ID\nWHERE pp.Earnings = (SELECT MIN(Earnings) FROM poker_player);",
+        "rows": [
+          [
+            "August 8, 1986"
+          ]
+        ],
+        "columns": [
+          "Birth_Date"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 21366,
+    "completion_tokens": 171,
+    "total_tokens": 21537
+  },
+  "model_calls": 3,
+  "response_sources": {
+    "intent": "v3",
+    "direction": "v3",
+    "generate": "v3"
+  },
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 1,
+    "prediction_rows": 1
+  }
+}

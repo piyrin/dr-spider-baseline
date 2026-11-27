@@ -1,0 +1,2013 @@
+{
+  "id": "NLQ_column_carrier-00210-pre",
+  "effort": "none",
+  "method": "canvas_v3",
+  "steps": [
+    {
+      "id": "intent",
+      "kind": "sort_select_v3",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "targets": [
+          {
+            "match": "direct",
+            "cue": "in order of birth date",
+            "requested_quantity": "birth date",
+            "table": "players",
+            "column": "birth_date"
+          }
+        ]
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Identify one clearly requested sort and select one candidate field from the supplied schema. Quote the exact contiguous sort wording including its direction cue, and name the quantity being ordered in the question. Keep the quote verbatim. Direct means the field stores the same quantity; similar means a plausible substitute represents it differently. Prefer a unique direct candidate. Return {\"targets\":[{\"cue\":\"verbatim quote\",\"requested_quantity\":\"quantity in the question\",\"table\":\"exact identifier\",\"column\":\"exact identifier\",\"match\":\"direct|similar\"}]}. Return {\"targets\":[]} for an ambiguous field or sort, a sort over an aggregate, or multiple sorting keys. Do not convert the direction, add a direction field, or generate SQL. This step only selects information for the next node."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"matches\" (\"best_of\" INT,\"draw_size\" INT,\"loser_age\" FLOAT,\"loser_entry\" TEXT,\"loser_hand\" TEXT,\"loser_ht\" INT,\"loser_id\" INT,\"loser_ioc\" TEXT,\"loser_name\" TEXT,\"loser_rank\" INT,\"loser_rank_points\" INT,\"loser_seed\" INT,\"match_num\" INT,\"minutes\" INT,\"round\" TEXT,\"score\" TEXT,\"surface\" TEXT,\"tourney_date\" DATE,\"tourney_id\" TEXT,\"tourney_level\" TEXT,\"tourney_name\" TEXT,\"winner_age\" FLOAT,\"winner_entry\" TEXT,\"winner_hand\" TEXT,\"winner_ht\" INT,\"winner_id\" INT,\"winner_ioc\" TEXT,\"winner_name\" TEXT,\"winner_rank\" INT,\"winner_rank_points\" INT,\"winner_seed\" INT,\"year\" INT,FOREIGN KEY (\"loser_id\") REFERENCES \"players\"(\"player_id\"),FOREIGN KEY (\"winner_id\") REFERENCES \"players\"(\"player_id\"))\nCREATE TABLE \"players\" (\"player_id\" INT PRIMARY KEY,\"first_name\" TEXT,\"last_name\" TEXT,\"hand\" TEXT,\"birth_date\" DATE,\"country_code\" TEXT)\nCREATE TABLE \"rankings\" (\"ranking_date\" DATE,\"ranking\" INT,\"player_id\" INT,\"ranking_points\" INT,\"tours\" INT,FOREIGN KEY (\"player_id\") REFERENCES \"players\"(\"player_id\"))\nQuestion\nWhat are the full names of all left handed players, in order of birth date?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_0aa7da58410917fa016b08e7cd6cd087d0acf07da4f8b7f497",
+          "object": "chat.completion",
+          "created": 1795745746,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"targets\":[{\"cue\":\"in order of birth date\",\"requested_quantity\":\"birth date\",\"table\":\"players\",\"column\":\"birth_date\",\"match\":\"direct\"}]}",
+                "reasoning_content": "**Clarifying output format and sorting criteria****Confirming ascending birth_date sorting**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_0aa7da58410917fa016b08e7cd6d1487d0a325c8c328860c8c": {
+                  "input_tokens": 318,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 318,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0aa7da58410917fa016b08e7cd6d1487d0b039a3b5a6e863f3": {
+                  "input_tokens": 232,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 232,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_0aa7da58410917fa016b08e7d2533887d0816f702efa7f1897": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 38,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 38
+                    }
+                  ]
+                },
+                "rs_0aa7da58410917fa016b08e7ce25a887d0912e91f4b01d8860": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 215
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 4932,
+            "completion_tokens": 253,
+            "total_tokens": 5185,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              }
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 215
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_0aa7da58410917fa016b08e7cd6d1487d0a325c8c328860c8c": {
+                "input_tokens": 318,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 318,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0aa7da58410917fa016b08e7cd6d1487d0b039a3b5a6e863f3": {
+                "input_tokens": 232,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 232,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_0aa7da58410917fa016b08e7d2533887d0816f702efa7f1897": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 38,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 38
+                  }
+                ]
+              },
+              "rs_0aa7da58410917fa016b08e7ce25a887d0912e91f4b01d8860": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 215
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 4932,
+          "completion_tokens": 253,
+          "total_tokens": 5185,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 215
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "probe",
+      "kind": "sort_verify_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "intent"
+      ],
+      "output": {
+        "route": "direct",
+        "cue": "in order of birth date",
+        "requested_quantity": "birth date",
+        "table": "players",
+        "column": "birth_date",
+        "declared_type": "DATE"
+      },
+      "call": null
+    },
+    {
+      "id": "direction",
+      "kind": "sort_finalize_v3",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "probe"
+      ],
+      "output": {
+        "route": "direct",
+        "cue": "in order of birth date",
+        "requested_quantity": "birth date",
+        "table": "players",
+        "column": "birth_date",
+        "declared_type": "DATE",
+        "direction": "ASC",
+        "relation": "same",
+        "column_meaning": "player handedness",
+        "reason": "The players.hand column directly represents handedness; observed schema values are not provided, so L is the primary plausible encoding, with Left and left-handed as alternatives. Birth-date ordering is ascending by default, but the requested filter targets hand rather than birth_date."
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Map requested SQL output fields and filter literals to plausible SQLite schema identifiers. Return a compact JSON object with keys output (array), joins (array), and targets (up to five objects with table, column, term from question, operator). List plausible alternatives for uncertain encodings. Include filters with names, codes, or dates. Use exact schema identifiers. Supply no SQL.\nNode configuration: Choose the final direction of the verified stored column. Start with the verbatim sort wording, then explain the candidate column meaning based on its identifier, schema, and observed values. Distinguish the requested concept from how the database represents it. For example, a store opened in a later calendar year has fewer elapsed years since opening at a shared snapshot. Thus descending opening year requires ascending elapsed years. When a field clearly stores elapsed duration for the same entity and event, and values support that meaning, a common snapshot is a reasonable default for a single table unless there are signs of different observation dates. A concrete reference year is unnecessary to decide relative ordering. Return {\"targets\":[{\"column_meaning\":\"what the field measures\",\"relation\":\"same|reverse|unknown\",\"direction\":\"ASC|DESC|unknown\",\"reason\":\"evidence\"}]}. direction is the final SQL direction for the candidate column, after applying the relationship once. Use unknown if field meaning, compatibility, or question direction remains ambiguous. Do not select another field or output SQL."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"matches\" (\"best_of\" INT,\"draw_size\" INT,\"loser_age\" FLOAT,\"loser_entry\" TEXT,\"loser_hand\" TEXT,\"loser_ht\" INT,\"loser_id\" INT,\"loser_ioc\" TEXT,\"loser_name\" TEXT,\"loser_rank\" INT,\"loser_rank_points\" INT,\"loser_seed\" INT,\"match_num\" INT,\"minutes\" INT,\"round\" TEXT,\"score\" TEXT,\"surface\" TEXT,\"tourney_date\" DATE,\"tourney_id\" TEXT,\"tourney_level\" TEXT,\"tourney_name\" TEXT,\"winner_age\" FLOAT,\"winner_entry\" TEXT,\"winner_hand\" TEXT,\"winner_ht\" INT,\"winner_id\" INT,\"winner_ioc\" TEXT,\"winner_name\" TEXT,\"winner_rank\" INT,\"winner_rank_points\" INT,\"winner_seed\" INT,\"year\" INT,FOREIGN KEY (\"loser_id\") REFERENCES \"players\"(\"player_id\"),FOREIGN KEY (\"winner_id\") REFERENCES \"players\"(\"player_id\"))\nCREATE TABLE \"players\" (\"player_id\" INT PRIMARY KEY,\"first_name\" TEXT,\"last_name\" TEXT,\"hand\" TEXT,\"birth_date\" DATE,\"country_code\" TEXT)\nCREATE TABLE \"rankings\" (\"ranking_date\" DATE,\"ranking\" INT,\"player_id\" INT,\"ranking_points\" INT,\"tours\" INT,FOREIGN KEY (\"player_id\") REFERENCES \"players\"(\"player_id\"))\nQuestion\nWhat are the full names of all left handed players, in order of birth date?\nObserved database values (candidate evidence)\n{\"route\":\"direct\",\"cue\":\"in order of birth date\",\"requested_quantity\":\"birth date\",\"table\":\"players\",\"column\":\"birth_date\",\"declared_type\":\"DATE\"}"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_02ad30ed2503eb51016b08e803a1c087d0839fe08e94e12595",
+          "object": "chat.completion",
+          "created": 1795745826,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"output\":[\"players.first_name\",\"players.last_name\"],\"joins\":[],\"targets\":[{\"table\":\"players\",\"column\":\"hand\",\"term\":\"left handed\",\"operator\":\"=\",\"column_meaning\":\"player handedness\",\"relation\":\"same\",\"direction\":\"ASC\",\"reason\":\"The players.hand column directly represents handedness; observed schema values are not provided, so L is the primary plausible encoding, with Left and left-handed as alternatives. Birth-date ordering is ascending by default, but the requested filter targets hand rather than birth_date.\"}]}",
+                "reasoning_content": "**Clarifying conflicting JSON output requirements****Reconciling target object and sorting schema****Confirming filter values and sorting order**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_02ad30ed2503eb51016b08e803a20087d089f1fb1d5919b5d1": {
+                  "input_tokens": 359,
+                  "cached_tokens": 176,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 359,
+                      "cached_tokens": 176,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_02ad30ed2503eb51016b08e803a20087d0a19cd9b3a052eaa7": {
+                  "input_tokens": 288,
+                  "cached_tokens": 259,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 288,
+                      "cached_tokens": 259,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_02ad30ed2503eb51016b08e81f09e487d08b3b2a50fcd6f361": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 112,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 112
+                    }
+                  ]
+                },
+                "rs_02ad30ed2503eb51016b08e80ca38c87d09ab624ec831f1f5e": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 431
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3938,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 11839,
+            "completion_tokens": 543,
+            "total_tokens": 12382,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 10496
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 431
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_02ad30ed2503eb51016b08e803a20087d089f1fb1d5919b5d1": {
+                "input_tokens": 359,
+                "cached_tokens": 176,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 359,
+                    "cached_tokens": 176,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_02ad30ed2503eb51016b08e803a20087d0a19cd9b3a052eaa7": {
+                "input_tokens": 288,
+                "cached_tokens": 259,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 288,
+                    "cached_tokens": 259,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_02ad30ed2503eb51016b08e81f09e487d08b3b2a50fcd6f361": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 112,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 112
+                  }
+                ]
+              },
+              "rs_02ad30ed2503eb51016b08e80ca38c87d09ab624ec831f1f5e": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 431
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3938,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 11839,
+          "completion_tokens": 543,
+          "total_tokens": 12382,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 10496
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 431
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "generate",
+      "kind": "sort_generate",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "direction"
+      ],
+      "output": {
+        "sql": "SELECT first_name || ' ' || last_name AS full_name\nFROM players\nWHERE hand = 'L'\nORDER BY birth_date ASC;",
+        "sort_plan": {
+          "route": "direct",
+          "cue": "in order of birth date",
+          "requested_quantity": "birth date",
+          "table": "players",
+          "column": "birth_date",
+          "declared_type": "DATE",
+          "direction": "ASC",
+          "relation": "same",
+          "column_meaning": "player handedness",
+          "reason": "The players.hand column directly represents handedness; observed schema values are not provided, so L is the primary plausible encoding, with Left and left-handed as alternatives. Birth-date ordering is ascending by default, but the requested filter targets hand rather than birth_date."
+        }
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"matches\" (\"best_of\" INT,\"draw_size\" INT,\"loser_age\" FLOAT,\"loser_entry\" TEXT,\"loser_hand\" TEXT,\"loser_ht\" INT,\"loser_id\" INT,\"loser_ioc\" TEXT,\"loser_name\" TEXT,\"loser_rank\" INT,\"loser_rank_points\" INT,\"loser_seed\" INT,\"match_num\" INT,\"minutes\" INT,\"round\" TEXT,\"score\" TEXT,\"surface\" TEXT,\"tourney_date\" DATE,\"tourney_id\" TEXT,\"tourney_level\" TEXT,\"tourney_name\" TEXT,\"winner_age\" FLOAT,\"winner_entry\" TEXT,\"winner_hand\" TEXT,\"winner_ht\" INT,\"winner_id\" INT,\"winner_ioc\" TEXT,\"winner_name\" TEXT,\"winner_rank\" INT,\"winner_rank_points\" INT,\"winner_seed\" INT,\"year\" INT,FOREIGN KEY (\"loser_id\") REFERENCES \"players\"(\"player_id\"),FOREIGN KEY (\"winner_id\") REFERENCES \"players\"(\"player_id\"))\nCREATE TABLE \"players\" (\"player_id\" INT PRIMARY KEY,\"first_name\" TEXT,\"last_name\" TEXT,\"hand\" TEXT,\"birth_date\" DATE,\"country_code\" TEXT)\nCREATE TABLE \"rankings\" (\"ranking_date\" DATE,\"ranking\" INT,\"player_id\" INT,\"ranking_points\" INT,\"tours\" INT,FOREIGN KEY (\"player_id\") REFERENCES \"players\"(\"player_id\"))\nQuestion\nWhat are the full names of all left handed players, in order of birth date?\nQuery plan\nFor the requested sorting use players.birth_date in ASC order. Preserve all requested outputs and filters."
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_ft_0eef5fa91ac647b5b871a09749a33730",
+          "object": "chat.completion",
+          "created": 1795745855,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "  SELECT first_name || ' ' || last_name AS full_name\nFROM players\nWHERE hand = 'L'\nORDER BY birth_date ASC;",
+                "reasoning_content": "**Composing SQL query for left-handed players**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 4747,
+            "completion_tokens": 105,
+            "total_tokens": 4852,
+            "prompt_tokens_details": {
+              "cached_tokens": 3712
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 71
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "prompt_tokens": 4747,
+          "completion_tokens": 105,
+          "total_tokens": 4852,
+          "prompt_tokens_details": {
+            "cached_tokens": 3712
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 71
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "execute",
+      "kind": "sort_execute",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "generate"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT first_name || ' ' || last_name AS full_name\nFROM players\nWHERE hand = 'L'\nORDER BY birth_date ASC;",
+        "rows": [
+          [
+            "Ann Jones"
+          ],
+          [
+            "Wendy Gilchrist"
+          ],
+          [
+            "Martina Navratilova"
+          ],
+          [
+            "Mary Carillo"
+          ],
+          [
+            "Katerina Bohmova"
+          ],
+          [
+            "Petra Delhees Jauch"
+          ],
+          [
+            "Nancy Loeffler Caro"
+          ],
+          [
+            "Lise Gregory"
+          ],
+          [
+            "Rene Collins"
+          ],
+          [
+            "Nicole Arendt"
+          ],
+          [
+            "Florencia Labat"
+          ],
+          [
+            "Sabine Appelmans"
+          ],
+          [
+            "Andreea Ehritt Vanc"
+          ],
+          [
+            "Monica Seles"
+          ],
+          [
+            "Gala Leon Garcia"
+          ],
+          [
+            "Karen Cross"
+          ],
+          [
+            "Julie Pullin"
+          ],
+          [
+            "Vanessa Webb"
+          ],
+          [
+            "Elena Tatarkova"
+          ],
+          [
+            "Anca Barna"
+          ],
+          [
+            "Francesca Lubiani"
+          ],
+          [
+            "Gaelle Widmer"
+          ],
+          [
+            "Amanda Keen"
+          ],
+          [
+            "Amanda Augustus"
+          ],
+          [
+            "Rita Kuti Kis"
+          ],
+          [
+            "Amelie Cocheteux"
+          ],
+          [
+            "Amelie Castera"
+          ],
+          [
+            "Saori Obata"
+          ],
+          [
+            "Marine Nizri Spiegel"
+          ],
+          [
+            "Patty Schnyder"
+          ],
+          [
+            "Julie Ditty"
+          ],
+          [
+            "Joana Cortez"
+          ],
+          [
+            "Barbara Schwartz"
+          ],
+          [
+            "Ludmilla Varmuza"
+          ],
+          [
+            "Magui Serna"
+          ],
+          [
+            "Amanda Grahame"
+          ],
+          [
+            "Kim Kilsdonk"
+          ],
+          [
+            "Emilie Loit"
+          ],
+          [
+            "Erika Pineider"
+          ],
+          [
+            "Anne Gaelle Sidot"
+          ],
+          [
+            "Erica Biro"
+          ],
+          [
+            "Stephanie Kovacic"
+          ],
+          [
+            "Sybille Bammer"
+          ],
+          [
+            "Lisa Fritz"
+          ],
+          [
+            "Maja Matevzic"
+          ],
+          [
+            "Leanne Baker"
+          ],
+          [
+            "Aurelie Vedy"
+          ],
+          [
+            "Carla Tiene"
+          ],
+          [
+            "Erika Venere"
+          ],
+          [
+            "Jelena Kostanic Tosic"
+          ],
+          [
+            "Clarisa Fernandez"
+          ],
+          [
+            "Ansley Cargill"
+          ],
+          [
+            "Dimana Krastevitch"
+          ],
+          [
+            "Maria Jose Martinez Sanchez"
+          ],
+          [
+            "Zerene Reyes"
+          ],
+          [
+            "Melinda Czink"
+          ],
+          [
+            "Sandra Klemenschits"
+          ],
+          [
+            "Maria Elizabeth Lopez"
+          ],
+          [
+            "Salome Llaguno"
+          ],
+          [
+            "Lindsay Cox"
+          ],
+          [
+            "Iveta Benesova"
+          ],
+          [
+            "Eugenia Chialvo"
+          ],
+          [
+            "Chun Yan He"
+          ],
+          [
+            "Maria Fernanda Alves"
+          ],
+          [
+            "Emily Quin"
+          ],
+          [
+            "Fernanda Oliveira Da Silva"
+          ],
+          [
+            "Annabel Blow"
+          ],
+          [
+            "Julia Smith"
+          ],
+          [
+            "Ana Lucia Migliarini De Leon"
+          ],
+          [
+            "Elizabeth Bondi"
+          ],
+          [
+            "Galina Fokina"
+          ],
+          [
+            "Elise Tamaela"
+          ],
+          [
+            "Bit Na Lee"
+          ],
+          [
+            "Sonia Iacovacci"
+          ],
+          [
+            "Mariana Pires Junqueira"
+          ],
+          [
+            "Natalia Bogdanova"
+          ],
+          [
+            "Irina Smirnova"
+          ],
+          [
+            "Meghha Vakaria"
+          ],
+          [
+            "Angela Haynes"
+          ],
+          [
+            "Karly Olson"
+          ],
+          [
+            "Casey Dellacqua"
+          ],
+          [
+            "Kathrin Hegel"
+          ],
+          [
+            "Beatrix Csordas"
+          ],
+          [
+            "Zsuzsanna Babos"
+          ],
+          [
+            "Emily Applegate"
+          ],
+          [
+            "Olga Pasichnichenko"
+          ],
+          [
+            "Theresa Logar"
+          ],
+          [
+            "Jin A Lee"
+          ],
+          [
+            "Hannah Kuervers"
+          ],
+          [
+            "Andreea Novaceanu"
+          ],
+          [
+            "Valentina Tizzano"
+          ],
+          [
+            "Helen Fritche"
+          ],
+          [
+            "Sandra Sasidharan"
+          ],
+          [
+            "Isha Lakhani"
+          ],
+          [
+            "Krushmi Chheda"
+          ],
+          [
+            "Ljubica Avramovic"
+          ],
+          [
+            "Avel Romaly Coronado"
+          ],
+          [
+            "Shadisha Robinson"
+          ],
+          [
+            "Carla Zabaleta"
+          ],
+          [
+            "Diana Arutyunova"
+          ],
+          [
+            "Cecile Baijot"
+          ],
+          [
+            "Laura Rocchi"
+          ],
+          [
+            "Rie Imai"
+          ],
+          [
+            "Danielle Harmsen"
+          ],
+          [
+            "Alejandra Obregon"
+          ],
+          [
+            "Ariela Perez"
+          ],
+          [
+            "Vasilisa Davydova"
+          ],
+          [
+            "Emilia Yorio"
+          ],
+          [
+            "Lizaan Du Plessis"
+          ],
+          [
+            "Claire Feuerstein"
+          ],
+          [
+            "Alexandria Liles"
+          ],
+          [
+            "Katharine Baker"
+          ],
+          [
+            "Emma Laine"
+          ],
+          [
+            "Geraldine Roma"
+          ],
+          [
+            "Aya El Akkad"
+          ],
+          [
+            "Alexandra Kazanova"
+          ],
+          [
+            "Allison Baker"
+          ],
+          [
+            "Lucy Fletcher"
+          ],
+          [
+            "Monika Musilova"
+          ],
+          [
+            "Jitka Gavdunova"
+          ],
+          [
+            "Elena Petrucciano"
+          ],
+          [
+            "Varvara Lepchenko"
+          ],
+          [
+            "Claire De Gubernatis"
+          ],
+          [
+            "Seheno Razafindramaso"
+          ],
+          [
+            "Karolina Soor"
+          ],
+          [
+            "Melisa Cabrera Handt"
+          ],
+          [
+            "Shraddha Lodha"
+          ],
+          [
+            "Sylvia Krywacz"
+          ],
+          [
+            "Amina El Sahn"
+          ],
+          [
+            "Hendrike Lea Heitmann"
+          ],
+          [
+            "Dunja Antunovic"
+          ],
+          [
+            "Micaela Acosta"
+          ],
+          [
+            "Katerina Bohmova"
+          ],
+          [
+            "Catherine Grotz"
+          ],
+          [
+            "Yurika Sema"
+          ],
+          [
+            "Sheng Nan Sun"
+          ],
+          [
+            "Lucie Safarova"
+          ],
+          [
+            "Jitka Kleisnerova"
+          ],
+          [
+            "Carolina Escamilla"
+          ],
+          [
+            "Tapiwa Marobela"
+          ],
+          [
+            "Punam Reddy"
+          ],
+          [
+            "Katia Sabate Orera"
+          ],
+          [
+            "Shana Claes"
+          ],
+          [
+            "Chrissie Seredni"
+          ],
+          [
+            "Yui Nagasawa"
+          ],
+          [
+            "Marcela Vojtiskova"
+          ],
+          [
+            "Seul Ki Chin"
+          ],
+          [
+            "Nina Munch Soegaard"
+          ],
+          [
+            "Hannah Grady"
+          ],
+          [
+            "Karen Castiblanco"
+          ],
+          [
+            "Angelique Kerber"
+          ],
+          [
+            "Lauren Lui"
+          ],
+          [
+            "Rana Tharwat Hafez"
+          ],
+          [
+            "Nicole Grunwald"
+          ],
+          [
+            "Ana Veselinovic"
+          ],
+          [
+            "Sanaa Bhambri"
+          ],
+          [
+            "Diana Andreea Gae"
+          ],
+          [
+            "Ana Beltran Trigueros"
+          ],
+          [
+            "Barbora Bozkova"
+          ],
+          [
+            "Camila Belassi"
+          ],
+          [
+            "Violette Huck"
+          ],
+          [
+            "Megumi Fukui"
+          ],
+          [
+            "Rita Gouveia"
+          ],
+          [
+            "Mihaela Buzarnescu"
+          ],
+          [
+            "Liset Brito Herrera"
+          ],
+          [
+            "Paulina Jorquera"
+          ],
+          [
+            "Ekaterina Makarova"
+          ],
+          [
+            "Dessislava Mladenova"
+          ],
+          [
+            "Sanaz Marand"
+          ],
+          [
+            "Cristina Greco Naccarato"
+          ],
+          [
+            "Cagla Urcu"
+          ],
+          [
+            "Liege Vieira"
+          ],
+          [
+            "Chang Xu"
+          ],
+          [
+            "Jessica Sweeting"
+          ],
+          [
+            "Yi Fan Xu"
+          ],
+          [
+            "Eloisa Maria Compostizo De Andres"
+          ],
+          [
+            "Karina Porushkevich"
+          ],
+          [
+            "Ornella Gentile"
+          ],
+          [
+            "Valeria Casillo"
+          ],
+          [
+            "Bianca Ioana Bonifate"
+          ],
+          [
+            "Michelle Russ"
+          ],
+          [
+            "Monika Lalewicz"
+          ],
+          [
+            "Amandine Cazeaux"
+          ],
+          [
+            "Fatima El Allami"
+          ],
+          [
+            "Simonetta Miori"
+          ],
+          [
+            "Gabriela Roux"
+          ],
+          [
+            "Sherazad Benamar"
+          ],
+          [
+            "Sherazad Reix"
+          ],
+          [
+            "Zora Vlckova"
+          ],
+          [
+            "Naomi Cavaday"
+          ],
+          [
+            "Nathalia Rossi"
+          ],
+          [
+            "Maria Eugenia Roca Recarey"
+          ],
+          [
+            "Lauren Jones"
+          ],
+          [
+            "Roxane Vaisemberg"
+          ],
+          [
+            "Ivana Belejova"
+          ],
+          [
+            "Petra Vogel"
+          ],
+          [
+            "Majdouline Akrate"
+          ],
+          [
+            "Laura Sadria"
+          ],
+          [
+            "Ia Jikia"
+          ],
+          [
+            "Alessandra Caprara"
+          ],
+          [
+            "Guadalupe Moreno"
+          ],
+          [
+            "Lucie Sipkova"
+          ],
+          [
+            "Xenia Samoilova"
+          ],
+          [
+            "Kotomi Takahata"
+          ],
+          [
+            "Stephanie Theiler"
+          ],
+          [
+            "Maria Prishlyak"
+          ],
+          [
+            "Grace Leake"
+          ],
+          [
+            "Ioana Alexandra Oprea"
+          ],
+          [
+            "Sanne Bakker"
+          ],
+          [
+            "Katerina Vankova"
+          ],
+          [
+            "Kristy Frilling"
+          ],
+          [
+            "Tatiana Bua"
+          ],
+          [
+            "Anastasia Kontratevidi"
+          ],
+          [
+            "Chane Hines"
+          ],
+          [
+            "Julia Gavenko"
+          ],
+          [
+            "Yuuki Tanaka"
+          ],
+          [
+            "Petra Kvitova"
+          ],
+          [
+            "Leticia Costas"
+          ],
+          [
+            "Sandra Roma"
+          ],
+          [
+            "Nina Mujezinovic"
+          ],
+          [
+            "Stella Papaspyrou"
+          ],
+          [
+            "Chinami Ogi"
+          ],
+          [
+            "Martina Balogova"
+          ],
+          [
+            "Xinyun Han"
+          ],
+          [
+            "Nicole Riner"
+          ],
+          [
+            "Lara Meccico"
+          ],
+          [
+            "Mai Iwasaki"
+          ],
+          [
+            "Oksana Kalashnikova"
+          ],
+          [
+            "Dipti Srivastava"
+          ],
+          [
+            "Claudia Mercado"
+          ],
+          [
+            "Margarita Lazareva"
+          ],
+          [
+            "Shaozhuo Liu"
+          ],
+          [
+            "Ana Maria Chavez Franco"
+          ],
+          [
+            "Arantxa Rus"
+          ],
+          [
+            "Ekaterina Kamendova"
+          ],
+          [
+            "Monika Tumova"
+          ],
+          [
+            "Gabriella Boboc"
+          ],
+          [
+            "Ganna Lukianchykova"
+          ],
+          [
+            "Sofia Medina"
+          ],
+          [
+            "Ekaterina Abaeva"
+          ],
+          [
+            "Andressa Garcia"
+          ],
+          [
+            "Giulia Bruzzone"
+          ],
+          [
+            "Catia Rodrigues"
+          ],
+          [
+            "Danielle Mills"
+          ],
+          [
+            "Flavia Borges"
+          ],
+          [
+            "Misaki Doi"
+          ],
+          [
+            "Veronika Domagala"
+          ],
+          [
+            "Cindy Chala"
+          ],
+          [
+            "Ksenia Pervak"
+          ],
+          [
+            "Bianca Botto"
+          ],
+          [
+            "Marianna Natali"
+          ],
+          [
+            "Carolina Orsi"
+          ],
+          [
+            "Aleksandra Vukadinovic"
+          ],
+          [
+            "Elixane Lechemia"
+          ],
+          [
+            "Sonya Dayal"
+          ],
+          [
+            "Francesca Campigotto"
+          ],
+          [
+            "Cristina Bianca Danaila"
+          ],
+          [
+            "Tereza Budilova"
+          ],
+          [
+            "Gemma Praditngam"
+          ],
+          [
+            "Ekaterine Gorgodze"
+          ],
+          [
+            "Dejana Raickovic"
+          ],
+          [
+            "Alena Gerasimova"
+          ],
+          [
+            "Quirine Lemoine"
+          ],
+          [
+            "Chieh Yu Hsu"
+          ],
+          [
+            "Anastasiya Vasylyeva"
+          ],
+          [
+            "Alexia Quartetto"
+          ],
+          [
+            "Joanna Bougon"
+          ],
+          [
+            "Kristyna Pliskova"
+          ],
+          [
+            "Elena Bogdan"
+          ],
+          [
+            "Fiorella Jerardino"
+          ],
+          [
+            "Julie Gonzalez Rodriguez"
+          ],
+          [
+            "Alejandra Barragan"
+          ],
+          [
+            "Renata Bakieva"
+          ],
+          [
+            "Ashley Krysiak"
+          ],
+          [
+            "Sarah Rebecca Sekulic"
+          ],
+          [
+            "Na Lae Han"
+          ],
+          [
+            "Natali Coronel"
+          ],
+          [
+            "Kristyna Hancarova"
+          ],
+          [
+            "Doroteja Eric"
+          ],
+          [
+            "Chanel Simmonds"
+          ],
+          [
+            "Kobkanok Upapong"
+          ],
+          [
+            "Annie Sullivan"
+          ],
+          [
+            "Jenny Thuy Le"
+          ],
+          [
+            "Xenia Knoll"
+          ],
+          [
+            "Francisca Matos"
+          ],
+          [
+            "Christina Madenoglou"
+          ],
+          [
+            "Alexandra Avirvarei"
+          ],
+          [
+            "Georgina Fedosenkova"
+          ],
+          [
+            "Alicia Doms Golobart"
+          ],
+          [
+            "Amy Hoburn"
+          ],
+          [
+            "Monica Turewicz"
+          ],
+          [
+            "Martina Zerbola"
+          ],
+          [
+            "Mashaal Hameed"
+          ],
+          [
+            "Sabrina Dos Reis"
+          ],
+          [
+            "Maria Sol Carrasco"
+          ],
+          [
+            "Ruxandra Ababii"
+          ],
+          [
+            "Daniella Patton"
+          ],
+          [
+            "Veronika Zavodska"
+          ],
+          [
+            "Briar Preston"
+          ],
+          [
+            "Gabriela Ce"
+          ],
+          [
+            "Amanda Rodgers"
+          ],
+          [
+            "Constanze Lotz"
+          ],
+          [
+            "Paula Mocete Talamantes"
+          ],
+          [
+            "Verena Gantschnig"
+          ],
+          [
+            "Ainhoa Atucha Gomez"
+          ],
+          [
+            "Katarzyna Kossowska"
+          ],
+          [
+            "Julia Stamatova"
+          ],
+          [
+            "Vorranavaporn Vorrarattanamongkol"
+          ],
+          [
+            "Michaela Jasenakova"
+          ],
+          [
+            "Agustina Sol Eskenazi"
+          ],
+          [
+            "Maja Mladenovic"
+          ],
+          [
+            "Sandra Garriga Catala"
+          ],
+          [
+            "Rita Vilaca"
+          ],
+          [
+            "Zanmarie Pienaar"
+          ],
+          [
+            "Julia Kimmelmann"
+          ],
+          [
+            "Martina Trevisan"
+          ],
+          [
+            "Charitomeni Matoula"
+          ],
+          [
+            "Andreea Istrate"
+          ],
+          [
+            "Sowjanya Bavisetti"
+          ],
+          [
+            "Gabrielle Moxey"
+          ],
+          [
+            "Viktoryia Kisialeva"
+          ],
+          [
+            "Sarahi Garcia Carrera"
+          ],
+          [
+            "Rachel Girard"
+          ],
+          [
+            "Laura Robson"
+          ],
+          [
+            "Kate Vialle"
+          ],
+          [
+            "Anna Montserrat Sanchez"
+          ],
+          [
+            "Elena Teodora Cadar"
+          ],
+          [
+            "Carol Augustine Benito"
+          ],
+          [
+            "Kamila Pavelkova"
+          ],
+          [
+            "Arantxa Sanchez"
+          ],
+          [
+            "Ana Sofia Sanchez"
+          ],
+          [
+            "Julia Wachaczyk"
+          ],
+          [
+            "Ecaterina Oproiu"
+          ],
+          [
+            "Snigdha Padamata"
+          ],
+          [
+            "Rona Berisha"
+          ],
+          [
+            "Olga Doroshina"
+          ],
+          [
+            "So Ra Lee"
+          ],
+          [
+            "Brandy Mina"
+          ],
+          [
+            "Natalie Novakova"
+          ],
+          [
+            "Storm Sanders"
+          ],
+          [
+            "Alexandra Martinez"
+          ],
+          [
+            "Ysaline Bonaventure"
+          ],
+          [
+            "Barbora Trestikova"
+          ],
+          [
+            "Stefania Hristov"
+          ],
+          [
+            "Ana Maria Crisan"
+          ],
+          [
+            "Elpida Papanelopoulou"
+          ],
+          [
+            "Tereza Jankovska"
+          ],
+          [
+            "Rebecca Andrade"
+          ],
+          [
+            "Kelly Williford"
+          ],
+          [
+            "Tina Rupert"
+          ],
+          [
+            "Mia Nicole Eklund"
+          ],
+          [
+            "Bernarda Pera"
+          ],
+          [
+            "Montserrat Alonso"
+          ],
+          [
+            "Rosalie Van Der Hoek"
+          ],
+          [
+            "Hedda Odegaard"
+          ],
+          [
+            "Samira Radjaa"
+          ],
+          [
+            "Zuzanna Maciejewska"
+          ],
+          [
+            "Saumya Vig"
+          ],
+          [
+            "Marie Benoit"
+          ],
+          [
+            "Iga Odrzywolek"
+          ],
+          [
+            "Shakhlo Saidova"
+          ],
+          [
+            "Irina Khromacheva"
+          ],
+          [
+            "Yuliya Lysa"
+          ],
+          [
+            "Sophie Blom"
+          ],
+          [
+            "Jennifer Zerbone"
+          ],
+          [
+            "Kristina Chasovskikh"
+          ],
+          [
+            "Maria Camila Trujillo Hoyos"
+          ],
+          [
+            "Karina Rovira"
+          ],
+          [
+            "Teodora Adina Ardeleanu"
+          ],
+          [
+            "Yasmine Rashad"
+          ],
+          [
+            "Judit Vives Joan"
+          ],
+          [
+            "Sarah Beth Askew"
+          ],
+          [
+            "Yasmine Xantos"
+          ],
+          [
+            "Lea Tholey"
+          ],
+          [
+            "Hikari Yamamoto"
+          ],
+          [
+            "Ines Miren De Pablo"
+          ],
+          [
+            "Stuti Singh Tomar"
+          ],
+          [
+            "Naomi Totka"
+          ],
+          [
+            "Polina Bezsmertnaya"
+          ],
+          [
+            "Hannah King"
+          ],
+          [
+            "Gabriele Bertasiute"
+          ],
+          [
+            "Rebecca Smaller"
+          ],
+          [
+            "Busra Kayrun"
+          ],
+          [
+            "Stephani Rodriguez"
+          ],
+          [
+            "Raquel Montalvo"
+          ],
+          [
+            "Oana Irimescu"
+          ],
+          [
+            "Taylor Townsend"
+          ],
+          [
+            "Carmen Blasco Robaina"
+          ],
+          [
+            "Giulia Della Cioppa"
+          ],
+          [
+            "Nadege Jorda"
+          ],
+          [
+            "Beatriz Haddad Maia"
+          ],
+          [
+            "Nelise Verster"
+          ],
+          [
+            "Eleonore Barrere"
+          ],
+          [
+            "Anastasia Prokopenko"
+          ],
+          [
+            "Dzina Milovanovic"
+          ],
+          [
+            "Isabelle Wallace"
+          ],
+          [
+            "Katelyn Jackson"
+          ],
+          [
+            "Polina Novoselova"
+          ],
+          [
+            "Maite Cano"
+          ],
+          [
+            "Ria Vaidya"
+          ],
+          [
+            "Ana Lorena Garcia Navas"
+          ],
+          [
+            "Aayushi Chouhan"
+          ],
+          [
+            "Ivona Cudina"
+          ],
+          [
+            "Karina Gurgenyan"
+          ],
+          [
+            "Maria Patrascu"
+          ],
+          [
+            "Denisa Chereches"
+          ],
+          [
+            "Mirabelle Njoze"
+          ],
+          [
+            "Vasanti Shinde"
+          ],
+          [
+            "Amanda Schneider"
+          ],
+          [
+            "Katharina Herpertz"
+          ],
+          [
+            "Tayisiya Morderger"
+          ],
+          [
+            "Tamara Tomic"
+          ],
+          [
+            "Maria Fernanda Herazo Gonzalez"
+          ],
+          [
+            "Andra Maria Nitescu"
+          ],
+          [
+            "Micheline Aubuchon"
+          ],
+          [
+            "Ilayda Yondem"
+          ],
+          [
+            "Birgit Burk"
+          ],
+          [
+            "Kanako Osafune"
+          ],
+          [
+            "Anastasiya Komardina"
+          ],
+          [
+            "Nina Holanova"
+          ],
+          [
+            "Jil Belen Teichmann"
+          ],
+          [
+            "Francesca Di Lorenzo"
+          ],
+          [
+            "Natsuho Arakawa"
+          ],
+          [
+            "Emerald Able"
+          ],
+          [
+            "Manca Pislak"
+          ],
+          [
+            "Irys Ekani"
+          ],
+          [
+            "Veronica Miroshnichenko"
+          ],
+          [
+            "Martina Capurro Taborda"
+          ],
+          [
+            "Mariam Bolkvadze"
+          ],
+          [
+            "Diana Valverde"
+          ],
+          [
+            "Do Hee Bae"
+          ],
+          [
+            "Daniela Morales Beckmann"
+          ],
+          [
+            "Ioana Diana Pietroiu"
+          ],
+          [
+            "Luisa Fernanda Echeverry Rodriguez"
+          ],
+          [
+            "Mayuka Aikawa"
+          ],
+          [
+            "Nicole Frenkel"
+          ],
+          [
+            "Daria Kruzhkova"
+          ],
+          [
+            "Alejandra Tamayo Gomez"
+          ],
+          [
+            "Tereza Koplova"
+          ],
+          [
+            "Chiara Lommer"
+          ],
+          [
+            "Laura Illanes"
+          ],
+          [
+            "Olga Fridman"
+          ],
+          [
+            "Ana Paula Leal"
+          ],
+          [
+            "Shiraz Bronstein"
+          ],
+          [
+            "Nicole Bunea"
+          ],
+          [
+            "Charlotte Robillard Millette"
+          ],
+          [
+            "Ashley Kratzer"
+          ],
+          [
+            "Momoka Chimura"
+          ],
+          [
+            "Anna Slovakova"
+          ],
+          [
+            "Ai Qi Chen"
+          ],
+          [
+            "Jiaying He"
+          ],
+          [
+            "Ysabel Gonzalez Rico"
+          ],
+          [
+            "Andreea Stanescu"
+          ],
+          [
+            "Marketa Vondrousova"
+          ],
+          [
+            "Ecaterina Ivasco"
+          ],
+          [
+            "Ivon Mihaleva"
+          ],
+          [
+            "Jasmine Boyd"
+          ],
+          [
+            "Andrea Arratia Fernandez"
+          ],
+          [
+            "Kayla Day"
+          ],
+          [
+            "Ekaterina Davletova"
+          ],
+          [
+            "Irina Cantos Siemers"
+          ],
+          [
+            "Oceane Mialon"
+          ],
+          [
+            "Watsachol Sawasdee"
+          ],
+          [
+            "Ellen Ashley"
+          ],
+          [
+            "Mila Mejic"
+          ],
+          [
+            "Natalia Nikolopoulou"
+          ],
+          [
+            "Marta Del Pino Maturano"
+          ],
+          [
+            "Jayci Goldsmith"
+          ],
+          [
+            "Yang Lee"
+          ],
+          [
+            "Isabella Tcherkes Zade"
+          ],
+          [
+            "Mara Vidal"
+          ],
+          [
+            "Taylor Johnson"
+          ],
+          [
+            "Julia Vulpio"
+          ],
+          [
+            "Dagmar Zdrubecka"
+          ],
+          [
+            "Olga Danilovic"
+          ],
+          [
+            "Xiyu Wang"
+          ],
+          [
+            "Lina Shokry"
+          ],
+          [
+            "Ya Hsin Lee"
+          ],
+          [
+            "Ruxandra Schech"
+          ],
+          [
+            "Yasmina Karimjanova"
+          ],
+          [
+            "Lara Biter"
+          ],
+          [
+            "Najah Dawson"
+          ],
+          [
+            "Giulia Morlet"
+          ],
+          [
+            "Matilde Mariani"
+          ],
+          [
+            "Isabella Nunez"
+          ],
+          [
+            "Betina Tokac"
+          ],
+          [
+            "Noa Krznaric"
+          ]
+        ],
+        "columns": [
+          "full_name"
+        ]
+      },
+      "call": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 21518,
+    "completion_tokens": 901,
+    "total_tokens": 22419
+  },
+  "model_calls": 3,
+  "response_sources": {
+    "intent": "v3",
+    "direction": "v3",
+    "generate": "v3"
+  },
+  "score": {
+    "correct": false,
+    "status": "mismatch",
+    "reference_rows": 487,
+    "prediction_rows": 487
+  }
+}

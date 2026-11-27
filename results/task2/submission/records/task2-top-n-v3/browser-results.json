@@ -1,0 +1,1431 @@
+[
+  {
+    "preset": "top_n_v3_interactive",
+    "request": {
+      "sample_id": "SQL_NonDB_number-00054-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v3"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v3"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v3",
+            "hint": "interactive"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v3"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v3"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "SQL_NonDB_number-00054-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v3"
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v3"
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v3",
+          "hint": "interactive"
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v3"
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v3"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "ffb718c9289c431a956eec29b9b5a918",
+    "graph_sha256": "9ec74a755768523980c3d372ff9493fea198d705bb015002efe9824634369f05",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v3",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "scope": "all_rows",
+              "unit": "entity",
+              "table": "matches",
+              "display": [
+                "winner_name",
+                "winner_rank"
+              ],
+              "key": [
+                "winner_id"
+              ],
+              "order": "winner_age",
+              "direction": "ASC",
+              "n": 5,
+              "grain_evidence": "winners",
+              "projection_evidence": "name and rank",
+              "ties": []
+            }
+          ]
+        },
+        "elapsed_s": 6.809767499998998
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unit_projection_or_scope_unverified"
+        },
+        "elapsed_s": 0.00005329999839887023
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v3",
+        "hint": "interactive",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unit_projection_or_scope_unverified"
+        },
+        "elapsed_s": 0.000006800000846851617
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unit_projection_or_scope_unverified",
+          "sql": "SELECT winner_name, winner_rank\nFROM matches\nWHERE winner_age IS NOT NULL\nORDER BY winner_age ASC\nLIMIT 5;"
+        },
+        "elapsed_s": 3.9402278999987175
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT winner_name, winner_rank\nFROM matches\nWHERE winner_age IS NOT NULL\nORDER BY winner_age ASC\nLIMIT 5;",
+          "rows": [
+            [
+              "Madison Keys",
+              17
+            ],
+            [
+              "Madison Keys",
+              24
+            ],
+            [
+              "Madison Keys",
+              16
+            ],
+            [
+              "Madison Keys",
+              12
+            ],
+            [
+              "Madison Keys",
+              12
+            ]
+          ],
+          "columns": [
+            "winner_name",
+            "winner_rank"
+          ],
+          "route": "fallback",
+          "decision_reason": "unit_projection_or_scope_unverified",
+          "row_count": 5
+        },
+        "elapsed_s": 0.0019850999997288454
+      }
+    ],
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 5,
+      "prediction_rows": 5
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 10046
+    },
+    "course_flow_id": "TASK2_CANVAS_9ec74a755768523980c3d372ff9493fea198d705bb015002efe9824634369f05",
+    "course_flow": {
+      "id": "TASK2_CANVAS_9ec74a755768523980c3d372ff9493fea198d705bb015002efe9824634369f05",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "preset": "top_n_v3",
+    "request": {
+      "sample_id": "lap-rows-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v3"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v3"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v3"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v3"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v3"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "lap-rows-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v3"
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v3"
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v3"
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v3"
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v3"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "0aef5edbfc8047adbf567a833b2ce1d5",
+    "graph_sha256": "05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v3",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "output": [
+            "driver_name",
+            "track"
+          ],
+          "joins": [],
+          "targets": [
+            {
+              "scope": "all_rows",
+              "unit": "rows",
+              "table": "laps",
+              "display": [
+                "driver_name",
+                "track"
+              ],
+              "key": [
+                "lap_id"
+              ],
+              "order": "elapsed_ms",
+              "direction": "ASC",
+              "n": 4,
+              "grain_evidence": "4 fastest lap records across all runs",
+              "projection_evidence": "Return the driver name and track for each record",
+              "ties": []
+            }
+          ]
+        },
+        "elapsed_s": 15.641574799999944
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "rows",
+          "table": "laps",
+          "display": [
+            "driver_name",
+            "track"
+          ],
+          "keys": [
+            "lap_id"
+          ],
+          "order": [
+            [
+              "elapsed_ms",
+              "ASC"
+            ]
+          ],
+          "n": 4,
+          "grain_evidence": "4 fastest lap records across all runs",
+          "projection_evidence": "Return the driver name and track for each record"
+        },
+        "elapsed_s": 0.0012144000029365998
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "route": "rows",
+          "table": "laps",
+          "display": [
+            "driver_name",
+            "track"
+          ],
+          "keys": [
+            "lap_id"
+          ],
+          "order": [
+            [
+              "elapsed_ms",
+              "ASC"
+            ]
+          ],
+          "n": 4,
+          "grain_evidence": "4 fastest lap records across all runs",
+          "projection_evidence": "Return the driver name and track for each record",
+          "sql": "SELECT \"driver_name\", \"track\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL ORDER BY \"elapsed_ms\" ASC LIMIT 4",
+          "cutoff_checked": true
+        },
+        "elapsed_s": 0.0009056000017153565
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "route": "rows",
+          "table": "laps",
+          "display": [
+            "driver_name",
+            "track"
+          ],
+          "keys": [
+            "lap_id"
+          ],
+          "order": [
+            [
+              "elapsed_ms",
+              "ASC"
+            ]
+          ],
+          "n": 4,
+          "grain_evidence": "4 fastest lap records across all runs",
+          "projection_evidence": "Return the driver name and track for each record",
+          "sql": "SELECT \"driver_name\", \"track\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL ORDER BY \"elapsed_ms\" ASC LIMIT 4",
+          "cutoff_checked": true
+        },
+        "elapsed_s": 0.0000039000005926936865
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"driver_name\", \"track\" FROM \"laps\" WHERE \"elapsed_ms\" IS NOT NULL ORDER BY \"elapsed_ms\" ASC LIMIT 4",
+          "rows": [
+            [
+              "Aya",
+              "North"
+            ],
+            [
+              "Aya",
+              "North"
+            ],
+            [
+              "Aya",
+              "South"
+            ],
+            [
+              "Bo",
+              "West"
+            ]
+          ],
+          "columns": [
+            "driver_name",
+            "track"
+          ],
+          "route": "rows",
+          "decision_reason": null,
+          "row_count": 4
+        },
+        "elapsed_s": 0.000743799999327166
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 5019
+    },
+    "course_flow_id": "TASK2_CANVAS_05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+    "course_flow": {
+      "id": "TASK2_CANVAS_05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "preset": "top_n_v3",
+    "request": {
+      "sample_id": "lap-entity-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v3"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v3"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v3"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v3"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v3"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "lap-entity-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v3"
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v3"
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v3"
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v3"
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v3"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "54a8af4ecce443e0955e318200739fae",
+    "graph_sha256": "05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v3",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "scope": "all_rows",
+              "unit": "entity",
+              "table": "laps",
+              "display": [
+                "driver_name",
+                "track"
+              ],
+              "key": [
+                "driver_number"
+              ],
+              "order": "elapsed_ms",
+              "direction": "ASC",
+              "n": 5,
+              "grain_evidence": "one entry per driver number",
+              "projection_evidence": "Show only the driver name and track of that lap.",
+              "ties": []
+            }
+          ]
+        },
+        "elapsed_s": 22.257937099999253
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unverified_limit_or_direction"
+        },
+        "elapsed_s": 0.00006580000263056718
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unverified_limit_or_direction"
+        },
+        "elapsed_s": 0.000008899998647393659
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "route": "fallback",
+          "reason": "unverified_limit_or_direction",
+          "sql": "SELECT driver_name, track\nFROM (\n  SELECT\n    driver_number,\n    driver_name,\n    track,\n    elapsed_ms,\n    ROW_NUMBER() OVER (\n      PARTITION BY driver_number\n      ORDER BY elapsed_ms ASC, lap_id ASC\n    ) AS driver_rank\n  FROM laps\n)\nWHERE driver_rank = 1\nORDER BY elapsed_ms ASC\nLIMIT 3;"
+        },
+        "elapsed_s": 5.338838499999838
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT driver_name, track\nFROM (\n  SELECT\n    driver_number,\n    driver_name,\n    track,\n    elapsed_ms,\n    ROW_NUMBER() OVER (\n      PARTITION BY driver_number\n      ORDER BY elapsed_ms ASC, lap_id ASC\n    ) AS driver_rank\n  FROM laps\n)\nWHERE driver_rank = 1\nORDER BY elapsed_ms ASC\nLIMIT 3;",
+          "rows": [
+            [
+              "Unknown",
+              "West"
+            ],
+            [
+              "Aya",
+              "North"
+            ],
+            [
+              "Bo",
+              "West"
+            ]
+          ],
+          "columns": [
+            "driver_name",
+            "track"
+          ],
+          "route": "fallback",
+          "decision_reason": "unverified_limit_or_direction",
+          "row_count": 3
+        },
+        "elapsed_s": 0.0015305999986594543
+      }
+    ],
+    "score": {
+      "correct": false,
+      "status": "mismatch",
+      "reference_rows": 3,
+      "prediction_rows": 3
+    },
+    "cost": {
+      "model_calls": 2,
+      "total_tokens": 11215
+    },
+    "course_flow_id": "TASK2_CANVAS_05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+    "course_flow": {
+      "id": "TASK2_CANVAS_05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  },
+  {
+    "preset": "top_n_v3",
+    "request": {
+      "sample_id": "sale-tuple-post",
+      "graph": {
+        "nodes": [
+          {
+            "id": "intent",
+            "kind": "top_n_intent_v3"
+          },
+          {
+            "id": "inspect",
+            "kind": "top_n_inspect_v3"
+          },
+          {
+            "id": "policy",
+            "kind": "top_n_policy_v3"
+          },
+          {
+            "id": "generate",
+            "kind": "top_n_generate_v3"
+          },
+          {
+            "id": "execute",
+            "kind": "top_n_execute_v3"
+          }
+        ],
+        "links": [
+          {
+            "source": "intent",
+            "target": "inspect"
+          },
+          {
+            "source": "inspect",
+            "target": "policy"
+          },
+          {
+            "source": "policy",
+            "target": "generate"
+          },
+          {
+            "source": "generate",
+            "target": "execute"
+          }
+        ]
+      }
+    },
+    "sample_id": "sale-tuple-post",
+    "graph": {
+      "nodes": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v3"
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v3"
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v3"
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v3"
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v3"
+        }
+      ],
+      "links": [
+        {
+          "source": "intent",
+          "target": "inspect"
+        },
+        {
+          "source": "inspect",
+          "target": "policy"
+        },
+        {
+          "source": "policy",
+          "target": "generate"
+        },
+        {
+          "source": "generate",
+          "target": "execute"
+        }
+      ]
+    },
+    "run_id": "b44257c67236463195b9c30181226990",
+    "graph_sha256": "05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+    "steps": [
+      {
+        "id": "intent",
+        "kind": "top_n_intent_v3",
+        "hint": "",
+        "probe": false,
+        "from": [],
+        "output": {
+          "targets": [
+            {
+              "scope": "all_rows",
+              "unit": "tuple",
+              "table": "orders",
+              "display": [
+                "customer_name",
+                "category"
+              ],
+              "key": [
+                "customer_name",
+                "category"
+              ],
+              "order": "amount",
+              "direction": "DESC",
+              "n": 4,
+              "grain_evidence": "distinct pairs of customer name and category",
+              "projection_evidence": "with customer name and category",
+              "ties": []
+            }
+          ]
+        },
+        "elapsed_s": 6.883411300001171
+      },
+      {
+        "id": "inspect",
+        "kind": "top_n_inspect_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "intent"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "orders",
+          "display": [
+            "customer_name",
+            "category"
+          ],
+          "keys": [
+            "customer_name",
+            "category"
+          ],
+          "order": [
+            [
+              "amount",
+              "DESC"
+            ]
+          ],
+          "n": 4,
+          "grain_evidence": "distinct pairs of customer name and category",
+          "projection_evidence": "with customer name and category"
+        },
+        "elapsed_s": 0.0009696999986772425
+      },
+      {
+        "id": "policy",
+        "kind": "top_n_policy_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "inspect"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "orders",
+          "display": [
+            "customer_name",
+            "category"
+          ],
+          "keys": [
+            "customer_name",
+            "category"
+          ],
+          "order": [
+            [
+              "amount",
+              "DESC"
+            ]
+          ],
+          "n": 4,
+          "grain_evidence": "distinct pairs of customer name and category",
+          "projection_evidence": "with customer name and category",
+          "sql": "SELECT \"customer_name\", \"category\" FROM (SELECT \"customer_name\", \"category\", MAX(\"amount\") AS \"__top_n_value\" FROM \"orders\" WHERE \"amount\" IS NOT NULL GROUP BY \"customer_name\", \"category\") ORDER BY \"__top_n_value\" DESC LIMIT 4",
+          "cutoff_checked": true
+        },
+        "elapsed_s": 0.0013075000024400651
+      },
+      {
+        "id": "generate",
+        "kind": "top_n_generate_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "policy"
+        ],
+        "output": {
+          "route": "tuple",
+          "table": "orders",
+          "display": [
+            "customer_name",
+            "category"
+          ],
+          "keys": [
+            "customer_name",
+            "category"
+          ],
+          "order": [
+            [
+              "amount",
+              "DESC"
+            ]
+          ],
+          "n": 4,
+          "grain_evidence": "distinct pairs of customer name and category",
+          "projection_evidence": "with customer name and category",
+          "sql": "SELECT \"customer_name\", \"category\" FROM (SELECT \"customer_name\", \"category\", MAX(\"amount\") AS \"__top_n_value\" FROM \"orders\" WHERE \"amount\" IS NOT NULL GROUP BY \"customer_name\", \"category\") ORDER BY \"__top_n_value\" DESC LIMIT 4",
+          "cutoff_checked": true
+        },
+        "elapsed_s": 0.0000034000004234258085
+      },
+      {
+        "id": "execute",
+        "kind": "top_n_execute_v3",
+        "hint": "",
+        "probe": false,
+        "from": [
+          "generate"
+        ],
+        "output": {
+          "status": "executed",
+          "sql": "SELECT \"customer_name\", \"category\" FROM (SELECT \"customer_name\", \"category\", MAX(\"amount\") AS \"__top_n_value\" FROM \"orders\" WHERE \"amount\" IS NOT NULL GROUP BY \"customer_name\", \"category\") ORDER BY \"__top_n_value\" DESC LIMIT 4",
+          "rows": [
+            [
+              "Ira",
+              "garden"
+            ],
+            [
+              "Ira",
+              "book"
+            ],
+            [
+              "Lee",
+              "garden"
+            ],
+            [
+              "Nia",
+              "book"
+            ]
+          ],
+          "columns": [
+            "customer_name",
+            "category"
+          ],
+          "route": "tuple",
+          "decision_reason": null,
+          "row_count": 4
+        },
+        "elapsed_s": 0.0008725000006961636
+      }
+    ],
+    "score": {
+      "correct": true,
+      "status": "match",
+      "reference_rows": 4,
+      "prediction_rows": 4
+    },
+    "cost": {
+      "model_calls": 1,
+      "total_tokens": 4978
+    },
+    "course_flow_id": "TASK2_CANVAS_05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+    "course_flow": {
+      "id": "TASK2_CANVAS_05af9c1f4b7c2c295c2998849c63c4628b80c8ce9cbe42ae95c2f97eff5893ab",
+      "type": "flow",
+      "name": "Task 2 canvas experiment",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": [],
+      "nodes": [
+        {
+          "id": "canvas_intent",
+          "type": "event",
+          "title": "intent",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_inspect",
+          "type": "event",
+          "title": "inspect",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_policy",
+          "type": "event",
+          "title": "policy",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_generate",
+          "type": "event",
+          "title": "generate",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        },
+        {
+          "id": "canvas_execute",
+          "type": "event",
+          "title": "execute",
+          "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+          "params": [
+            {
+              "name": "canvasRunId",
+              "type": "String",
+              "scope": "defaultScope"
+            }
+          ],
+          "results": []
+        }
+      ],
+      "routes": [
+        {
+          "source": "start",
+          "target": "canvas_intent"
+        },
+        {
+          "source": "canvas_intent",
+          "target": "canvas_inspect"
+        },
+        {
+          "source": "canvas_inspect",
+          "target": "canvas_policy"
+        },
+        {
+          "source": "canvas_policy",
+          "target": "canvas_generate"
+        },
+        {
+          "source": "canvas_generate",
+          "target": "canvas_execute"
+        },
+        {
+          "source": "canvas_execute",
+          "target": "end"
+        }
+      ]
+    }
+  }
+]

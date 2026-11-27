@@ -1,0 +1,234 @@
+{
+  "原题": {
+    "none": {
+      "pairs": 1,
+      "baseline": {
+        "pre": 1,
+        "post": 0,
+        "both": 0,
+        "avg_tokens": 11069
+      },
+      "v1": {
+        "pre": 1,
+        "post": 1,
+        "both": 1,
+        "avg_tokens": 9815
+      },
+      "score": {
+        "pre": 1,
+        "post": 1,
+        "both": 1,
+        "avg_tokens": 11069
+      },
+      "v2_changes": {
+        "repaired_post": 1,
+        "harmed_pre": 0,
+        "harmed_post": 0,
+        "patches": 1,
+        "reviews": 0
+      }
+    },
+    "high": {
+      "pairs": 1,
+      "baseline": {
+        "pre": 1,
+        "post": 0,
+        "both": 0,
+        "avg_tokens": 8059
+      },
+      "v1": {
+        "pre": 0,
+        "post": 1,
+        "both": 0,
+        "avg_tokens": 10308.5
+      },
+      "score": {
+        "pre": 1,
+        "post": 1,
+        "both": 1,
+        "avg_tokens": 8059
+      },
+      "v2_changes": {
+        "repaired_post": 1,
+        "harmed_pre": 0,
+        "harmed_post": 0,
+        "patches": 1,
+        "reviews": 0
+      }
+    }
+  },
+  "同类": {
+    "none": {
+      "pairs": 8,
+      "baseline": {
+        "pre": 8,
+        "post": 6,
+        "both": 6,
+        "avg_tokens": 5936.1
+      },
+      "v1": {
+        "pre": 7,
+        "post": 6,
+        "both": 6,
+        "avg_tokens": 11314.8
+      },
+      "score": {
+        "pre": 8,
+        "post": 6,
+        "both": 6,
+        "avg_tokens": 5936.1
+      },
+      "v2_changes": {
+        "repaired_post": 0,
+        "harmed_pre": 0,
+        "harmed_post": 0,
+        "patches": 0,
+        "reviews": 0
+      }
+    },
+    "high": {
+      "pairs": 8,
+      "baseline": {
+        "pre": 6,
+        "post": 7,
+        "both": 5,
+        "avg_tokens": 6001.9
+      },
+      "v1": {
+        "pre": 8,
+        "post": 6,
+        "both": 6,
+        "avg_tokens": 13083.7
+      },
+      "score": {
+        "pre": 6,
+        "post": 7,
+        "both": 5,
+        "avg_tokens": 6001.9
+      },
+      "v2_changes": {
+        "repaired_post": 0,
+        "harmed_pre": 0,
+        "harmed_post": 0,
+        "patches": 0,
+        "reviews": 0
+      }
+    }
+  },
+  "混合": {
+    "none": {
+      "pairs": 8,
+      "baseline": {
+        "pre": 6,
+        "post": 6,
+        "both": 6,
+        "avg_tokens": 5597.4
+      },
+      "v1": {
+        "pre": 6,
+        "post": 7,
+        "both": 6,
+        "avg_tokens": 10640.7
+      },
+      "score": {
+        "pre": 6,
+        "post": 6,
+        "both": 6,
+        "avg_tokens": 5597.4
+      },
+      "v2_changes": {
+        "repaired_post": 0,
+        "harmed_pre": 0,
+        "harmed_post": 0,
+        "patches": 0,
+        "reviews": 0
+      }
+    },
+    "high": {
+      "pairs": 8,
+      "baseline": {
+        "pre": 6,
+        "post": 7,
+        "both": 6,
+        "avg_tokens": 6105.4
+      },
+      "v1": {
+        "pre": 6,
+        "post": 7,
+        "both": 6,
+        "avg_tokens": 12183.1
+      },
+      "score": {
+        "pre": 6,
+        "post": 7,
+        "both": 6,
+        "avg_tokens": 6105.4
+      },
+      "v2_changes": {
+        "repaired_post": 0,
+        "harmed_pre": 0,
+        "harmed_post": 0,
+        "patches": 0,
+        "reviews": 0
+      }
+    }
+  },
+  "全体": {
+    "none": {
+      "pairs": 17,
+      "baseline": {
+        "pre": 15,
+        "post": 12,
+        "both": 12,
+        "avg_tokens": 6078.6
+      },
+      "v1": {
+        "pre": 14,
+        "post": 14,
+        "both": 13,
+        "avg_tokens": 10909.4
+      },
+      "score": {
+        "pre": 15,
+        "post": 13,
+        "both": 13,
+        "avg_tokens": 6078.6
+      },
+      "v2_changes": {
+        "repaired_post": 1,
+        "harmed_pre": 0,
+        "harmed_post": 0,
+        "patches": 1,
+        "reviews": 0
+      }
+    },
+    "high": {
+      "pairs": 17,
+      "baseline": {
+        "pre": 13,
+        "post": 14,
+        "both": 11,
+        "avg_tokens": 6171.6
+      },
+      "v1": {
+        "pre": 14,
+        "post": 14,
+        "both": 12,
+        "avg_tokens": 12496.6
+      },
+      "score": {
+        "pre": 13,
+        "post": 15,
+        "both": 12,
+        "avg_tokens": 6171.6
+      },
+      "v2_changes": {
+        "repaired_post": 1,
+        "harmed_pre": 0,
+        "harmed_post": 0,
+        "patches": 1,
+        "reviews": 0
+      }
+    }
+  }
+}

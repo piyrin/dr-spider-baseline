@@ -1,0 +1,331 @@
+{
+  "id": "SQL_DB_text-00048-pre",
+  "effort": "none",
+  "steps": [
+    {
+      "id": "draft",
+      "kind": "column_draft_v2",
+      "hint": "",
+      "probe": false,
+      "from": [],
+      "output": {
+        "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;"
+      },
+      "call": {
+        "request": {
+          "model": "gpt-6-sol",
+          "stream": false,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Generate one SQLite SELECT query for the question and schema. Include required values. Return only the SQL query."
+            },
+            {
+              "role": "user",
+              "content": "Schema\nCREATE TABLE \"car_makers\" (\"Id\" INTEGER PRIMARY KEY,\"Maker\" TEXT,\"FullName\" TEXT,\"Country\" TEXT,FOREIGN KEY (\"Country\") REFERENCES \"countries\" (\"CountryId\"))\nCREATE TABLE \"car_names\" (\"MakeId\" INTEGER PRIMARY KEY,\"Model\" TEXT,\"Make\" TEXT,FOREIGN KEY (\"Model\") REFERENCES \"model_list\" (\"Model\"))\nCREATE TABLE \"cars_data\" (\"Id\" INTEGER PRIMARY KEY,\"MPG\" TEXT,\"Cylinders\" INTEGER,\"Edispl\" REAL,\"Horsepower\" TEXT,\"Weight\" INTEGER,\"Accelerate\" REAL,\"Year\" INTEGER,FOREIGN KEY (\"Id\") REFERENCES \"car_names\" (\"MakeId\"))\nCREATE TABLE \"continents\" (\"ContId\" INTEGER PRIMARY KEY,\"Continent\" TEXT)\nCREATE TABLE \"countries\" (\"CountryId\" INTEGER PRIMARY KEY,\"CountryName\" TEXT,\"Continent\" INTEGER,FOREIGN KEY (\"Continent\") REFERENCES \"continents\" (\"ContId\"))\nCREATE TABLE \"model_list\" (\"ModelId\" INTEGER PRIMARY KEY,\"Maker\" INTEGER,\"Model\" TEXT UNIQUE,FOREIGN KEY (\"Maker\") REFERENCES \"car_makers\" (\"Id\"))\nQuestion\nWhat are the different models created by either the car maker General Motors or weighed more than 3500?"
+            }
+          ]
+        },
+        "response": {
+          "id": "resp_013441104f10cf2f016b082761c0f487d0946ef851d88bc3c4",
+          "object": "chat.completion",
+          "created": 1795696500,
+          "model": "gpt-6-sol",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;",
+                "reasoning_content": "**Designing SQL query structure****Clarifying join keys and filter conditions**"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "attribution": {
+              "items": {
+                "msg_013441104f10cf2f016b082761c14c87d08010e4efcbfe3970": {
+                  "input_tokens": 265,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 265,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_013441104f10cf2f016b082761c14c87d08220e68903d584d2": {
+                  "input_tokens": 25,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0,
+                  "content": [
+                    {
+                      "input_tokens": 25,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 0
+                    }
+                  ]
+                },
+                "msg_013441104f10cf2f016b082772ca3c87d08b8c2cc5fd28bdb4": {
+                  "input_tokens": 0,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 74,
+                  "content": [
+                    {
+                      "input_tokens": 0,
+                      "cached_tokens": 0,
+                      "cache_write_tokens": 0,
+                      "output_tokens": 74
+                    }
+                  ]
+                },
+                "rs_013441104f10cf2f016b082767e4a887d0a394a426a952ae3e": {
+                  "input_tokens": 2,
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 337
+                }
+              },
+              "request_fields": {
+                "instructions": {
+                  "input_tokens": 4380,
+                  "cached_tokens": 3787,
+                  "cache_write_tokens": 0,
+                  "output_tokens": 0
+                }
+              }
+            },
+            "prompt_tokens": 10586,
+            "completion_tokens": 411,
+            "total_tokens": 10997,
+            "prompt_tokens_details": {
+              "cache_write_tokens_details": {
+                "ttl_30m_tokens": 0,
+                "ttl_12h_tokens": 0
+              },
+              "cached_tokens": 9088
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 337
+            }
+          },
+          "service_tier": "default"
+        },
+        "usage": {
+          "attribution": {
+            "items": {
+              "msg_013441104f10cf2f016b082761c14c87d08010e4efcbfe3970": {
+                "input_tokens": 265,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 265,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_013441104f10cf2f016b082761c14c87d08220e68903d584d2": {
+                "input_tokens": 25,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 0,
+                "content": [
+                  {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                ]
+              },
+              "msg_013441104f10cf2f016b082772ca3c87d08b8c2cc5fd28bdb4": {
+                "input_tokens": 0,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 74,
+                "content": [
+                  {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 74
+                  }
+                ]
+              },
+              "rs_013441104f10cf2f016b082767e4a887d0a394a426a952ae3e": {
+                "input_tokens": 2,
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 337
+              }
+            },
+            "request_fields": {
+              "instructions": {
+                "input_tokens": 4380,
+                "cached_tokens": 3787,
+                "cache_write_tokens": 0,
+                "output_tokens": 0
+              }
+            }
+          },
+          "prompt_tokens": 10586,
+          "completion_tokens": 411,
+          "total_tokens": 10997,
+          "prompt_tokens_details": {
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            },
+            "cached_tokens": 9088
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 337
+          }
+        },
+        "model": "gpt-6-sol",
+        "fingerprint": null
+      }
+    },
+    {
+      "id": "inspect",
+      "kind": "column_inspect_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "draft"
+      ],
+      "output": {
+        "draft": {
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;"
+        },
+        "route": "keep",
+        "reason": "no_verified_column_conflict",
+        "options": []
+      },
+      "call": null
+    },
+    {
+      "id": "revise",
+      "kind": "column_revise_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "inspect"
+      ],
+      "output": {
+        "final": {
+          "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;"
+        },
+        "revision": "kept",
+        "route": "keep"
+      },
+      "call": null
+    },
+    {
+      "id": "execute",
+      "kind": "column_execute_v2",
+      "hint": "",
+      "probe": false,
+      "from": [
+        "revise"
+      ],
+      "output": {
+        "status": "executed",
+        "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cd.Id = cn.MakeId\nJOIN model_list AS ml ON ml.Model = cn.Model\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;",
+        "rows": [
+          [
+            "chevrolet"
+          ],
+          [
+            "buick"
+          ],
+          [
+            "ford"
+          ],
+          [
+            "plymouth"
+          ],
+          [
+            "pontiac"
+          ],
+          [
+            "amc"
+          ],
+          [
+            "dodge"
+          ],
+          [
+            "mercury"
+          ],
+          [
+            "oldsmobile"
+          ],
+          [
+            "chrysler"
+          ],
+          [
+            "mercedes-benz"
+          ],
+          [
+            "cadillac"
+          ],
+          [
+            "mercedes"
+          ]
+        ],
+        "columns": [
+          "Model"
+        ],
+        "revision": "kept"
+      },
+      "call": null
+    }
+  ],
+  "baseline": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 13,
+    "prediction_rows": 13
+  },
+  "v1": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 13,
+    "prediction_rows": 13
+  },
+  "baseline_usage": {
+    "prompt_tokens": 10586,
+    "completion_tokens": 411,
+    "total_tokens": 10997
+  },
+  "v1_usage": {
+    "prompt_tokens": 9671,
+    "completion_tokens": 138,
+    "total_tokens": 9809
+  },
+  "usage": {
+    "prompt_tokens": 10586,
+    "completion_tokens": 411,
+    "total_tokens": 10997
+  },
+  "model_calls": 1,
+  "draft_source": "runs/task2-filter-column-v1/requests/baseline/none/SQL_DB_text-00048-pre/generate/response.json",
+  "score": {
+    "correct": true,
+    "status": "match",
+    "reference_rows": 13,
+    "prediction_rows": 13
+  }
+}
