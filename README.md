@@ -35,38 +35,11 @@ if (!(Test-Path .env)) { Copy-Item .env.example .env }
 & ./.venv/Scripts/python.exe ./scripts/verify_course_acceptance.py
 ```
 
-如需从课程页面重新生成 SQL，在本地 `.env` 填入课程 API 地址和密钥，模型账户需可调用 `gpt-6-sol`。首次运行前按下节准备课程组件和编译后端。当前验收请求固定使用 Thinking `high`。新生成的 SQL 和评分取决于模型服务当次返回。
-
-### 首次接入课程前端和后端
-
-使用 PowerShell 7、Node.js 24、pnpm 12.23.0、Corretto 8u514、Maven 3.9.16 和 H2 1.4.199。下载或检出以下课程源码，将解包后的项目根目录放到对应位置。
-
-| 课程组件 | 在本仓库中的位置 |
-| --- | --- |
-| [RSI Data 前端 29ecb6c](https://github.com/ymxiong/rsi-data-platform/tree/29ecb6c0b3abe32a5df2a649b22085377c86fce7) | `.local/platform-preview/rsi-data-platform/` |
-| [RSI Flow Visual 43b8f53](https://github.com/ymxiong/rsi-flow-visual/tree/43b8f53a7c77cbc6ea5f655820dfbe9336cb4452) | `.local/platform-preview/rsi-flow-visual/` |
-| [RSI Data 后端 58051d9](https://github.com/ymxiong/rsi-data-spring-boot/tree/58051d9b7e679e9730e0a431fc5229cc01f972dd) | `.local/upstream/snapshots/rsi-data-spring-boot/` |
-
-使用课程组提供的 `dist.zip` 和 Maven 私服 `settings.xml`。解包后确认 `.local/platform-preview/rsi-flow-visual/dist/index.js` 存在。将 Maven 配置及运行时放到以下位置。
-
-```text
-.local/task2-rsi-data/spring-boot/
-├── settings.xml
-└── runtime/
-    ├── corretto8/jdk1.8.0_514/bin/java.exe
-    ├── apache-maven-3.9.16/bin/mvn.cmd
-    └── h2-1.4.199.jar
-```
-
-在仓库根目录先装配课程页面，再安装前端依赖并编译后端。后端首次构建通过课程 Maven 配置取得依赖。已有本地 Maven 缓存时可为编译命令加 `-Offline`。
-
-```powershell
-& ./task2-rsi-data/experiment/install-preview.ps1
-pnpm.cmd --dir .local/platform-preview/rsi-data-platform install --no-frozen-lockfile
-& ./task2-rsi-data/experiment/build-course.ps1
-```
+如需从课程页面重新生成 SQL，在本地 `.env` 填入课程 API 地址和密钥，模型账户需可调用 `gpt-6-sol`。当前验收请求固定使用 Thinking `high`。新生成的 SQL 和评分取决于模型服务当次返回。
 
 ### 启动前后端
+
+以下步骤使用已配置的课程前后端环境。本项目的接入改动和构建入口见源码目录。[前端接入](task2-rsi-data/experiment/install-preview.ps1) · [后端构建](task2-rsi-data/experiment/build-course.ps1) · [编排及节点源码](task2-rsi-data/experiment/README.md)
 
 在仓库根目录打开三个 PowerShell 终端，每个终端执行对应的命令并保持运行。
 
