@@ -1,0 +1,2 @@
+# Preserve the exact bytes used by the recorded hashes and the course ZIP.
+results/task2/submission/acceptance/** -text whitespace=cr-at-eol

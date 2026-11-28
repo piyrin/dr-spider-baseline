@@ -1,0 +1,2639 @@
+{
+  "case": "case5",
+  "topic": "明细与零值",
+  "pair_id": "SQL_comparison-00133",
+  "frontend": {
+    "file": "../frontend/case5.json",
+    "sha256": "3df643556793d66d93fa76fad8a6d6dc73674681840db5adffd462fbfcaa7c2f"
+  },
+  "backend": {
+    "file": "../backend/case5.json",
+    "sha256": "54b98042a3d48be89aaf27d333905e119a06d589a25829a484231f78e95150fa",
+    "flow_id": "TASK2_COURSE_CASE5"
+  },
+  "historical_post_prediction": {
+    "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nLEFT JOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+    "status": "mismatch"
+  },
+  "runs": {
+    "pre": {
+      "sample_id": "SQL_comparison-00133-pre",
+      "question": "What are the names of countries that speak more than 2 languages, as well as how many languages they speak?",
+      "database": "data/Spider-dev/databases/world_1/world_1.sqlite",
+      "database_sha256": "f21ac0e799f04194de10460bed3309c123239090b3ab25c39ebb13629d7ace79",
+      "checked_at": "2026-11-28T09:12:17.792Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case5",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE5",
+      "run_id": "86ae378951e348809043eb4072f76b14",
+      "graph_sha256": "153f0a51d10d598afae1ed231ea4bdd8d92f258fd4a484d4535e69a9fbb9067e",
+      "reference": {
+        "sql": "SELECT COUNT(T2.Language) , T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name HAVING COUNT(*) > 2",
+        "columns": [
+          "COUNT(T2.Language)",
+          "Name"
+        ],
+        "rows": [
+          [
+            5,
+            "Afghanistan"
+          ],
+          [
+            3,
+            "Albania"
+          ],
+          [
+            3,
+            "American Samoa"
+          ],
+          [
+            4,
+            "Andorra"
+          ],
+          [
+            9,
+            "Angola"
+          ],
+          [
+            3,
+            "Argentina"
+          ],
+          [
+            4,
+            "Aruba"
+          ],
+          [
+            8,
+            "Australia"
+          ],
+          [
+            8,
+            "Austria"
+          ],
+          [
+            4,
+            "Azerbaijan"
+          ],
+          [
+            7,
+            "Bangladesh"
+          ],
+          [
+            4,
+            "Belarus"
+          ],
+          [
+            6,
+            "Belgium"
+          ],
+          [
+            4,
+            "Belize"
+          ],
+          [
+            7,
+            "Benin"
+          ],
+          [
+            3,
+            "Bhutan"
+          ],
+          [
+            4,
+            "Bolivia"
+          ],
+          [
+            5,
+            "Botswana"
+          ],
+          [
+            5,
+            "Brazil"
+          ],
+          [
+            4,
+            "Brunei"
+          ],
+          [
+            4,
+            "Bulgaria"
+          ],
+          [
+            6,
+            "Burkina Faso"
+          ],
+          [
+            3,
+            "Burundi"
+          ],
+          [
+            4,
+            "Cambodia"
+          ],
+          [
+            8,
+            "Cameroon"
+          ],
+          [
+            12,
+            "Canada"
+          ],
+          [
+            6,
+            "Central African Republic"
+          ],
+          [
+            8,
+            "Chad"
+          ],
+          [
+            4,
+            "Chile"
+          ],
+          [
+            12,
+            "China"
+          ],
+          [
+            5,
+            "Colombia"
+          ],
+          [
+            5,
+            "Comoros"
+          ],
+          [
+            6,
+            "Congo"
+          ],
+          [
+            10,
+            "Congo, The Democratic Republic of the"
+          ],
+          [
+            4,
+            "Costa Rica"
+          ],
+          [
+            8,
+            "Czech Republic"
+          ],
+          [
+            5,
+            "Côte d’Ivoire"
+          ],
+          [
+            7,
+            "Denmark"
+          ],
+          [
+            3,
+            "Djibouti"
+          ],
+          [
+            6,
+            "Eritrea"
+          ],
+          [
+            5,
+            "Estonia"
+          ],
+          [
+            7,
+            "Ethiopia"
+          ],
+          [
+            5,
+            "Finland"
+          ],
+          [
+            6,
+            "France"
+          ],
+          [
+            3,
+            "French Polynesia"
+          ],
+          [
+            4,
+            "Gabon"
+          ],
+          [
+            5,
+            "Gambia"
+          ],
+          [
+            6,
+            "Georgia"
+          ],
+          [
+            6,
+            "Germany"
+          ],
+          [
+            6,
+            "Ghana"
+          ],
+          [
+            5,
+            "Guam"
+          ],
+          [
+            5,
+            "Guatemala"
+          ],
+          [
+            7,
+            "Guinea"
+          ],
+          [
+            6,
+            "Guinea-Bissau"
+          ],
+          [
+            3,
+            "Guyana"
+          ],
+          [
+            4,
+            "Honduras"
+          ],
+          [
+            5,
+            "Hong Kong"
+          ],
+          [
+            6,
+            "Hungary"
+          ],
+          [
+            12,
+            "India"
+          ],
+          [
+            9,
+            "Indonesia"
+          ],
+          [
+            10,
+            "Iran"
+          ],
+          [
+            5,
+            "Iraq"
+          ],
+          [
+            3,
+            "Israel"
+          ],
+          [
+            8,
+            "Italy"
+          ],
+          [
+            6,
+            "Japan"
+          ],
+          [
+            3,
+            "Jordan"
+          ],
+          [
+            6,
+            "Kazakstan"
+          ],
+          [
+            10,
+            "Kenya"
+          ],
+          [
+            7,
+            "Kyrgyzstan"
+          ],
+          [
+            4,
+            "Laos"
+          ],
+          [
+            6,
+            "Latvia"
+          ],
+          [
+            3,
+            "Lebanon"
+          ],
+          [
+            3,
+            "Lesotho"
+          ],
+          [
+            8,
+            "Liberia"
+          ],
+          [
+            3,
+            "Liechtenstein"
+          ],
+          [
+            5,
+            "Lithuania"
+          ],
+          [
+            5,
+            "Luxembourg"
+          ],
+          [
+            4,
+            "Macao"
+          ],
+          [
+            5,
+            "Macedonia"
+          ],
+          [
+            4,
+            "Malawi"
+          ],
+          [
+            6,
+            "Malaysia"
+          ],
+          [
+            6,
+            "Mali"
+          ],
+          [
+            6,
+            "Mauritania"
+          ],
+          [
+            6,
+            "Mauritius"
+          ],
+          [
+            3,
+            "Mayotte"
+          ],
+          [
+            6,
+            "Mexico"
+          ],
+          [
+            6,
+            "Micronesia, Federated States of"
+          ],
+          [
+            5,
+            "Moldova"
+          ],
+          [
+            4,
+            "Monaco"
+          ],
+          [
+            6,
+            "Mongolia"
+          ],
+          [
+            10,
+            "Mozambique"
+          ],
+          [
+            8,
+            "Myanmar"
+          ],
+          [
+            8,
+            "Namibia"
+          ],
+          [
+            5,
+            "Nauru"
+          ],
+          [
+            7,
+            "Nepal"
+          ],
+          [
+            4,
+            "Netherlands"
+          ],
+          [
+            3,
+            "Netherlands Antilles"
+          ],
+          [
+            3,
+            "New Caledonia"
+          ],
+          [
+            4,
+            "Nicaragua"
+          ],
+          [
+            5,
+            "Niger"
+          ],
+          [
+            10,
+            "Nigeria"
+          ],
+          [
+            6,
+            "Northern Mariana Islands"
+          ],
+          [
+            5,
+            "Norway"
+          ],
+          [
+            8,
+            "Pakistan"
+          ],
+          [
+            4,
+            "Palau"
+          ],
+          [
+            6,
+            "Panama"
+          ],
+          [
+            4,
+            "Paraguay"
+          ],
+          [
+            3,
+            "Peru"
+          ],
+          [
+            10,
+            "Philippines"
+          ],
+          [
+            4,
+            "Poland"
+          ],
+          [
+            6,
+            "Romania"
+          ],
+          [
+            12,
+            "Russian Federation"
+          ],
+          [
+            5,
+            "Réunion"
+          ],
+          [
+            3,
+            "Samoa"
+          ],
+          [
+            6,
+            "Senegal"
+          ],
+          [
+            3,
+            "Seychelles"
+          ],
+          [
+            8,
+            "Sierra Leone"
+          ],
+          [
+            3,
+            "Singapore"
+          ],
+          [
+            5,
+            "Slovakia"
+          ],
+          [
+            3,
+            "Slovenia"
+          ],
+          [
+            3,
+            "Solomon Islands"
+          ],
+          [
+            11,
+            "South Africa"
+          ],
+          [
+            4,
+            "Spain"
+          ],
+          [
+            3,
+            "Sri Lanka"
+          ],
+          [
+            10,
+            "Sudan"
+          ],
+          [
+            6,
+            "Sweden"
+          ],
+          [
+            4,
+            "Switzerland"
+          ],
+          [
+            6,
+            "Taiwan"
+          ],
+          [
+            3,
+            "Tajikistan"
+          ],
+          [
+            11,
+            "Tanzania"
+          ],
+          [
+            6,
+            "Thailand"
+          ],
+          [
+            8,
+            "Togo"
+          ],
+          [
+            3,
+            "Trinidad and Tobago"
+          ],
+          [
+            3,
+            "Tunisia"
+          ],
+          [
+            3,
+            "Turkey"
+          ],
+          [
+            4,
+            "Turkmenistan"
+          ],
+          [
+            3,
+            "Tuvalu"
+          ],
+          [
+            10,
+            "Uganda"
+          ],
+          [
+            7,
+            "Ukraine"
+          ],
+          [
+            3,
+            "United Kingdom"
+          ],
+          [
+            12,
+            "United States"
+          ],
+          [
+            6,
+            "Uzbekistan"
+          ],
+          [
+            3,
+            "Vanuatu"
+          ],
+          [
+            3,
+            "Venezuela"
+          ],
+          [
+            9,
+            "Vietnam"
+          ],
+          [
+            3,
+            "Virgin Islands, U.S."
+          ],
+          [
+            6,
+            "Yugoslavia"
+          ],
+          [
+            6,
+            "Zambia"
+          ],
+          [
+            4,
+            "Zimbabwe"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT country.Name, COUNT(countrylanguage.Language) AS LanguageCount\nFROM country\nJOIN countrylanguage ON country.Code = countrylanguage.CountryCode\nGROUP BY country.Code, country.Name\nHAVING COUNT(countrylanguage.Language) > 2;",
+        "rows": [
+          [
+            "Aruba",
+            4
+          ],
+          [
+            "Afghanistan",
+            5
+          ],
+          [
+            "Angola",
+            9
+          ],
+          [
+            "Albania",
+            3
+          ],
+          [
+            "Andorra",
+            4
+          ],
+          [
+            "Netherlands Antilles",
+            3
+          ],
+          [
+            "Argentina",
+            3
+          ],
+          [
+            "American Samoa",
+            3
+          ],
+          [
+            "Australia",
+            8
+          ],
+          [
+            "Austria",
+            8
+          ],
+          [
+            "Azerbaijan",
+            4
+          ],
+          [
+            "Burundi",
+            3
+          ],
+          [
+            "Belgium",
+            6
+          ],
+          [
+            "Benin",
+            7
+          ],
+          [
+            "Burkina Faso",
+            6
+          ],
+          [
+            "Bangladesh",
+            7
+          ],
+          [
+            "Bulgaria",
+            4
+          ],
+          [
+            "Belarus",
+            4
+          ],
+          [
+            "Belize",
+            4
+          ],
+          [
+            "Bolivia",
+            4
+          ],
+          [
+            "Brazil",
+            5
+          ],
+          [
+            "Brunei",
+            4
+          ],
+          [
+            "Bhutan",
+            3
+          ],
+          [
+            "Botswana",
+            5
+          ],
+          [
+            "Central African Republic",
+            6
+          ],
+          [
+            "Canada",
+            12
+          ],
+          [
+            "Switzerland",
+            4
+          ],
+          [
+            "Chile",
+            4
+          ],
+          [
+            "China",
+            12
+          ],
+          [
+            "Côte d’Ivoire",
+            5
+          ],
+          [
+            "Cameroon",
+            8
+          ],
+          [
+            "Congo, The Democratic Republic of the",
+            10
+          ],
+          [
+            "Congo",
+            6
+          ],
+          [
+            "Colombia",
+            5
+          ],
+          [
+            "Comoros",
+            5
+          ],
+          [
+            "Costa Rica",
+            4
+          ],
+          [
+            "Czech Republic",
+            8
+          ],
+          [
+            "Germany",
+            6
+          ],
+          [
+            "Djibouti",
+            3
+          ],
+          [
+            "Denmark",
+            7
+          ],
+          [
+            "Eritrea",
+            6
+          ],
+          [
+            "Spain",
+            4
+          ],
+          [
+            "Estonia",
+            5
+          ],
+          [
+            "Ethiopia",
+            7
+          ],
+          [
+            "Finland",
+            5
+          ],
+          [
+            "France",
+            6
+          ],
+          [
+            "Micronesia, Federated States of",
+            6
+          ],
+          [
+            "Gabon",
+            4
+          ],
+          [
+            "United Kingdom",
+            3
+          ],
+          [
+            "Georgia",
+            6
+          ],
+          [
+            "Ghana",
+            6
+          ],
+          [
+            "Guinea",
+            7
+          ],
+          [
+            "Gambia",
+            5
+          ],
+          [
+            "Guinea-Bissau",
+            6
+          ],
+          [
+            "Guatemala",
+            5
+          ],
+          [
+            "Guam",
+            5
+          ],
+          [
+            "Guyana",
+            3
+          ],
+          [
+            "Hong Kong",
+            5
+          ],
+          [
+            "Honduras",
+            4
+          ],
+          [
+            "Hungary",
+            6
+          ],
+          [
+            "Indonesia",
+            9
+          ],
+          [
+            "India",
+            12
+          ],
+          [
+            "Iran",
+            10
+          ],
+          [
+            "Iraq",
+            5
+          ],
+          [
+            "Israel",
+            3
+          ],
+          [
+            "Italy",
+            8
+          ],
+          [
+            "Jordan",
+            3
+          ],
+          [
+            "Japan",
+            6
+          ],
+          [
+            "Kazakstan",
+            6
+          ],
+          [
+            "Kenya",
+            10
+          ],
+          [
+            "Kyrgyzstan",
+            7
+          ],
+          [
+            "Cambodia",
+            4
+          ],
+          [
+            "Laos",
+            4
+          ],
+          [
+            "Lebanon",
+            3
+          ],
+          [
+            "Liberia",
+            8
+          ],
+          [
+            "Liechtenstein",
+            3
+          ],
+          [
+            "Sri Lanka",
+            3
+          ],
+          [
+            "Lesotho",
+            3
+          ],
+          [
+            "Lithuania",
+            5
+          ],
+          [
+            "Luxembourg",
+            5
+          ],
+          [
+            "Latvia",
+            6
+          ],
+          [
+            "Macao",
+            4
+          ],
+          [
+            "Monaco",
+            4
+          ],
+          [
+            "Moldova",
+            5
+          ],
+          [
+            "Mexico",
+            6
+          ],
+          [
+            "Macedonia",
+            5
+          ],
+          [
+            "Mali",
+            6
+          ],
+          [
+            "Myanmar",
+            8
+          ],
+          [
+            "Mongolia",
+            6
+          ],
+          [
+            "Northern Mariana Islands",
+            6
+          ],
+          [
+            "Mozambique",
+            10
+          ],
+          [
+            "Mauritania",
+            6
+          ],
+          [
+            "Mauritius",
+            6
+          ],
+          [
+            "Malawi",
+            4
+          ],
+          [
+            "Malaysia",
+            6
+          ],
+          [
+            "Mayotte",
+            3
+          ],
+          [
+            "Namibia",
+            8
+          ],
+          [
+            "New Caledonia",
+            3
+          ],
+          [
+            "Niger",
+            5
+          ],
+          [
+            "Nigeria",
+            10
+          ],
+          [
+            "Nicaragua",
+            4
+          ],
+          [
+            "Netherlands",
+            4
+          ],
+          [
+            "Norway",
+            5
+          ],
+          [
+            "Nepal",
+            7
+          ],
+          [
+            "Nauru",
+            5
+          ],
+          [
+            "Pakistan",
+            8
+          ],
+          [
+            "Panama",
+            6
+          ],
+          [
+            "Peru",
+            3
+          ],
+          [
+            "Philippines",
+            10
+          ],
+          [
+            "Palau",
+            4
+          ],
+          [
+            "Poland",
+            4
+          ],
+          [
+            "Paraguay",
+            4
+          ],
+          [
+            "French Polynesia",
+            3
+          ],
+          [
+            "Réunion",
+            5
+          ],
+          [
+            "Romania",
+            6
+          ],
+          [
+            "Russian Federation",
+            12
+          ],
+          [
+            "Sudan",
+            10
+          ],
+          [
+            "Senegal",
+            6
+          ],
+          [
+            "Singapore",
+            3
+          ],
+          [
+            "Solomon Islands",
+            3
+          ],
+          [
+            "Sierra Leone",
+            8
+          ],
+          [
+            "Slovakia",
+            5
+          ],
+          [
+            "Slovenia",
+            3
+          ],
+          [
+            "Sweden",
+            6
+          ],
+          [
+            "Seychelles",
+            3
+          ],
+          [
+            "Chad",
+            8
+          ],
+          [
+            "Togo",
+            8
+          ],
+          [
+            "Thailand",
+            6
+          ],
+          [
+            "Tajikistan",
+            3
+          ],
+          [
+            "Turkmenistan",
+            4
+          ],
+          [
+            "Trinidad and Tobago",
+            3
+          ],
+          [
+            "Tunisia",
+            3
+          ],
+          [
+            "Turkey",
+            3
+          ],
+          [
+            "Tuvalu",
+            3
+          ],
+          [
+            "Taiwan",
+            6
+          ],
+          [
+            "Tanzania",
+            11
+          ],
+          [
+            "Uganda",
+            10
+          ],
+          [
+            "Ukraine",
+            7
+          ],
+          [
+            "United States",
+            12
+          ],
+          [
+            "Uzbekistan",
+            6
+          ],
+          [
+            "Venezuela",
+            3
+          ],
+          [
+            "Virgin Islands, U.S.",
+            3
+          ],
+          [
+            "Vietnam",
+            9
+          ],
+          [
+            "Vanuatu",
+            3
+          ],
+          [
+            "Samoa",
+            3
+          ],
+          [
+            "Yugoslavia",
+            6
+          ],
+          [
+            "South Africa",
+            11
+          ],
+          [
+            "Zambia",
+            6
+          ],
+          [
+            "Zimbabwe",
+            4
+          ]
+        ],
+        "columns": [
+          "Name",
+          "LanguageCount"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 149,
+        "prediction_rows": 149
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 16051
+      },
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "count_intent",
+          "from": [],
+          "elapsed_s": 14.97006810000039,
+          "output": {
+            "targets": [
+              {
+                "parent_table": "country",
+                "parent_key": "Code",
+                "detail_table": "countrylanguage",
+                "detail_key": "CountryCode",
+                "role": "both",
+                "operator": ">",
+                "threshold": 2,
+                "policy": "observed",
+                "cue": "countries that speak more than 2 languages"
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_0266ef9ceaf84fb9016b0a9af0837887d18f042e60166f0f08": {
+                    "input_tokens": 361,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 361,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0266ef9ceaf84fb9016b0a9af0837887d1a786dfe0a9b16c74": {
+                    "input_tokens": 295,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 295,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0266ef9ceaf84fb9016b0a9afc0aac87d193fbc2fd679bdbf8": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 61,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 61
+                      }
+                    ]
+                  },
+                  "rs_0266ef9ceaf84fb9016b0a9af6092887d19e5b90e1d4196c97": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 157
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3787,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 10952,
+              "completion_tokens": 218,
+              "total_tokens": 11170,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 9088
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 157
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "a0f5bab37fa30eddc6826b92a41095471f427a218858ec9c6524d31bc68285d3"
+          }
+        },
+        {
+          "id": "policy",
+          "kind": "count_policy_v2",
+          "from": [
+            "intent"
+          ],
+          "elapsed_s": 3.990000004705507e-05,
+          "output": {
+            "route": "fallback",
+            "reason": "zero_cannot_change_supported_filter"
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "count_generate",
+          "from": [
+            "policy"
+          ],
+          "elapsed_s": 7.677020799999809,
+          "output": {
+            "sql": "SELECT country.Name, COUNT(countrylanguage.Language) AS LanguageCount\nFROM country\nJOIN countrylanguage ON country.Code = countrylanguage.CountryCode\nGROUP BY country.Code, country.Name\nHAVING COUNT(countrylanguage.Language) > 2;",
+            "route": "fallback"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_04c221fb0b1f5240016b0a9aff7da087d0ab034a168fde7fdd": {
+                    "input_tokens": 391,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 391,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_04c221fb0b1f5240016b0a9aff7da087d0b4bc22bda529831d": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_04c221fb0b1f5240016b0a9b04752487d0bef078af1a43011d": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 53,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 53
+                      }
+                    ]
+                  },
+                  "rs_04c221fb0b1f5240016b0a9affff4487d0be317e600e02b438": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 30
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4798,
+              "completion_tokens": 83,
+              "total_tokens": 4881,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 30
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "143326f291c39244eb5cc160e8448ebe706f156c23b3feafbdf1a3bc8ae54940"
+          }
+        },
+        {
+          "id": "check",
+          "kind": "count_sql_check",
+          "from": [
+            "policy",
+            "generate"
+          ],
+          "elapsed_s": 1.0000000656873453e-05,
+          "output": {
+            "sql": "SELECT country.Name, COUNT(countrylanguage.Language) AS LanguageCount\nFROM country\nJOIN countrylanguage ON country.Code = countrylanguage.CountryCode\nGROUP BY country.Code, country.Name\nHAVING COUNT(countrylanguage.Language) > 2;",
+            "route": "fallback",
+            "check": "unchanged"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "check"
+          ],
+          "elapsed_s": 0.0012524999992820085,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT country.Name, COUNT(countrylanguage.Language) AS LanguageCount\nFROM country\nJOIN countrylanguage ON country.Code = countrylanguage.CountryCode\nGROUP BY country.Code, country.Name\nHAVING COUNT(countrylanguage.Language) > 2;",
+            "rows": [
+              [
+                "Aruba",
+                4
+              ],
+              [
+                "Afghanistan",
+                5
+              ],
+              [
+                "Angola",
+                9
+              ],
+              [
+                "Albania",
+                3
+              ],
+              [
+                "Andorra",
+                4
+              ],
+              [
+                "Netherlands Antilles",
+                3
+              ],
+              [
+                "Argentina",
+                3
+              ],
+              [
+                "American Samoa",
+                3
+              ],
+              [
+                "Australia",
+                8
+              ],
+              [
+                "Austria",
+                8
+              ],
+              [
+                "Azerbaijan",
+                4
+              ],
+              [
+                "Burundi",
+                3
+              ],
+              [
+                "Belgium",
+                6
+              ],
+              [
+                "Benin",
+                7
+              ],
+              [
+                "Burkina Faso",
+                6
+              ],
+              [
+                "Bangladesh",
+                7
+              ],
+              [
+                "Bulgaria",
+                4
+              ],
+              [
+                "Belarus",
+                4
+              ],
+              [
+                "Belize",
+                4
+              ],
+              [
+                "Bolivia",
+                4
+              ],
+              [
+                "Brazil",
+                5
+              ],
+              [
+                "Brunei",
+                4
+              ],
+              [
+                "Bhutan",
+                3
+              ],
+              [
+                "Botswana",
+                5
+              ],
+              [
+                "Central African Republic",
+                6
+              ],
+              [
+                "Canada",
+                12
+              ],
+              [
+                "Switzerland",
+                4
+              ],
+              [
+                "Chile",
+                4
+              ],
+              [
+                "China",
+                12
+              ],
+              [
+                "Côte d’Ivoire",
+                5
+              ],
+              [
+                "Cameroon",
+                8
+              ],
+              [
+                "Congo, The Democratic Republic of the",
+                10
+              ],
+              [
+                "Congo",
+                6
+              ],
+              [
+                "Colombia",
+                5
+              ],
+              [
+                "Comoros",
+                5
+              ],
+              [
+                "Costa Rica",
+                4
+              ],
+              [
+                "Czech Republic",
+                8
+              ],
+              [
+                "Germany",
+                6
+              ],
+              [
+                "Djibouti",
+                3
+              ],
+              [
+                "Denmark",
+                7
+              ],
+              [
+                "Eritrea",
+                6
+              ],
+              [
+                "Spain",
+                4
+              ],
+              [
+                "Estonia",
+                5
+              ],
+              [
+                "Ethiopia",
+                7
+              ],
+              [
+                "Finland",
+                5
+              ],
+              [
+                "France",
+                6
+              ],
+              [
+                "Micronesia, Federated States of",
+                6
+              ],
+              [
+                "Gabon",
+                4
+              ],
+              [
+                "United Kingdom",
+                3
+              ],
+              [
+                "Georgia",
+                6
+              ],
+              [
+                "Ghana",
+                6
+              ],
+              [
+                "Guinea",
+                7
+              ],
+              [
+                "Gambia",
+                5
+              ],
+              [
+                "Guinea-Bissau",
+                6
+              ],
+              [
+                "Guatemala",
+                5
+              ],
+              [
+                "Guam",
+                5
+              ],
+              [
+                "Guyana",
+                3
+              ],
+              [
+                "Hong Kong",
+                5
+              ],
+              [
+                "Honduras",
+                4
+              ],
+              [
+                "Hungary",
+                6
+              ],
+              [
+                "Indonesia",
+                9
+              ],
+              [
+                "India",
+                12
+              ],
+              [
+                "Iran",
+                10
+              ],
+              [
+                "Iraq",
+                5
+              ],
+              [
+                "Israel",
+                3
+              ],
+              [
+                "Italy",
+                8
+              ],
+              [
+                "Jordan",
+                3
+              ],
+              [
+                "Japan",
+                6
+              ],
+              [
+                "Kazakstan",
+                6
+              ],
+              [
+                "Kenya",
+                10
+              ],
+              [
+                "Kyrgyzstan",
+                7
+              ],
+              [
+                "Cambodia",
+                4
+              ],
+              [
+                "Laos",
+                4
+              ],
+              [
+                "Lebanon",
+                3
+              ],
+              [
+                "Liberia",
+                8
+              ],
+              [
+                "Liechtenstein",
+                3
+              ],
+              [
+                "Sri Lanka",
+                3
+              ],
+              [
+                "Lesotho",
+                3
+              ],
+              [
+                "Lithuania",
+                5
+              ],
+              [
+                "Luxembourg",
+                5
+              ],
+              [
+                "Latvia",
+                6
+              ],
+              [
+                "Macao",
+                4
+              ],
+              [
+                "Monaco",
+                4
+              ],
+              [
+                "Moldova",
+                5
+              ],
+              [
+                "Mexico",
+                6
+              ],
+              [
+                "Macedonia",
+                5
+              ],
+              [
+                "Mali",
+                6
+              ],
+              [
+                "Myanmar",
+                8
+              ],
+              [
+                "Mongolia",
+                6
+              ],
+              [
+                "Northern Mariana Islands",
+                6
+              ],
+              [
+                "Mozambique",
+                10
+              ],
+              [
+                "Mauritania",
+                6
+              ],
+              [
+                "Mauritius",
+                6
+              ],
+              [
+                "Malawi",
+                4
+              ],
+              [
+                "Malaysia",
+                6
+              ],
+              [
+                "Mayotte",
+                3
+              ],
+              [
+                "Namibia",
+                8
+              ],
+              [
+                "New Caledonia",
+                3
+              ],
+              [
+                "Niger",
+                5
+              ],
+              [
+                "Nigeria",
+                10
+              ],
+              [
+                "Nicaragua",
+                4
+              ],
+              [
+                "Netherlands",
+                4
+              ],
+              [
+                "Norway",
+                5
+              ],
+              [
+                "Nepal",
+                7
+              ],
+              [
+                "Nauru",
+                5
+              ],
+              [
+                "Pakistan",
+                8
+              ],
+              [
+                "Panama",
+                6
+              ],
+              [
+                "Peru",
+                3
+              ],
+              [
+                "Philippines",
+                10
+              ],
+              [
+                "Palau",
+                4
+              ],
+              [
+                "Poland",
+                4
+              ],
+              [
+                "Paraguay",
+                4
+              ],
+              [
+                "French Polynesia",
+                3
+              ],
+              [
+                "Réunion",
+                5
+              ],
+              [
+                "Romania",
+                6
+              ],
+              [
+                "Russian Federation",
+                12
+              ],
+              [
+                "Sudan",
+                10
+              ],
+              [
+                "Senegal",
+                6
+              ],
+              [
+                "Singapore",
+                3
+              ],
+              [
+                "Solomon Islands",
+                3
+              ],
+              [
+                "Sierra Leone",
+                8
+              ],
+              [
+                "Slovakia",
+                5
+              ],
+              [
+                "Slovenia",
+                3
+              ],
+              [
+                "Sweden",
+                6
+              ],
+              [
+                "Seychelles",
+                3
+              ],
+              [
+                "Chad",
+                8
+              ],
+              [
+                "Togo",
+                8
+              ],
+              [
+                "Thailand",
+                6
+              ],
+              [
+                "Tajikistan",
+                3
+              ],
+              [
+                "Turkmenistan",
+                4
+              ],
+              [
+                "Trinidad and Tobago",
+                3
+              ],
+              [
+                "Tunisia",
+                3
+              ],
+              [
+                "Turkey",
+                3
+              ],
+              [
+                "Tuvalu",
+                3
+              ],
+              [
+                "Taiwan",
+                6
+              ],
+              [
+                "Tanzania",
+                11
+              ],
+              [
+                "Uganda",
+                10
+              ],
+              [
+                "Ukraine",
+                7
+              ],
+              [
+                "United States",
+                12
+              ],
+              [
+                "Uzbekistan",
+                6
+              ],
+              [
+                "Venezuela",
+                3
+              ],
+              [
+                "Virgin Islands, U.S.",
+                3
+              ],
+              [
+                "Vietnam",
+                9
+              ],
+              [
+                "Vanuatu",
+                3
+              ],
+              [
+                "Samoa",
+                3
+              ],
+              [
+                "Yugoslavia",
+                6
+              ],
+              [
+                "South Africa",
+                11
+              ],
+              [
+                "Zambia",
+                6
+              ],
+              [
+                "Zimbabwe",
+                4
+              ]
+            ],
+            "columns": [
+              "Name",
+              "LanguageCount"
+            ]
+          }
+        }
+      ]
+    },
+    "post": {
+      "sample_id": "SQL_comparison-00133-post",
+      "question": "What are the names of countries that speak less than 2 languages, as well as how many languages they speak?",
+      "database": "data/Spider-dev/databases/world_1/world_1.sqlite",
+      "database_sha256": "f21ac0e799f04194de10460bed3309c123239090b3ab25c39ebb13629d7ace79",
+      "checked_at": "2026-11-28T09:11:13.474Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case5",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE5",
+      "run_id": "be705c695e154ea6b675c872cf9737a4",
+      "graph_sha256": "153f0a51d10d598afae1ed231ea4bdd8d92f258fd4a484d4535e69a9fbb9067e",
+      "reference": {
+        "sql": "SELECT COUNT(T2.Language) , T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Name HAVING COUNT(*) < 2",
+        "columns": [
+          "COUNT(T2.Language)",
+          "Name"
+        ],
+        "rows": [
+          [
+            1,
+            "Anguilla"
+          ],
+          [
+            1,
+            "Bermuda"
+          ],
+          [
+            1,
+            "Bosnia and Herzegovina"
+          ],
+          [
+            1,
+            "Cayman Islands"
+          ],
+          [
+            1,
+            "Cuba"
+          ],
+          [
+            1,
+            "Falkland Islands"
+          ],
+          [
+            1,
+            "Grenada"
+          ],
+          [
+            1,
+            "Holy See (Vatican City State)"
+          ],
+          [
+            1,
+            "Montserrat"
+          ],
+          [
+            1,
+            "Norfolk Island"
+          ],
+          [
+            1,
+            "Pitcairn"
+          ],
+          [
+            1,
+            "Portugal"
+          ],
+          [
+            1,
+            "Saint Helena"
+          ],
+          [
+            1,
+            "Saint Pierre and Miquelon"
+          ],
+          [
+            1,
+            "San Marino"
+          ],
+          [
+            1,
+            "Saudi Arabia"
+          ],
+          [
+            1,
+            "Turks and Caicos Islands"
+          ],
+          [
+            1,
+            "United States Minor Outlying Islands"
+          ],
+          [
+            1,
+            "Uruguay"
+          ],
+          [
+            1,
+            "Virgin Islands, British"
+          ],
+          [
+            1,
+            "Western Sahara"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT c.Name, COUNT(cl.Language) AS language_count\nFROM country AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+        "rows": [
+          [
+            "Anguilla",
+            1
+          ],
+          [
+            "Bosnia and Herzegovina",
+            1
+          ],
+          [
+            "Bermuda",
+            1
+          ],
+          [
+            "Cuba",
+            1
+          ],
+          [
+            "Cayman Islands",
+            1
+          ],
+          [
+            "Western Sahara",
+            1
+          ],
+          [
+            "Falkland Islands",
+            1
+          ],
+          [
+            "Grenada",
+            1
+          ],
+          [
+            "Montserrat",
+            1
+          ],
+          [
+            "Norfolk Island",
+            1
+          ],
+          [
+            "Pitcairn",
+            1
+          ],
+          [
+            "Portugal",
+            1
+          ],
+          [
+            "Saudi Arabia",
+            1
+          ],
+          [
+            "Saint Helena",
+            1
+          ],
+          [
+            "San Marino",
+            1
+          ],
+          [
+            "Saint Pierre and Miquelon",
+            1
+          ],
+          [
+            "Turks and Caicos Islands",
+            1
+          ],
+          [
+            "United States Minor Outlying Islands",
+            1
+          ],
+          [
+            "Uruguay",
+            1
+          ],
+          [
+            "Holy See (Vatican City State)",
+            1
+          ],
+          [
+            "Virgin Islands, British",
+            1
+          ]
+        ],
+        "columns": [
+          "Name",
+          "language_count"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 21,
+        "prediction_rows": 21
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 10240
+      },
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "count_intent",
+          "from": [],
+          "elapsed_s": 10.356630299999779,
+          "output": {
+            "targets": [
+              {
+                "parent_table": "country",
+                "parent_key": "Code",
+                "detail_table": "countrylanguage",
+                "detail_key": "CountryCode",
+                "role": "both",
+                "operator": "<",
+                "threshold": 2,
+                "policy": "observed",
+                "cue": "speak less than 2 languages"
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_02799e5d87ff053b016b0a9ab68e1087d1b6045d419d71a450": {
+                    "input_tokens": 295,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 295,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_02799e5d87ff053b016b0a9ab68e1087d1bde78f5fe4733a23": {
+                    "input_tokens": 361,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 361,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_02799e5d87ff053b016b0a9abea22087d1bb1a602a9e170814": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 60,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 60
+                      }
+                    ]
+                  },
+                  "rs_02799e5d87ff053b016b0a9ab7093487d1ae02403d09e94594": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 137
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 5038,
+              "completion_tokens": 197,
+              "total_tokens": 5235,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 137
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "72dd386fa1c591322530497eff3ae74dcb893999650066dbf02ab071e13ba3e5"
+          }
+        },
+        {
+          "id": "policy",
+          "kind": "count_policy_v2",
+          "from": [
+            "intent"
+          ],
+          "elapsed_s": 0.00164889999996376,
+          "output": {
+            "route": "observed",
+            "role": "both",
+            "operator": "<",
+            "threshold": 2,
+            "cue": "speak less than 2 languages",
+            "parent_table": "country",
+            "parent_key": "Code",
+            "detail_table": "countrylanguage",
+            "detail_key": "CountryCode"
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "count_generate",
+          "from": [
+            "policy"
+          ],
+          "elapsed_s": 5.925361399999929,
+          "output": {
+            "sql": "SELECT c.Name, COUNT(cl.Language) AS language_count\nFROM country AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+            "route": "observed"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_0d729af5fa59d678016b0a9ac0816887d281a864002d698c58": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0d729af5fa59d678016b0a9ac0816887d2be6e3e2f737e1bd8": {
+                    "input_tokens": 456,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 456,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0d729af5fa59d678016b0a9ac4669c87d2a39712b8112cb5e1": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 54,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 54
+                      }
+                    ]
+                  },
+                  "rs_0d729af5fa59d678016b0a9ac0d16887d29b46b8d2b72bad10": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 88
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4863,
+              "completion_tokens": 142,
+              "total_tokens": 5005,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 88
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "74d2bb2d37bcb3343d507cfac9a5612662bea2f1b776462a46e82c73e9c02331"
+          }
+        },
+        {
+          "id": "check",
+          "kind": "count_sql_check",
+          "from": [
+            "policy",
+            "generate"
+          ],
+          "elapsed_s": 1.6200000573007856e-05,
+          "output": {
+            "sql": "SELECT c.Name, COUNT(cl.Language) AS language_count\nFROM country AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+            "route": "observed",
+            "check": "unchanged"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "check"
+          ],
+          "elapsed_s": 0.0014807999996264698,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT c.Name, COUNT(cl.Language) AS language_count\nFROM country AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+            "rows": [
+              [
+                "Anguilla",
+                1
+              ],
+              [
+                "Bosnia and Herzegovina",
+                1
+              ],
+              [
+                "Bermuda",
+                1
+              ],
+              [
+                "Cuba",
+                1
+              ],
+              [
+                "Cayman Islands",
+                1
+              ],
+              [
+                "Western Sahara",
+                1
+              ],
+              [
+                "Falkland Islands",
+                1
+              ],
+              [
+                "Grenada",
+                1
+              ],
+              [
+                "Montserrat",
+                1
+              ],
+              [
+                "Norfolk Island",
+                1
+              ],
+              [
+                "Pitcairn",
+                1
+              ],
+              [
+                "Portugal",
+                1
+              ],
+              [
+                "Saudi Arabia",
+                1
+              ],
+              [
+                "Saint Helena",
+                1
+              ],
+              [
+                "San Marino",
+                1
+              ],
+              [
+                "Saint Pierre and Miquelon",
+                1
+              ],
+              [
+                "Turks and Caicos Islands",
+                1
+              ],
+              [
+                "United States Minor Outlying Islands",
+                1
+              ],
+              [
+                "Uruguay",
+                1
+              ],
+              [
+                "Holy See (Vatican City State)",
+                1
+              ],
+              [
+                "Virgin Islands, British",
+                1
+              ]
+            ],
+            "columns": [
+              "Name",
+              "language_count"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

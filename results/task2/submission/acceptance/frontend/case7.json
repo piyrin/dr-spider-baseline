@@ -1,0 +1,144 @@
+{
+  "id": "case7",
+  "title": "Top N 去重",
+  "samples": {
+    "pre": {
+      "id": "SQL_NonDB_number-00054-pre",
+      "question": "Find the name and rank of the 3 youngest winners across all matches."
+    },
+    "post": {
+      "id": "SQL_NonDB_number-00054-post",
+      "question": "Find the name and rank of the 5 youngest winners across all matches."
+    }
+  },
+  "elements": [
+    {
+      "id": "intent",
+      "name": "Top N 候选规则 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "top_n_intent_v4"
+          }
+        }
+      }
+    },
+    {
+      "id": "inspect",
+      "name": "核验规则与事件证据",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "top_n_inspect_v4"
+          }
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "name": "确定规则或回退",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "top_n_policy_v4"
+          }
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "生成 SQL 或调用基线",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "top_n_generate_v4"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行 Top N 查询 v4",
+      "type": "task2-card",
+      "x": 350,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "top_n_execute_v4"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "intent-inspect",
+      "fromElementId": "intent",
+      "toElementId": "inspect",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "inspect-policy",
+      "fromElementId": "inspect",
+      "toElementId": "policy",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "policy-generate",
+      "fromElementId": "policy",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "generate-execute",
+      "fromElementId": "generate",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

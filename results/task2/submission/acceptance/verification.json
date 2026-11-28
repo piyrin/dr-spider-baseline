@@ -1,0 +1,296 @@
+{
+  "git_base": "4c45af44ce4d0751a91e34bc24a4e6d98df2d0fb",
+  "source_file_sha256": {
+    "task2-rsi-data/experiment/serve_canvas.py": "658af002a2ed76cadbd8c0c994689385ed1d74e336a69afd6a2dcd012affcaac",
+    "task2-rsi-data/experiment/run.py": "1db102957d7492659a81195758f3129b9aca1d3292b503c8ac32b925857e1c1f",
+    "task2-rsi-data/experiment/experiment.py": "850025dddc0248bf98e5c16acdb3db1aead814645fed0975719fd69e279a44a4",
+    "task2-rsi-data/experiment/prior_round1.py": "859dba5a7dca08bbb2c93e4199e5065f1396ad6de6d286df3ad2dff9d0d48e45",
+    "task2-rsi-data/experiment/projection_generalization.py": "b040b817640f38777cd205cf7b8a87ce157823cea1190f1d09d336ca371c5848",
+    "task2-rsi-data/experiment/format_canvas.py": "457f78934b065ce4a00bec9ecd394203e75527c9d02c369742efed1928905582",
+    "task2-rsi-data/experiment/synonym_canvas.py": "b02eced9556639fbb9063cc8fc38d0a9d055bc589403705229845d8d1f8049a6",
+    "task2-rsi-data/experiment/boolean_evidence_canvas.py": "1cd5142e5525e39f7b041d842e5f57cafdacf4709fa84997439a19dfd9a75e72",
+    "task2-rsi-data/experiment/count_scope_v3.py": "98bc17d2bee0ae268db2d301ff857632df79d4eabceb9890da38ead20e3d0320",
+    "task2-rsi-data/experiment/split_output_v3.py": "2f364c2806ce3537d409d4232c143ef8c300f4ea1d2e76df05b63f764c4f9b3e",
+    "task2-rsi-data/experiment/top_n_v4.py": "b04c70c296c7029d305b2c831717e63b3923a81e8e6630c518f6d037e8685be0",
+    "task2-rsi-data/experiment/sort_direction_v3.py": "19fe270d1e4ee8b841b554b4ab2f6a8ebe2b2a25537de0ee96c776aa95c24406",
+    "task2-rsi-data/experiment/filter_column_v2.py": "e487390e8e3ee3184dcb912dc92d8e010751b0ed3e743592ed88561ad64994f9",
+    "task2-rsi-data/experiment/filter_count_canvas.py": "7802435763d52d7d3b00677cb1db1ee10dcfba67250fa493130c0e9808ddf1b2",
+    "task2-rsi-data/experiment/spring/FlowCodeRun.java": "750114cbf1ae121990f52b734aac172b44436c328603770f01c5e86a7b9bf6a0",
+    "task2-rsi-data/experiment/spring/CanvasExperimentController.java": "6beec602e90e8ad3a07364595d239597b08ae5736cbac3b631ed41fc1c913ea3",
+    "task2-rsi-data/experiment/spring/CanvasExperimentNode.java": "1225b67133a3ab3b94d654aebb3b9d1f0a9e7b15b68ee5b34a0b1757654e1eea",
+    "task2-rsi-data/experiment/web/CourseCases.tsx": "8d5ac811932ea313a5007668613b727995c1e7446fbf97ec78d1ae0d13cc2570",
+    "task2-rsi-data/experiment/web/check-course-cases.cjs": "926c42d12287c94509ec9d0e02637888d7c2b716fec0c37532db0e38512c5697",
+    "task2-rsi-data/experiment/build-course.ps1": "8015118b3c9e9413a30e0a0c25764405a54579fba7a6ee3c01770fdd90ef7161",
+    "task2-rsi-data/experiment/install-preview.ps1": "19dd283f63642ba106621596974e8e64b2e576733550c6e92ed6f3d85212dcf8"
+  },
+  "dataset_commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "sqlite_version": "3.50.4",
+  "metric": "single-database EX; ordered comparison when reference contains ORDER BY",
+  "generation_parameters": {
+    "models": [
+      "gpt-6-sol"
+    ],
+    "available_system_fingerprints": [],
+    "calls_without_system_fingerprint": 37,
+    "reasoning_effort": "high",
+    "stream": false
+  },
+  "entry_point": "Course Visual /?case=caseN → /dataTesting-core/api/engine/flow → FLOW_CODE_RUN → numbered rsi-flow → Python nodes",
+  "scope": {
+    "dataset_pairs": 10,
+    "pre_post_executions": 20,
+    "pre_pass": 10,
+    "post_pass": 10,
+    "both_pass": 10
+  },
+  "model_calls": 37,
+  "recorded_total_tokens": 271706,
+  "cases": [
+    {
+      "case": "case1",
+      "sample_pair_id": "NLQ_column_carrier-00499",
+      "pre": {
+        "run_id": "96223441948f48a28ab50a15dea91a8e",
+        "checked_at": "2026-11-28T09:11:40.549Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 4,
+          "prediction_rows": 4
+        }
+      },
+      "post": {
+        "run_id": "9909e1b6da734de2a76dc8ed061101ee",
+        "checked_at": "2026-11-28T09:11:17.139Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 4,
+          "prediction_rows": 4
+        }
+      }
+    },
+    {
+      "case": "case2",
+      "sample_pair_id": "NLQ_column_value-00205",
+      "pre": {
+        "run_id": "9d10bc1bde774b95a62c3f50d69a60ce",
+        "checked_at": "2026-11-28T09:11:51.837Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        }
+      },
+      "post": {
+        "run_id": "daf274d60d5e4226b8da3a820dfe39ba",
+        "checked_at": "2026-11-28T09:11:38.355Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        }
+      }
+    },
+    {
+      "case": "case3",
+      "sample_pair_id": "NLQ_value_synonym-00162",
+      "pre": {
+        "run_id": "397999fcd3fd4963bfd136e912114edf",
+        "checked_at": "2026-11-28T09:11:54.535Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 12,
+          "prediction_rows": 12
+        }
+      },
+      "post": {
+        "run_id": "2c72a06e5154454e8fbecf46c2c0d111",
+        "checked_at": "2026-11-28T09:11:22.787Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 12,
+          "prediction_rows": 12
+        }
+      }
+    },
+    {
+      "case": "case4",
+      "sample_pair_id": "DB_DBcontent_equivalence-00143",
+      "pre": {
+        "run_id": "c6435f2d02b847ccb32665cfaea27e4b",
+        "checked_at": "2026-11-28T09:12:09.425Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        }
+      },
+      "post": {
+        "run_id": "76edff8ed54b4b2c897f5d4858a88a89",
+        "checked_at": "2026-11-28T09:12:27.042Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        }
+      }
+    },
+    {
+      "case": "case5",
+      "sample_pair_id": "SQL_comparison-00133",
+      "pre": {
+        "run_id": "86ae378951e348809043eb4072f76b14",
+        "checked_at": "2026-11-28T09:12:17.792Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 149,
+          "prediction_rows": 149
+        }
+      },
+      "post": {
+        "run_id": "be705c695e154ea6b675c872cf9737a4",
+        "checked_at": "2026-11-28T09:11:13.474Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 21,
+          "prediction_rows": 21
+        }
+      }
+    },
+    {
+      "case": "case6",
+      "sample_pair_id": "DB_DBcontent_equivalence-00125",
+      "pre": {
+        "run_id": "d80c6f15b9014732996099adca62d975",
+        "checked_at": "2026-11-28T09:12:12.083Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        }
+      },
+      "post": {
+        "run_id": "030e7766e7244d82933e96db6795fd9f",
+        "checked_at": "2026-11-28T09:11:34.312Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        }
+      }
+    },
+    {
+      "case": "case7",
+      "sample_pair_id": "SQL_NonDB_number-00054",
+      "pre": {
+        "run_id": "cba2f7f138f24c2985a1d7fc31db3846",
+        "checked_at": "2026-11-28T09:12:23.834Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 3,
+          "prediction_rows": 3
+        }
+      },
+      "post": {
+        "run_id": "df4662c8ff964b4cafa72f22936ef917",
+        "checked_at": "2026-11-28T09:11:31.018Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 5,
+          "prediction_rows": 5
+        }
+      }
+    },
+    {
+      "case": "case8",
+      "sample_pair_id": "DB_DBcontent_equivalence-00304",
+      "pre": {
+        "run_id": "46ad79f0ecf34c10bd69ff84c71f6485",
+        "checked_at": "2026-11-28T09:12:22.465Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 12,
+          "prediction_rows": 12
+        }
+      },
+      "post": {
+        "run_id": "2e748e4adb8149d0b70db78a3f0c9b33",
+        "checked_at": "2026-11-28T09:11:57.475Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 12,
+          "prediction_rows": 12
+        }
+      }
+    },
+    {
+      "case": "case9",
+      "sample_pair_id": "SQL_DB_text-00048",
+      "pre": {
+        "run_id": "c06f89f3499b48699414fe55ae8a11a5",
+        "checked_at": "2026-11-28T09:12:22.670Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 13,
+          "prediction_rows": 13
+        }
+      },
+      "post": {
+        "run_id": "1c36c04359d049f5a924c6534206c5ef",
+        "checked_at": "2026-11-28T09:11:36.081Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 14,
+          "prediction_rows": 14
+        }
+      }
+    },
+    {
+      "case": "case10",
+      "sample_pair_id": "NLQ_keyword_carrier-00248",
+      "pre": {
+        "run_id": "5a432903b4e84b2fa28d5b0769edae99",
+        "checked_at": "2026-11-28T09:12:38.960Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        }
+      },
+      "post": {
+        "run_id": "5e72945ed9e04b28ac8771efbcc87a84",
+        "checked_at": "2026-11-28T09:12:25.175Z",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        }
+      }
+    }
+  ],
+  "course_backend_build": {
+    "framework": "rsi-flow-core 0.4.14",
+    "spring_boot": "2.1.9.RELEASE",
+    "executable_sha256": "68fdf1392023be6bb5fd7187ead9b565a04500841f123302c3d4785453d7f113"
+  }
+}

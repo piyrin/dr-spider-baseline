@@ -1,17 +1,35 @@
 # Dr.Spider 与 RSI Data
 
-本阶段我在 Dr.Spider 上完成了 SQL 生成基线，逐对复核了 134 对扰动前通过、扰动后失败的样本。我从中选择 10 个问题，先比较加入先验知识前后的结果，再在 RSI Data 课程 Visual 中测试人工编排。
+## 课程十题验收
+
+课程验收使用 Dr.Spider 的十道原题。历史基线 `pre` 通过 10/10、`post` 通过 0/10。课程默认「运行」入口统一使用 Thinking `high` 实测，`pre` 和 `post` 各通过 **10/10**。逐题材料包括人工调整后的前端画布 JSON、Spring Boot 编排 JSON、运行结果和原因说明。[十题验收明细](results/task2/submission/acceptance/README.md) · [十题提交包](results/task2/submission/课程十题验收.zip)
+
+## 项目与扩展实验
+
+本阶段我在 Dr.Spider 上完成了 SQL 生成基线，逐对复核了 134 对扰动前通过、扰动后失败的样本。我从中选择 10 个问题，先比较加入先验知识前后的结果，再在画布中测试人工编排。
 
 | 任务 | 提交内容 | 验收入口 |
 | --- | --- | --- |
 | 1 · Dr.Spider 基线 | 使用 `gpt-6-sol` 完成 **850 对、1,700 条预测**。执行准确率从 **78.24%（665/850）降至 64.00%（544/850）**。 | [基线实验报告](reports/任务1实验报告.md) · [134 对人工复核 Excel](results/drspider-17x50/Dr.Spider-850对基线与鲁棒性问题复核（汇报版）.xlsx) |
 | 1 · 扩样与辅助对照 | 扩样和定向补测共 **344 对**。另完成三行样例对照与表数分层分析。 | [扩样结果](results/drspider-17x50/expansion/README.md) · [三行样例对照](results/drspider-17x50/select3/README.md) · [表数分层](results/drspider-17x50/diagnostics/table-count-summary.json) |
-| 2 · Dr.Spider 人工编排 | 按各题最新版本统计，Visual 页面实测的原题扰动后通过 **9/10**，扰动前后均通过 **8/10**。第 7 题采用通用 v4。 | [十题结果](reports/任务2先验知识与人工编排实验.md#十题最新编排结果) · [画布与验收证据](results/task2/submission/README.md) · [编排源码](task2-rsi-data/experiment/README.md) |
+| 2 · Dr.Spider 人工编排历史实验 | 接入课程默认入口前，Visual 实验页实测的原题扰动后通过 **9/10**，扰动前后均通过 **8/10**。第 7 题采用通用 v4。 | [历史十题结果](reports/任务2先验知识与人工编排实验.md#十题最新编排结果) · [画布与复测证据](results/task2/submission/README.md#扩展实验与历版记录) · [编排源码](task2-rsi-data/experiment/README.md) |
 | 2 · RSI Data 启动验收 | 课程 Spring Boot 经流程引擎运行单表 Agent 和多 Agent 协作，在 Dr.Spider SQLite 上核对结果。 | [课程执行验收记录](results/task2/course-acceptance-20261120.json) |
 
 ## 启动 Visual 并查看编排结果
 
-以下步骤使用已配置好课程组件的本地环境。启动前确认仓库根目录已有 `.venv`、Dr.Spider 数据和本地 `.env`，模型账户可调用 `gpt-6-sol`。
+### 准备数据和 Python 环境
+
+在仓库根目录运行以下命令。实测环境使用 Python 3.13.6。数据准备脚本下载并校验固定版本的 Dr.Spider，评测准备脚本下载固定版本的 SQL 比较器。
+
+```powershell
+python -m venv .venv
+& ./.venv/Scripts/python.exe -m pip install -r requirements.txt
+& ./.venv/Scripts/python.exe ./scripts/prepare_data.py
+& ./.venv/Scripts/python.exe ./scripts/setup_evaluator.py
+if (!(Test-Path .env)) { Copy-Item .env.example .env }
+```
+
+在本地 `.env` 填入课程 API 地址和密钥，模型账户需可调用 `gpt-6-sol`。首次运行还需按下文「首次接入课程前端和后端」准备课程组件和编译后端。已经配置好课程环境的读者可直接启动三个服务。
 
 ### 启动前后端
 
@@ -41,6 +59,8 @@ npm.cmd run dev -- --hostname 127.0.0.1 --port 3000
 Spring Boot 显示 `Started AppStarter`、前端显示 `Ready` 后，就可以打开下方的编排示例。
 
 ### 在页面运行并查看结果
+
+十题验收页面直接选择编号和 `pre` / `post`，使用固定编排和 Thinking `high`。页面运行后会显示是否通过、最终 SQL 和查询结果。编排实验工作台可以改节点、切换历版预设和运行对照样本。在工作台选择某题的预设会自动匹配该题样本，跨题实验可以手动切换题面。「本机草稿」保存在当前浏览器。[十题验收页面](http://127.0.0.1:3000/?case=case1) · [编排实验工作台](http://127.0.0.1:3000/task2-experiment)
 
 打开下面任一示例，选择「开发样本」中的扰动后（`post`）题面，点击「运行当前流程」。「运行记录」会显示节点输出、生成的 SQL、SQLite 查询结果和执行评分。
 
@@ -94,7 +114,7 @@ npm.cmd --prefix .local/platform-preview/rsi-data-platform install
 
 ## 人工复核附件
 
-我将 134 对前对后错样本的逐对判断、分类依据和备注整理在[人工复核 Excel 工作簿](results/drspider-17x50/Dr.Spider-850对基线与鲁棒性问题复核（汇报版）.xlsx)中，作为本次汇报的附件。老师可以结合[实验报告](reports/任务1实验报告.md)和[逐对判定 CSV](results/drspider-17x50/prepass-postfail-review.csv)核对结果。
+134 对前对后错样本的逐对判断、分类依据和备注见人工复核工作簿。[人工复核 Excel](results/drspider-17x50/Dr.Spider-850对基线与鲁棒性问题复核（汇报版）.xlsx) · [实验报告](reports/任务1实验报告.md) · [逐对判定 CSV](results/drspider-17x50/prepass-postfail-review.csv)
 
 ## Dr.Spider 基线
 
@@ -125,4 +145,4 @@ npm.cmd --prefix .local/platform-preview/rsi-data-platform install
 
 我先比较同一题面和模型在有无人工先验时的结果。配对复测中，扰动后通过从 **1/10 提升到 10/10**，扰动前有 1 题回退，双侧同时通过从 **1/10 提升到 9/10**。
 
-随后我在课程 Visual 按问题类型设计节点和分支。第 7 题通用 v4 的原题在页面和两档 Thinking 批测均双侧通过。第 3 题的扰动后输入及第 9 题的扰动前输入仍在页面实测失分。同类与混合题单用于开发回归，独立泛化仍待验证。[版本迭代汇总](reports/任务2先验知识与人工编排实验.md#版本迭代汇总) · [页面与批测证据](results/task2/submission/README.md)
+随后我在课程 Visual 按问题类型设计节点和分支。第 7 题通用 v4 的原题在实验页和两档 Thinking 批测均双侧通过。接入课程默认入口前，第 3 题的扰动后输入及第 9 题的扰动前输入在实验页实测失分。同类与混合题单用于开发回归，独立泛化仍待验证。[版本迭代汇总](reports/任务2先验知识与人工编排实验.md#版本迭代汇总) · [历史页面与批测证据](results/task2/submission/README.md#扩展实验与历版记录)

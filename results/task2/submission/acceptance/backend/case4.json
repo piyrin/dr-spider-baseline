@@ -1,0 +1,93 @@
+{
+  "id": "TASK2_COURSE_CASE4",
+  "type": "flow",
+  "name": "Task 2 canvas experiment",
+  "params": [
+    {
+      "name": "canvasRunId",
+      "type": "String",
+      "scope": "defaultScope"
+    }
+  ],
+  "results": [],
+  "nodes": [
+    {
+      "id": "canvas_extract",
+      "type": "event",
+      "title": "extract",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_lookup",
+      "type": "event",
+      "title": "lookup",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_generate",
+      "type": "event",
+      "title": "generate",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_execute",
+      "type": "event",
+      "title": "execute",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    }
+  ],
+  "routes": [
+    {
+      "source": "start",
+      "target": "canvas_extract"
+    },
+    {
+      "source": "canvas_extract",
+      "target": "canvas_lookup"
+    },
+    {
+      "source": "canvas_lookup",
+      "target": "canvas_generate"
+    },
+    {
+      "source": "canvas_generate",
+      "target": "canvas_execute"
+    },
+    {
+      "source": "canvas_execute",
+      "target": "end"
+    }
+  ]
+}

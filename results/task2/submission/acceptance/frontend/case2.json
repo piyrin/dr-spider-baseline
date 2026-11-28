@@ -1,0 +1,153 @@
+{
+  "id": "case2",
+  "title": "值大小写",
+  "samples": {
+    "pre": {
+      "id": "NLQ_column_value-00205-pre",
+      "question": "What are the Package Options of the TV Channels whose series names are Sky Radio?"
+    },
+    "post": {
+      "id": "NLQ_column_value-00205-post",
+      "question": "What are the package options of TV channels 'Sky radio'?"
+    }
+  },
+  "elements": [
+    {
+      "id": "extract",
+      "name": "筛选条件提取 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "format_extract"
+          }
+        }
+      }
+    },
+    {
+      "id": "exact",
+      "name": "SQLite 精确匹配",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "format_exact"
+          }
+        }
+      }
+    },
+    {
+      "id": "normalize",
+      "name": "归一化核验 Agent",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "format_normalize"
+          }
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "SQL 生成 Agent",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "format_generate"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行 SQLite",
+      "type": "task2-card",
+      "x": 350,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "execute"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "extract-exact",
+      "fromElementId": "extract",
+      "toElementId": "exact",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "exact-normalize",
+      "fromElementId": "exact",
+      "toElementId": "normalize",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "exact-generate",
+      "fromElementId": "exact",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "normalize-generate",
+      "fromElementId": "normalize",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "generate-execute",
+      "fromElementId": "generate",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "id": "case6",
+  "title": "姓名分列",
+  "samples": {
+    "pre": {
+      "id": "DB_DBcontent_equivalence-00125-pre",
+      "question": "What is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?"
+    },
+    "post": {
+      "id": "DB_DBcontent_equivalence-00125-post",
+      "question": "What is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?"
+    }
+  },
+  "elements": [
+    {
+      "id": "draft",
+      "name": "SQL 初稿 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sql_review_draft"
+          }
+        }
+      }
+    },
+    {
+      "id": "audit",
+      "name": "SQL 审查 Agent",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sql_review_audit"
+          }
+        }
+      }
+    },
+    {
+      "id": "gate",
+      "name": "题面依据与 SQLite 核验",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sql_review_gate"
+          }
+        }
+      }
+    },
+    {
+      "id": "confirm",
+      "name": "修订确认 Agent",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sql_review_confirm"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行最终 SQL",
+      "type": "task2-card",
+      "x": 350,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sql_review_execute"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "draft-audit",
+      "fromElementId": "draft",
+      "toElementId": "audit",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "audit-gate",
+      "fromElementId": "audit",
+      "toElementId": "gate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "gate-confirm",
+      "fromElementId": "gate",
+      "toElementId": "confirm",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "confirm-execute",
+      "fromElementId": "confirm",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

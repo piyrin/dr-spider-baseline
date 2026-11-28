@@ -1,0 +1,111 @@
+{
+  "id": "TASK2_COURSE_CASE6",
+  "type": "flow",
+  "name": "Task 2 canvas experiment",
+  "params": [
+    {
+      "name": "canvasRunId",
+      "type": "String",
+      "scope": "defaultScope"
+    }
+  ],
+  "results": [],
+  "nodes": [
+    {
+      "id": "canvas_draft",
+      "type": "event",
+      "title": "draft",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_audit",
+      "type": "event",
+      "title": "audit",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_gate",
+      "type": "event",
+      "title": "gate",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_confirm",
+      "type": "event",
+      "title": "confirm",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_execute",
+      "type": "event",
+      "title": "execute",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    }
+  ],
+  "routes": [
+    {
+      "source": "start",
+      "target": "canvas_draft"
+    },
+    {
+      "source": "canvas_draft",
+      "target": "canvas_audit"
+    },
+    {
+      "source": "canvas_audit",
+      "target": "canvas_gate"
+    },
+    {
+      "source": "canvas_gate",
+      "target": "canvas_confirm"
+    },
+    {
+      "source": "canvas_confirm",
+      "target": "canvas_execute"
+    },
+    {
+      "source": "canvas_execute",
+      "target": "end"
+    }
+  ]
+}

@@ -1,0 +1,478 @@
+{
+  "case": "case4",
+  "topic": "布尔编码",
+  "pair_id": "DB_DBcontent_equivalence-00143",
+  "frontend": {
+    "file": "../frontend/case4.json",
+    "sha256": "bdd2f4cb00e317901429c24afd847fdcba0685dc1651951c5ddbac68ac753533"
+  },
+  "backend": {
+    "file": "../backend/case4.json",
+    "sha256": "2f38562384f4a3e573f41b32e28934cac09d7c1c2cf9528b14b311e510c4c603",
+    "flow_id": "TASK2_COURSE_CASE4"
+  },
+  "historical_post_prediction": {
+    "sql": "SELECT COUNT(*) FROM \"ship\" WHERE \"is_captured\" = 1;",
+    "status": "mismatch"
+  },
+  "runs": {
+    "pre": {
+      "sample_id": "DB_DBcontent_equivalence-00143-pre",
+      "question": "How many ships ended up being 'Captured'?",
+      "database": "data/Spider-dev/databases/battle_death/battle_death.sqlite",
+      "database_sha256": "9f5ca4d4e92353aff0926b7072b9449a91dd596371495f42065e260fe29e932f",
+      "checked_at": "2026-11-28T09:12:09.425Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case4",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE4",
+      "run_id": "c6435f2d02b847ccb32665cfaea27e4b",
+      "graph_sha256": "a693306ee944ac419f92a4e4e21efbf6ed7b11d79e61a26bad8ad196566bc186",
+      "reference": {
+        "sql": "SELECT count(*) FROM ship WHERE disposition_of_ship = 'Captured'",
+        "columns": [
+          "count(*)"
+        ],
+        "rows": [
+          [
+            4
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';\n--",
+        "rows": [
+          [
+            4
+          ]
+        ],
+        "columns": [
+          "COUNT(*)"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 12346
+      },
+      "steps": [
+        {
+          "id": "extract",
+          "kind": "evidence_extract",
+          "from": [],
+          "elapsed_s": 12.578519400000005,
+          "output": {
+            "output": [
+              {
+                "table": "ship",
+                "column": "id"
+              }
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "table": "ship",
+                "column": "disposition_of_ship",
+                "term": "Captured"
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_09694fb02c2c7d14016b0a9aed820887d08bfb032cf4f92563": {
+                    "input_tokens": 173,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 173,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_09694fb02c2c7d14016b0a9aed820887d097ef1539385a24e2": {
+                    "input_tokens": 217,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 217,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_09694fb02c2c7d14016b0a9af78f0487d080c65f0502557ea5": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 41,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 41
+                      }
+                    ]
+                  },
+                  "rs_09694fb02c2c7d14016b0a9aef541c87d08b830e15baa34ea9": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 182
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4772,
+              "completion_tokens": 223,
+              "total_tokens": 4995,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 182
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "e00b25006765945171c2414b522819a33ea9944db8e2e170bb0c89ce1c4d7aa3"
+          }
+        },
+        {
+          "id": "lookup",
+          "kind": "evidence_lookup",
+          "from": [
+            "extract"
+          ],
+          "elapsed_s": 0.0025402999999641906,
+          "output": {
+            "route": "fallback",
+            "evidence": [],
+            "checks": [
+              {
+                "table": "ship",
+                "column": "disposition_of_ship",
+                "term": "Captured",
+                "status": "exact"
+              }
+            ],
+            "reason": "no_usable_value_evidence"
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "evidence_generate",
+          "from": [
+            "lookup"
+          ],
+          "elapsed_s": 4.471994200000154,
+          "output": {
+            "sql": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';\n--",
+            "route": "fallback",
+            "evidence_columns": 0
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "prompt_tokens": 7181,
+              "completion_tokens": 170,
+              "total_tokens": 7351,
+              "completion_tokens_details": {
+                "reasoning_tokens": 156
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "90c2171875c1914bc675cfb650f9fcbf28e011234830273c481e756b7b91e419"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0009759000004123664,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';\n--",
+            "rows": [
+              [
+                4
+              ]
+            ],
+            "columns": [
+              "COUNT(*)"
+            ]
+          }
+        }
+      ]
+    },
+    "post": {
+      "sample_id": "DB_DBcontent_equivalence-00143-post",
+      "question": "How many ships ended up being 'Captured'?",
+      "database": "data/DB_DBcontent_equivalence/database_post_perturbation/battle_death_0/battle_death_0.sqlite",
+      "database_sha256": "0fb7df2f4694e43ce5adeb9d3b8dae65b748b5dd3a0f89638e58377fe4b89392",
+      "checked_at": "2026-11-28T09:12:27.042Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case4",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE4",
+      "run_id": "76edff8ed54b4b2c897f5d4858a88a89",
+      "graph_sha256": "a693306ee944ac419f92a4e4e21efbf6ed7b11d79e61a26bad8ad196566bc186",
+      "reference": {
+        "sql": "SELECT count(*) FROM ship WHERE ship.is_captured = \"T\"",
+        "columns": [
+          "count(*)"
+        ],
+        "rows": [
+          [
+            4
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT COUNT(*) FROM \"ship\" WHERE \"is_captured\" = 'T';",
+        "rows": [
+          [
+            4
+          ]
+        ],
+        "columns": [
+          "COUNT(*)"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 10530
+      },
+      "steps": [
+        {
+          "id": "extract",
+          "kind": "evidence_extract",
+          "from": [],
+          "elapsed_s": 79.9234478999997,
+          "output": {
+            "output": [
+              "ship.id"
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "table": "ship",
+                "column": "is_captured",
+                "term": "Captured",
+                "operator": "="
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "prompt_tokens": 4809,
+              "completion_tokens": 893,
+              "total_tokens": 5702,
+              "completion_tokens_details": {
+                "reasoning_tokens": 855
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "c1defbc73dea22b0d36672698fcf0454c326447829c0a6d46b9c72a30e992ba9"
+          }
+        },
+        {
+          "id": "lookup",
+          "kind": "evidence_lookup",
+          "from": [
+            "extract"
+          ],
+          "elapsed_s": 0.0028095999996367027,
+          "output": {
+            "route": "evidence",
+            "evidence": [
+              {
+                "table": "ship",
+                "column": "is_captured",
+                "term": "Captured",
+                "examples": [
+                  {
+                    "value": "F",
+                    "storage": "text"
+                  },
+                  {
+                    "value": "T",
+                    "storage": "text"
+                  }
+                ]
+              }
+            ],
+            "checks": [
+              {
+                "table": "ship",
+                "column": "is_captured",
+                "term": "Captured",
+                "status": "observed"
+              }
+            ],
+            "reason": null
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "evidence_generate",
+          "from": [
+            "lookup"
+          ],
+          "elapsed_s": 9.940583100000367,
+          "output": {
+            "sql": "SELECT COUNT(*) FROM \"ship\" WHERE \"is_captured\" = 'T';",
+            "route": "evidence",
+            "evidence_columns": 1
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_01cb95d3000263f6016b0a9b061cb887d19bf63965fe41e789": {
+                    "input_tokens": 351,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 351,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_01cb95d3000263f6016b0a9b061cb887d1bc375fa1026b7100": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_01cb95d3000263f6016b0a9b0d453087d19ec7d1d5a03ca095": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 23,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 23
+                      }
+                    ]
+                  },
+                  "rs_01cb95d3000263f6016b0a9b0b973c87d19c93ee7228cc23e6": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 47
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4758,
+              "completion_tokens": 70,
+              "total_tokens": 4828,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 47
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "4aae65a2c4207ad1dd2e3c1881e77141f6c6df666c8763792b99344588ed6ddc"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0011819999999715947,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT COUNT(*) FROM \"ship\" WHERE \"is_captured\" = 'T';",
+            "rows": [
+              [
+                4
+              ]
+            ],
+            "columns": [
+              "COUNT(*)"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

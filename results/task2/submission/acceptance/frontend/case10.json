@@ -1,0 +1,117 @@
+{
+  "id": "case10",
+  "title": "赛事筛选和去重计数",
+  "samples": {
+    "pre": {
+      "id": "NLQ_keyword_carrier-00248-pre",
+      "question": "Find the number of left handed winners who participated in the WTA Championships."
+    },
+    "post": {
+      "id": "NLQ_keyword_carrier-00248-post",
+      "question": "How many participants of the WTA have won this tournament is left-handed?"
+    }
+  },
+  "elements": [
+    {
+      "id": "intent",
+      "name": "筛选与计数解析 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "filter_count_intent"
+          }
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "name": "SQLite 筛选与统计核验",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "filter_count_verify"
+          }
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "按筛选和计数约束生成 SQL",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "filter_count_generate"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "检查并执行 SQLite",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "filter_count_execute"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "intent-verify",
+      "fromElementId": "intent",
+      "toElementId": "verify",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "verify-generate",
+      "fromElementId": "verify",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "generate-execute",
+      "fromElementId": "generate",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

@@ -3,6 +3,8 @@
 import VisualDiagram, { type LinkState, type ViewState, type VisualCanvasConfig,
   type VisualDiagramHandle, type VisualElementProps } from '@horsecoder/visual-core';
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { courseCases } from './case-options';
+import QueryResult, { type QueryScore } from './QueryResult';
 import styles from './workbench.module.css';
 
 const labels = {
@@ -65,8 +67,8 @@ type Graph = { nodes: ({ id: string; kind: Kind } & Options)[]; links: Link[] };
 type Saved = { name: string; view: ViewState; options: Record<string, Options> };
 type Catalog = { graphs: Record<string, Graph>; examples: { id: string; question: string }[] };
 type Step = { id: string; kind: Kind; from: string[]; output: unknown; elapsed_s: number };
-type Result = { run_id: string; course_flow_id: string; steps: Step[];
-  score: { correct: boolean; status: string }; graph_sha256: string;
+type Result = { run_id: string; course_flow_id: string; sample_id: string; steps: Step[];
+  score: QueryScore; graph_sha256: string;
   cost?: { model_calls: number; total_tokens: number | null } };
 type Ports = { pick: (id: string) => void; send: (id: string) => void;
   receive: (id: string, explicit?: string) => void; source: string; active: string };
@@ -134,6 +136,10 @@ const graphLabels: Record<string, string> = { baseline: '单 Agent 基线', valu
   filter_column: '第 9 题 · 筛选列核验',
   filter_column_v2: '第 9 题 · 初稿筛选列核验与局部修正',
   filter_count: '第 10 题 · 筛选条件与计数对象' };
+const namedPresets = new Set(courseCases.flatMap(item => item.presets));
+const sampleCases = new Map(courseCases.flatMap(item => ['pre', 'post'].map(side => [`${item.pair}-${side}`, item] as const)));
+const caseLabel = (item: typeof courseCases[number]) => `${item.id} · ${item.title}`;
+const sampleLabel = (id: string) => `${id.endsWith('-pre') ? '扰动前（pre）' : '扰动后（post）'} · ${id}`;
 const splitPositions: Partial<Record<Kind, readonly [number, number]>> = {
   split_intent: [86, 90], split_fields: [275, 90], split_decide: [464, 90],
   split_fields_v2: [275, 90],
@@ -297,6 +303,7 @@ export default function Task2Canvas() {
   const [saved, setSaved] = useState<Saved[]>([]);
   const [options, setOptions] = useState<Record<string, Options>>({});
   const [sample, setSample] = useState('');
+  const [preset, setPreset] = useState('');
   const [name, setName] = useState('实验流程');
   const [active, pick] = useState('');
   const [source, send] = useState('');
@@ -312,7 +319,7 @@ export default function Task2Canvas() {
     setShowAllKinds(graph.nodes.length === 0);
     setNodeSearch('');
     setOptions(Object.fromEntries(graph.nodes.map(({ id, hint, probe }) => [id, { hint, probe }])));
-    setName(graphName); pick(''); send(''); setError('');
+    setName(graphName); pick(''); send(''); setError(''); setNotice(''); setResult(undefined);
   }, []);
 
   useEffect(() => {
@@ -325,42 +332,12 @@ export default function Task2Canvas() {
       if (!response.ok) throw new Error('无法获取实验节点与开发题');
       const data: Catalog = await response.json();
       const requested = new URLSearchParams(window.location.search).get('case');
-      const key = requested === 'top_n_v4' && data.graphs.top_n_v4 ? 'top_n_v4'
-        : requested === 'top_n_v3' && data.graphs.top_n_v3 ? 'top_n_v3'
-        : requested === 'top_n_v3_interactive' && data.graphs.top_n_v3_interactive ? 'top_n_v3_interactive'
-        : requested === 'top_n_original' && data.graphs.top_n_original ? 'top_n_original'
-        : requested === 'top_n_interactive' && data.graphs.top_n_interactive ? 'top_n_interactive'
-        : requested === 'top_n' && data.graphs.top_n ? 'top_n'
-        : requested === 'filter_count' && data.graphs.filter_count ? 'filter_count'
-        : requested === 'sort_direction_v3' && data.graphs.sort_direction_v3 ? 'sort_direction_v3'
-        : requested === 'sort_meaning_v2' && data.graphs.sort_meaning_v2 ? 'sort_meaning_v2'
-        : requested === 'filter_column_v2' && data.graphs.filter_column_v2 ? 'filter_column_v2'
-        : requested === 'filter_column' && data.graphs.filter_column ? 'filter_column'
-        : requested === 'sort_direction' && data.graphs.sort_direction ? 'sort_direction'
-        : requested === 'split_output_v3' && data.graphs.split_output_v3 ? 'split_output_v3'
-        : requested === 'split_output_v2' && data.graphs.split_output_v2 ? 'split_output_v2'
-        : requested === 'split_output' && data.graphs.split_output ? 'split_output'
-        : requested === 'count_scope_v3' && data.graphs.count_scope_v3 ? 'count_scope_v3'
-        : requested === 'count_scope_v2' && data.graphs.count_scope_v2 ? 'count_scope_v2'
-        : requested === 'count_scope' && data.graphs.count_scope ? 'count_scope'
-        : requested === 'filter_boolean_evidence' && data.graphs.filter_boolean_evidence ? 'filter_boolean_evidence'
-        : requested === 'filter_boolean' && data.graphs.filter_boolean ? 'filter_boolean'
-        : requested === 'filter_synonym' && data.graphs.filter_synonym ? 'filter_synonym'
-        : requested === 'filter_format' && data.graphs.filter_format ? 'filter_format'
-        : requested === 'projection_v2' && data.graphs.projection_v2 ? 'projection_v2'
-        : requested === 'projection' && data.graphs.projection ? 'projection' : 'value';
+      const key = requested && Object.hasOwn(data.graphs, requested) ? requested : 'value';
+      const item = courseCases.find(entry => entry.presets.includes(key));
       setCatalog(data);
-      setSample(key.startsWith('top_n') ? 'SQL_NonDB_number-00054-post'
-        : key === 'filter_count' ? 'NLQ_keyword_carrier-00248-post'
-        : (key === 'filter_column' || key === 'filter_column_v2') ? 'SQL_DB_text-00048-post'
-        : (key === 'sort_direction' || key === 'sort_meaning_v2' || key === 'sort_direction_v3') ? 'DB_DBcontent_equivalence-00304-post'
-        : key === 'split_output' || key === 'split_output_v2' || key === 'split_output_v3' ? 'DB_DBcontent_equivalence-00125-post'
-        : key === 'count_scope' || key === 'count_scope_v2' || key === 'count_scope_v3' ? 'SQL_comparison-00133-post'
-        : (key === 'filter_boolean' || key === 'filter_boolean_evidence') ? 'DB_DBcontent_equivalence-00143-post'
-        : key === 'filter_synonym' ? 'NLQ_value_synonym-00162-post'
-        : key === 'filter_format' ? 'NLQ_column_value-00205-post'
-        : key !== 'value' ? 'NLQ_column_carrier-00499-post' : data.examples[1].id);
-      loadGraph(graphLabels[key], data.graphs[key]);
+      setSample(item ? `${item.pair}-post` : (data.examples[1] ?? data.examples[0])?.id ?? '');
+      setPreset(key);
+      loadGraph(graphLabels[key] ?? key, data.graphs[key]);
     }).catch(failure => { if (!abort.signal.aborted) setError(String(failure.message)); });
     return () => abort.abort();
   }, [loadGraph]);
@@ -427,6 +404,9 @@ export default function Task2Canvas() {
 
   const selected = view.elements.find(element => element.id === active);
   const example = catalog?.examples.find(item => item.id === sample);
+  const sampleCase = sampleCases.get(sample);
+  const presetCase = courseCases.find(item => item.presets.includes(preset));
+  const otherSamples = (catalog?.examples ?? []).filter(item => !sampleCases.has(item.id));
   const currentKinds = [...new Set([...presetKinds, ...elementKinds(view.elements)])];
   const search = nodeSearch.trim().toLowerCase();
   const visibleKinds = showAllKinds
@@ -435,37 +415,60 @@ export default function Task2Canvas() {
 
   return <main className={styles.page}>
     <header className={styles.header}>
-      <div><a href="/">RSI Data</a><h1>Agent 编排实验</h1></div>
+      <div><a href={`/?case=${sampleCase?.id ?? presetCase?.id ?? 'case1'}`}>前往课程十题验收</a><h1>Agent 编排实验</h1></div>
       <button className={styles.primary} onClick={run} disabled={busy || !sample}>
         {busy ? '课程引擎运行中…' : '运行当前流程'}
       </button>
     </header>
     <section className={styles.controls}>
-      <label>开发样本<select value={sample} disabled={busy} onChange={e => setSample(e.target.value)}>
-        {catalog?.examples.map(item => <option key={item.id} value={item.id}>{item.id}</option>)}
+      <label>开发样本<select value={sample} disabled={busy} onChange={e => {
+        setSample(e.target.value); setResult(undefined); setError(''); setNotice('');
+      }}>
+        {courseCases.map(item => <optgroup key={item.id} label={caseLabel(item)}>
+          {['pre', 'post'].map(side => `${item.pair}-${side}`).filter(id => catalog?.examples.some(entry => entry.id === id))
+            .map(id => <option key={id} value={id}>{sampleLabel(id)}</option>)}
+        </optgroup>)}
+        <optgroup label="其他开发样本和对照题">
+          {otherSamples.map(item => <option key={item.id} value={item.id}>{item.id}</option>)}
+        </optgroup>
       </select></label>
-      <label>预设流程<select aria-label="加载预设流程" defaultValue="" disabled={busy} onChange={e => {
-        const key = e.target.value; if (key && catalog) loadGraph(graphLabels[key], catalog.graphs[key]);
-        e.target.value = '';
-      }}><option value="">加载预设…</option>{Object.keys(catalog?.graphs ?? {}).map(key =>
-        <option key={key} value={key}>{graphLabels[key]}</option>)}
+      <label>预设流程<select aria-label="加载预设流程" value={preset} disabled={busy} onChange={e => {
+        const key = e.target.value;
+        if (!key || !catalog) return;
+        const item = courseCases.find(entry => entry.presets.includes(key));
+        if (item && sampleCases.get(sample) !== item) setSample(`${item.pair}-post`);
+        setPreset(key);
+        loadGraph(graphLabels[key] ?? key, catalog.graphs[key]);
+      }}><option value="" disabled>选择预设流程</option>
+        {courseCases.map(item => <optgroup key={item.id} label={caseLabel(item)}>
+          {item.presets.filter(key => catalog?.graphs[key]).map(key => <option key={key} value={key}>{graphLabels[key]}</option>)}
+        </optgroup>)}
+        <optgroup label="通用基线与对照流程">
+          {Object.keys(catalog?.graphs ?? {}).filter(key => !namedPresets.has(key)).map(key =>
+            <option key={key} value={key}>{graphLabels[key] ?? key}</option>)}
+        </optgroup>
       </select></label>
-      <label>已保存流程<select aria-label="加载已保存流程" defaultValue="" disabled={busy} onChange={e => {
+      <button disabled={busy || !preset || !catalog} onClick={() => {
+        if (catalog && preset) loadGraph(graphLabels[preset] ?? preset, catalog.graphs[preset]);
+      }}>重载预设</button>
+      <label>本机草稿<select aria-label="加载已保存流程" defaultValue="" disabled={busy || !saved.length} onChange={e => {
         const item = saved.find(graph => graph.name === e.target.value);
         if (item) {
           diagram.current?.setView(item.view);
           setPresetKinds(elementKinds(item.view.elements));
           setShowAllKinds(item.view.elements.length === 0);
           setNodeSearch('');
-          setOptions(item.options); setName(item.name); pick(''); send('');
+          setOptions(item.options); setName(item.name); setPreset(''); pick(''); send('');
+          setResult(undefined); setError(''); setNotice(`已加载本机草稿「${item.name}」`);
         }
         e.target.value = '';
-      }}><option value="">加载已保存流程…</option>{saved.map(item => <option key={item.name}>{item.name}</option>)}
+      }}><option value="">{saved.length ? '选择本机草稿' : '本浏览器暂无草稿'}</option>{saved.map(item => <option key={item.name}>{item.name}</option>)}
       </select></label>
       <label>流程名<input value={name} onChange={e => setName(e.target.value)} maxLength={64} /></label>
-      <button onClick={saveGraph} disabled={busy || !name.trim()}>保存流程</button>
+      <button onClick={saveGraph} disabled={busy || !name.trim()}>保存为本机草稿</button>
     </section>
-    <p className={styles.question}>{example?.question}</p>
+    <p className={styles.question}>{sampleCase && <strong>{caseLabel(sampleCase)} · {sample.endsWith('-pre') ? '扰动前' : '扰动后'}　</strong>}{example?.question}</p>
+    {presetCase && presetCase !== sampleCase && <p className={styles.selectionNote}>当前题面与预设不属于同一案例，运行时会把它们作为交叉实验使用。</p>}
     <div className={styles.workspace}>
       <aside className={styles.palette} aria-label="可用节点">
         <h2>{showAllKinds ? '节点库' : '当前流程节点'}</h2>
@@ -483,7 +486,7 @@ export default function Task2Canvas() {
           {visibleKinds.length === 0 && <p>{showAllKinds ? '未找到匹配节点' : '当前流程暂无节点'}</p>}
         </div>
         <button className={styles.paletteClear} disabled={busy}
-          onClick={() => loadGraph('新流程', { nodes: [], links: [] })}>清空画布</button>
+          onClick={() => { setPreset(''); loadGraph('新流程', { nodes: [], links: [] }); }}>清空画布</button>
       </aside>
       <div className={styles.canvas} ref={surface} aria-label="RSI Visual 画布"
         onDragOver={e => e.preventDefault()} onDrop={e => {
@@ -528,11 +531,12 @@ export default function Task2Canvas() {
     <div className={styles.status} aria-live="polite" role={error ? 'alert' : 'status'}>{error || notice}</div>
     {result && <section className={styles.results}>
       <h2>运行记录</h2>
-      <p>{result.score.correct ? '与参考结果一致' : result.score.status} · {result.run_id}</p>
+      <p>样本 <code>{result.sample_id}</code> · 运行 ID <code>{result.run_id}</code></p>
+      <QueryResult score={result.score} output={result.steps.at(-1)?.output} />
       {result.cost && <p>模型调用 {result.cost.model_calls} 次 · {result.cost.total_tokens === null
         ? 'API 未返回 token 用量' : `${result.cost.total_tokens.toLocaleString()} token`}</p>}
       <code>{result.course_flow_id}</code>
-      {result.steps.map(step => <details key={step.id} open={step.kind === 'execute'}>
+      {result.steps.map(step => <details key={step.id}>
         <summary>{labels[step.kind]} · {step.id} · {step.elapsed_s.toFixed(2)} 秒</summary>
         <div>上游节点 {step.from.join('、') || '题面和数据库结构'}</div>
         <pre>{JSON.stringify(step.output, null, 2)}</pre>

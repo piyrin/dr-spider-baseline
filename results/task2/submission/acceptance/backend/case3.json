@@ -1,0 +1,129 @@
+{
+  "id": "TASK2_COURSE_CASE3",
+  "type": "flow",
+  "name": "Task 2 canvas experiment",
+  "params": [
+    {
+      "name": "canvasRunId",
+      "type": "String",
+      "scope": "defaultScope"
+    }
+  ],
+  "results": [],
+  "nodes": [
+    {
+      "id": "canvas_extract",
+      "type": "event",
+      "title": "extract",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_exact",
+      "type": "event",
+      "title": "exact",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_match",
+      "type": "event",
+      "title": "match",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_verify",
+      "type": "event",
+      "title": "verify",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_generate",
+      "type": "event",
+      "title": "generate",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_execute",
+      "type": "event",
+      "title": "execute",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    }
+  ],
+  "routes": [
+    {
+      "source": "start",
+      "target": "canvas_extract"
+    },
+    {
+      "source": "canvas_extract",
+      "target": "canvas_exact"
+    },
+    {
+      "source": "canvas_exact",
+      "target": "canvas_match"
+    },
+    {
+      "source": "canvas_match",
+      "target": "canvas_verify"
+    },
+    {
+      "source": "canvas_verify",
+      "target": "canvas_generate"
+    },
+    {
+      "source": "canvas_generate",
+      "target": "canvas_execute"
+    },
+    {
+      "source": "canvas_execute",
+      "target": "end"
+    }
+  ]
+}

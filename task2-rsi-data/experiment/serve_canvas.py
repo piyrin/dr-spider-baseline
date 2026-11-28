@@ -7,7 +7,7 @@ from threading import Lock
 import time
 from uuid import uuid4
 
-from experiment import HERE, GRAPHS, Scenario, execute_sql, score
+from experiment import HERE, GRAPHS, SYSTEM, Scenario, execute_sql, score
 from iterations.v3.canvas_rules import GRAPHS_V3, canvas_digest
 from run import complete_at, model_client
 from run_api_sample import load, save
@@ -38,6 +38,7 @@ from sort_direction_v3 import GRAPH_V3 as SORT_GRAPH_V3, is_sort_v3, sort_step_v
 from synonym_canvas import EXAMPLES as SYNONYM_EXAMPLES, GRAPH as SYNONYM_GRAPH, is_synonym, synonym_step, validate_synonym
 from projection_canvas import EXAMPLES, GRAPH, is_projection, projection_step, validate_projection
 from projection_generalization import FIRST_KIND, GRAPH_V2, generalized_step, validate_v2
+from prior_round1 import CASES as ACCEPTANCE_CASES
 from top_n_canvas import (EXAMPLES as TOP_N_EXAMPLES, GRAPH as TOP_N_GRAPH,
                           INTERACTIVE_GRAPH as TOP_N_INTERACTIVE, is_top_n,
                           original_or_control, top_n_step, validate_top_n)
@@ -53,6 +54,21 @@ from canvas_v4 import SCOPED_GRAPHS, scoped_step, validate_scoped
 LIVE = {}
 SESSION_LOCK = Lock()
 OUTPUT = HERE / 'runs' / 'canvas'
+ACCEPTANCE_CASE_IDS = {f'case{i}': case for i, case in enumerate(ACCEPTANCE_CASES, 1)}
+
+
+def acceptance_prior(case_id, sample_id):
+    pair_id, _, _, pre, post = ACCEPTANCE_CASE_IDS[case_id]
+    if sample_id == pair_id + '-pre':
+        if case_id == 'case9':
+            return pre + (' Eligible names come from car_names joined to cars_data by MakeId = Id, '
+                          'then model_list by Model and car_makers by Maker = Id. Apply the full-name '
+                          'OR weight predicate to those joined rows. Preserve the manufacturer join '
+                          'on the weight branch and return distinct model names.')
+        return pre
+    if sample_id == pair_id + '-post':
+        return post
+    raise ValueError('样本必须属于当前验收案例。')
 
 
 def small(step):
@@ -120,6 +136,8 @@ class Handler(BaseHTTPRequestHandler):
     def begin(self, body):
         graph = body['graph']
         sample_id = body['sample_id']
+        case_id = body.get('acceptance_case')
+        prior = acceptance_prior(case_id, sample_id) if case_id is not None else None
         case = top_n_fixture_case(sample_id) if sample_id in TOP_N_FIXTURES else original_or_control(sample_id)
         if is_top_n_v4(graph):
             ordered, runner = validate_top_n_v4(graph), run_top_n_v4
@@ -170,7 +188,7 @@ class Handler(BaseHTTPRequestHandler):
             ordered, runner = validate_scoped(graph), scoped_step
         run_id = uuid4().hex
         state = {'created': time.time(), 'case': case, 'ordered': ordered, 'steps': {},
-                 'runner': runner,
+                 'runner': runner, 'acceptance_prior': prior,
                  'graph_sha256': canvas_digest(ordered), 'graph': body['graph'], 'lock': Lock()}
         with SESSION_LOCK:
             for key in list(LIVE):
@@ -195,9 +213,18 @@ class Handler(BaseHTTPRequestHandler):
             model, endpoint, key = self.server.client
             case = state['case']
             inputs = ReviewInput(case.question, case.database) if state['runner'] is review_step else case
+
+            def complete(_, payload):
+                if state['acceptance_prior']:
+                    payload['reasoning_effort'] = 'high'
+                    if payload['messages'][0]['content'].startswith(SYSTEM):
+                        payload['messages'][-1]['content'] += ('\nVerified course-case knowledge\n'
+                                                              + state['acceptance_prior'])
+                return complete_at(endpoint, key, payload)
+
             output, call = state['runner'](node, inputs, model,
                                            [state['steps'][parent] for parent in node['from']],
-                                           lambda _, payload: complete_at(endpoint, key, payload))
+                                           complete)
             state['steps'][node['id']] = {**node, 'output': output, 'call': call,
                                          'elapsed_s': time.monotonic() - started}
             return {'node': node['id'], 'position': index}

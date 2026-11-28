@@ -1,0 +1,939 @@
+{
+  "case": "case3",
+  "topic": "同义值",
+  "pair_id": "NLQ_value_synonym-00162",
+  "frontend": {
+    "file": "../frontend/case3.json",
+    "sha256": "6c61b98a955af4a1298444d7d5a5537343332f6c6a69e55b95d63f9df7ce29b8"
+  },
+  "backend": {
+    "file": "../backend/case3.json",
+    "sha256": "99a92ff76d1338deea82b84a8e389d335336f3376f2a8276db369eddc47cb9d5",
+    "flow_id": "TASK2_COURSE_CASE3"
+  },
+  "historical_post_prediction": {
+    "sql": "SELECT Airline, Abbreviation\nFROM airlines\nWHERE Country = 'United States';",
+    "status": "mismatch"
+  },
+  "runs": {
+    "pre": {
+      "sample_id": "NLQ_value_synonym-00162-pre",
+      "question": "What are the airline names and abbreviations for airlines in the USA?",
+      "database": "data/Spider-dev/databases/flight_2/flight_2.sqlite",
+      "database_sha256": "8ee4f3ad172de0cb0a1f889171f15d6682f7d7249b0c415e1dbefe9b50da2411",
+      "checked_at": "2026-11-28T09:11:54.535Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case3",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE3",
+      "run_id": "397999fcd3fd4963bfd136e912114edf",
+      "graph_sha256": "e414aac7160ecfa76265ad8347ddfc1ff47ad912ae085c9f9085746947bc8f4d",
+      "reference": {
+        "sql": "SELECT Airline , Abbreviation FROM AIRLINES WHERE Country = \"USA\"",
+        "columns": [
+          "Airline",
+          "Abbreviation"
+        ],
+        "rows": [
+          [
+            "United Airlines",
+            "UAL"
+          ],
+          [
+            "US Airways",
+            "USAir"
+          ],
+          [
+            "Delta Airlines",
+            "Delta"
+          ],
+          [
+            "Southwest Airlines",
+            "Southwest"
+          ],
+          [
+            "American Airlines",
+            "American"
+          ],
+          [
+            "Northwest Airlines",
+            "Northwest"
+          ],
+          [
+            "Continental Airlines",
+            "Continental"
+          ],
+          [
+            "JetBlue Airways",
+            "JetBlue"
+          ],
+          [
+            "Frontier Airlines",
+            "Frontier"
+          ],
+          [
+            "AirTran Airways",
+            "AirTran"
+          ],
+          [
+            "Allegiant Air",
+            "Allegiant"
+          ],
+          [
+            "Virgin America",
+            "Virgin"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT Airline, Abbreviation\nFROM airlines\nWHERE Country = 'USA';\n--",
+        "rows": [
+          [
+            "United Airlines",
+            "UAL"
+          ],
+          [
+            "US Airways",
+            "USAir"
+          ],
+          [
+            "Delta Airlines",
+            "Delta"
+          ],
+          [
+            "Southwest Airlines",
+            "Southwest"
+          ],
+          [
+            "American Airlines",
+            "American"
+          ],
+          [
+            "Northwest Airlines",
+            "Northwest"
+          ],
+          [
+            "Continental Airlines",
+            "Continental"
+          ],
+          [
+            "JetBlue Airways",
+            "JetBlue"
+          ],
+          [
+            "Frontier Airlines",
+            "Frontier"
+          ],
+          [
+            "AirTran Airways",
+            "AirTran"
+          ],
+          [
+            "Allegiant Air",
+            "Allegiant"
+          ],
+          [
+            "Virgin America",
+            "Virgin"
+          ]
+        ],
+        "columns": [
+          "Airline",
+          "Abbreviation"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 12,
+        "prediction_rows": 12
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 18124
+      },
+      "steps": [
+        {
+          "id": "extract",
+          "kind": "synonym_extract",
+          "from": [],
+          "elapsed_s": 8.110556000000543,
+          "output": {
+            "output": [
+              "airlines.Airline",
+              "airlines.Abbreviation"
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "table": "airlines",
+                "column": "Country",
+                "term": "USA",
+                "operator": "="
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_07f6522a5cccbbb7016b0a9ae30a0887d0a10178bbf09235c0": {
+                    "input_tokens": 151,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 151,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_07f6522a5cccbbb7016b0a9ae30a0887d0a768dd62d8866c1f": {
+                    "input_tokens": 128,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 128,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_07f6522a5cccbbb7016b0a9ae832c887d0b4efef3cce5385c0": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 45,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 45
+                      }
+                    ]
+                  },
+                  "rs_07f6522a5cccbbb7016b0a9ae3493c87d0be1a5b2c7d4189d3": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 98
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3787,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 10575,
+              "completion_tokens": 143,
+              "total_tokens": 10718,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 9088
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 98
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "094ef77321ca9d2bc6e00c2fab0b9256e2e0a6539d6fcec02592a48e11cb3ab3"
+          }
+        },
+        {
+          "id": "exact",
+          "kind": "synonym_exact",
+          "from": [
+            "extract"
+          ],
+          "elapsed_s": 0.0011669999994410318,
+          "output": {
+            "status": "exact",
+            "target": {
+              "table": "airlines",
+              "column": "Country",
+              "term": "USA",
+              "operator": "="
+            }
+          }
+        },
+        {
+          "id": "match",
+          "kind": "synonym_match",
+          "from": [
+            "exact"
+          ],
+          "elapsed_s": 7.099999493220821e-06,
+          "output": {
+            "status": "skipped",
+            "reason": "exact"
+          }
+        },
+        {
+          "id": "verify",
+          "kind": "synonym_verify",
+          "from": [
+            "exact",
+            "match"
+          ],
+          "elapsed_s": 7.3999999585794285e-06,
+          "output": {
+            "route": "exact",
+            "mapping": null
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "synonym_generate",
+          "from": [
+            "verify"
+          ],
+          "elapsed_s": 5.277796800000033,
+          "output": {
+            "sql": "SELECT Airline, Abbreviation\nFROM airlines\nWHERE Country = 'USA';\n--",
+            "route": "exact",
+            "stored_value": null
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "prompt_tokens": 7176,
+              "completion_tokens": 230,
+              "total_tokens": 7406,
+              "completion_tokens_details": {
+                "reasoning_tokens": 214
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "25bddd0a79fe01431088968985077e62ee8a58240fe056fa2fc9d91c94113576"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0010980999995808816,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT Airline, Abbreviation\nFROM airlines\nWHERE Country = 'USA';\n--",
+            "rows": [
+              [
+                "United Airlines",
+                "UAL"
+              ],
+              [
+                "US Airways",
+                "USAir"
+              ],
+              [
+                "Delta Airlines",
+                "Delta"
+              ],
+              [
+                "Southwest Airlines",
+                "Southwest"
+              ],
+              [
+                "American Airlines",
+                "American"
+              ],
+              [
+                "Northwest Airlines",
+                "Northwest"
+              ],
+              [
+                "Continental Airlines",
+                "Continental"
+              ],
+              [
+                "JetBlue Airways",
+                "JetBlue"
+              ],
+              [
+                "Frontier Airlines",
+                "Frontier"
+              ],
+              [
+                "AirTran Airways",
+                "AirTran"
+              ],
+              [
+                "Allegiant Air",
+                "Allegiant"
+              ],
+              [
+                "Virgin America",
+                "Virgin"
+              ]
+            ],
+            "columns": [
+              "Airline",
+              "Abbreviation"
+            ]
+          }
+        }
+      ]
+    },
+    "post": {
+      "sample_id": "NLQ_value_synonym-00162-post",
+      "question": "Show the list of the airlines and their abbreviations used in the United States.",
+      "database": "data/Spider-dev/databases/flight_2/flight_2.sqlite",
+      "database_sha256": "8ee4f3ad172de0cb0a1f889171f15d6682f7d7249b0c415e1dbefe9b50da2411",
+      "checked_at": "2026-11-28T09:11:22.787Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case3",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE3",
+      "run_id": "2c72a06e5154454e8fbecf46c2c0d111",
+      "graph_sha256": "e414aac7160ecfa76265ad8347ddfc1ff47ad912ae085c9f9085746947bc8f4d",
+      "reference": {
+        "sql": "SELECT Airline , Abbreviation FROM AIRLINES WHERE Country = \"USA\"",
+        "columns": [
+          "Airline",
+          "Abbreviation"
+        ],
+        "rows": [
+          [
+            "United Airlines",
+            "UAL"
+          ],
+          [
+            "US Airways",
+            "USAir"
+          ],
+          [
+            "Delta Airlines",
+            "Delta"
+          ],
+          [
+            "Southwest Airlines",
+            "Southwest"
+          ],
+          [
+            "American Airlines",
+            "American"
+          ],
+          [
+            "Northwest Airlines",
+            "Northwest"
+          ],
+          [
+            "Continental Airlines",
+            "Continental"
+          ],
+          [
+            "JetBlue Airways",
+            "JetBlue"
+          ],
+          [
+            "Frontier Airlines",
+            "Frontier"
+          ],
+          [
+            "AirTran Airways",
+            "AirTran"
+          ],
+          [
+            "Allegiant Air",
+            "Allegiant"
+          ],
+          [
+            "Virgin America",
+            "Virgin"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'USA';",
+        "rows": [
+          [
+            "United Airlines",
+            "UAL"
+          ],
+          [
+            "US Airways",
+            "USAir"
+          ],
+          [
+            "Delta Airlines",
+            "Delta"
+          ],
+          [
+            "Southwest Airlines",
+            "Southwest"
+          ],
+          [
+            "American Airlines",
+            "American"
+          ],
+          [
+            "Northwest Airlines",
+            "Northwest"
+          ],
+          [
+            "Continental Airlines",
+            "Continental"
+          ],
+          [
+            "JetBlue Airways",
+            "JetBlue"
+          ],
+          [
+            "Frontier Airlines",
+            "Frontier"
+          ],
+          [
+            "AirTran Airways",
+            "AirTran"
+          ],
+          [
+            "Allegiant Air",
+            "Allegiant"
+          ],
+          [
+            "Virgin America",
+            "Virgin"
+          ]
+        ],
+        "columns": [
+          "Airline",
+          "Abbreviation"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 12,
+        "prediction_rows": 12
+      },
+      "cost": {
+        "model_calls": 3,
+        "total_tokens": 14130
+      },
+      "steps": [
+        {
+          "id": "extract",
+          "kind": "synonym_extract",
+          "from": [],
+          "elapsed_s": 10.975741500000368,
+          "output": {
+            "output": [
+              "airlines.Airline",
+              "airlines.Abbreviation"
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "table": "airlines",
+                "column": "Country",
+                "term": "United States",
+                "operator": "="
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_0b70c905a63b2663016b0a9ab6571887d081d8f1b72f6f904e": {
+                    "input_tokens": 153,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 153,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0b70c905a63b2663016b0a9ab6571887d0aeac09eaff4b7706": {
+                    "input_tokens": 128,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 128,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0b70c905a63b2663016b0a9abf057c87d0afaf34cf15625fd5": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 46,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 46
+                      }
+                    ]
+                  },
+                  "rs_0b70c905a63b2663016b0a9ab6f17487d0bc59d4e37eff0dba": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 147
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4663,
+              "completion_tokens": 193,
+              "total_tokens": 4856,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 147
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "d1991c8baabc3bc62a0725aec23ecfaeaf50874b171b3554e1f6f38bb68ed59e"
+          }
+        },
+        {
+          "id": "exact",
+          "kind": "synonym_exact",
+          "from": [
+            "extract"
+          ],
+          "elapsed_s": 0.0025101000001086504,
+          "output": {
+            "status": "miss",
+            "target": {
+              "table": "airlines",
+              "column": "Country",
+              "term": "United States",
+              "operator": "="
+            }
+          }
+        },
+        {
+          "id": "match",
+          "kind": "synonym_match",
+          "from": [
+            "exact"
+          ],
+          "elapsed_s": 9.11741340000026,
+          "output": {
+            "status": "selected",
+            "candidates": [
+              "USA"
+            ],
+            "value": "USA",
+            "reason": "USA is an abbreviation for the United States."
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_0e571ccc3cfb143f016b0a9ac19eb887d0900e7cde3ae2053c": {
+                    "input_tokens": 60,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 60,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0e571ccc3cfb143f016b0a9ac19eb887d0b08b2885371b1461": {
+                    "input_tokens": 101,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 101,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0e571ccc3cfb143f016b0a9ac8210887d0bdc12e39de924499": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 23,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 23
+                      }
+                    ]
+                  },
+                  "rs_0e571ccc3cfb143f016b0a9ac21b9887d087bb81b22b1a98f2": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 37
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4543,
+              "completion_tokens": 60,
+              "total_tokens": 4603,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 37
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "7e8ef307eafee4e1ad58f0d9b8301bdb300c7e9f0444e09d6879063d5e601f40"
+          }
+        },
+        {
+          "id": "verify",
+          "kind": "synonym_verify",
+          "from": [
+            "exact",
+            "match"
+          ],
+          "elapsed_s": 0.0015904000001683016,
+          "output": {
+            "route": "synonym",
+            "mapping": {
+              "table": "airlines",
+              "column": "Country",
+              "term": "United States",
+              "operator": "=",
+              "stored_value": "USA"
+            }
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "synonym_generate",
+          "from": [
+            "verify"
+          ],
+          "elapsed_s": 5.501592300000084,
+          "output": {
+            "sql": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'USA';",
+            "route": "synonym",
+            "stored_value": "USA"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_097b593f20f971c2016b0a9acaaf8887d19fc20241445cba20": {
+                    "input_tokens": 214,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 214,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_097b593f20f971c2016b0a9acaaf8887d1a91e130f827302ab": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_097b593f20f971c2016b0a9acdb2a087d1be86a13463cd8a69": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 28,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 28
+                      }
+                    ]
+                  },
+                  "rs_097b593f20f971c2016b0a9acb2aa887d1867962ecbc25278b": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 22
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4621,
+              "completion_tokens": 50,
+              "total_tokens": 4671,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 22
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "6233effb20d9b06da2429384ddf0b96690ecf262c321c0224de98c33014bf715"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0010374999992563971,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'USA';",
+            "rows": [
+              [
+                "United Airlines",
+                "UAL"
+              ],
+              [
+                "US Airways",
+                "USAir"
+              ],
+              [
+                "Delta Airlines",
+                "Delta"
+              ],
+              [
+                "Southwest Airlines",
+                "Southwest"
+              ],
+              [
+                "American Airlines",
+                "American"
+              ],
+              [
+                "Northwest Airlines",
+                "Northwest"
+              ],
+              [
+                "Continental Airlines",
+                "Continental"
+              ],
+              [
+                "JetBlue Airways",
+                "JetBlue"
+              ],
+              [
+                "Frontier Airlines",
+                "Frontier"
+              ],
+              [
+                "AirTran Airways",
+                "AirTran"
+              ],
+              [
+                "Allegiant Air",
+                "Allegiant"
+              ],
+              [
+                "Virgin America",
+                "Virgin"
+              ]
+            ],
+            "columns": [
+              "Airline",
+              "Abbreviation"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

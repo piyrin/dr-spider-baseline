@@ -1,0 +1,180 @@
+{
+  "id": "case1",
+  "title": "输出字段",
+  "samples": {
+    "pre": {
+      "id": "NLQ_column_carrier-00499-pre",
+      "question": "What are the names of all high schoolers in grade 10?"
+    },
+    "post": {
+      "id": "NLQ_column_carrier-00499-post",
+      "question": "Who are all students currently in grade ten?"
+    }
+  },
+  "elements": [
+    {
+      "id": "match",
+      "name": "明确字段匹配 v2",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "projection_match_v2"
+          }
+        }
+      }
+    },
+    {
+      "id": "normalize",
+      "name": "指代归一化",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "projection_normalize"
+          }
+        }
+      }
+    },
+    {
+      "id": "recheck",
+      "name": "当前库字段复核",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "projection_recheck"
+          }
+        }
+      }
+    },
+    {
+      "id": "constraint",
+      "name": "输出约束或回退",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "projection_constraint"
+          }
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "按输出范围生成 SQL",
+      "type": "task2-card",
+      "x": 350,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "projection_generate"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行 SQLite",
+      "type": "task2-card",
+      "x": 90,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "execute"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "match-normalize",
+      "fromElementId": "match",
+      "toElementId": "normalize",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "normalize-recheck",
+      "fromElementId": "normalize",
+      "toElementId": "recheck",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "match-constraint",
+      "fromElementId": "match",
+      "toElementId": "constraint",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "recheck-constraint",
+      "fromElementId": "recheck",
+      "toElementId": "constraint",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "constraint-generate",
+      "fromElementId": "constraint",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "generate-execute",
+      "fromElementId": "generate",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

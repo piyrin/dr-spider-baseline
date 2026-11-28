@@ -2,7 +2,7 @@
 
 [人工编排报告](../../reports/任务2先验知识与人工编排实验.md) · [版本迭代汇总](../../reports/任务2先验知识与人工编排实验.md#版本迭代汇总) · [画布截图与实测证据](../../results/task2/submission/README.md)
 
-本目录保存课程提交及后续复测的编排源码。课程 Visual 页面在 [web/page.tsx](web/page.tsx)，Spring Boot 的图注册与事件调度在 [spring/](spring/)，Python 节点入口在 [serve_canvas.py](serve_canvas.py)。先验实验运行入口是 [prior_round1.py](prior_round1.py)。实验代码在运行时以 Git 基点和文件 SHA-256 定位，各批的配置、题单和报告保存于证据目录。
+本目录保存课程十题验收和历版复测的编排源码。验收入口由课程首页组件和 `FLOW_CODE_RUN` 接入。实验工作台用于编辑画布和运行历版预设。Python 服务执行编排节点，Spring Boot 注册和调度流程。[十题验收页](web/CourseCases.tsx) · [实验工作台](web/page.tsx) · [课程后端接入](spring/) · [Python 节点入口](serve_canvas.py) · [先验实验程序](prior_round1.py)
 
 | 题号 | 节点源码 | 课程页面预设 |
 |---:|---|---|
@@ -19,6 +19,6 @@
 
 ## 课程画布
 
-课程 Visual 提交节点、连线和样本 ID。Spring Boot 使用 `rsi-flow` 调度 Python 节点，查询结果由同侧 SQLite 返回。评测的参考 SQL 与模型输入分别保存在证据中。
+课程 Visual 提交节点、连线和样本 ID。课程默认入口读取当前案例的后端 JSON，由 Spring Boot 使用 `rsi-flow` 调度同机 Python 节点。查询与参考 SQL 在相同的当侧 SQLite 上评测。[十题前后端 JSON 与运行结果](../../results/task2/submission/acceptance/README.md)
 
 各题的画布图、结构、浏览器响应、课程流程 ID、逐节点调用及执行评分见[验收证据目录](../../results/task2/submission/README.md)。Thinking 以请求中的 `reasoning_effort=none/high` 表示，各批结果以其冻结题单和原始运行配置为准。

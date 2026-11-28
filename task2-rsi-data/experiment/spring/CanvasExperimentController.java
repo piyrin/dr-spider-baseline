@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.core.io.ClassPathResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -49,8 +50,48 @@ public class CanvasExperimentController {
         String runId = initialized.path("run_id").asText();
         String flowId = "TASK2_CANVAS_" + initialized.path("graph_sha256").asText();
         ObjectNode flow = compile(flowId, initialized.path("sequence"));
-        register(flowId, flow);
+        return execute(runId, flow);
+    }
 
+    @PostMapping("/case")
+    public JsonNode runCase(@RequestBody ObjectNode structure) throws Exception {
+        String caseId = structure.path("id").asText();
+        if (!caseId.matches("case(?:[1-9]|10)")) {
+            throw new IllegalArgumentException("Select one of the ten Dr.Spider cases.");
+        }
+        ObjectNode graph = mapper.createObjectNode();
+        ArrayNode nodes = graph.putArray("nodes");
+        for (JsonNode element : structure.path("elements")) {
+            JsonNode detail = element.path("pendant").path("data").path("detail");
+            ObjectNode node = nodes.addObject().put("id", element.path("id").asText());
+            node.put("kind", detail.path("kind").asText());
+            if (detail.has("hint")) node.set("hint", detail.get("hint"));
+            if (detail.has("probe")) node.set("probe", detail.get("probe"));
+        }
+        ArrayNode links = graph.putArray("links");
+        for (JsonNode link : structure.path("links")) {
+            links.addObject().put("source", link.path("fromElementId").asText())
+                    .put("target", link.path("toElementId").asText());
+        }
+        ObjectNode request = mapper.createObjectNode().put("acceptance_case", caseId)
+                .put("sample_id", structure.path("sample_id").asText());
+        request.set("graph", graph);
+        ObjectNode flow;
+        try (java.io.InputStream input = new ClassPathResource("task2-cases/" + caseId + ".json").getInputStream()) {
+            flow = (ObjectNode) mapper.readTree(input);
+        }
+        JsonNode initialized = worker.postForObject(WORKER + "/begin", request, JsonNode.class);
+        String flowId = flow.path("id").asText();
+        ObjectNode expected = compile(flowId, initialized.path("sequence"));
+        if (!flow.equals(expected)) {
+            throw new IllegalArgumentException("The case's backend flow does not match the submitted diagram.");
+        }
+        return execute(initialized.path("run_id").asText(), flow);
+    }
+
+    private ObjectNode execute(String runId, ObjectNode flow) throws Exception {
+        String flowId = flow.path("id").asText();
+        register(flowId, flow);
         FlowEngine engine = FlowEngine.instance();
         try {
             engine.registerWithDefaultScope("canvasRunId", runId);
@@ -61,8 +102,8 @@ public class CanvasExperimentController {
         } finally {
             engine.release();
         }
-        ObjectNode body = mapper.createObjectNode().put("run_id", runId);
-        ObjectNode result = worker.postForObject(WORKER + "/finish", body, ObjectNode.class);
+        ObjectNode result = worker.postForObject(WORKER + "/finish",
+                mapper.createObjectNode().put("run_id", runId), ObjectNode.class);
         result.put("course_flow_id", flowId);
         result.set("course_flow", flow);
         return result;

@@ -1,0 +1,129 @@
+{
+  "id": "TASK2_COURSE_CASE1",
+  "type": "flow",
+  "name": "Task 2 canvas experiment",
+  "params": [
+    {
+      "name": "canvasRunId",
+      "type": "String",
+      "scope": "defaultScope"
+    }
+  ],
+  "results": [],
+  "nodes": [
+    {
+      "id": "canvas_match",
+      "type": "event",
+      "title": "match",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_normalize",
+      "type": "event",
+      "title": "normalize",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_recheck",
+      "type": "event",
+      "title": "recheck",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_constraint",
+      "type": "event",
+      "title": "constraint",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_generate",
+      "type": "event",
+      "title": "generate",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_execute",
+      "type": "event",
+      "title": "execute",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    }
+  ],
+  "routes": [
+    {
+      "source": "start",
+      "target": "canvas_match"
+    },
+    {
+      "source": "canvas_match",
+      "target": "canvas_normalize"
+    },
+    {
+      "source": "canvas_normalize",
+      "target": "canvas_recheck"
+    },
+    {
+      "source": "canvas_recheck",
+      "target": "canvas_constraint"
+    },
+    {
+      "source": "canvas_constraint",
+      "target": "canvas_generate"
+    },
+    {
+      "source": "canvas_generate",
+      "target": "canvas_execute"
+    },
+    {
+      "source": "canvas_execute",
+      "target": "end"
+    }
+  ]
+}

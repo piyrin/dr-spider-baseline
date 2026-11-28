@@ -1,0 +1,700 @@
+{
+  "case": "case7",
+  "topic": "Top N 去重",
+  "pair_id": "SQL_NonDB_number-00054",
+  "frontend": {
+    "file": "../frontend/case7.json",
+    "sha256": "73de38ede7a6a3369b3752fa0c323d8b7adb16e12c6bf5ec20908fb38675ddf5"
+  },
+  "backend": {
+    "file": "../backend/case7.json",
+    "sha256": "018785cdd77c198f87e0863cef55af861177807a1ebf2ec0b2b8b7fdcb8687db",
+    "flow_id": "TASK2_COURSE_CASE7"
+  },
+  "historical_post_prediction": {
+    "sql": "SELECT winner_name, winner_rank\nFROM matches\nWHERE winner_age IS NOT NULL\nORDER BY winner_age ASC\nLIMIT 5;",
+    "status": "mismatch"
+  },
+  "runs": {
+    "pre": {
+      "sample_id": "SQL_NonDB_number-00054-pre",
+      "question": "Find the name and rank of the 3 youngest winners across all matches.",
+      "database": "data/Spider-dev/databases/wta_1/wta_1.sqlite",
+      "database_sha256": "c29b1026c9be63fddbb4754f78e584f0d36779fa71d7e8dafc301772ab0cf4a4",
+      "checked_at": "2026-11-28T09:12:23.834Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case7",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE7",
+      "run_id": "cba2f7f138f24c2985a1d7fc31db3846",
+      "graph_sha256": "a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+      "reference": {
+        "sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 3",
+        "columns": [
+          "winner_name",
+          "winner_rank"
+        ],
+        "rows": [
+          [
+            "Madison Keys",
+            17
+          ],
+          [
+            "Madison Keys",
+            24
+          ],
+          [
+            "Madison Keys",
+            16
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 3",
+        "rows": [
+          [
+            "Madison Keys",
+            17
+          ],
+          [
+            "Madison Keys",
+            24
+          ],
+          [
+            "Madison Keys",
+            16
+          ]
+        ],
+        "columns": [
+          "winner_name",
+          "winner_rank"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 3,
+        "prediction_rows": 3
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 5439
+      },
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v4",
+          "from": [],
+          "elapsed_s": 13.869881100000384,
+          "output": {
+            "output": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "rule": "event_tuple",
+                "scope": "all_rows",
+                "table": "matches",
+                "display": [
+                  "winner_name",
+                  "winner_rank"
+                ],
+                "key": [
+                  "winner_name",
+                  "winner_rank"
+                ],
+                "order": "winner_age",
+                "direction": "ASC",
+                "n": 3,
+                "grain_evidence": "across all matches",
+                "projection_evidence": "name and rank",
+                "ties": [],
+                "entity_key": "winner_id",
+                "entity_display": "winner_name"
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_0122ba834f0b9dd0016b0a9afef22087d08203ccae9541d0be": {
+                    "input_tokens": 388,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 388,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0122ba834f0b9dd0016b0a9afef22087d0830e3bd79c74fb07": {
+                    "input_tokens": 316,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 316,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0122ba834f0b9dd0016b0a9b0a396087d09c9c6e453f954723": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 100,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 100
+                      }
+                    ]
+                  },
+                  "rs_0122ba834f0b9dd0016b0a9b00439c87d09eea5059599680ff": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 253
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 5086,
+              "completion_tokens": 353,
+              "total_tokens": 5439,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 253
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "9e3d39055a5845fc244efe1f87f2de1da416ebf26263cfbbbd340ea03bb9acee"
+          }
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v4",
+          "from": [
+            "intent"
+          ],
+          "elapsed_s": 0.0018121000002793153,
+          "output": {
+            "route": "tuple",
+            "table": "matches",
+            "display": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "keys": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "order": [
+              [
+                "winner_age",
+                "ASC"
+              ]
+            ],
+            "n": 3,
+            "grain_evidence": "across all matches",
+            "projection_evidence": "name and rank",
+            "identity_key": "winner_id",
+            "variable_attribute": "winner_rank",
+            "selected_rule": "event_tuple",
+            "agent_limit": 3,
+            "verified_limit": 3
+          }
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v4",
+          "from": [
+            "inspect"
+          ],
+          "elapsed_s": 0.0015137999998842133,
+          "output": {
+            "route": "tuple",
+            "table": "matches",
+            "display": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "keys": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "order": [
+              [
+                "winner_age",
+                "ASC"
+              ]
+            ],
+            "n": 3,
+            "grain_evidence": "across all matches",
+            "projection_evidence": "name and rank",
+            "identity_key": "winner_id",
+            "variable_attribute": "winner_rank",
+            "selected_rule": "event_tuple",
+            "agent_limit": 3,
+            "verified_limit": 3,
+            "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 3",
+            "cutoff_checked": true,
+            "rule": "event_tuple"
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v4",
+          "from": [
+            "policy"
+          ],
+          "elapsed_s": 8.099999831756577e-06,
+          "output": {
+            "route": "tuple",
+            "table": "matches",
+            "display": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "keys": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "order": [
+              [
+                "winner_age",
+                "ASC"
+              ]
+            ],
+            "n": 3,
+            "grain_evidence": "across all matches",
+            "projection_evidence": "name and rank",
+            "identity_key": "winner_id",
+            "variable_attribute": "winner_rank",
+            "selected_rule": "event_tuple",
+            "agent_limit": 3,
+            "verified_limit": 3,
+            "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 3",
+            "cutoff_checked": true,
+            "rule": "event_tuple"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v4",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0013755999998465995,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 3",
+            "rows": [
+              [
+                "Madison Keys",
+                17
+              ],
+              [
+                "Madison Keys",
+                24
+              ],
+              [
+                "Madison Keys",
+                16
+              ]
+            ],
+            "columns": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "route": "tuple",
+            "decision_reason": null,
+            "rule": "event_tuple"
+          }
+        }
+      ]
+    },
+    "post": {
+      "sample_id": "SQL_NonDB_number-00054-post",
+      "question": "Find the name and rank of the 5 youngest winners across all matches.",
+      "database": "data/Spider-dev/databases/wta_1/wta_1.sqlite",
+      "database_sha256": "c29b1026c9be63fddbb4754f78e584f0d36779fa71d7e8dafc301772ab0cf4a4",
+      "checked_at": "2026-11-28T09:11:31.018Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case7",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE7",
+      "run_id": "df4662c8ff964b4cafa72f22936ef917",
+      "graph_sha256": "a9df480271e732f387fae633e4aad5ee4936a8cf80d978dbd51e6854165af4ce",
+      "reference": {
+        "sql": "SELECT DISTINCT winner_name , winner_rank FROM matches ORDER BY winner_age LIMIT 5",
+        "columns": [
+          "winner_name",
+          "winner_rank"
+        ],
+        "rows": [
+          [
+            "Madison Keys",
+            17
+          ],
+          [
+            "Madison Keys",
+            24
+          ],
+          [
+            "Madison Keys",
+            16
+          ],
+          [
+            "Madison Keys",
+            12
+          ],
+          [
+            "Madison Keys",
+            9
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 5",
+        "rows": [
+          [
+            "Madison Keys",
+            17
+          ],
+          [
+            "Madison Keys",
+            24
+          ],
+          [
+            "Madison Keys",
+            16
+          ],
+          [
+            "Madison Keys",
+            12
+          ],
+          [
+            "Madison Keys",
+            9
+          ]
+        ],
+        "columns": [
+          "winner_name",
+          "winner_rank"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 5,
+        "prediction_rows": 5
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 5607
+      },
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "top_n_intent_v4",
+          "from": [],
+          "elapsed_s": 13.306015000000116,
+          "output": {
+            "output": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "rule": "event_tuple",
+                "scope": "all_rows",
+                "table": "matches",
+                "display": [
+                  "winner_name",
+                  "winner_rank"
+                ],
+                "key": [
+                  "winner_name",
+                  "winner_rank"
+                ],
+                "order": "winner_age",
+                "direction": "ASC",
+                "n": 5,
+                "grain_evidence": "across all matches",
+                "projection_evidence": "name and rank",
+                "ties": [],
+                "entity_key": "winner_id",
+                "entity_display": "winner_name"
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_092ba0ca86644de6016b0a9acaa5f887d28557ac32c24d8d6b": {
+                    "input_tokens": 388,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 388,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_092ba0ca86644de6016b0a9acaa5f887d2a8da6b0ead54952f": {
+                    "input_tokens": 316,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 316,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_092ba0ca86644de6016b0a9ad5de6887d29fe8d868e0c52b48": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 100,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 100
+                      }
+                    ]
+                  },
+                  "rs_092ba0ca86644de6016b0a9acb4d7887d29bc549711291f15b": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 421
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 5086,
+              "completion_tokens": 521,
+              "total_tokens": 5607,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 421
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "cf9f536abe180a366628a91996308d86e2500986e4432e0561bedd328f073325"
+          }
+        },
+        {
+          "id": "inspect",
+          "kind": "top_n_inspect_v4",
+          "from": [
+            "intent"
+          ],
+          "elapsed_s": 0.003021499999704247,
+          "output": {
+            "route": "tuple",
+            "table": "matches",
+            "display": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "keys": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "order": [
+              [
+                "winner_age",
+                "ASC"
+              ]
+            ],
+            "n": 5,
+            "grain_evidence": "across all matches",
+            "projection_evidence": "name and rank",
+            "identity_key": "winner_id",
+            "variable_attribute": "winner_rank",
+            "selected_rule": "event_tuple",
+            "agent_limit": 5,
+            "verified_limit": 5
+          }
+        },
+        {
+          "id": "policy",
+          "kind": "top_n_policy_v4",
+          "from": [
+            "inspect"
+          ],
+          "elapsed_s": 0.001123600000028091,
+          "output": {
+            "route": "tuple",
+            "table": "matches",
+            "display": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "keys": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "order": [
+              [
+                "winner_age",
+                "ASC"
+              ]
+            ],
+            "n": 5,
+            "grain_evidence": "across all matches",
+            "projection_evidence": "name and rank",
+            "identity_key": "winner_id",
+            "variable_attribute": "winner_rank",
+            "selected_rule": "event_tuple",
+            "agent_limit": 5,
+            "verified_limit": 5,
+            "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 5",
+            "cutoff_checked": true,
+            "rule": "event_tuple"
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "top_n_generate_v4",
+          "from": [
+            "policy"
+          ],
+          "elapsed_s": 7.200000254670158e-06,
+          "output": {
+            "route": "tuple",
+            "table": "matches",
+            "display": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "keys": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "order": [
+              [
+                "winner_age",
+                "ASC"
+              ]
+            ],
+            "n": 5,
+            "grain_evidence": "across all matches",
+            "projection_evidence": "name and rank",
+            "identity_key": "winner_id",
+            "variable_attribute": "winner_rank",
+            "selected_rule": "event_tuple",
+            "agent_limit": 5,
+            "verified_limit": 5,
+            "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 5",
+            "cutoff_checked": true,
+            "rule": "event_tuple"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "top_n_execute_v4",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0016148999993674806,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 5",
+            "rows": [
+              [
+                "Madison Keys",
+                17
+              ],
+              [
+                "Madison Keys",
+                24
+              ],
+              [
+                "Madison Keys",
+                16
+              ],
+              [
+                "Madison Keys",
+                12
+              ],
+              [
+                "Madison Keys",
+                9
+              ]
+            ],
+            "columns": [
+              "winner_name",
+              "winner_rank"
+            ],
+            "route": "tuple",
+            "decision_reason": null,
+            "rule": "event_tuple"
+          }
+        }
+      ]
+    }
+  }
+}

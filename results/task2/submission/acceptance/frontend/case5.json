@@ -1,0 +1,153 @@
+{
+  "id": "case5",
+  "title": "明细与零值",
+  "samples": {
+    "pre": {
+      "id": "SQL_comparison-00133-pre",
+      "question": "What are the names of countries that speak more than 2 languages, as well as how many languages they speak?"
+    },
+    "post": {
+      "id": "SQL_comparison-00133-post",
+      "question": "What are the names of countries that speak less than 2 languages, as well as how many languages they speak?"
+    }
+  },
+  "elements": [
+    {
+      "id": "intent",
+      "name": "统计题意解析 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "count_intent"
+          }
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "name": "缺失与零值分支 v2",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "count_policy_v2"
+          }
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "按统计口径生成 SQL",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "count_generate"
+          }
+        }
+      }
+    },
+    {
+      "id": "check",
+      "name": "SQL 统计口径核验",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "count_sql_check"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行 SQLite",
+      "type": "task2-card",
+      "x": 350,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "execute"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "intent-policy",
+      "fromElementId": "intent",
+      "toElementId": "policy",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "policy-generate",
+      "fromElementId": "policy",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "policy-check",
+      "fromElementId": "policy",
+      "toElementId": "check",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "generate-check",
+      "fromElementId": "generate",
+      "toElementId": "check",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "check-execute",
+      "fromElementId": "check",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

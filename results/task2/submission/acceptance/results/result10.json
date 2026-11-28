@@ -1,0 +1,581 @@
+{
+  "case": "case10",
+  "topic": "赛事筛选和去重计数",
+  "pair_id": "NLQ_keyword_carrier-00248",
+  "frontend": {
+    "file": "../frontend/case10.json",
+    "sha256": "3c609a7d7e2e309a0e93883d98997ed9b33e7705024ffc9cd3e19dc59ba7f50f"
+  },
+  "backend": {
+    "file": "../backend/case10.json",
+    "sha256": "d2f1493fe8bdf4efd29ad423b429b5ae994a1509d3bff01bb34ac489f87fed8d",
+    "flow_id": "TASK2_COURSE_CASE10"
+  },
+  "historical_post_prediction": {
+    "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE winner_hand = 'L';",
+    "status": "mismatch"
+  },
+  "runs": {
+    "pre": {
+      "sample_id": "NLQ_keyword_carrier-00248-pre",
+      "question": "Find the number of left handed winners who participated in the WTA Championships.",
+      "database": "data/Spider-dev/databases/wta_1/wta_1.sqlite",
+      "database_sha256": "c29b1026c9be63fddbb4754f78e584f0d36779fa71d7e8dafc301772ab0cf4a4",
+      "checked_at": "2026-11-28T09:12:38.960Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case10",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE10",
+      "run_id": "5a432903b4e84b2fa28d5b0769edae99",
+      "graph_sha256": "782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+      "reference": {
+        "sql": "SELECT count(DISTINCT winner_name) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L'",
+        "columns": [
+          "count(DISTINCT winner_name)"
+        ],
+        "rows": [
+          [
+            2
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE winner_hand = 'L' AND tourney_name = 'WTA Championships';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 18756
+      },
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "filter_count_intent",
+          "from": [],
+          "elapsed_s": 5.78793289999976,
+          "output": {
+            "targets": [
+              {
+                "table": "matches",
+                "column": "winner_hand",
+                "term": "left handed",
+                "kind": "handedness"
+              },
+              {
+                "table": "matches",
+                "column": "tourney_name",
+                "term": "WTA Championships",
+                "kind": "name"
+              }
+            ],
+            "count": {
+              "table": "matches",
+              "column": "winner_id",
+              "term": "winners",
+              "unit": "entity"
+            }
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "prompt_tokens": 7684,
+              "completion_tokens": 184,
+              "total_tokens": 7868,
+              "completion_tokens_details": {
+                "reasoning_tokens": 119
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "7ce0dd13412a78bff529a08190d481b977c01c4dcd6290cd33f69aed65a42439"
+          }
+        },
+        {
+          "id": "verify",
+          "kind": "filter_count_verify",
+          "from": [
+            "intent"
+          ],
+          "elapsed_s": 0.002684100000806211,
+          "output": {
+            "route": "grounded",
+            "table": "matches",
+            "filters": [
+              {
+                "column": "winner_hand",
+                "term": "left handed",
+                "value": "L",
+                "evidence": "handedness_code"
+              },
+              {
+                "column": "tourney_name",
+                "term": "WTA Championships",
+                "value": "WTA Championships",
+                "evidence": "exact"
+              }
+            ],
+            "count": {
+              "column": "winner_id",
+              "unit": "distinct_entity",
+              "term": "winners"
+            }
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "filter_count_generate",
+          "from": [
+            "verify"
+          ],
+          "elapsed_s": 10.159407399999509,
+          "output": {
+            "sql": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE winner_hand = 'L' AND tourney_name = 'WTA Championships';",
+            "contract": {
+              "route": "grounded",
+              "table": "matches",
+              "filters": [
+                {
+                  "column": "winner_hand",
+                  "term": "left handed",
+                  "value": "L",
+                  "evidence": "handedness_code"
+                },
+                {
+                  "column": "tourney_name",
+                  "term": "WTA Championships",
+                  "value": "WTA Championships",
+                  "evidence": "exact"
+                }
+              ],
+              "count": {
+                "column": "winner_id",
+                "unit": "distinct_entity",
+                "term": "winners"
+              }
+            }
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_09164c7ad3ac05bf016b0a9b123b2487d09fad11be2cfc3c48": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_09164c7ad3ac05bf016b0a9b123b2887d08ed5ad5c8666fe17": {
+                    "input_tokens": 484,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 484,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_09164c7ad3ac05bf016b0a9b195d0887d09424737137da49be": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 33,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 33
+                      }
+                    ]
+                  },
+                  "rs_09164c7ad3ac05bf016b0a9b17fe1087d089b561bcc997b5c2": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 50
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3787,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 10805,
+              "completion_tokens": 83,
+              "total_tokens": 10888,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 9088
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 50
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "9b4c83b5b3888fc2f6782eb156bdf1ad6b4ead2a16db81b260e28ca43613be68"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "filter_count_execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0028957999993508565,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE winner_hand = 'L' AND tourney_name = 'WTA Championships';",
+            "rows": [
+              [
+                2
+              ]
+            ],
+            "columns": [
+              "COUNT(DISTINCT winner_id)"
+            ],
+            "contract_check": "match"
+          }
+        }
+      ]
+    },
+    "post": {
+      "sample_id": "NLQ_keyword_carrier-00248-post",
+      "question": "How many participants of the WTA have won this tournament is left-handed?",
+      "database": "data/Spider-dev/databases/wta_1/wta_1.sqlite",
+      "database_sha256": "c29b1026c9be63fddbb4754f78e584f0d36779fa71d7e8dafc301772ab0cf4a4",
+      "checked_at": "2026-11-28T09:12:25.175Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case10",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE10",
+      "run_id": "5e72945ed9e04b28ac8771efbcc87a84",
+      "graph_sha256": "782735046658f1e4c614b98f08b2612e71156a83d46aacb78d2f4ec8975d5b01",
+      "reference": {
+        "sql": "SELECT count(DISTINCT winner_name) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L'",
+        "columns": [
+          "count(DISTINCT winner_name)"
+        ],
+        "rows": [
+          [
+            2
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+        "rows": [
+          [
+            2
+          ]
+        ],
+        "columns": [
+          "COUNT(DISTINCT winner_id)"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 22768
+      },
+      "steps": [
+        {
+          "id": "intent",
+          "kind": "filter_count_intent",
+          "from": [],
+          "elapsed_s": 42.54053169999952,
+          "output": {
+            "targets": [
+              {
+                "table": "matches",
+                "column": "tourney_level",
+                "term": "WTA",
+                "kind": "name"
+              },
+              {
+                "table": "matches",
+                "column": "tourney_name",
+                "term": "this tournament",
+                "kind": "name"
+              },
+              {
+                "table": "matches",
+                "column": "winner_hand",
+                "term": "left-handed",
+                "kind": "handedness"
+              }
+            ],
+            "count": {
+              "table": "matches",
+              "column": "winner_id",
+              "term": "participants ... have won",
+              "unit": "entity"
+            }
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_01c3c1bafc368320016b0a9add0ab087d2aab7810c7b607021": {
+                    "input_tokens": 282,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 282,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_01c3c1bafc368320016b0a9add0ab087d2b4188c293ec8d0a4": {
+                    "input_tokens": 316,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 316,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_01c3c1bafc368320016b0a9b024ff887d2865ba71a1138724a": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 91,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 91
+                      }
+                    ]
+                  },
+                  "rs_01c3c1bafc368320016b0a9ae32b6c87d2bf4cb89307c92d4b": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 516
+                  },
+                  "rs_01c3c1bafc368320016b0a9af40c3087d2a57af640e0372122": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 436
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3787,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 10894,
+              "completion_tokens": 1043,
+              "total_tokens": 11937,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 9088
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 952
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "c268ed498fd2b16972f72c1db8e1828eb59338215c698121ef9d9a59c646de7a"
+          }
+        },
+        {
+          "id": "verify",
+          "kind": "filter_count_verify",
+          "from": [
+            "intent"
+          ],
+          "elapsed_s": 1.4399999599845614e-05,
+          "output": {
+            "route": "fallback",
+            "reason": "unverified_entity_count"
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "filter_count_generate",
+          "from": [
+            "verify"
+          ],
+          "elapsed_s": 7.770214699999997,
+          "output": {
+            "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+            "contract": {
+              "route": "fallback",
+              "reason": "unverified_entity_count"
+            }
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_06f463d8ebbc57a3016b0a9b075c9c87d198966f98e7d5f18b": {
+                    "input_tokens": 369,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 369,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_06f463d8ebbc57a3016b0a9b075c9c87d1b327054246df407c": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_06f463d8ebbc57a3016b0a9b0c0d0487d1ac4a2331146f15b0": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 35,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 35
+                      }
+                    ]
+                  },
+                  "rs_06f463d8ebbc57a3016b0a9b07dddc87d1aded20e7ffcf8c5d": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 106
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3787,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 10690,
+              "completion_tokens": 141,
+              "total_tokens": 10831,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 9088
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 106
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "1b12b8dce42c8fe9f646540e1804942b58252631141460f417f31defa58960f3"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "filter_count_execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.001507300000412215,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT COUNT(DISTINCT winner_id)\nFROM matches\nWHERE tourney_name = 'WTA Championships'\n  AND winner_hand = 'L';",
+            "rows": [
+              [
+                2
+              ]
+            ],
+            "columns": [
+              "COUNT(DISTINCT winner_id)"
+            ],
+            "contract_check": "not_applicable"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "id": "case4",
+  "title": "布尔编码",
+  "samples": {
+    "pre": {
+      "id": "DB_DBcontent_equivalence-00143-pre",
+      "question": "How many ships ended up being 'Captured'?"
+    },
+    "post": {
+      "id": "DB_DBcontent_equivalence-00143-post",
+      "question": "How many ships ended up being 'Captured'?"
+    }
+  },
+  "elements": [
+    {
+      "id": "extract",
+      "name": "不确定筛选列提取 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "evidence_extract"
+          }
+        }
+      }
+    },
+    {
+      "id": "lookup",
+      "name": "SQLite 列值取样",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "evidence_lookup"
+          }
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "按库值样例生成 SQL",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "evidence_generate"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行 SQLite",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "execute"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "extract-lookup",
+      "fromElementId": "extract",
+      "toElementId": "lookup",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "lookup-generate",
+      "fromElementId": "lookup",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "generate-execute",
+      "fromElementId": "generate",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

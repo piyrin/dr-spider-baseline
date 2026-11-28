@@ -1,0 +1,552 @@
+{
+  "case": "case9",
+  "topic": "匹配正确筛选列",
+  "pair_id": "SQL_DB_text-00048",
+  "frontend": {
+    "file": "../frontend/case9.json",
+    "sha256": "846df533034aead123b8f570c3658ca60fcf5f7c54479903775680fec393cd3c"
+  },
+  "backend": {
+    "file": "../backend/case9.json",
+    "sha256": "0f399f00824e01386fe82a4bb3eb74b33726b2a2f7a8370276e42ee317245cc3",
+    "flow_id": "TASK2_COURSE_CASE9"
+  },
+  "historical_post_prediction": {
+    "sql": "SELECT DISTINCT ml.\"Model\"\nFROM \"model_list\" AS ml\nJOIN \"car_makers\" AS cm ON cm.\"Id\" = ml.\"Maker\"\nWHERE cm.\"Maker\" = 'Honda'\n   OR EXISTS (\n       SELECT 1\n       FROM \"car_names\" AS cn\n       JOIN \"cars_data\" AS cd ON cd.\"Id\" = cn.\"MakeId\"\n       WHERE cn.\"Model\" = ml.\"Model\"\n         AND cd.\"Weight\" > 3500\n   );",
+    "status": "mismatch"
+  },
+  "runs": {
+    "pre": {
+      "sample_id": "SQL_DB_text-00048-pre",
+      "question": "What are the different models created by either the car maker General Motors or weighed more than 3500?",
+      "database": "data/Spider-dev/databases/car_1/car_1.sqlite",
+      "database_sha256": "378377f82d2c6f64439fdc2c728c8b3a78feb3592cb4689076e77940b7b59007",
+      "checked_at": "2026-11-28T09:12:22.670Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case9",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE9",
+      "run_id": "c06f89f3499b48699414fe55ae8a11a5",
+      "graph_sha256": "064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+      "reference": {
+        "sql": "SELECT DISTINCT T2.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model = T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker = T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId = T4.Id WHERE T3.FullName = 'General Motors' OR T4.weight > 3500",
+        "columns": [
+          "Model"
+        ],
+        "rows": [
+          [
+            "chevrolet"
+          ],
+          [
+            "buick"
+          ],
+          [
+            "ford"
+          ],
+          [
+            "plymouth"
+          ],
+          [
+            "pontiac"
+          ],
+          [
+            "amc"
+          ],
+          [
+            "dodge"
+          ],
+          [
+            "mercury"
+          ],
+          [
+            "oldsmobile"
+          ],
+          [
+            "chrysler"
+          ],
+          [
+            "mercedes-benz"
+          ],
+          [
+            "cadillac"
+          ],
+          [
+            "mercedes"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cn.MakeId = cd.Id\nJOIN model_list AS ml ON cn.Model = ml.Model\nJOIN car_makers AS cm ON ml.Maker = cm.Id\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;",
+        "rows": [
+          [
+            "chevrolet"
+          ],
+          [
+            "buick"
+          ],
+          [
+            "ford"
+          ],
+          [
+            "plymouth"
+          ],
+          [
+            "pontiac"
+          ],
+          [
+            "amc"
+          ],
+          [
+            "dodge"
+          ],
+          [
+            "mercury"
+          ],
+          [
+            "oldsmobile"
+          ],
+          [
+            "chrysler"
+          ],
+          [
+            "mercedes-benz"
+          ],
+          [
+            "cadillac"
+          ],
+          [
+            "mercedes"
+          ]
+        ],
+        "columns": [
+          "Model"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 13,
+        "prediction_rows": 13
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 4836
+      },
+      "steps": [
+        {
+          "id": "draft",
+          "kind": "column_draft_v2",
+          "from": [],
+          "elapsed_s": 4.329002000000401,
+          "output": {
+            "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cn.MakeId = cd.Id\nJOIN model_list AS ml ON cn.Model = ml.Model\nJOIN car_makers AS cm ON ml.Maker = cm.Id\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_02a79831943e3677016b0a9b079bec87d18bfd3db5ca5a18c4": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_02a79831943e3677016b0a9b079bec87d1b44af4809988a53e": {
+                    "input_tokens": 357,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 357,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_02a79831943e3677016b0a9b0877ac87d19e86a8df04d4f593": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 72,
+                    "content": [
+                      {
+                        "input_tokens": 2,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 72
+                      }
+                    ]
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4764,
+              "completion_tokens": 72,
+              "total_tokens": 4836,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                }
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "b71fa245d98a56a641bac3ef5c097e4a8d9a4e1dd631a174dbfc4c4693056e64"
+          }
+        },
+        {
+          "id": "inspect",
+          "kind": "column_inspect_v2",
+          "from": [
+            "draft"
+          ],
+          "elapsed_s": 0.005751800000325602,
+          "output": {
+            "draft": {
+              "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cn.MakeId = cd.Id\nJOIN model_list AS ml ON cn.Model = ml.Model\nJOIN car_makers AS cm ON ml.Maker = cm.Id\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;"
+            },
+            "route": "keep",
+            "reason": "no_verified_column_conflict",
+            "options": []
+          }
+        },
+        {
+          "id": "revise",
+          "kind": "column_revise_v2",
+          "from": [
+            "inspect"
+          ],
+          "elapsed_s": 9.399999726156238e-06,
+          "output": {
+            "final": {
+              "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cn.MakeId = cd.Id\nJOIN model_list AS ml ON cn.Model = ml.Model\nJOIN car_makers AS cm ON ml.Maker = cm.Id\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;"
+            },
+            "revision": "kept",
+            "route": "keep"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "column_execute_v2",
+          "from": [
+            "revise"
+          ],
+          "elapsed_s": 0.0016513999999006046,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cn.MakeId = cd.Id\nJOIN model_list AS ml ON cn.Model = ml.Model\nJOIN car_makers AS cm ON ml.Maker = cm.Id\nWHERE cm.FullName = 'General Motors'\n   OR cd.Weight > 3500;",
+            "rows": [
+              [
+                "chevrolet"
+              ],
+              [
+                "buick"
+              ],
+              [
+                "ford"
+              ],
+              [
+                "plymouth"
+              ],
+              [
+                "pontiac"
+              ],
+              [
+                "amc"
+              ],
+              [
+                "dodge"
+              ],
+              [
+                "mercury"
+              ],
+              [
+                "oldsmobile"
+              ],
+              [
+                "chrysler"
+              ],
+              [
+                "mercedes-benz"
+              ],
+              [
+                "cadillac"
+              ],
+              [
+                "mercedes"
+              ]
+            ],
+            "columns": [
+              "Model"
+            ],
+            "revision": "kept"
+          }
+        }
+      ]
+    },
+    "post": {
+      "sample_id": "SQL_DB_text-00048-post",
+      "question": "What are the different models created by either the car maker Honda or weighed more than 3500?",
+      "database": "data/Spider-dev/databases/car_1/car_1.sqlite",
+      "database_sha256": "378377f82d2c6f64439fdc2c728c8b3a78feb3592cb4689076e77940b7b59007",
+      "checked_at": "2026-11-28T09:11:36.081Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case9",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE9",
+      "run_id": "1c36c04359d049f5a924c6534206c5ef",
+      "graph_sha256": "064fccf9d4807b4de3dda988cf04c067a6779a22dc85772c00322487fc8fa273",
+      "reference": {
+        "sql": "SELECT DISTINCT T2.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model = T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker = T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId = T4.Id WHERE T3.FullName = 'Honda' OR T4.weight > 3500",
+        "columns": [
+          "Model"
+        ],
+        "rows": [
+          [
+            "chevrolet"
+          ],
+          [
+            "buick"
+          ],
+          [
+            "ford"
+          ],
+          [
+            "plymouth"
+          ],
+          [
+            "pontiac"
+          ],
+          [
+            "amc"
+          ],
+          [
+            "dodge"
+          ],
+          [
+            "mercury"
+          ],
+          [
+            "oldsmobile"
+          ],
+          [
+            "chrysler"
+          ],
+          [
+            "honda"
+          ],
+          [
+            "mercedes-benz"
+          ],
+          [
+            "cadillac"
+          ],
+          [
+            "mercedes"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda' OR cd.Weight > 3500;\n--",
+        "rows": [
+          [
+            "amc"
+          ],
+          [
+            "buick"
+          ],
+          [
+            "cadillac"
+          ],
+          [
+            "chevrolet"
+          ],
+          [
+            "chrysler"
+          ],
+          [
+            "dodge"
+          ],
+          [
+            "ford"
+          ],
+          [
+            "honda"
+          ],
+          [
+            "mercedes"
+          ],
+          [
+            "mercedes-benz"
+          ],
+          [
+            "mercury"
+          ],
+          [
+            "oldsmobile"
+          ],
+          [
+            "plymouth"
+          ],
+          [
+            "pontiac"
+          ]
+        ],
+        "columns": [
+          "Model"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 14,
+        "prediction_rows": 14
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 7458
+      },
+      "steps": [
+        {
+          "id": "draft",
+          "kind": "column_draft_v2",
+          "from": [],
+          "elapsed_s": 4.53169220000018,
+          "output": {
+            "sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda' OR cd.Weight > 3500;\n--"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "prompt_tokens": 7319,
+              "completion_tokens": 139,
+              "total_tokens": 7458,
+              "completion_tokens_details": {
+                "reasoning_tokens": 70
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "b5b231889124935606ab139a52a0af69f5d9ccc704bda27a63dd379dcf83f1e3"
+          }
+        },
+        {
+          "id": "inspect",
+          "kind": "column_inspect_v2",
+          "from": [
+            "draft"
+          ],
+          "elapsed_s": 0.009178599999358994,
+          "output": {
+            "draft": {
+              "sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda' OR cd.Weight > 3500;\n--"
+            },
+            "route": "keep",
+            "reason": "unsupported_or_invalid_draft",
+            "options": []
+          }
+        },
+        {
+          "id": "revise",
+          "kind": "column_revise_v2",
+          "from": [
+            "inspect"
+          ],
+          "elapsed_s": 1.0200000360782724e-05,
+          "output": {
+            "final": {
+              "sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda' OR cd.Weight > 3500;\n--"
+            },
+            "revision": "kept",
+            "route": "keep"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "column_execute_v2",
+          "from": [
+            "revise"
+          ],
+          "elapsed_s": 0.0018287000002601417,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda' OR cd.Weight > 3500;\n--",
+            "rows": [
+              [
+                "amc"
+              ],
+              [
+                "buick"
+              ],
+              [
+                "cadillac"
+              ],
+              [
+                "chevrolet"
+              ],
+              [
+                "chrysler"
+              ],
+              [
+                "dodge"
+              ],
+              [
+                "ford"
+              ],
+              [
+                "honda"
+              ],
+              [
+                "mercedes"
+              ],
+              [
+                "mercedes-benz"
+              ],
+              [
+                "mercury"
+              ],
+              [
+                "oldsmobile"
+              ],
+              [
+                "plymouth"
+              ],
+              [
+                "pontiac"
+              ]
+            ],
+            "columns": [
+              "Model"
+            ],
+            "revision": "kept"
+          }
+        }
+      ]
+    }
+  }
+}

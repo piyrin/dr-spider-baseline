@@ -1,0 +1,567 @@
+{
+  "case": "case2",
+  "topic": "值大小写",
+  "pair_id": "NLQ_column_value-00205",
+  "frontend": {
+    "file": "../frontend/case2.json",
+    "sha256": "160538f1fc9bdf891772c184f69473ad0f0fd09a2b662e6567200e8f3712979b"
+  },
+  "backend": {
+    "file": "../backend/case2.json",
+    "sha256": "d590c0cb8e7ee479692c0be4c03b0beede63c23acef04dabcf1d04efde422d88",
+    "flow_id": "TASK2_COURSE_CASE2"
+  },
+  "historical_post_prediction": {
+    "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky radio';",
+    "status": "mismatch"
+  },
+  "runs": {
+    "pre": {
+      "sample_id": "NLQ_column_value-00205-pre",
+      "question": "What are the Package Options of the TV Channels whose series names are Sky Radio?",
+      "database": "data/Spider-dev/databases/tvshow/tvshow.sqlite",
+      "database_sha256": "b770da24f1ed58243d160a5ff788b99ccc30748821c3270cf4c47d4d05cc9865",
+      "checked_at": "2026-11-28T09:11:51.837Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case2",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE2",
+      "run_id": "9d10bc1bde774b95a62c3f50d69a60ce",
+      "graph_sha256": "cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+      "reference": {
+        "sql": "SELECT Package_Option FROM TV_Channel WHERE series_name = \"Sky Radio\"",
+        "columns": [
+          "Package_Option"
+        ],
+        "rows": [
+          [
+            "Sky Famiglia"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+        "rows": [
+          [
+            "Sky Famiglia"
+          ]
+        ],
+        "columns": [
+          "Package_Option"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "cost": {
+        "model_calls": 2,
+        "total_tokens": 12244
+      },
+      "steps": [
+        {
+          "id": "extract",
+          "kind": "format_extract",
+          "from": [],
+          "elapsed_s": 4.878503799999635,
+          "output": {
+            "output": [
+              "TV_Channel.Package_Option"
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "table": "TV_Channel",
+                "column": "series_name",
+                "term": "Sky Radio",
+                "operator": "="
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "prompt_tokens": 7366,
+              "completion_tokens": 124,
+              "total_tokens": 7490,
+              "completion_tokens_details": {
+                "reasoning_tokens": 88
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "84d1325c61faed584173dedb02f14f58da392ec9a3befd825408551017ed3491"
+          }
+        },
+        {
+          "id": "exact",
+          "kind": "format_exact",
+          "from": [
+            "extract"
+          ],
+          "elapsed_s": 0.0012261000001672073,
+          "output": {
+            "status": "exact",
+            "target": {
+              "table": "TV_Channel",
+              "column": "series_name",
+              "term": "Sky Radio"
+            },
+            "value": "Sky Radio"
+          }
+        },
+        {
+          "id": "normalize",
+          "kind": "format_normalize",
+          "from": [
+            "exact"
+          ],
+          "elapsed_s": 4.699999408330768e-06,
+          "output": {
+            "status": "skipped",
+            "reason": "exact",
+            "value": null
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "format_generate",
+          "from": [
+            "exact",
+            "normalize"
+          ],
+          "elapsed_s": 7.915507300000172,
+          "output": {
+            "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+            "route": "exact",
+            "stored_value": "Sky Radio"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_06e5b5758da0e2ff016b0a9ae59a0087d1893cc06c6e761aab": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_06e5b5758da0e2ff016b0a9ae59a0087d19f31128d71090aaf": {
+                    "input_tokens": 280,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 280,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_06e5b5758da0e2ff016b0a9aea5c3887d1ab2811e701d77972": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 27,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 27
+                      }
+                    ]
+                  },
+                  "rs_06e5b5758da0e2ff016b0a9ae60c1887d1b00843196c5c3ad9": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 40
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4687,
+              "completion_tokens": 67,
+              "total_tokens": 4754,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 40
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "1b11cf1102e9b4a78d0e4aec19de44cfd1efde9c8ca4e8fcdb8312f119c75a83"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0009608000000298489,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+            "rows": [
+              [
+                "Sky Famiglia"
+              ]
+            ],
+            "columns": [
+              "Package_Option"
+            ]
+          }
+        }
+      ]
+    },
+    "post": {
+      "sample_id": "NLQ_column_value-00205-post",
+      "question": "What are the package options of TV channels 'Sky radio'?",
+      "database": "data/Spider-dev/databases/tvshow/tvshow.sqlite",
+      "database_sha256": "b770da24f1ed58243d160a5ff788b99ccc30748821c3270cf4c47d4d05cc9865",
+      "checked_at": "2026-11-28T09:11:38.355Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case2",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE2",
+      "run_id": "daf274d60d5e4226b8da3a820dfe39ba",
+      "graph_sha256": "cb03d5f37c0d14d424bd59cb6801f353a4d3a08b1c2d90a41ce635a5330f0929",
+      "reference": {
+        "sql": "SELECT Package_Option FROM TV_Channel WHERE series_name = \"Sky Radio\"",
+        "columns": [
+          "Package_Option"
+        ],
+        "rows": [
+          [
+            "Sky Famiglia"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+        "rows": [
+          [
+            "Sky Famiglia"
+          ]
+        ],
+        "columns": [
+          "Package_Option"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 1,
+        "prediction_rows": 1
+      },
+      "cost": {
+        "model_calls": 3,
+        "total_tokens": 21571
+      },
+      "steps": [
+        {
+          "id": "extract",
+          "kind": "format_extract",
+          "from": [],
+          "elapsed_s": 6.0308248999999705,
+          "output": {
+            "output": [
+              "TV_Channel.Package_Option"
+            ],
+            "joins": [],
+            "targets": [
+              {
+                "table": "TV_Channel",
+                "column": "series_name",
+                "term": "Sky radio",
+                "operator": "="
+              }
+            ]
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "prompt_tokens": 6141,
+              "completion_tokens": 160,
+              "total_tokens": 6301,
+              "prompt_tokens_details": {
+                "cached_tokens": 3968
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 105
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "9f5e2d8665226693b18cc39c886f350370ed4c7738f3ef3a24c31ce3a7fea951"
+          }
+        },
+        {
+          "id": "exact",
+          "kind": "format_exact",
+          "from": [
+            "extract"
+          ],
+          "elapsed_s": 0.002464999999574502,
+          "output": {
+            "status": "miss",
+            "target": {
+              "table": "TV_Channel",
+              "column": "series_name",
+              "term": "Sky radio"
+            },
+            "value": null
+          }
+        },
+        {
+          "id": "normalize",
+          "kind": "format_normalize",
+          "from": [
+            "exact"
+          ],
+          "elapsed_s": 28.463163200000054,
+          "output": {
+            "status": "normalized",
+            "candidates": [
+              "Sky Radio"
+            ],
+            "value": "Sky Radio"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_0709df6b4e64dec4016b0a9acd129c87d0ad7abb8537d1f572": {
+                    "input_tokens": 58,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 58,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0709df6b4e64dec4016b0a9acd129c87d0b38fbf7140254006": {
+                    "input_tokens": 53,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 53,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_0709df6b4e64dec4016b0a9ad676c887d084422a0446209ff8": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 11,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 11
+                      }
+                    ]
+                  },
+                  "rs_0709df6b4e64dec4016b0a9ad2cf3087d0a674d5d40b5aa9f4": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 114
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3787,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 10407,
+              "completion_tokens": 125,
+              "total_tokens": 10532,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 9088
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 114
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "ef4512fd448604ee9dee6081e8b1942663ed458b94014698d6ea4727df8cb55c"
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "format_generate",
+          "from": [
+            "exact",
+            "normalize"
+          ],
+          "elapsed_s": 6.670119200000045,
+          "output": {
+            "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+            "route": "normalized",
+            "stored_value": "Sky Radio"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_051de4d0692f83fb016b0a9ad938d087d097caea05b2897e15": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_051de4d0692f83fb016b0a9ad938d087d0ae572db07852775e": {
+                    "input_tokens": 280,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 280,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_051de4d0692f83fb016b0a9adcb03487d0b1023ead2833b406": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 27,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 27
+                      }
+                    ]
+                  },
+                  "rs_051de4d0692f83fb016b0a9ad9997887d0ba96b59dbd1b9681": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 24
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3712,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 4687,
+              "completion_tokens": 51,
+              "total_tokens": 4738,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 3712
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 24
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "ded2205d5a2a43c58db9ef9515d09f9fb716797fa8f2ce3265b2d0e62742b453"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0010317999995095306,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+            "rows": [
+              [
+                "Sky Famiglia"
+              ]
+            ],
+            "columns": [
+              "Package_Option"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

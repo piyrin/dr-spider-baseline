@@ -1,0 +1,111 @@
+{
+  "id": "TASK2_COURSE_CASE5",
+  "type": "flow",
+  "name": "Task 2 canvas experiment",
+  "params": [
+    {
+      "name": "canvasRunId",
+      "type": "String",
+      "scope": "defaultScope"
+    }
+  ],
+  "results": [],
+  "nodes": [
+    {
+      "id": "canvas_intent",
+      "type": "event",
+      "title": "intent",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_policy",
+      "type": "event",
+      "title": "policy",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_generate",
+      "type": "event",
+      "title": "generate",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_check",
+      "type": "event",
+      "title": "check",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "canvas_execute",
+      "type": "event",
+      "title": "execute",
+      "reference": "TASK2_CANVAS_EXPERIMENT_STEP",
+      "params": [
+        {
+          "name": "canvasRunId",
+          "type": "String",
+          "scope": "defaultScope"
+        }
+      ],
+      "results": []
+    }
+  ],
+  "routes": [
+    {
+      "source": "start",
+      "target": "canvas_intent"
+    },
+    {
+      "source": "canvas_intent",
+      "target": "canvas_policy"
+    },
+    {
+      "source": "canvas_policy",
+      "target": "canvas_generate"
+    },
+    {
+      "source": "canvas_generate",
+      "target": "canvas_check"
+    },
+    {
+      "source": "canvas_check",
+      "target": "canvas_execute"
+    },
+    {
+      "source": "canvas_execute",
+      "target": "end"
+    }
+  ]
+}

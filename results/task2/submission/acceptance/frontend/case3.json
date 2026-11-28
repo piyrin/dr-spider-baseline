@@ -1,0 +1,180 @@
+{
+  "id": "case3",
+  "title": "同义值",
+  "samples": {
+    "pre": {
+      "id": "NLQ_value_synonym-00162-pre",
+      "question": "What are the airline names and abbreviations for airlines in the USA?"
+    },
+    "post": {
+      "id": "NLQ_value_synonym-00162-post",
+      "question": "Show the list of the airlines and their abbreviations used in the United States."
+    }
+  },
+  "elements": [
+    {
+      "id": "extract",
+      "name": "同义筛选提取 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "synonym_extract"
+          }
+        }
+      }
+    },
+    {
+      "id": "exact",
+      "name": "SQLite 原值查找",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "synonym_exact"
+          }
+        }
+      }
+    },
+    {
+      "id": "match",
+      "name": "同义配对 Agent",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "synonym_match"
+          }
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "name": "SQLite 库值复核",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "synonym_verify"
+          }
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "按核验值生成 SQL",
+      "type": "task2-card",
+      "x": 350,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "synonym_generate"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行 SQLite",
+      "type": "task2-card",
+      "x": 90,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "execute"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "extract-exact",
+      "fromElementId": "extract",
+      "toElementId": "exact",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "exact-match",
+      "fromElementId": "exact",
+      "toElementId": "match",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "exact-verify",
+      "fromElementId": "exact",
+      "toElementId": "verify",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "match-verify",
+      "fromElementId": "match",
+      "toElementId": "verify",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "verify-generate",
+      "fromElementId": "verify",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "generate-execute",
+      "fromElementId": "generate",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

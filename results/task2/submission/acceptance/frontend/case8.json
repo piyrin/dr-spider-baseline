@@ -1,0 +1,144 @@
+{
+  "id": "case8",
+  "title": "替代排序字段",
+  "samples": {
+    "pre": {
+      "id": "DB_DBcontent_equivalence-00304-pre",
+      "question": "What are the record companies of orchestras in descending order of years in which they were founded?"
+    },
+    "post": {
+      "id": "DB_DBcontent_equivalence-00304-post",
+      "question": "What are the record companies of orchestras in descending order of years in which they were founded?"
+    }
+  },
+  "elements": [
+    {
+      "id": "intent",
+      "name": "排序要求提取 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sort_select_v3"
+          }
+        }
+      }
+    },
+    {
+      "id": "probe",
+      "name": "SQLite 候选列核对",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sort_verify_v3"
+          }
+        }
+      }
+    },
+    {
+      "id": "direction",
+      "name": "最终排序方向 Agent",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sort_finalize_v3"
+          }
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "按排序约束生成 SQL",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sort_generate"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行 SQLite 查询",
+      "type": "task2-card",
+      "x": 350,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "sort_execute"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "intent-probe",
+      "fromElementId": "intent",
+      "toElementId": "probe",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "probe-direction",
+      "fromElementId": "probe",
+      "toElementId": "direction",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "direction-generate",
+      "fromElementId": "direction",
+      "toElementId": "generate",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "generate-execute",
+      "fromElementId": "generate",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

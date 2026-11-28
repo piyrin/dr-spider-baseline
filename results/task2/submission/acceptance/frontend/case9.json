@@ -1,0 +1,117 @@
+{
+  "id": "case9",
+  "title": "匹配正确筛选列",
+  "samples": {
+    "pre": {
+      "id": "SQL_DB_text-00048-pre",
+      "question": "What are the different models created by either the car maker General Motors or weighed more than 3500?"
+    },
+    "post": {
+      "id": "SQL_DB_text-00048-post",
+      "question": "What are the different models created by either the car maker Honda or weighed more than 3500?"
+    }
+  },
+  "elements": [
+    {
+      "id": "draft",
+      "name": "SQL 初稿 Agent",
+      "type": "task2-card",
+      "x": 90,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "column_draft_v2"
+          }
+        }
+      }
+    },
+    {
+      "id": "inspect",
+      "name": "SQLite 筛选列核验",
+      "type": "task2-card",
+      "x": 350,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "column_inspect_v2"
+          }
+        }
+      }
+    },
+    {
+      "id": "revise",
+      "name": "局部修正或条件复核",
+      "type": "task2-card",
+      "x": 610,
+      "y": 85,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "column_revise_v2"
+          }
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "name": "执行最终 SQL",
+      "type": "task2-card",
+      "x": 610,
+      "y": 235,
+      "color": "#24645e",
+      "select": false,
+      "locked": false,
+      "pendant": {
+        "data": {
+          "type": "task2-node",
+          "detail": {
+            "kind": "column_execute_v2"
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "draft-inspect",
+      "fromElementId": "draft",
+      "toElementId": "inspect",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "inspect-revise",
+      "fromElementId": "inspect",
+      "toElementId": "revise",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    },
+    {
+      "id": "revise-execute",
+      "fromElementId": "revise",
+      "toElementId": "execute",
+      "name": "",
+      "type": "task2-line",
+      "color": "#557575",
+      "points": []
+    }
+  ]
+}

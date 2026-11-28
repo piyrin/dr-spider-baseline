@@ -1,0 +1,428 @@
+{
+  "case": "case1",
+  "topic": "输出字段",
+  "pair_id": "NLQ_column_carrier-00499",
+  "frontend": {
+    "file": "../frontend/case1.json",
+    "sha256": "011dd98f0415fe12b27c8e86f377311da19ffc8634b86279a30a319276f62b4a"
+  },
+  "backend": {
+    "file": "../backend/case1.json",
+    "sha256": "28460c4c316159d3e96b6095cf2ca104c4756fa264151890f6f8bc8087e4135c",
+    "flow_id": "TASK2_COURSE_CASE1"
+  },
+  "historical_post_prediction": {
+    "sql": "SELECT ID, name, grade\nFROM Highschooler\nWHERE grade = 10;",
+    "status": "mismatch"
+  },
+  "runs": {
+    "pre": {
+      "sample_id": "NLQ_column_carrier-00499-pre",
+      "question": "What are the names of all high schoolers in grade 10?",
+      "database": "data/Spider-dev/databases/network_1/network_1.sqlite",
+      "database_sha256": "262dc8da550346eb2c289ad8d22fd0d3b8b327576963e80deccb5059726c25e0",
+      "checked_at": "2026-11-28T09:11:40.549Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case1",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE1",
+      "run_id": "96223441948f48a28ab50a15dea91a8e",
+      "graph_sha256": "3d1ac1b1a878edfa619c51feeed7829bfe64a347d190c6e898221eb028814567",
+      "reference": {
+        "sql": "SELECT name FROM Highschooler WHERE grade = 10",
+        "columns": [
+          "name"
+        ],
+        "rows": [
+          [
+            "Haley"
+          ],
+          [
+            "Andrew"
+          ],
+          [
+            "Kris"
+          ],
+          [
+            "Brittany"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT name FROM Highschooler WHERE grade = 10;",
+        "rows": [
+          [
+            "Haley"
+          ],
+          [
+            "Andrew"
+          ],
+          [
+            "Kris"
+          ],
+          [
+            "Brittany"
+          ]
+        ],
+        "columns": [
+          "name"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 4,
+        "prediction_rows": 4
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 10577
+      },
+      "steps": [
+        {
+          "id": "match",
+          "kind": "projection_match_v2",
+          "from": [],
+          "elapsed_s": 2.550000044720946e-05,
+          "output": {
+            "status": "verified",
+            "field": "Highschooler.name",
+            "entity": "high schoolers"
+          }
+        },
+        {
+          "id": "normalize",
+          "kind": "projection_normalize",
+          "from": [
+            "match"
+          ],
+          "elapsed_s": 6.70000008540228e-06,
+          "output": {
+            "status": "skipped",
+            "candidate": null
+          }
+        },
+        {
+          "id": "recheck",
+          "kind": "projection_recheck",
+          "from": [
+            "normalize"
+          ],
+          "elapsed_s": 5.199999577598646e-06,
+          "output": {
+            "status": "skipped",
+            "field": null,
+            "entity": null
+          }
+        },
+        {
+          "id": "constraint",
+          "kind": "projection_constraint",
+          "from": [
+            "match",
+            "recheck"
+          ],
+          "elapsed_s": 7.800000275892671e-06,
+          "output": {
+            "route": "direct",
+            "field": "Highschooler.name",
+            "hint": "Return only the requested entity name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "projection_generate",
+          "from": [
+            "constraint"
+          ],
+          "elapsed_s": 3.690139000000272,
+          "output": {
+            "sql": "SELECT name FROM Highschooler WHERE grade = 10;"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "attribution": {
+                "items": {
+                  "msg_070593406d0b509b016b0a9ade124c87d0968ea3bbc7bc9806": {
+                    "input_tokens": 213,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 213,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_070593406d0b509b016b0a9ade124c87d0b960887dccd79d48": {
+                    "input_tokens": 25,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0,
+                    "content": [
+                      {
+                        "input_tokens": 25,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 0
+                      }
+                    ]
+                  },
+                  "msg_070593406d0b509b016b0a9adf376c87d0ba18957d15f61262": {
+                    "input_tokens": 0,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 18,
+                    "content": [
+                      {
+                        "input_tokens": 0,
+                        "cached_tokens": 0,
+                        "cache_write_tokens": 0,
+                        "output_tokens": 18
+                      }
+                    ]
+                  },
+                  "rs_070593406d0b509b016b0a9ade9c1487d08fa372210ea49512": {
+                    "input_tokens": 2,
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 25
+                  }
+                },
+                "request_fields": {
+                  "instructions": {
+                    "input_tokens": 4380,
+                    "cached_tokens": 3787,
+                    "cache_write_tokens": 0,
+                    "output_tokens": 0
+                  }
+                }
+              },
+              "prompt_tokens": 10534,
+              "completion_tokens": 43,
+              "total_tokens": 10577,
+              "prompt_tokens_details": {
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                },
+                "cached_tokens": 9088
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 25
+              }
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "3ccb63e5fc04c90dca6c78c2656b71304bc65112d4786e84853f307d36f21a54"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.0011819999999715947,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT name FROM Highschooler WHERE grade = 10;",
+            "rows": [
+              [
+                "Haley"
+              ],
+              [
+                "Andrew"
+              ],
+              [
+                "Kris"
+              ],
+              [
+                "Brittany"
+              ]
+            ],
+            "columns": [
+              "name"
+            ]
+          }
+        }
+      ]
+    },
+    "post": {
+      "sample_id": "NLQ_column_carrier-00499-post",
+      "question": "Who are all students currently in grade ten?",
+      "database": "data/Spider-dev/databases/network_1/network_1.sqlite",
+      "database_sha256": "262dc8da550346eb2c289ad8d22fd0d3b8b327576963e80deccb5059726c25e0",
+      "checked_at": "2026-11-28T09:11:17.139Z",
+      "browser_url": "http://127.0.0.1:3000/?case=case1",
+      "endpoint": "/dataTesting-core/api/engine/flow",
+      "http_status": 200,
+      "entry_flow_id": "@com.horsecoder.common.whuTalent.dataTesting.core/FLOW_RUN",
+      "course_flow_id": "TASK2_COURSE_CASE1",
+      "run_id": "9909e1b6da734de2a76dc8ed061101ee",
+      "graph_sha256": "3d1ac1b1a878edfa619c51feeed7829bfe64a347d190c6e898221eb028814567",
+      "reference": {
+        "sql": "SELECT name FROM Highschooler WHERE grade = 10",
+        "columns": [
+          "name"
+        ],
+        "rows": [
+          [
+            "Haley"
+          ],
+          [
+            "Andrew"
+          ],
+          [
+            "Kris"
+          ],
+          [
+            "Brittany"
+          ]
+        ]
+      },
+      "executed": {
+        "status": "executed",
+        "sql": "SELECT name FROM Highschooler WHERE grade = 10",
+        "rows": [
+          [
+            "Haley"
+          ],
+          [
+            "Andrew"
+          ],
+          [
+            "Kris"
+          ],
+          [
+            "Brittany"
+          ]
+        ],
+        "columns": [
+          "name"
+        ]
+      },
+      "score": {
+        "correct": true,
+        "status": "match",
+        "reference_rows": 4,
+        "prediction_rows": 4
+      },
+      "cost": {
+        "model_calls": 1,
+        "total_tokens": 314
+      },
+      "steps": [
+        {
+          "id": "match",
+          "kind": "projection_match_v2",
+          "from": [],
+          "elapsed_s": 1.5099999473022763e-05,
+          "output": {
+            "status": "unresolved",
+            "field": null,
+            "entity": null
+          }
+        },
+        {
+          "id": "normalize",
+          "kind": "projection_normalize",
+          "from": [
+            "match"
+          ],
+          "elapsed_s": 2.3999999939405825e-05,
+          "output": {
+            "status": "candidate",
+            "candidate": "students"
+          }
+        },
+        {
+          "id": "recheck",
+          "kind": "projection_recheck",
+          "from": [
+            "normalize"
+          ],
+          "elapsed_s": 0.0020623000000341563,
+          "output": {
+            "status": "verified",
+            "field": "Highschooler.name",
+            "entity": "students"
+          }
+        },
+        {
+          "id": "constraint",
+          "kind": "projection_constraint",
+          "from": [
+            "match",
+            "recheck"
+          ],
+          "elapsed_s": 1.0300000212737359e-05,
+          "output": {
+            "route": "normalized",
+            "field": "Highschooler.name",
+            "hint": "Return only the requested entity name from Highschooler.name. Fields used to filter, identify, or order rows do not belong in the output unless explicitly requested."
+          }
+        },
+        {
+          "id": "generate",
+          "kind": "projection_generate",
+          "from": [
+            "constraint"
+          ],
+          "elapsed_s": 19.77069599999959,
+          "output": {
+            "sql": "SELECT name FROM Highschooler WHERE grade = 10"
+          },
+          "model_call": {
+            "model": "gpt-6-sol",
+            "system_fingerprint": null,
+            "usage": {
+              "prompt_tokens": 301,
+              "completion_tokens": 13,
+              "total_tokens": 314
+            },
+            "reasoning_effort": "high",
+            "stream": false,
+            "request_sha256": "46476669cddc3146ef46db552a62accf7c241bed3ebddb4ffcbbee59e30acc1a"
+          }
+        },
+        {
+          "id": "execute",
+          "kind": "execute",
+          "from": [
+            "generate"
+          ],
+          "elapsed_s": 0.001545300000543648,
+          "output": {
+            "status": "executed",
+            "sql": "SELECT name FROM Highschooler WHERE grade = 10",
+            "rows": [
+              [
+                "Haley"
+              ],
+              [
+                "Andrew"
+              ],
+              [
+                "Kris"
+              ],
+              [
+                "Brittany"
+              ]
+            ],
+            "columns": [
+              "name"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

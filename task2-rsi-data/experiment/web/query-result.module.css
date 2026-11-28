@@ -1,0 +1,9 @@
+.outcome { margin-block: 10px 18px; }
+.summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding: 10px 14px; border-left: 3px solid; }
+.summary[data-correct='true'] { color: #164c3c; background: #eaf6ef; }
+.summary[data-correct='false'] { color: #842a24; background: #fff1ee; }
+.note { color: #4a5b64; font-size: .88rem; margin-block: 8px; }
+.outcome h3 { font-size: .94rem; font-weight: 700; margin: 14px 0 6px; }
+.outcome pre { padding: 12px; background: #f1f5f7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.table { overflow-x: auto; }
+.table :is(th, td) { padding: 5px 14px; border-bottom: 1px solid #d8e2e6; text-align: left; white-space: nowrap; }
