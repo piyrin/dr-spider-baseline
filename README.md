@@ -2,7 +2,7 @@
 
 ## 课程十题验收
 
-课程验收使用 Dr.Spider 的十道原题。历史基线 `pre` 通过 10/10、`post` 通过 0/10。课程默认「运行」入口统一使用 Thinking `high` 实测，`pre` 和 `post` 各通过 **10/10**。逐题材料包括人工调整后的前端画布 JSON、Spring Boot 编排 JSON、运行结果和原因说明。[十题验收明细](results/task2/submission/acceptance/README.md) · [十题提交包](results/task2/submission/课程十题验收.zip)
+课程验收使用 Dr.Spider 的十道原题。历史基线 `pre` 通过 10/10、`post` 通过 0/10。课程默认「运行」入口统一使用 Thinking `high` 实测，`pre` 和 `post` 各通过 **10/10**。从 GitHub 独立检出并重新构建后复跑 20 次，所有查询的返回行与归档一致。[十题验收明细](results/task2/submission/acceptance/README.md) · [独立复跑记录](results/task2/submission/clean-checkout-verification.json) · [十题提交包](results/task2/submission/课程十题验收.zip)
 
 ## 项目与扩展实验
 
@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | 1 · Dr.Spider 基线 | 使用 `gpt-6-sol` 完成 **850 对、1,700 条预测**。执行准确率从 **78.24%（665/850）降至 64.00%（544/850）**。 | [基线实验报告](reports/任务1实验报告.md) · [134 对人工复核 Excel](results/drspider-17x50/Dr.Spider-850对基线与鲁棒性问题复核（汇报版）.xlsx) |
 | 1 · 扩样与辅助对照 | 扩样和定向补测共 **344 对**。另完成三行样例对照与表数分层分析。 | [扩样结果](results/drspider-17x50/expansion/README.md) · [三行样例对照](results/drspider-17x50/select3/README.md) · [表数分层](results/drspider-17x50/diagnostics/table-count-summary.json) |
-| 2 · Dr.Spider 人工编排历史实验 | 接入课程默认入口前，Visual 实验页实测的原题扰动后通过 **9/10**，扰动前后均通过 **8/10**。第 7 题采用通用 v4。 | [历史十题结果](reports/任务2先验知识与人工编排实验.md#十题最新编排结果) · [画布与复测证据](results/task2/submission/README.md#扩展实验与历版记录) · [编排源码](task2-rsi-data/experiment/README.md) |
+| 2 · Dr.Spider 课程十题验收 | 通过课程默认「运行」入口，用 Thinking `high` 实测 **pre 10/10、post 10/10、双侧通过 10/10**。 | [正式十题结果](results/task2/submission/acceptance/README.md) · [编排源码](task2-rsi-data/experiment/README.md) |
 | 2 · RSI Data 启动验收 | 课程 Spring Boot 经流程引擎运行单表 Agent 和多 Agent 协作，在 Dr.Spider SQLite 上核对结果。 | [课程执行验收记录](results/task2/course-acceptance-20261120.json) |
 
 ## 启动 Visual 并查看编排结果
@@ -29,7 +29,42 @@ python -m venv .venv
 if (!(Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
-在本地 `.env` 填入课程 API 地址和密钥，模型账户需可调用 `gpt-6-sol`。首次运行还需按下文「首次接入课程前端和后端」准备课程组件和编译后端。已经配置好课程环境的读者可直接启动三个服务。
+核对归档结果可直接运行以下命令。脚本逐题检查案例文件和 SQLite 的 SHA-256，并在原数据库重执行 20 条已归档的 SQL，核对参考结果、行数和评分。此命令无需模型密钥和课程服务。
+
+```powershell
+& ./.venv/Scripts/python.exe ./scripts/verify_course_acceptance.py
+```
+
+如需从课程页面重新生成 SQL，在本地 `.env` 填入课程 API 地址和密钥，模型账户需可调用 `gpt-6-sol`。首次运行前按下节准备课程组件和编译后端。当前验收请求固定使用 Thinking `high`。新生成的 SQL 和评分取决于模型服务当次返回。
+
+### 首次接入课程前端和后端
+
+使用 PowerShell 7、Node.js 24、pnpm 12.23.0、Corretto 8u514、Maven 3.9.16 和 H2 1.4.199。下载或检出以下课程源码，将解包后的项目根目录放到对应位置。
+
+| 课程组件 | 在本仓库中的位置 |
+| --- | --- |
+| [RSI Data 前端 29ecb6c](https://github.com/ymxiong/rsi-data-platform/tree/29ecb6c0b3abe32a5df2a649b22085377c86fce7) | `.local/platform-preview/rsi-data-platform/` |
+| [RSI Flow Visual 43b8f53](https://github.com/ymxiong/rsi-flow-visual/tree/43b8f53a7c77cbc6ea5f655820dfbe9336cb4452) | `.local/platform-preview/rsi-flow-visual/` |
+| [RSI Data 后端 58051d9](https://github.com/ymxiong/rsi-data-spring-boot/tree/58051d9b7e679e9730e0a431fc5229cc01f972dd) | `.local/upstream/snapshots/rsi-data-spring-boot/` |
+
+使用课程组提供的 `dist.zip` 和 Maven 私服 `settings.xml`。解包后确认 `.local/platform-preview/rsi-flow-visual/dist/index.js` 存在。将 Maven 配置及运行时放到以下位置。
+
+```text
+.local/task2-rsi-data/spring-boot/
+├── settings.xml
+└── runtime/
+    ├── corretto8/jdk1.8.0_514/bin/java.exe
+    ├── apache-maven-3.9.16/bin/mvn.cmd
+    └── h2-1.4.199.jar
+```
+
+在仓库根目录先装配课程页面，再安装前端依赖并编译后端。后端首次构建通过课程 Maven 配置取得依赖。已有本地 Maven 缓存时可为编译命令加 `-Offline`。
+
+```powershell
+& ./task2-rsi-data/experiment/install-preview.ps1
+pnpm.cmd --dir .local/platform-preview/rsi-data-platform install --no-frozen-lockfile
+& ./task2-rsi-data/experiment/build-course.ps1
+```
 
 ### 启动前后端
 
@@ -53,7 +88,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\task2-rsi-data\spring-
 
 ```powershell
 Set-Location ./.local/platform-preview/rsi-data-platform
-npm.cmd run dev -- --hostname 127.0.0.1 --port 3000
+pnpm.cmd dev --hostname 127.0.0.1 --port 3000
 ```
 
 Spring Boot 显示 `Started AppStarter`、前端显示 `Ready` 后，就可以打开下方的编排示例。
@@ -78,22 +113,6 @@ Spring Boot 显示 `Started AppStarter`、前端显示 `Ready` 后，就可以�
 | [第 10 题 · 筛选条件核验](http://127.0.0.1:3000/task2-experiment?case=filter_count) | `wta_1` | `matches` 中 WTA Championships 的 `winner_hand = 'L'` 匹配 3 条比赛明细，按获胜者姓名去重后为 2 人。 |
 
 每题的 `pre` 和 `post` 均附 SQLite 路径、建表语句、核对查询与实际返回行，以及参考 SQL 和完整结果。[十题数据库证据](results/task2/submission/十题数据库证据.json) · [全部编排预设](task2-rsi-data/experiment/README.md) · [实验结果与画布证据](results/task2/submission/README.md)
-
-<details>
-<summary>首次接入课程前端和后端</summary>
-
-使用 PowerShell 7、Node.js 24、Corretto 8u514、Maven 3.9.16 和 H2 1.4.199。将课程前端放在 `.local/platform-preview/rsi-data-platform/`，按前端 `package.json` 的 `@horsecoder/visual-core` 配置放置同级可视化组件及课程提供的 `dist`。课程后端源码放在 `.local/upstream/snapshots/rsi-data-spring-boot/`。Maven 私服配置放在 `.local/task2-rsi-data/spring-boot/settings.xml`，Java、Maven 和 H2 放在同目录的 `runtime/` 下，路径分别为 `corretto8/jdk1.8.0_514/`、`apache-maven-3.9.16/` 和 `h2-1.4.199.jar`。[课程前端源码](https://github.com/ymxiong/rsi-data-platform/tree/dev_main) · [课程后端源码](https://github.com/ymxiong/rsi-data-spring-boot)
-
-从仓库根目录执行以下命令，再启动上面的三个服务。
-
-```powershell
-npm.cmd --prefix .local/platform-preview/rsi-data-platform install
-& ./task2-rsi-data/spring-boot/build-course.ps1
-& ./task2-rsi-data/experiment/build-course.ps1
-& ./task2-rsi-data/experiment/install-preview.ps1
-```
-
-</details>
 
 ## 目录与产物
 
@@ -145,4 +164,4 @@ npm.cmd --prefix .local/platform-preview/rsi-data-platform install
 
 我先比较同一题面和模型在有无人工先验时的结果。配对复测中，扰动后通过从 **1/10 提升到 10/10**，扰动前有 1 题回退，双侧同时通过从 **1/10 提升到 9/10**。
 
-随后我在课程 Visual 按问题类型设计节点和分支。第 7 题通用 v4 的原题在实验页和两档 Thinking 批测均双侧通过。接入课程默认入口前，第 3 题的扰动后输入及第 9 题的扰动前输入在实验页实测失分。同类与混合题单用于开发回归，独立泛化仍待验证。[版本迭代汇总](reports/任务2先验知识与人工编排实验.md#版本迭代汇总) · [历史页面与批测证据](results/task2/submission/README.md#扩展实验与历版记录)
+课程 Visual 的编排版本、实验页成绩和阶段性对照记录见任务 2 报告。同类与混合题单用于开发回归，独立泛化仍待验证。[历史编排对照](reports/任务2先验知识与人工编排实验.md#接入课程默认入口前的编排对照) · [正式十题结果](results/task2/submission/acceptance/README.md)

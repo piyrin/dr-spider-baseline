@@ -1,0 +1,374 @@
+{
+  "checkout_commit": "d22ffe4c22c49a359dc503fe1383cea1fb03c117",
+  "validation": "Fresh GitHub clone with the reviewed setup-script updates applied before building.",
+  "source_file_sha256": {
+    "task2-rsi-data/experiment/install-preview.ps1": "b23cb14c518ccdb3eca17340a0f20176417d3b831e7ecc4fd9ad541adfb7d81d",
+    "task2-rsi-data/experiment/build-course.ps1": "ad0f03e746ba2b12f25924fb8663cc174252d7af3f7e6a487ea71f6ee1bf931d",
+    "task2-rsi-data/spring-boot/build-course.ps1": "3506dc596355ee75d17bac9d21edb35e5e4553d7cfc1dd118c3375454461613f",
+    "scripts/verify_course_acceptance.py": "ed63a9626e3c0577986ca38e065066a93961f03aefc851526d89df3b7325044b",
+    "task2-rsi-data/experiment/serve_canvas.py": "befd5ee26ceacc6aba5c55a64564cb11a502628c494a8ff582b07eb875852deb",
+    "task2-rsi-data/experiment/web/CourseCases.tsx": "b928e937bad3817f156fc72639f5d8f39a082fabee2310cb2ad9891c32b8bb54"
+  },
+  "dataset_commit": "c64694a4a278ab0faff08ce7a3501d46f458b431",
+  "evaluator_commit": "e97acc546ecbee8fa27fa8dbf025ef61493a876c",
+  "sqlite_version": "3.50.4",
+  "setup": {
+    "frontend": "Pinned course frontend and supplied Visual dist; fresh pnpm install backed by local package store.",
+    "backend": "Pinned course backend and supplied settings.xml; online build from empty project Maven repository.",
+    "python": "New Python 3.13.6 environment, three pinned packages copied from the same installed versions after PyPI TLS failures; pip check passed.",
+    "data": "Pinned cached archive verified and unpacked into clean checkout; fixed evaluator modules downloaded.",
+    "offline_replay": "20/20 archived queries independently re-executed in the clean checkout."
+  },
+  "entry_point": "Course Visual → /dataTesting-core/api/engine/flow → numbered rsi-flow → Python nodes",
+  "model": {
+    "ids": [
+      "gpt-6-sol"
+    ],
+    "reasoning_effort": "high",
+    "available_system_fingerprints": [],
+    "model_calls": 38,
+    "total_tokens": 258733
+  },
+  "scope": {
+    "case_pairs": 10,
+    "browser_runs": 20,
+    "pre_pass": 10,
+    "post_pass": 10,
+    "both_pass": 10,
+    "equivalent_to_archived_result": 20,
+    "same_rows_in_same_order_as_archive": 20,
+    "same_sql_text_as_archive": 8
+  },
+  "cases": [
+    {
+      "case": "case1",
+      "pre": {
+        "sample_id": "NLQ_column_carrier-00499-pre",
+        "checked_at": "2026-11-28T11:12:06.163Z",
+        "run_id": "498f0ba558d745ff9e054688a52a1b3b",
+        "course_flow_id": "TASK2_COURSE_CASE1",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 4,
+          "prediction_rows": 4
+        },
+        "sql": "SELECT name FROM Highschooler WHERE grade = 10;",
+        "same_sql_as_archive": true,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "NLQ_column_carrier-00499-post",
+        "checked_at": "2026-11-28T11:11:41.731Z",
+        "run_id": "5da99856acc6447f95aa5366a59508af",
+        "course_flow_id": "TASK2_COURSE_CASE1",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 4,
+          "prediction_rows": 4
+        },
+        "sql": "SELECT name FROM Highschooler WHERE grade = 10;",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case2",
+      "pre": {
+        "sample_id": "NLQ_column_value-00205-pre",
+        "checked_at": "2026-11-28T11:12:15.970Z",
+        "run_id": "d8ef87b2619f4283b28e4596245246ad",
+        "course_flow_id": "TASK2_COURSE_CASE2",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        },
+        "sql": "SELECT \"Package_Option\"\nFROM \"TV_Channel\"\nWHERE \"series_name\" = 'Sky Radio';",
+        "same_sql_as_archive": true,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "NLQ_column_value-00205-post",
+        "checked_at": "2026-11-28T11:12:00.124Z",
+        "run_id": "af9bb92b60d84dde991aa8690cacabf5",
+        "course_flow_id": "TASK2_COURSE_CASE2",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        },
+        "sql": "SELECT \"Package_Option\" FROM \"TV_Channel\" WHERE \"series_name\" = 'Sky Radio';",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case3",
+      "pre": {
+        "sample_id": "NLQ_value_synonym-00162-pre",
+        "checked_at": "2026-11-28T11:12:21.453Z",
+        "run_id": "1d7638426a7d49ec85381a3f66d68aa5",
+        "course_flow_id": "TASK2_COURSE_CASE3",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 12,
+          "prediction_rows": 12
+        },
+        "sql": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'USA';",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "NLQ_value_synonym-00162-post",
+        "checked_at": "2026-11-28T11:11:54.604Z",
+        "run_id": "a627c840a1d84c6081b28a80f94d3c75",
+        "course_flow_id": "TASK2_COURSE_CASE3",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 12,
+          "prediction_rows": 12
+        },
+        "sql": "SELECT \"Airline\", \"Abbreviation\"\nFROM \"airlines\"\nWHERE \"Country\" = 'USA';",
+        "same_sql_as_archive": true,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case4",
+      "pre": {
+        "sample_id": "DB_DBcontent_equivalence-00143-pre",
+        "checked_at": "2026-11-28T11:12:19.054Z",
+        "run_id": "d9ef38281c204bb2bba3e6640caf781a",
+        "course_flow_id": "TASK2_COURSE_CASE4",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        },
+        "sql": "SELECT COUNT(*) FROM ship WHERE disposition_of_ship = 'Captured';",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "DB_DBcontent_equivalence-00143-post",
+        "checked_at": "2026-11-28T11:11:52.451Z",
+        "run_id": "da01ac81b03d42ec8073372a6ec7b106",
+        "course_flow_id": "TASK2_COURSE_CASE4",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        },
+        "sql": "SELECT COUNT(*) FROM \"ship\" WHERE \"is_captured\" = 'T';",
+        "same_sql_as_archive": true,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case5",
+      "pre": {
+        "sample_id": "SQL_comparison-00133-pre",
+        "checked_at": "2026-11-28T11:12:22.385Z",
+        "run_id": "5434e77c54c7471099406aa7cd26fcbd",
+        "course_flow_id": "TASK2_COURSE_CASE5",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 149,
+          "prediction_rows": 149
+        },
+        "sql": "SELECT c.Name, COUNT(*) AS language_count\nFROM country AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(*) > 2;\n--",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "SQL_comparison-00133-post",
+        "checked_at": "2026-11-28T11:11:49.355Z",
+        "run_id": "7ee19d6fc8334c5f92eab184e9932ae5",
+        "course_flow_id": "TASK2_COURSE_CASE5",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 21,
+          "prediction_rows": 21
+        },
+        "sql": "SELECT c.Name, COUNT(cl.Language) AS LanguageCount\nFROM country AS c\nJOIN countrylanguage AS cl ON cl.CountryCode = c.Code\nGROUP BY c.Code, c.Name\nHAVING COUNT(cl.Language) < 2;",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case6",
+      "pre": {
+        "sample_id": "DB_DBcontent_equivalence-00125-pre",
+        "checked_at": "2026-11-28T11:12:33.428Z",
+        "run_id": "a26f4e6b1330446bb3e515eeb4c6e30a",
+        "course_flow_id": "TASK2_COURSE_CASE6",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        },
+        "sql": "SELECT v.Name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.Name\nHAVING SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN 1 ELSE 0 END) > 0\n   AND SUM(CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN 1 ELSE 0 END) > 0;\n--",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "DB_DBcontent_equivalence-00125-post",
+        "checked_at": "2026-11-28T11:11:56.215Z",
+        "run_id": "797e33c405e74b2d8f6aa5a2272178d0",
+        "course_flow_id": "TASK2_COURSE_CASE6",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        },
+        "sql": "SELECT v.first_name, v.last_name\nFROM visitor AS v\nJOIN visit AS vi ON vi.visitor_ID = v.ID\nJOIN museum AS m ON m.Museum_ID = vi.Museum_ID\nGROUP BY v.ID, v.first_name, v.last_name\nHAVING COUNT(DISTINCT CASE WHEN CAST(m.Open_Year AS INTEGER) < 2009 THEN m.Museum_ID END) > 0\n   AND COUNT(DISTINCT CASE WHEN CAST(m.Open_Year AS INTEGER) > 2011 THEN m.Museum_ID END) > 0;",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case7",
+      "pre": {
+        "sample_id": "SQL_NonDB_number-00054-pre",
+        "checked_at": "2026-11-28T11:12:34.630Z",
+        "run_id": "637f642bce2b44ee94489f18a94ec66b",
+        "course_flow_id": "TASK2_COURSE_CASE7",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 3,
+          "prediction_rows": 3
+        },
+        "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 3",
+        "same_sql_as_archive": true,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "SQL_NonDB_number-00054-post",
+        "checked_at": "2026-11-28T11:12:04.125Z",
+        "run_id": "2086daa16d5c4c27a0e181475ac7dda2",
+        "course_flow_id": "TASK2_COURSE_CASE7",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 5,
+          "prediction_rows": 5
+        },
+        "sql": "SELECT \"winner_name\", \"winner_rank\" FROM (SELECT \"winner_name\", \"winner_rank\", MIN(\"winner_age\") AS \"__top_n_value\" FROM \"matches\" WHERE \"winner_age\" IS NOT NULL GROUP BY \"winner_name\", \"winner_rank\") ORDER BY \"__top_n_value\" ASC LIMIT 5",
+        "same_sql_as_archive": true,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case8",
+      "pre": {
+        "sample_id": "DB_DBcontent_equivalence-00304-pre",
+        "checked_at": "2026-11-28T11:13:39.568Z",
+        "run_id": "0841949d17a947faa5a1f4b7e864a7b1",
+        "course_flow_id": "TASK2_COURSE_CASE8",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 12,
+          "prediction_rows": 12
+        },
+        "sql": "SELECT \"Record_Company\"\nFROM \"orchestra\"\nORDER BY \"Year_of_Founded\" DESC;",
+        "same_sql_as_archive": true,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "DB_DBcontent_equivalence-00304-post",
+        "checked_at": "2026-11-28T11:12:32.630Z",
+        "run_id": "d7d380d78b9f4fe590593f864bec62d8",
+        "course_flow_id": "TASK2_COURSE_CASE8",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 12,
+          "prediction_rows": 12
+        },
+        "sql": "SELECT \"Record_Company\" FROM \"orchestra\" ORDER BY \"year_of_existence\" ASC;",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case9",
+      "pre": {
+        "sample_id": "SQL_DB_text-00048-pre",
+        "checked_at": "2026-11-28T11:12:27.899Z",
+        "run_id": "ab30558244ad465bba46a8d344633a12",
+        "course_flow_id": "TASK2_COURSE_CASE9",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 13,
+          "prediction_rows": 13
+        },
+        "sql": "SELECT DISTINCT cn.Model\nFROM car_names AS cn\nJOIN cars_data AS cd ON cn.MakeId = cd.Id\nJOIN model_list AS ml ON cn.Model = ml.Model\nJOIN car_makers AS cm ON ml.Maker = cm.Id\nWHERE cm.FullName = 'General Motors' OR cd.Weight > 3500;",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "SQL_DB_text-00048-post",
+        "checked_at": "2026-11-28T11:12:03.640Z",
+        "run_id": "0d3025fb4ea44ba591c2ec974031ee9e",
+        "course_flow_id": "TASK2_COURSE_CASE9",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 14,
+          "prediction_rows": 14
+        },
+        "sql": "SELECT DISTINCT ml.Model\nFROM model_list AS ml\nJOIN car_makers AS cm ON cm.Id = ml.Maker\nLEFT JOIN car_names AS cn ON cn.Model = ml.Model\nLEFT JOIN cars_data AS cd ON cd.Id = cn.MakeId\nWHERE cm.FullName = 'Honda'\n   OR cd.Weight > 3500;",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      }
+    },
+    {
+      "case": "case10",
+      "pre": {
+        "sample_id": "NLQ_keyword_carrier-00248-pre",
+        "checked_at": "2026-11-28T11:12:44.527Z",
+        "run_id": "50f1d70fbf6a4cb5a6db98100fe3b12b",
+        "course_flow_id": "TASK2_COURSE_CASE10",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        },
+        "sql": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE winner_hand = 'L' AND tourney_name = 'WTA Championships';",
+        "same_sql_as_archive": true,
+        "same_rows_in_same_order_as_archive": true
+      },
+      "post": {
+        "sample_id": "NLQ_keyword_carrier-00248-post",
+        "checked_at": "2026-11-28T11:12:09.419Z",
+        "run_id": "5851de1cd7854d7cb4eb51e772bdd58a",
+        "course_flow_id": "TASK2_COURSE_CASE10",
+        "score": {
+          "correct": true,
+          "status": "match",
+          "reference_rows": 1,
+          "prediction_rows": 1
+        },
+        "sql": "SELECT COUNT(DISTINCT winner_id) FROM matches WHERE tourney_name = 'WTA Championships' AND winner_hand = 'L';",
+        "same_sql_as_archive": false,
+        "same_rows_in_same_order_as_archive": true
+      }
+    }
+  ]
+}

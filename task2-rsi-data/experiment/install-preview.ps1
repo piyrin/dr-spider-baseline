@@ -1,6 +1,15 @@
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $platform = Join-Path $root '.local/platform-preview/rsi-data-platform'
+$visual = Join-Path $root '.local/platform-preview/rsi-flow-visual'
+$packagePath = Join-Path $platform 'package.json'
+if (!(Test-Path -LiteralPath $packagePath)) { throw "Place the course frontend source in $platform" }
+if (!(Test-Path -LiteralPath (Join-Path $visual 'dist/index.js'))) { throw "Extract the course-supplied dist.zip into $visual" }
+$package = Get-Content -LiteralPath $packagePath -Raw -Encoding UTF8 | ConvertFrom-Json
+if ($package.dependencies.'@horsecoder/visual-core' -ne 'file:../rsi-flow-visual') {
+    $package.dependencies.'@horsecoder/visual-core' = 'file:../rsi-flow-visual'
+    [IO.File]::WriteAllText($packagePath, ($package | ConvertTo-Json -Depth 30) + "`n", [Text.UTF8Encoding]::new($false))
+}
 $route = Join-Path $platform 'app/task2-experiment'
 $null = New-Item -ItemType Directory -Force -Path $route
 $shared = @('QueryResult.tsx', 'query-result.module.css', 'case-options.ts') | ForEach-Object { Join-Path $PSScriptRoot "web/$_" }

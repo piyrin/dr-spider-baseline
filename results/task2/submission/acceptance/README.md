@@ -23,7 +23,9 @@
 
 ## 运行方式
 
-按代码仓库根目录 `README.md` 的「首次接入课程前端和后端」安装课程组件，再按「启动前后端」启动课程 Visual、Spring Boot 和 Python 节点服务。打开[课程首页十题验收](http://127.0.0.1:3000/?case=case1)，选中 `case1` 至 `case10`，选择题面后点击「运行」。
+在代码仓库根目录按 `README.md` 准备固定版本的数据和评测器后，运行 `./.venv/Scripts/python.exe ./scripts/verify_course_acceptance.py`，可离线重执行并复核本次归档的 20 条 SQL。
+
+现场生成按根目录 `README.md` 的「首次接入课程前端和后端」安装课程组件并启动课程 Visual、Spring Boot 与 Python 节点服务。打开[课程首页十题验收](http://127.0.0.1:3000/?case=case1)，选中 `case1` 至 `case10`，选择题面后点击「运行」。
 
 浏览器将当前画布序列化为 `structure`，提交给课程的 `/dataTesting-core/api/engine/flow`。`FLOW_CODE_RUN` 进入已编号的 Spring Boot 编排。`rsi-flow` 按后端 JSON 调度 `@Flow` 节点，节点通过本机 Python 服务完成 Agent 调用、数据库核验与 SQL 执行。Python 使用 `gpt-6-sol`，验收请求使用 `reasoning_effort=high`。评分在各侧对应的 SQLite 上按结果等价计算。
 
