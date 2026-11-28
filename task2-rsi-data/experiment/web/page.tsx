@@ -58,6 +58,7 @@ const labels = {
   top_n_execute_v4: '执行 Top N 查询 v4',
 };
 type Kind = keyof typeof labels;
+const allKinds = Object.keys(labels) as Kind[];
 type Link = { source: string; target: string };
 type Options = { hint?: string; probe?: boolean };
 type Graph = { nodes: ({ id: string; kind: Kind } & Options)[]; links: Link[] };
@@ -252,7 +253,7 @@ function AgentNode({ element }: VisualElementProps) {
 }
 
 const config: VisualCanvasConfig = {
-  elementConfig: { components: Object.fromEntries(Object.keys(labels).map(kind => [kind, {
+  elementConfig: { components: Object.fromEntries(allKinds.map(kind => [kind, {
     component: AgentNode, minSize: { width: 152, height: 62 },
   }])) },
   linkConfig: { components: { data: { hasArrow: true, showName: false } } },
@@ -262,6 +263,10 @@ const config: VisualCanvasConfig = {
 function toLink(source: string, target: string): LinkState {
   return { id: `${source}--${target}`, type: 'data', name: '', color: '#537096',
     points: [], fromElementId: source, toElementId: target };
+}
+
+function elementKinds(elements: { type: string }[]): Kind[] {
+  return elements.map(element => element.type as Kind);
 }
 
 function toCanvas(graph: Graph): ViewState {
@@ -286,6 +291,9 @@ export default function Task2Canvas() {
   const sequence = useRef(0);
   const [catalog, setCatalog] = useState<Catalog>();
   const [view, setView] = useState(initialView);
+  const [presetKinds, setPresetKinds] = useState<Kind[]>([]);
+  const [showAllKinds, setShowAllKinds] = useState(false);
+  const [nodeSearch, setNodeSearch] = useState('');
   const [saved, setSaved] = useState<Saved[]>([]);
   const [options, setOptions] = useState<Record<string, Options>>({});
   const [sample, setSample] = useState('');
@@ -300,6 +308,9 @@ export default function Task2Canvas() {
 
   const loadGraph = useCallback((graphName: string, graph: Graph) => {
     diagram.current?.setView(toCanvas(graph));
+    setPresetKinds(graph.nodes.map(node => node.kind));
+    setShowAllKinds(graph.nodes.length === 0);
+    setNodeSearch('');
     setOptions(Object.fromEntries(graph.nodes.map(({ id, hint, probe }) => [id, { hint, probe }])));
     setName(graphName); pick(''); send(''); setError('');
   }, []);
@@ -416,6 +427,11 @@ export default function Task2Canvas() {
 
   const selected = view.elements.find(element => element.id === active);
   const example = catalog?.examples.find(item => item.id === sample);
+  const currentKinds = [...new Set([...presetKinds, ...elementKinds(view.elements)])];
+  const search = nodeSearch.trim().toLowerCase();
+  const visibleKinds = showAllKinds
+    ? allKinds.filter(kind => labels[kind].toLowerCase().includes(search) || kind.includes(search))
+    : currentKinds;
 
   return <main className={styles.page}>
     <header className={styles.header}>
@@ -436,7 +452,13 @@ export default function Task2Canvas() {
       </select></label>
       <label>已保存流程<select aria-label="加载已保存流程" defaultValue="" disabled={busy} onChange={e => {
         const item = saved.find(graph => graph.name === e.target.value);
-        if (item) { diagram.current?.setView(item.view); setOptions(item.options); setName(item.name); pick(''); send(''); }
+        if (item) {
+          diagram.current?.setView(item.view);
+          setPresetKinds(elementKinds(item.view.elements));
+          setShowAllKinds(item.view.elements.length === 0);
+          setNodeSearch('');
+          setOptions(item.options); setName(item.name); pick(''); send('');
+        }
         e.target.value = '';
       }}><option value="">加载已保存流程…</option>{saved.map(item => <option key={item.name}>{item.name}</option>)}
       </select></label>
@@ -446,12 +468,22 @@ export default function Task2Canvas() {
     <p className={styles.question}>{example?.question}</p>
     <div className={styles.workspace}>
       <aside className={styles.palette} aria-label="可用节点">
-        <h2>节点</h2>
-        {(Object.keys(labels) as Kind[]).map(kind => <button key={kind} type="button" draggable
-          disabled={busy} onClick={() => addNode(kind)} onDragStart={e => {
-            e.dataTransfer.setData('application/x-rsi-kind', kind); e.dataTransfer.effectAllowed = 'copy';
-          }}><i style={{ background: nodeColors[kind] }} />{labels[kind]}</button>)}
-        <button disabled={busy} onClick={() => loadGraph('新流程', { nodes: [], links: [] })}>清空画布</button>
+        <h2>{showAllKinds ? '节点库' : '当前流程节点'}</h2>
+        <button type="button" className={styles.paletteToggle} aria-expanded={showAllKinds}
+          onClick={() => setShowAllKinds(!showAllKinds)}>
+          {showAllKinds ? '返回当前流程' : '查看全部节点'}
+        </button>
+        {showAllKinds && <input type="search" aria-label="搜索节点" placeholder="搜索节点"
+          value={nodeSearch} onChange={e => setNodeSearch(e.target.value)} />}
+        <div className={styles.nodeList} aria-label="节点列表">
+          {visibleKinds.map(kind => <button key={kind} type="button" draggable
+            disabled={busy} onClick={() => addNode(kind)} onDragStart={e => {
+              e.dataTransfer.setData('application/x-rsi-kind', kind); e.dataTransfer.effectAllowed = 'copy';
+            }}><i aria-hidden="true" style={{ background: nodeColors[kind] }} />{labels[kind]}</button>)}
+          {visibleKinds.length === 0 && <p>{showAllKinds ? '未找到匹配节点' : '当前流程暂无节点'}</p>}
+        </div>
+        <button className={styles.paletteClear} disabled={busy}
+          onClick={() => loadGraph('新流程', { nodes: [], links: [] })}>清空画布</button>
       </aside>
       <div className={styles.canvas} ref={surface} aria-label="RSI Visual 画布"
         onDragOver={e => e.preventDefault()} onDrop={e => {

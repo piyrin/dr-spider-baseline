@@ -9,6 +9,72 @@
 | 2 · Dr.Spider 人工编排 | 按各题最新版本统计，Visual 页面实测的原题扰动后通过 **9/10**，扰动前后均通过 **8/10**。第 7 题采用通用 v4。 | [十题结果](reports/任务2先验知识与人工编排实验.md#十题最新编排结果) · [画布与验收证据](results/task2/submission/README.md) · [编排源码](task2-rsi-data/experiment/README.md) |
 | 2 · RSI Data 启动验收 | 课程 Spring Boot 经流程引擎运行单表 Agent 和多 Agent 协作，在 Dr.Spider SQLite 上核对结果。 | [课程执行验收记录](results/task2/course-acceptance-20261120.json) |
 
+## 启动 Visual 并查看编排结果
+
+以下步骤使用已配置好课程组件的本地环境。启动前确认仓库根目录已有 `.venv`、Dr.Spider 数据和本地 `.env`，模型账户可调用 `gpt-6-sol`。
+
+### 启动前后端
+
+在仓库根目录打开三个 PowerShell 终端，每个终端执行对应的命令并保持运行。
+
+**终端 1 · Python 编排服务（3213）**
+
+```powershell
+& ./.venv/Scripts/python.exe ./task2-rsi-data/experiment/serve_canvas.py
+```
+
+**终端 2 · Spring Boot 后端（30845）**
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\task2-rsi-data\spring-boot\start-course.ps1
+```
+
+该命令为仓库启动脚本新开一个 PowerShell 进程，`-ExecutionPolicy` 仅作用于该次启动。[PowerShell 执行策略](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_exe?view=powershell-5.1)
+
+**终端 3 · RSI Data Visual 前端（3000）**
+
+```powershell
+Set-Location ./.local/platform-preview/rsi-data-platform
+npm.cmd run dev -- --hostname 127.0.0.1 --port 3000
+```
+
+Spring Boot 显示 `Started AppStarter`、前端显示 `Ready` 后，就可以打开下方的编排示例。
+
+### 在页面运行并查看结果
+
+打开下面任一示例，选择「开发样本」中的扰动后（`post`）题面，点击「运行当前流程」。「运行记录」会显示节点输出、生成的 SQL、SQLite 查询结果和执行评分。
+
+| 十题编排入口 | SQLite 数据库 | 库内关键数据与参考结果 |
+| --- | --- | --- |
+| [第 1 题 · 输出字段匹配 v2](http://127.0.0.1:3000/task2-experiment?case=projection_v2) | `network_1` | `Highschooler.grade = 10` 匹配 4 人，参考结果只输出 `name` 列。 |
+| [第 2 题 · 筛选值归一化](http://127.0.0.1:3000/task2-experiment?case=filter_format) | `tvshow` | `TV_Channel.series_name` 实际存为 `Sky Radio`，对应套餐 `Sky Famiglia`。 |
+| [第 3 题 · 筛选值同义配对](http://127.0.0.1:3000/task2-experiment?case=filter_synonym) | `flight_2` | `AIRLINES.Country` 存为 `USA`，匹配 12 家航司。 |
+| [第 4 题 · 布尔字段取样](http://127.0.0.1:3000/task2-experiment?case=filter_boolean_evidence) | `battle_death` → `battle_death_0` | 原库用 `ship.disposition_of_ship = 'Captured'`。扰动库的 `ship.is_captured` 存文本 `F`、`T`，其中 `T` 有 4 条。 |
+| [第 5 题 · 缺失明细与零值 v3](http://127.0.0.1:3000/task2-experiment?case=count_scope_v3) | `world_1` | `country` 中有 6 个地区在 `countrylanguage` 中没有明细。扰动后的参考查询按已有语言明细计数，返回 21 行。 |
+| [第 6 题 · 姓名分列 v3](http://127.0.0.1:3000/task2-experiment?case=split_output_v3) | `museum_visit` → `museum_visit_0` | `visitor` 中同一访客从 `name = 'Fernando Gago'` 改为 `first_name = 'Fernando'`、`last_name = 'Gago'`。 |
+| [第 7 题 · Top N v4](http://127.0.0.1:3000/task2-experiment?case=top_n_v4) | `wta_1` | `matches` 中 Madison Keys 的排名 12 组合重复。按姓名和排名去重后，前 5 项的排名为 17、24、16、12、9。 |
+| [第 8 题 · 替代字段排序 v3](http://127.0.0.1:3000/task2-experiment?case=sort_direction_v3) | `orchestra` → `orchestra_1` | `orchestra.Year_of_Founded` 降序对应扰动库 `year_of_existence` 升序。两侧参考结果各 12 行。 |
+| [第 9 题 · 筛选列核验 v2](http://127.0.0.1:3000/task2-experiment?case=filter_column_v2) | `car_1` | `car_makers.FullName` 存有 `Honda`，同一行的 `Maker` 是 `honda`。扰动后参考结果为 14 个车型。 |
+| [第 10 题 · 筛选条件核验](http://127.0.0.1:3000/task2-experiment?case=filter_count) | `wta_1` | `matches` 中 WTA Championships 的 `winner_hand = 'L'` 匹配 3 条比赛明细，按获胜者姓名去重后为 2 人。 |
+
+每题的 `pre` 和 `post` 均附 SQLite 路径、建表语句、核对查询与实际返回行，以及参考 SQL 和完整结果。[十题数据库证据](results/task2/submission/十题数据库证据.json) · [全部编排预设](task2-rsi-data/experiment/README.md) · [实验结果与画布证据](results/task2/submission/README.md)
+
+<details>
+<summary>首次接入课程前端和后端</summary>
+
+使用 PowerShell 7、Node.js 24、Corretto 8u514、Maven 3.9.16 和 H2 1.4.199。将课程前端放在 `.local/platform-preview/rsi-data-platform/`，按前端 `package.json` 的 `@horsecoder/visual-core` 配置放置同级可视化组件及课程提供的 `dist`。课程后端源码放在 `.local/upstream/snapshots/rsi-data-spring-boot/`。Maven 私服配置放在 `.local/task2-rsi-data/spring-boot/settings.xml`，Java、Maven 和 H2 放在同目录的 `runtime/` 下，路径分别为 `corretto8/jdk1.8.0_514/`、`apache-maven-3.9.16/` 和 `h2-1.4.199.jar`。[课程前端源码](https://github.com/ymxiong/rsi-data-platform/tree/dev_main) · [课程后端源码](https://github.com/ymxiong/rsi-data-spring-boot)
+
+从仓库根目录执行以下命令，再启动上面的三个服务。
+
+```powershell
+npm.cmd --prefix .local/platform-preview/rsi-data-platform install
+& ./task2-rsi-data/spring-boot/build-course.ps1
+& ./task2-rsi-data/experiment/build-course.ps1
+& ./task2-rsi-data/experiment/install-preview.ps1
+```
+
+</details>
+
 ## 目录与产物
 
 ```text

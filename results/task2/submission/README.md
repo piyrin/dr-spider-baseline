@@ -7,6 +7,7 @@
 | 内容 | 阅读入口 |
 |---|---|
 | 各题各版 Visual 画布 | [canvas/](canvas/) |
+| 十道所选原题的 SQLite 路径、建表语句、库内取值与参考结果 | [十题数据库证据](十题数据库证据.json) |
 | 先验实验请求与响应、各题浏览器记录、汇总与题单 | [records/](records/) |
 | 批量逐节点请求、响应与逐题评分 | [完整批测记录.zip](完整批测记录.zip) |
 | 第 5 题 v2/v3 同题单回放与画布实测 | [版本对照](records/task2-count-scope-revisions/comparison.json) |
